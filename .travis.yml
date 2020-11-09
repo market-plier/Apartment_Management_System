@@ -1,7 +1,3 @@
 language: java
 script:
   - mvn clean package
-deploy:
-  provider: heroku:git
-  username: netcracker466
-  password: &Netcracker4666
