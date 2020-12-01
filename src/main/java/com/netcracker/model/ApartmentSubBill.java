@@ -2,10 +2,12 @@ package com.netcracker.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ApartmentSubBill {
     private double debt;
-  //  private List<ApartmnetOperation> apartmnetOperation;
-    //  private List<DebtPaymentOperation> debtPaymentOperation;
+    private List<ApartmentOperation> apartmnetOperation;
+    private List<DebtPaymentOperation> debtPaymentOperation;
 
 }

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ManagerOperationSpending {
-   //private  ManagerSubBillId managerSubBillId;
+    private  ManagerSubBill managerSubBillId;
     private String description;
 }

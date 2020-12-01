@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class ManagerSpendingReport {
-   //private ManagerSubBill managerSubBill;
+    private ManagerSubBill managerSubBill;
     private List<ManagerOperationSpending> managerOperationSpendings;
 }
