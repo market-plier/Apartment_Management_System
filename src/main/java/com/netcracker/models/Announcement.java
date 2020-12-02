@@ -1,14 +1,15 @@
-package com.netcracker.model;
+package com.netcracker.models;
 
 
 import lombok.Data;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
 @Data
 public class Announcement {
-    private long announcementId;
+    private BigInteger announcementId;
     private String title;
     private String body;
     private boolean isOpened;

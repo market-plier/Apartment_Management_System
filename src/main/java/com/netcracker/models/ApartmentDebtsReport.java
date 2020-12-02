@@ -1,4 +1,4 @@
-package com.netcracker.model;
+package com.netcracker.models;
 
 import lombok.Data;
 

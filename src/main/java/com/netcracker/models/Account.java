@@ -1,10 +1,12 @@
-package com.netcracker.model;
+package com.netcracker.models;
 
 import lombok.Data;
 
+import java.math.BigInteger;
+
 @Data
 public class Account {
-    protected long accountId;
+    protected BigInteger accountId;
     protected String firstName;
     protected String lastName;
     protected String email;

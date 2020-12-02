@@ -1,10 +1,12 @@
-package com.netcracker.model;
+package com.netcracker.models;
 
 import lombok.Data;
 
+import java.math.BigInteger;
+
 @Data
 public class ManagerBill {
-    private long managerBillId;
+    private BigInteger managerBillId;
     private Manager manager;
     private String cardNumber;
 }

@@ -1,9 +1,10 @@
-package com.netcracker.model;
+package com.netcracker.models;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class Comment {
-    private long commentId;
+    private BigInteger commentId;
     private Announcement announcement;
     private String body;
     private Date createdAt;

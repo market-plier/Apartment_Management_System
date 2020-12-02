@@ -1,4 +1,4 @@
-package com.netcracker.model;
+package com.netcracker.models;
 
 import lombok.Data;
 
@@ -6,8 +6,8 @@ import java.util.List;
 
 @Data
 public class ApartmentSubBill {
-    private double debt;
-    private List<ApartmentOperation> apartmnetOperation;
+    private Double debt;
+    private List<ApartmentOperation> apartmentOperation;
     private List<DebtPaymentOperation> debtPaymentOperation;
 
 }

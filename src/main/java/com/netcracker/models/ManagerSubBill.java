@@ -1,11 +1,11 @@
-package com.netcracker.model;
+package com.netcracker.models;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ManagerSpendingReport {
-    private ManagerSubBill managerSubBill;
+public class ManagerSubBill {
     private List<ManagerOperationSpending> managerOperationSpendings;
+    private List<DebtPaymentOperation> debtPaymentOperations;
 }
