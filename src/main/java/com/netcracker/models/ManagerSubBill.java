@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ManagerSubBill {
+public class ManagerSubBill extends SubBill {
     private List<ManagerOperationSpending> managerOperationSpendings;
     private List<DebtPaymentOperation> debtPaymentOperations;
 }

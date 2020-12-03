@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ApartmentDebtsReport {
+public class ApartmentDebtsReport extends ReportPdfBuildInfo{
     private ApartmentSubBill apartmentSubBill;
     private List<DebtPaymentOperation> debtPaymentOperations;
 }
