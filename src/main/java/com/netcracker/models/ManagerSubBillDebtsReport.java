@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class ManagerSubBillDebtsReport extends ReportPdfBuildInfo{
     private ManagerSubBill managerSubBull;
-    private List<ManagerOperationSpending> managerOperationSpendings;
+    private List<ManagerSpendingOperation> managerSpendingOperations;
 }
