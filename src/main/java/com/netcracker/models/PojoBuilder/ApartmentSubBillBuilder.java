@@ -5,13 +5,20 @@ import com.netcracker.models.ApartmentSubBill;
 import com.netcracker.models.DebtPaymentOperation;
 import com.netcracker.models.SubBill;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class ApartmentSubBillBuilder {
+    private BigInteger subBillId;
     private Double debt;
     private List<ApartmentOperation> apartmentOperation;
     private List<DebtPaymentOperation> debtPaymentOperation;
     private SubBill subBill;
+
+    public ApartmentSubBillBuilder withSubBillId(BigInteger subBillId) {
+        this.subBillId=subBillId;
+        return this;
+    }
 
     public ApartmentSubBillBuilder withDept(Double debt) {
         this.debt = debt;
@@ -29,12 +36,12 @@ public class ApartmentSubBillBuilder {
     }
 
     public ApartmentSubBillBuilder withSubBill(SubBill subBill) {
-        this.subBill=subBill;
+        this.subBill = subBill;
         return this;
     }
 
     public ApartmentSubBill build() {
-        return new ApartmentSubBill(debt, apartmentOperation, debtPaymentOperation,subBill);
+        return new ApartmentSubBill(subBillId,debt, apartmentOperation, debtPaymentOperation, subBill);
     }
 }
 
