@@ -7,6 +7,8 @@ public interface Constants {
     BigInteger ANNOUNCEMENT_OBJECT_TYPE_ID = BigInteger.valueOf(3);
     BigInteger HOUSE_VOTING_OBJECT_TYPE_ID = BigInteger.valueOf(5);
     BigInteger VOTING_OPTION_OBJECT_TYPE_ID = BigInteger.valueOf(6);
+    BigInteger APARTMENT_OBJECT_TYPE_ID = BigInteger.valueOf(7);
+    BigInteger APARTMENT_SUB_BILL_OBJECT_TYPE_ID = BigInteger.valueOf(13);
 
     //Announcement attributes
     BigInteger ANNOUNCEMENT_TITLE_ATTR_ID = BigInteger.valueOf(7);
@@ -19,4 +21,14 @@ public interface Constants {
 
     //VotingOption attributes
     BigInteger VOTING_OPTION_NAME_ATTR_ID = BigInteger.valueOf(14);
+
+    //Apartment attributes
+    BigInteger APARTMENT_NUMBER_ATTR_ID = BigInteger.valueOf(15);
+    BigInteger SQUARE_ATTR_ID = BigInteger.valueOf(16);
+    BigInteger FLOOR_ATTR_ID = BigInteger.valueOf(17);
+    BigInteger PEOPLE_COUNT_ATTR_ID = BigInteger.valueOf(18);
+
+    //ApartmentSubBill attributes
+    BigInteger DEBT_ATTR_ID = BigInteger.valueOf(38);
+
 }
