@@ -3,6 +3,8 @@
 
 -- Creating an Instances of the Apartments
 
+
+--Apartment 1
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_' || obj_id_seq.currval, NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -48,7 +50,7 @@ VALUES (38, obj_id_seq.currval, '500');
 -- Reference
 INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
 
--- Apartment
+-- Apartment2
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_' || obj_id_seq.currval, NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -72,7 +74,7 @@ VALUES (17, obj_id_seq.currval, '1');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '2');
 
--- SubBills for Apartment
+-- SubBills for Apartment2
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -94,6 +96,7 @@ VALUES (38, obj_id_seq.currval, '80');
 -- Reference
 INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
 
+-- Apartment3
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_' || obj_id_seq.currval, NULL);
 -- add account data
@@ -106,7 +109,7 @@ VALUES (17, obj_id_seq.currval, '2');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '4');
 
--- SubBills for Apartment
+-- SubBills for Apartment3
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -127,3 +130,18 @@ INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (38, obj_id_seq.currval, '0');
 -- Reference
 INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
+
+/*Test data for table ApartmentOperationDao*/
+-- ApartmentOperations for Apartment_Sub_Bill_1 for Apartment_1
+
+-- ApartmentOperation1
+INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) VALUES (obj_id_seq.nextval,NULL,17,'Apartment_Operation1',NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(26, obj_id_seq.currval, '1000');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(27, obj_id_seq.currval, '01.01.2001');
+INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (34, obj_id_seq.currval, 2);
+
+-- ApartmentOperation2
+INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) VALUES (obj_id_seq.nextval,NULL,17,'Apartment_Operation2',NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(26, obj_id_seq.currval, '2000');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(27, obj_id_seq.currval, '02.02.2002');
+INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (34, obj_id_seq.currval, 2);
