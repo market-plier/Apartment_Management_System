@@ -28,6 +28,8 @@ public interface Constants {
     BigInteger FLOOR_ATTR_ID = BigInteger.valueOf(17);
     BigInteger PEOPLE_COUNT_ATTR_ID = BigInteger.valueOf(18);
 
+    //SubBill attributes
+    BigInteger BALANCE_ATTR_ID=BigInteger.valueOf(25);
     //ApartmentSubBill attributes
     BigInteger DEBT_ATTR_ID = BigInteger.valueOf(38);
 
