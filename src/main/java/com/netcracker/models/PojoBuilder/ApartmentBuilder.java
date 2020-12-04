@@ -3,13 +3,20 @@ package com.netcracker.models.PojoBuilder;
 import com.netcracker.models.Account;
 import com.netcracker.models.Apartment;
 
+import java.math.BigInteger;
+
 public class ApartmentBuilder {
+    private BigInteger apartmentId;
     private Integer apartmentNumber;
     private Integer squareMetres;
     private Integer floor;
     private Integer peopleCount;
     private Account account;
 
+    public ApartmentBuilder withApartmentId(BigInteger apartmentId) {
+        this.apartmentId = apartmentId;
+        return this;
+    }
     public ApartmentBuilder withApartmentNumber(Integer apartmentNumber) {
         this.apartmentNumber = apartmentNumber;
         return this;
@@ -36,7 +43,7 @@ public class ApartmentBuilder {
     }
 
     public Apartment build() {
-        return new Apartment(apartmentNumber, squareMetres, floor, peopleCount,account);
+        return new Apartment(apartmentId,apartmentNumber, squareMetres, floor, peopleCount,account);
     }
 
 }
