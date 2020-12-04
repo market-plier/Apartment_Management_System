@@ -12,8 +12,19 @@ public class Announcement {
     private BigInteger announcementId;
     private String title;
     private String body;
-    private boolean isOpened;
+    private Boolean isOpened;
     private Date createdAt;
     private List<Comment> comments;
-    private HouseVoting housevoting;
+    private HouseVoting houseVoting;
+
+    public Announcement(BigInteger announcementId, String title, String body, Boolean isOpened,
+                        Date createdAt, List<Comment> comments, HouseVoting houseVoting) {
+        this.announcementId = announcementId;
+        this.title = title;
+        this.body = body;
+        this.isOpened = isOpened;
+        this.createdAt = createdAt;
+        this.comments = comments;
+        this.houseVoting = houseVoting;
+    }
 }
