@@ -1,14 +1,23 @@
 package com.netcracker.models.PojoBuilder;
 
-import com.netcracker.models.Account;
 import com.netcracker.models.Apartment;
+import com.netcracker.models.Role;
+
+import java.math.BigInteger;
 
 public class ApartmentBuilder {
     private Integer apartmentNumber;
     private Integer squareMetres;
     private Integer floor;
     private Integer peopleCount;
-    private Account account;
+    private BigInteger accountId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String phoneNumber;
+    private Role role;
+
 
     public ApartmentBuilder withApartmentNumber(Integer apartmentNumber) {
         this.apartmentNumber = apartmentNumber;
@@ -30,13 +39,44 @@ public class ApartmentBuilder {
         return this;
     }
 
-    public ApartmentBuilder withAccount(Account account) {
-        this.account = account;
+    public ApartmentBuilder withAccountId(BigInteger accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
+    public ApartmentBuilder withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public ApartmentBuilder withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ApartmentBuilder withRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
+    public ApartmentBuilder withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ApartmentBuilder withPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public ApartmentBuilder withPassword(String password) {
+        this.password = password;
         return this;
     }
 
     public Apartment build() {
-        return new Apartment(apartmentNumber, squareMetres, floor, peopleCount, account);
+        return new Apartment(accountId, firstName, lastName, email, password,
+                phoneNumber, role, apartmentNumber, squareMetres, floor, peopleCount);
     }
 
 }
