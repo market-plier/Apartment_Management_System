@@ -5,6 +5,7 @@ import java.math.BigInteger;
 public interface Constants {
     //Object types
     BigInteger ANNOUNCEMENT_OBJECT_TYPE_ID = BigInteger.valueOf(3);
+    BigInteger COMMENT_OBJECT_TYPE_ID = BigInteger.valueOf(4);
     BigInteger HOUSE_VOTING_OBJECT_TYPE_ID = BigInteger.valueOf(5);
     BigInteger VOTING_OPTION_OBJECT_TYPE_ID = BigInteger.valueOf(6);
     BigInteger APARTMENT_OBJECT_TYPE_ID = BigInteger.valueOf(7);
@@ -21,6 +22,7 @@ public interface Constants {
 
     //VotingOption attributes
     BigInteger VOTING_OPTION_NAME_ATTR_ID = BigInteger.valueOf(14);
+    BigInteger VOTING_OPTION_ACCOUNT_REF_ID = BigInteger.valueOf(30);
 
     //Apartment attributes
     BigInteger APARTMENT_NUMBER_ATTR_ID = BigInteger.valueOf(15);
