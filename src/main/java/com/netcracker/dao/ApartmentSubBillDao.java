@@ -10,6 +10,8 @@ public interface ApartmentSubBillDao {
 
     ApartmentSubBill getApartmentSubBillById(BigInteger apartmentSubBillId);
 
+    List<ApartmentSubBill> getAllApartmentSubBillsByAccountId(BigInteger accountId);
+
     void updateApartmentSubBill(ApartmentSubBill apartmentSubBill);
 
     void createApartmentSubBill(ApartmentSubBill apartmentSubBill);
