@@ -12,5 +12,19 @@ public class Account {
     protected String email;
     protected String password;
     protected String phoneNumber;
-    protected Role Role;
+    protected Role role;
+
+    public Account(BigInteger accountId, String firstName, String lastName,
+                   String email, String password, String phoneNumber, Role role) {
+        this.accountId = accountId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
+    public Account() {
+    }
 }

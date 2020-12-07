@@ -8,6 +8,11 @@ import java.math.BigInteger;
 public class Role {
     protected BigInteger roleId;
     protected String name;
+
+    public Role(BigInteger roleId, String roleName) {
+        this.roleId = roleId;
+        this.name = roleName;
+    }
 }
 
 
