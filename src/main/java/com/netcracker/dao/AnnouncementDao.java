@@ -68,13 +68,13 @@ public interface AnnouncementDao {
 
     String CREATE_ANNOUNCEMENT_ATTRIBUTES =
             "MERGE INTO ATTRIBUTES old\n" +
-            "USING (SELECT 7 ATTR_ID, seq_obj_curr OBJECT_ID, 'WELCOME' VALUE, NULL DATE_VALUE FROM DUAL\n" +
+            "USING (SELECT 7 ATTR_ID, seq_obj_curr OBJECT_ID, ? VALUE, NULL DATE_VALUE FROM DUAL\n" +
             "   UNION ALL\n" +
-            "   SELECT 8, seq_obj_curr, 'Welcome to our system.', NULL FROM DUAL\n" +
+            "   SELECT 8, seq_obj_curr, ?, NULL FROM DUAL\n" +
             "   UNION ALL\n" +
-            "   SELECT 9, seq_obj_curr, 'false', NULL FROM DUAL\n" +
+            "   SELECT 9, seq_obj_curr, ?, NULL FROM DUAL\n" +
             "   UNION ALL\n" +
-            "   SELECT 10, seq_obj_curr, NULL, sysdate FROM DUAL) new\n" +
+            "   SELECT 10, seq_obj_curr, NULL, ? FROM DUAL) new\n" +
             "ON (old.OBJECT_ID = new.OBJECT_ID AND old.ATTR_ID = new.ATTR_ID)\n" +
             "WHEN MATCHED THEN\n" +
             "   UPDATE SET old.VALUE = new.VALUE, old.DATE_VALUE = new.DATE_VALUE\n" +
