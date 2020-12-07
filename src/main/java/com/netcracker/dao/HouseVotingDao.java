@@ -28,7 +28,7 @@ public interface HouseVotingDao {
             "       old.NAME <> new.NAME OR old.DESCRIPTION <> new.DESCRIPTION\n" +
             "WHEN NOT MATCHED THEN\n" +
             "   INSERT(old.OBJECT_ID, old.PARENT_ID, old.OBJECT_TYPE_ID, old.NAME, old.DESCRIPTION)\n" +
-            "   VALUES(new.OBJECT_ID, new.PARENT_ID, new.OBJECT_TYPE_ID, new.NAME, new.DESCRIPTION)";
+            "   VALUES(seq_obj_curr, new.PARENT_ID, new.OBJECT_TYPE_ID, new.NAME, new.DESCRIPTION)";
 
     String CREATE_HOUSE_VOTING_ATTRIBUTES =
             "MERGE INTO ATTRIBUTES old\n" +
