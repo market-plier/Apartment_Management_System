@@ -3,20 +3,25 @@ package com.netcracker.models.PojoBuilder;
 import com.netcracker.models.ApartmentOperation;
 import com.netcracker.models.ApartmentSubBill;
 import com.netcracker.models.DebtPaymentOperation;
-import com.netcracker.models.SubBill;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public class ApartmentSubBillBuilder {
     private BigInteger subBillId;
+    private Double balance;
     private Double debt;
     private List<ApartmentOperation> apartmentOperation;
     private List<DebtPaymentOperation> debtPaymentOperation;
-    private SubBill subBill;
+
 
     public ApartmentSubBillBuilder withSubBillId(BigInteger subBillId) {
-        this.subBillId=subBillId;
+        this.subBillId = subBillId;
+        return this;
+    }
+
+    public ApartmentSubBillBuilder withBalance(Double debt) {
+        this.balance = balance;
         return this;
     }
 
@@ -35,13 +40,8 @@ public class ApartmentSubBillBuilder {
         return this;
     }
 
-    public ApartmentSubBillBuilder withSubBill(SubBill subBill) {
-        this.subBill = subBill;
-        return this;
-    }
-
     public ApartmentSubBill build() {
-        return new ApartmentSubBill(subBillId,debt, apartmentOperation, debtPaymentOperation, subBill);
+        return new ApartmentSubBill(subBillId, balance, debt, apartmentOperation, debtPaymentOperation);
     }
 }
 
