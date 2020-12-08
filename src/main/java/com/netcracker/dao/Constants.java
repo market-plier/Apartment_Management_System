@@ -34,5 +34,11 @@ public interface Constants {
     BigInteger BALANCE_ATTR_ID=BigInteger.valueOf(25);
     //ApartmentSubBill attributes
     BigInteger DEBT_ATTR_ID = BigInteger.valueOf(38);
+    //Comment_TYPE
+    BigInteger COMMENT_TYPE_ID = BigInteger.valueOf(4);
+    //Comment attributtes
+    BigInteger COMMENT_ATTR_BODY_ID = BigInteger.valueOf(11);
+    BigInteger COMMENT_ATTR_CREATED_AT_ID = BigInteger.valueOf(12);
+    BigInteger COMMENT_ATTR_REF_TO_APARTMENT = BigInteger.valueOf(29);
 
 }

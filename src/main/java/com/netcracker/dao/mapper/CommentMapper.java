@@ -19,13 +19,13 @@ public class CommentMapper implements RowMapper<Comment> {
     @Override
     public Comment mapRow(ResultSet resultSet, int i) throws SQLException {
 
-        Comment comment = new CommentBuilder()
+        return new CommentBuilder()
                 .witCommentId(new BigInteger(resultSet.getString("comment_id")))
                 .withApartment(new ApartmentBuilder()
                         .withAccountId(new BigInteger(resultSet.getString("apartment_id")))
                         .withFirstName(resultSet.getString("first_name"))
                         .withLastName(resultSet.getString("last_name"))
-                        .withApartmentNumber(new Integer(resultSet.getString("apartament_number")))
+                        .withApartmentNumber(new Integer(resultSet.getString("apartment_number")))
                         .build())
                 .withBody(resultSet.getString("comment_body"))
                 .withCreatedAt(resultSet.getDate("created_at"))
@@ -33,7 +33,5 @@ public class CommentMapper implements RowMapper<Comment> {
                         .withAnnouncementId(new BigInteger(resultSet.getString("announcement_id")))
                         .build())
                 .build();
-
-        return comment;
     }
 }
