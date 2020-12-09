@@ -10,7 +10,6 @@ public class Apartment extends Account {
     private Integer squareMetres;
     private Integer floor;
     private Integer peopleCount;
-    private Account account;
 
     public Apartment(BigInteger accountId, String firstName,
                      String lastName, String email, String password, String phoneNumber, Role role, Integer apartmentNumber, Integer squareMetres,
