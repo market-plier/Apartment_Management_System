@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class CommunalUtility {
-    public enum Status {ENABLE,DISABLE}
+    public enum Status {ENABLED,DISABLED}
     public enum Duration {TEMPORARY,CONSTANT}
     private BigInteger communalUtilityId;
     private CalculationMethod calculationMethod;

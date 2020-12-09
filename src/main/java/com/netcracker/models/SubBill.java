@@ -8,10 +8,12 @@ import java.math.BigInteger;
 public class SubBill {
     protected BigInteger subBillId;
     protected Double balance;
+    protected CommunalUtility communalUtility;
 
-    public SubBill(BigInteger subBillId, Double balance) {
+    public SubBill(BigInteger subBillId, Double balance, CommunalUtility communalUtility) {
         this.subBillId = subBillId;
         this.balance = balance;
+        this.communalUtility = communalUtility;
     }
 
     public SubBill() {
