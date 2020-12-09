@@ -40,5 +40,10 @@ public interface Constants {
     BigInteger COMMENT_ATTR_BODY_ID = BigInteger.valueOf(11);
     BigInteger COMMENT_ATTR_CREATED_AT_ID = BigInteger.valueOf(12);
     BigInteger COMMENT_ATTR_REF_TO_APARTMENT = BigInteger.valueOf(29);
+    // ManagerBill
+    BigInteger MANAGER_BILL_TYPE = BigInteger.valueOf(9);
+    //MANAGER attributes
+    BigInteger MANAGER_BILL_ATTR_CARD_NUMBER = BigInteger.valueOf(19);
+    BigInteger MANAGER_BILL_ATTR_OWNER_REF = BigInteger.valueOf(31);
 
 }
