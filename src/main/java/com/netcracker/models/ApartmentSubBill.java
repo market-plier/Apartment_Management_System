@@ -12,8 +12,8 @@ public class ApartmentSubBill extends SubBill {
     private List<DebtPaymentOperation> debtPaymentOperation;
 
     public ApartmentSubBill(BigInteger subBill, Double balance, Double debt, List<ApartmentOperation> apartmentOperation,
-                            List<DebtPaymentOperation> debtPaymentOperation) {
-        super(subBill, balance);
+                            List<DebtPaymentOperation> debtPaymentOperation, CommunalUtility communalUtility) {
+        super(subBill, balance,communalUtility);
         this.debt = debt;
         this.apartmentOperation = apartmentOperation;
         this.debtPaymentOperation = debtPaymentOperation;
