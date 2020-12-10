@@ -297,5 +297,203 @@ commit ;
 ---------------------------------------------------------END------------------------------------------------------------
 
 
+------------------------------------CREATE COMMENTS, ANNOUNCEMENTS AND APARTMENTS---------------------------------------
+INSERT ALL
+            INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+            VALUES (obj_id_seq.nextval,NULL,3,'Announcement_' || obj_id_seq.currval,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(9,obj_id_seq.currval, 'TRUE')
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(10,obj_id_seq.currval, SYSDATE )
+sELECT * FROM DUAL;
+
+
+
+INSERT
+        ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_'||OBJ_ID_SEQ.currval,NULL)
+        INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+         INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
+sELECT * FROM DUAL;
+
+        INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval, ?, 7, 'Apartment_' || obj_id_seq.currval, NULL); -- 3 - ? ROLE OBJECT_ID
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (18, obj_id_seq.currval, '5');
+
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+        VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
+
+INSERT ALL
+            INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+            VALUES (obj_id_seq.nextval,NULL,3,'Announcement_' || obj_id_seq.currval,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(9,obj_id_seq.currval, 'TRUE')
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(10,obj_id_seq.currval, SYSDATE )
+sELECT * FROM DUAL;
+
+
+
+INSERT
+        ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_'||OBJ_ID_SEQ.currval,NULL)
+        INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+         INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
+sELECT * FROM DUAL;
+
+        INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval, ?, 7, 'Apartment_' || obj_id_seq.currval, NULL); -- 3 - ? ROLE OBJECT_ID
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (18, obj_id_seq.currval, '5');
+
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+        VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
+
+INSERT ALL
+            INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+            VALUES (obj_id_seq.nextval,NULL,3,'Announcement_' || obj_id_seq.currval,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(9,obj_id_seq.currval, 'TRUE')
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(10,obj_id_seq.currval, SYSDATE )
+sELECT * FROM DUAL;
+
+
+
+INSERT
+        ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_'||OBJ_ID_SEQ.currval,NULL)
+        INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+         INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
+sELECT * FROM DUAL;
+
+        INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval, ?, 7, 'Apartment_' || obj_id_seq.currval, NULL); -- 3 - ? ROLE OBJECT_ID
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (18, obj_id_seq.currval, '5');
+
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+        VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
+
+INSERT ALL
+            INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+            VALUES (obj_id_seq.nextval,NULL,3,'Announcement_' || obj_id_seq.currval,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(9,obj_id_seq.currval, 'TRUE')
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
+            VALUES(10,obj_id_seq.currval, SYSDATE )
+sELECT * FROM DUAL;
+
+
+
+INSERT
+        ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_'||OBJ_ID_SEQ.currval,NULL)
+        INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+         INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
+sELECT * FROM DUAL;
+
+        INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval, ?, 7, 'Apartment_' || obj_id_seq.currval, NULL); -- 3 - ? ROLE OBJECT_ID
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+        INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+        VALUES (18, obj_id_seq.currval, '5');
+
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+        VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
+
+commit ;
+
+-----------------------------------------------END----------------------------------------------------------------------
+
+
 
 
