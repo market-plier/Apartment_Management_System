@@ -174,3 +174,128 @@ INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) VALUES
 INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(26, obj_id_seq.currval, '2000');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(27, obj_id_seq.currval, '02.02.2002');
 INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (34, obj_id_seq.currval, 2);
+
+
+-----------------------------------------Create Manager Operation Spending----------------------------------------------
+INSERT ALL
+        INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval, NULL,10,'CalculationMethod'||obj_id_seq.currval,null)
+        INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES(20,obj_id_seq.currval,'newMethod'||obj_id_seq.currval,null,null)
+SELECT * FROM DUAL;
+
+INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
+VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility' || obj_id_seq.currval,NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
+VALUES(22, obj_id_seq.currval, null,1);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
+VALUES(23, obj_id_seq.currval, null,3 );
+INSERT INTO ATTRIBUTES(attr_id, object_id, DATE_VALUE)
+VALUES(24, obj_id_seq.currval, DATE '2021-01-12');
+
+INSERT ALL
+        INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,14,'MANAGERSUBBIL_'||obj_id_seq.currval,NULL)
+        INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+        VALUES(25,obj_id_seq.currval,'9999991'||obj_id_seq.currval,null,null)
+select * from dual;
+
+INSERT ALL
+            INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+            VALUES (OBJ_ID_SEQ.nextval,null,18,'ManagerOperationSpending_'||OBJ_ID_SEQ.currval,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (28,OBJ_ID_SEQ.currval,'NEW DESC'||OBJ_ID_SEQ.currval,null,null)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (26,OBJ_ID_SEQ.currval,'909090'||OBJ_ID_SEQ.currval,NULL,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (27,OBJ_ID_SEQ.currval,null,systimestamp,NULL)
+            INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+            VALUES (36,OBJ_ID_SEQ.currval,OBJ_ID_SEQ.currval-1)
+SELECT * FROM DUAL;
+
+
+----------------
+INSERT ALL
+        INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval, NULL,10,'CalculationMethod'||obj_id_seq.currval,null)
+        INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES(20,obj_id_seq.currval,'newMethod'||obj_id_seq.currval,null,null)
+SELECT * FROM DUAL;
+
+INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
+VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility' || obj_id_seq.currval,NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
+VALUES(22, obj_id_seq.currval, null,2);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
+VALUES(23, obj_id_seq.currval, null, 3 );
+INSERT INTO ATTRIBUTES(attr_id, object_id, DATE_VALUE)
+VALUES(24, obj_id_seq.currval, DATE '2021-01-3');
+
+INSERT ALL
+        INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,14,'MANAGERSUBBIL_'||obj_id_seq.currval,NULL)
+        INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+        VALUES(25,obj_id_seq.currval,'9999998'||obj_id_seq.currval,null,null)
+select * from dual;
+
+INSERT ALL
+            INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+            VALUES (OBJ_ID_SEQ.nextval,NULL,18,'ManagerOperationSpending_'||OBJ_ID_SEQ.currval,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (28,OBJ_ID_SEQ.currval,'NEW DESC'||OBJ_ID_SEQ.currval,null,null)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (26,OBJ_ID_SEQ.currval,'909090'||OBJ_ID_SEQ.currval,NULL,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (27,OBJ_ID_SEQ.currval,null,systimestamp,NULL)
+            INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+            VALUES (36,OBJ_ID_SEQ.currval,OBJ_ID_SEQ.currval-1)
+SELECT * FROM DUAL;
+--------
+INSERT ALL
+        INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval, NULL,10,'CalculationMethod'||obj_id_seq.currval,null)
+        INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+        VALUES(20,obj_id_seq.currval,'newMethod'||obj_id_seq.currval,null,null)
+SELECT * FROM DUAL;
+
+INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
+VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility' || obj_id_seq.currval,NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
+VALUES(22, obj_id_seq.currval, null,2);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
+VALUES(23, obj_id_seq.currval, null,4);
+INSERT INTO ATTRIBUTES(attr_id, object_id, DATE_VALUE)
+VALUES(24, obj_id_seq.currval, DATE '2021-01-6');
+
+INSERT ALL
+        INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+        VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,14,'MANAGERSUBBIL_'||obj_id_seq.currval,NULL)
+        INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+        VALUES(25,obj_id_seq.currval,'9999900'||obj_id_seq.currval,null,null)
+select * from dual;
+
+
+INSERT ALL
+            INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+            VALUES (OBJ_ID_SEQ.nextval,NULL,18,'ManagerOperationSpending_'||OBJ_ID_SEQ.currval,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (28,OBJ_ID_SEQ.currval,'NEW DESC'||OBJ_ID_SEQ.currval,null,null)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (26,OBJ_ID_SEQ.currval,'909090'||OBJ_ID_SEQ.currval,NULL,NULL)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (27,OBJ_ID_SEQ.currval,null,systimestamp,NULL)
+            INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+            VALUES (36,OBJ_ID_SEQ.currval,OBJ_ID_SEQ.currval-1)
+SELECT * FROM DUAL;
+commit ;
+---------------------------------------------------------END------------------------------------------------------------
+
+
+
+
