@@ -25,7 +25,7 @@ public class AccountDaoImpl implements AccountDao {
 
 
     @Override
-    public Account getAccount(BigInteger id) throws DataAccessException {
+    public Account getAccount(BigInteger id) throws DaoAccessException {
         try {
             return jdbcTemplate.queryForObject(GET_ACCOUNT_BY_ID, new AccountMapper(), id);
         } catch (DataAccessException e) {
@@ -35,7 +35,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public Account getAccountByEmail(String email) throws DataAccessException {
+    public Account getAccountByEmail(String email) throws DaoAccessException {
         try {
             return jdbcTemplate.queryForObject(GET_ACCOUNT_BY_EMAIL, new AccountMapper(), email);
         } catch (DataAccessException e) {
