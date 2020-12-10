@@ -8,4 +8,12 @@ import java.math.BigInteger;
 public class CalculationMethod {
     private BigInteger calculationMethodId;
     private String name;
+
+    public CalculationMethod(BigInteger calculationMethodId, String name) {
+        this.calculationMethodId = calculationMethodId;
+        this.name = name;
+    }
+
+    public CalculationMethod() {
+    }
 }

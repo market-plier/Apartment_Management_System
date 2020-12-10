@@ -4,7 +4,7 @@ import com.netcracker.models.CalculationMethod;
 import com.netcracker.models.CommunalUtility;
 
 import java.math.BigInteger;
-import java.util.Date;
+import java.sql.Date;
 
 public class CommunalUtilityBuilder {
     private BigInteger communalUtilityId;

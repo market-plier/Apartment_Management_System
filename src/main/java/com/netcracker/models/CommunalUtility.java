@@ -1,13 +1,40 @@
 package com.netcracker.models;
 
 import lombok.Data;
+
 import java.math.BigInteger;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 public class CommunalUtility {
-    public enum Status {ENABLED,DISABLED}
-    public enum Duration {TEMPORARY,CONSTANT}
+    public enum Status {
+        Enabled(3),
+        Disabled(4);
+        private final int statusCode;
+
+        Status(int statusCode) {
+            this.statusCode = statusCode;
+        }
+
+        public int getStatusCode() {
+            return this.statusCode;
+        }
+    }
+
+    public enum Duration {
+        Temporary(1),
+        Constant(2);
+        private final int durationCode;
+
+        Duration(int durationCode) {
+            this.durationCode = durationCode;
+        }
+
+        public int getDurationCode() {
+            return this.durationCode;
+        }
+    }
+
     private BigInteger communalUtilityId;
     private CalculationMethod calculationMethod;
     private String name;
