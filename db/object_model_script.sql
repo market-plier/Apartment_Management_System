@@ -46,10 +46,10 @@ VALUES (9, NULL, 'MNGBLL', 'ManagerBill', NULL);
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
 VALUES (10, NULL, 'CALC', 'CalculationMethod', NULL);
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
-VALUES (11, NULL, 'COMUNUTL', 'CommunalUtility', NULL);
+VALUES (11, 10, 'COMUNUTL', 'CommunalUtility', NULL);
 
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
-VALUES (12, NULL, 'SBLL', 'SubBill', NULL);
+VALUES (12, 11, 'SBLL', 'SubBill', NULL);
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
 VALUES (13, 12, 'APTSBLL', 'ApartmentSubBill', NULL);
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
@@ -242,7 +242,9 @@ WHEN NOT MATCHED THEN
 
 /* Sequence for future inserts */
 begin
-  execute immediate 'DROP SEQUENCE OBJ_ID_SEQ';
+    execute immediate 'DROP SEQUENCE OBJ_ID_SEQ';
+    execute immediate 'DROP function seq_obj_next';
+    execute immediate 'DROP function seq_obj_curr';
   exception
   when others then null;
 end;

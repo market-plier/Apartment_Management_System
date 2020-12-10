@@ -1,164 +1,3 @@
-/*Test data for table ApartmentDao*/
-/*Test data for table ApartmentDao*/
-
--- Creating an Instances of the Apartments
-
-
---Apartment 1
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'masha@gmail.com');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '1234567');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'Mariia');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'Kozhushan');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (6, obj_id_seq.currval, '345675677887');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '10');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (16, obj_id_seq.currval, '80');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '1');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (18, obj_id_seq.currval, '2');
-
--- SubBills for Apartment_1
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '340.50');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '300');
-
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-1);
-
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '127.80');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '0');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-2);
-
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '569');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '500');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
-
--- Apartment2
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'dasha@gmail.com');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '12345457');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'Dasha');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'Markovkina');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (6, obj_id_seq.currval, '3456456887');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '11');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (16, obj_id_seq.currval, '44');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '1');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (18, obj_id_seq.currval, '2');
-
--- SubBills for Apartment2
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '112');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '1678');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-1);
-
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '67');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '120');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-2);
-
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '890');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '80');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
--- Apartment3
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'artem@gmail.com');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '888005553535');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'Igor');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'Yabluchkin');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (6, obj_id_seq.currval, '9876543679');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '12');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (16, obj_id_seq.currval, '120');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '2');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (18, obj_id_seq.currval, '4');
-
--- SubBills for Apartment3
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '321');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '800');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-1);
-
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '0');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '250');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-2);
-
-INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 13, 'SubBill_' || obj_id_seq.currval, NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (25, obj_id_seq.currval, '2');
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (38, obj_id_seq.currval, '0');
--- Reference
-INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
 
 /*Test data for table ApartmentOperationDao*/
 -- ApartmentOperations for Apartment_Sub_Bill_1 for Apartment_1
@@ -185,7 +24,7 @@ INSERT ALL
 SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
-VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility' || obj_id_seq.currval,NULL);
+VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility1',NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
@@ -215,7 +54,6 @@ INSERT ALL
             VALUES (36,OBJ_ID_SEQ.currval,OBJ_ID_SEQ.currval-1)
 SELECT * FROM DUAL;
 
-
 ----------------
 INSERT ALL
         INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
@@ -225,7 +63,7 @@ INSERT ALL
 SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
-VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility' || obj_id_seq.currval,NULL);
+VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility2',NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
@@ -263,7 +101,7 @@ INSERT ALL
 SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
-VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility' || obj_id_seq.currval,NULL);
+VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility3',NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
@@ -296,6 +134,164 @@ SELECT * FROM DUAL;
 commit ;
 ---------------------------------------------------------END------------------------------------------------------------
 
+-----------------------------------------Test data for Apartments and ApartmentSubBills----------------------------------------------
+--Apartment 1
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_1', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (2, obj_id_seq.currval, 'masha@gmail.com');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (3, obj_id_seq.currval, '1234567');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (4, obj_id_seq.currval, 'Mariia');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (5, obj_id_seq.currval, 'Kozhushan');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (6, obj_id_seq.currval, '345675677887');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (15, obj_id_seq.currval, '10');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (16, obj_id_seq.currval, '80');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (17, obj_id_seq.currval, '1');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (18, obj_id_seq.currval, '2');
+
+-- SubBills for Apartment_1
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility1'), 13, 'SubBill_11', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '340.50');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '300');
+
+
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-1);
+
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility2'), 13, 'SubBill_12', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '127.80');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '0');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-2);
+
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility3'), 13, 'SubBill_13', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '569');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '500');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
+
+-- Apartment2
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_2', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (2, obj_id_seq.currval, 'dasha@gmail.com');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (3, obj_id_seq.currval, '12345457');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (4, obj_id_seq.currval, 'Dasha');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (5, obj_id_seq.currval, 'Markovkina');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (6, obj_id_seq.currval, '3456456887');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (15, obj_id_seq.currval, '11');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (16, obj_id_seq.currval, '44');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (17, obj_id_seq.currval, '1');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (18, obj_id_seq.currval, '2');
+
+-- SubBills for Apartment2
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility1'), 13, 'SubBill_21', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '112');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '1678');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-1);
+
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility2'), 13, 'SubBill_22', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '67');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '120');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-2);
+
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility3'), 13, 'SubBill_23', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '890');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '80');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
+-- Apartment3
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_3', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (2, obj_id_seq.currval, 'artem@gmail.com');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (3, obj_id_seq.currval, '888005553535');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (4, obj_id_seq.currval, 'Igor');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (5, obj_id_seq.currval, 'Yabluchkin');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (6, obj_id_seq.currval, '9876543679');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (15, obj_id_seq.currval, '12');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (16, obj_id_seq.currval, '120');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (17, obj_id_seq.currval, '2');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (18, obj_id_seq.currval, '4');
+
+-- SubBills for Apartment3
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility1'), 13, 'SubBill_31', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '321');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '800');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-1);
+
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility2'), 13, 'SubBill_32', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '0');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '250');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-2);
+
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility3'), 13, 'SubBill_33', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (25, obj_id_seq.currval, '2');
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (38, obj_id_seq.currval, '0');
+-- Reference
+INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (33,obj_id_seq.currval,obj_id_seq.currval-3);
+-------------------------------------------------------END-------------------------------------------------------------
 
 ------------------------------------CREATE COMMENTS, ANNOUNCEMENTS AND APARTMENTS---------------------------------------
 INSERT ALL
