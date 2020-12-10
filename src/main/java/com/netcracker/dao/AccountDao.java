@@ -41,6 +41,9 @@ public interface AccountDao {
             "AND ATTR_PHONE.ATTR_ID = 6\n" +
             "AND ATTR_ROLE_NAME.ATTR_ID = 1";
 
+    String EXCEPTION_GET_ACCOUNT_BY_ID = "Cant find account with id ";
+    String EXCEPTION_GET_ACCOUNT_BY_EMAIL = "Cant find account with email: ";
+
     Account getAccount(BigInteger id);
     Account getAccountByEmail(String email);
 }
