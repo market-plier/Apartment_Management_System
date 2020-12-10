@@ -1,9 +1,6 @@
 package com.netcracker.models.PojoBuilder;
 
-import com.netcracker.models.ApartmentOperation;
-import com.netcracker.models.ApartmentSubBill;
-import com.netcracker.models.CommunalUtility;
-import com.netcracker.models.DebtPaymentOperation;
+import com.netcracker.models.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -15,6 +12,7 @@ public class ApartmentSubBillBuilder {
     private List<ApartmentOperation> apartmentOperation;
     private List<DebtPaymentOperation> debtPaymentOperation;
     private CommunalUtility communalUtility;
+    private Apartment apartment;
 
 
     public ApartmentSubBillBuilder withSubBillId(BigInteger subBillId) {
@@ -22,7 +20,7 @@ public class ApartmentSubBillBuilder {
         return this;
     }
 
-    public ApartmentSubBillBuilder withBalance(Double debt) {
+    public ApartmentSubBillBuilder withBalance(Double balance) {
         this.balance = balance;
         return this;
     }
@@ -47,8 +45,13 @@ public class ApartmentSubBillBuilder {
         return this;
     }
 
+    public ApartmentSubBillBuilder withApartment(Apartment apartment)
+    {
+        this.apartment=apartment;
+        return this;
+    }
     public ApartmentSubBill build() {
-        return new ApartmentSubBill(subBillId, balance, debt, apartmentOperation, debtPaymentOperation,communalUtility);
+        return new ApartmentSubBill(subBillId, balance, debt, apartmentOperation, debtPaymentOperation,communalUtility,apartment);
     }
 }
 
