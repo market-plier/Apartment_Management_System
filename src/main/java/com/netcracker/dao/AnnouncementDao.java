@@ -1,5 +1,6 @@
 package com.netcracker.dao;
 
+import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Announcement;
 
 import java.math.BigInteger;
@@ -99,13 +100,19 @@ public interface AnnouncementDao {
 
     String DELETE_ANNOUNCEMENT = "DELETE FROM OBJECTS WHERE OBJECT_ID = ?";
 
-    List<Announcement> getAllAnnouncements();
+    String EXCEPTION_GET_ALL_ANNOUNCEMENTS = "Can't get announcements";
+    String EXCEPTION_GET_ANNOUNCEMENT_BY_ID = "Can't get announcement with this id: ";
+    String EXCEPTION_CREATE_ANNOUNCEMENT = "Can't create announcement";
+    String EXCEPTION_UPDATE_ANNOUNCEMENT = "Can't update announcement with id: ";
+    String EXCEPTION_DELETE_ANNOUNCEMENT = "Can't delete announcement with id: ";
 
-    Announcement getAnnouncementById(BigInteger id);
+    List<Announcement> getAllAnnouncements() throws DaoAccessException;
 
-    void createAnnouncement(Announcement announcement);
+    Announcement getAnnouncementById(BigInteger id) throws DaoAccessException;
 
-    void updateAnnouncement(Announcement announcement);
+    void createAnnouncement(Announcement announcement) throws DaoAccessException;
 
-    void deleteAnnouncement(BigInteger id);
+    void updateAnnouncement(Announcement announcement) throws DaoAccessException;
+
+    void deleteAnnouncement(BigInteger id) throws DaoAccessException;
 }

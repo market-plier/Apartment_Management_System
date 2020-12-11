@@ -1,5 +1,6 @@
 package com.netcracker.dao;
 
+import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.HouseVoting;
 
 import java.math.BigInteger;
@@ -43,9 +44,13 @@ public interface HouseVotingDao {
 
     String DELETE_HOUSE_VOTING = "DELETE FROM OBJECTS WHERE OBJECT_ID = ?";
 
-    HouseVoting getHouseVotingByAnnouncementId(BigInteger id);
+    String EXCEPTION_GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID = "Can't get house voting with this announcement id: ";
+    String EXCEPTION_CREATE_HOUSE_VOTING = "Can't create announcement";
+    String EXCEPTION_DELETE_HOUSE_VOTING = "Can't delete announcement with id: ";
 
-    void createHouseVoting(HouseVoting houseVoting);
+    HouseVoting getHouseVotingByAnnouncementId(BigInteger id) throws DaoAccessException;
 
-    void deleteHouseVoting(BigInteger id);
+    void createHouseVoting(HouseVoting houseVoting) throws DaoAccessException;
+
+    void deleteHouseVoting(BigInteger id) throws DaoAccessException;
 }

@@ -1,5 +1,6 @@
 package com.netcracker.dao;
 
+import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Account;
 import com.netcracker.models.VotingOption;
 
@@ -14,7 +15,7 @@ public interface VotingOptionDao {
             "FROM OBJECTS VOTING_OPTION, OBJECTS HVOTING,\n" +
             "ATTRIBUTES VOTING_OPTION_NAME\n" +
             "    WHERE VOTING_OPTION.OBJECT_TYPE_ID = 6\n" +
-            "    AND HVOTING.OBJECT_ID = ?\n" +
+            "    AND HVOTING.PARENT_ID = ?\n" +
             "    AND VOTING_OPTION.PARENT_ID = HVOTING.OBJECT_ID\n" +
             "    AND VOTING_OPTION_NAME.ATTR_ID = 14\n" +
             "    AND VOTING_OPTION_NAME.OBJECT_ID = VOTING_OPTION.OBJECT_ID";
@@ -55,9 +56,13 @@ public interface VotingOptionDao {
             "   INSERT(old.ATTR_ID,old.OBJECT_ID, old.REFERENCE)\n" +
             "   VALUES(new.ATTR_ID,new.OBJECT_ID, new.REFERENCE);";
 
-    Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger id);
+    String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID = "Can't get voting option with this announcement id: ";
+    String EXCEPTION_CREATE_VOTING_OPTION = "Can't create voting option";
+    String EXCEPTION_ADD_VOTED_ACCOUNT = "Can't add vote reference with voting option id: ";
 
-    void createVotingOption(VotingOption votingOption);
+    Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger id) throws DaoAccessException;
 
-    void addVotedAccount(VotingOption votingOption, Account account);
+    void createVotingOption(VotingOption votingOption) throws DaoAccessException;
+
+    void addVotedAccount(VotingOption votingOption, Account account) throws DaoAccessException;
 }
