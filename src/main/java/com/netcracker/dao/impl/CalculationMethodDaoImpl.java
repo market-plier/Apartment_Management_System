@@ -2,7 +2,9 @@ package com.netcracker.dao.impl;
 
 import com.netcracker.dao.CalculationMethodDao;
 import com.netcracker.dao.mapper.CalculationMethodMapper;
+import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.CalculationMethod;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,34 +24,54 @@ public class CalculationMethodDaoImpl implements CalculationMethodDao {
 
     @Override
     public List<CalculationMethod> getAllCalculationMethods() {
-        return jdbcTemplate.query(getAllCalculationMethods, new CalculationMethodMapper());
+        try {
+            return jdbcTemplate.query(getAllCalculationMethods, new CalculationMethodMapper());
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_GET_ALL_CALCULATION_METHODS, e.getCause());
+        }
     }
 
     @Override
     public CalculationMethod getCalculationMethodById(BigInteger id) {
-        return (jdbcTemplate.queryForObject(getCalculationMethodById, new CalculationMethodMapper(), id));
+        try {
+            return (jdbcTemplate.queryForObject(getCalculationMethodById, new CalculationMethodMapper(), id));
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_GET_CALCULATION_METHOD_BY_ID, e.getCause());
+        }
     }
 
     @Override
     public CalculationMethod getCalculationMethodByCommunalUtilityId(BigInteger id) {
-        return (jdbcTemplate.queryForObject(getCalculationMethodByCommunalUtilityId, new CalculationMethodMapper(), id));
+        try {
+            return (jdbcTemplate.queryForObject(getCalculationMethodByCommunalUtilityId, new CalculationMethodMapper(), id));
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_GET_CALCULATION_METHOD_BY_ID, e.getCause());
+        }
     }
 
     @Override
     public void updateCalculationMethod(CalculationMethod calculationMethod) {
-        jdbcTemplate.update(updateCalculationMethod,
-                calculationMethod.getName(),
-                calculationMethod.getCalculationMethodId());
+        try {
+            jdbcTemplate.update(updateCalculationMethod,
+                    calculationMethod.getName(),
+                    calculationMethod.getCalculationMethodId());
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_UPDATE_CALCULATION_METHOD, e.getCause());
+        }
     }
 
     @Override
     public void createCalculationMethod(CalculationMethod calculationMethod) {
-        jdbcTemplate.update(createCalculationMethodObject);
-        jdbcTemplate.update(createCalculationMethodAttributes, calculationMethod.getName());
+        try {
+            jdbcTemplate.update(createCalculationMethodObject);
+            jdbcTemplate.update(createCalculationMethodAttributes, calculationMethod.getName());
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_CREATE_CALCULATION_METHOD, e.getCause());
+        }
     }
 
-    @Override
-    public void deleteCalculationMethod(BigInteger id) {
-        jdbcTemplate.update(deleteCalculationMethod, id);
-    }
+//    @Override
+//    public void deleteCalculationMethod(BigInteger id) {
+//        jdbcTemplate.update(deleteCalculationMethod, id);
+//    }
 }

@@ -6,7 +6,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface CalculationMethodDao {
-
     String createCalculationMethodObject = "merge into OBJECTS x\n" +
             "    using (select seq_obj_next OBJECT_ID,10 OBJECT_TYPE_ID,'CalculationMethod' || seq_obj_curr NAME\n" +
             "from DUAL) y\n" +
@@ -35,8 +34,8 @@ public interface CalculationMethodDao {
             "insert (x.ATTR_ID,x.VALUE,x.OBJECT_ID)\n" +
             "VALUES ( y.ATTR_ID,y.VALUE,y.OBJECT_ID)";
 
-    String deleteCalculationMethod = "delete from OBJECTS\n" +
-            "where OBJECT_ID = ?";
+//    String deleteCalculationMethod = "delete from OBJECTS\n" +
+//            "where OBJECT_ID = ?";
 
     String getCalculationMethodById = "select calcname.OBJECT_ID calc_id, calcname.VALUE calc_name from\n" +
             "ATTRIBUTES calcname\n" +
@@ -54,6 +53,11 @@ public interface CalculationMethodDao {
             "ATTRIBUTES calcname\n" +
             "where calcname.ATTR_ID = 20";
 
+    String EXCEPTION_GET_ALL_CALCULATION_METHODS = "Can't get calculation methods";
+    String EXCEPTION_GET_CALCULATION_METHOD_BY_ID = "Can't get calculation method by id";
+    String EXCEPTION_UPDATE_CALCULATION_METHOD = "Can't update calculation method";
+    String EXCEPTION_CREATE_CALCULATION_METHOD = "Can't create calculation method";
+
     List<CalculationMethod> getAllCalculationMethods();
 
     CalculationMethod getCalculationMethodById(BigInteger id);
@@ -64,5 +68,5 @@ public interface CalculationMethodDao {
 
     void createCalculationMethod(CalculationMethod calculationMethod);
 
-    void deleteCalculationMethod(BigInteger id);
+    //void deleteCalculationMethod(BigInteger id);
 }
