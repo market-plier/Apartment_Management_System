@@ -9,9 +9,9 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ApartmentMapper implements RowMapper {
+public class ApartmentMapper implements RowMapper<Apartment> {
     @Override
-    public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+    public Apartment mapRow(ResultSet resultSet, int i) throws SQLException {
         Apartment apartment = new ApartmentBuilder()
                 .withApartmentNumber(Integer.valueOf(resultSet.getString("apartment_number")))
                 .withSquareMeters(Integer.valueOf(resultSet.getString("square_metres")))
