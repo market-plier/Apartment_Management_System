@@ -3,7 +3,7 @@ package com.netcracker.dao.mapper;
 import com.netcracker.models.*;
 import com.netcracker.models.PojoBuilder.ManagerBillBuilder;
 import com.netcracker.models.PojoBuilder.ManagerBuilder;
-import com.netcracker.models.PojoBuilder.RoleBuilder;
+import com.netcracker.models.Role;
 import org.springframework.jdbc.core.RowMapper;
 
 
