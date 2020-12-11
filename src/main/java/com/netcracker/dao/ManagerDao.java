@@ -48,7 +48,7 @@ public interface ManagerDao {
             "WHEN MATCHED THEN\n" +
             "        UPDATE SET old.ATTR_ID = new.ATTR_ID,\n" +
             "                   old.VALUE = new.VALUE,\n" +
-            "WHERE old.VALUE <> nel.VALUE;";
+            "WHERE old.VALUE <> nel.VALUE";
 
 
 
