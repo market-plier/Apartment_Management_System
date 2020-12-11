@@ -18,7 +18,7 @@ public class AccountMapper implements RowMapper<Account> {
                 .withFirstName(resultSet.getString("first_name"))
                 .withPassword(resultSet.getString("password"))
                 .withPhoneNumber(resultSet.getString("phone"))
-                .withRole(new Role(null,resultSet.getString("role_name")))
+                .withRole(Role.valueOf(resultSet.getString("role_name")))
                 .build();
     }
 }
