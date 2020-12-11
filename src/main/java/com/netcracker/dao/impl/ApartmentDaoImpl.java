@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -29,8 +29,7 @@ public class ApartmentDaoImpl implements ApartmentDao {
     public List<Apartment> getAllApartments() throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_ALL_APARTMENTS, new ApartmentMapper());
-        } catch (
-                DataAccessException e) {
+        } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_GET_ALL_APARTMENTS, e.getCause());
         }
     }
