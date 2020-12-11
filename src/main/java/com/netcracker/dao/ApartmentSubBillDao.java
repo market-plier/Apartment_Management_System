@@ -220,4 +220,10 @@ public interface ApartmentSubBillDao {
             "    UPDATE" +
             "    SET old.VALUE = new.VALUE" +
             "    WHERE old.VALUE <> new.VALUE;";
+
+    String EXCEPTION_GET_ALL_APARTMENT_SUB_BILLS = "Can't get apartment's subbills";
+    String EXCEPTION_GET_APARTMENT_SUB_BILL_BY_ID = "Can't get apartment's subbill with this id";
+    String EXCEPTION_GET_ALL_APARTMENT_SUB_BILLS_BY_ACCOUNT_ID = "Can't get apartment's subbill with this account id";
+    String EXCEPTION_UPDATE_APARTMENT_SUB_BILL = "Cant update apartment's subbill with id";
+    String EXCEPTION_CREATE_APARTMENT_SUB_BILL = "Cant create apartment's subbill";
 }

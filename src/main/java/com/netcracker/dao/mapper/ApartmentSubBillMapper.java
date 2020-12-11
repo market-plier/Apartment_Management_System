@@ -14,9 +14,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ApartmentSubBillMapper implements RowMapper {
+public class ApartmentSubBillMapper implements RowMapper<ApartmentSubBill> {
     @Override
-    public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+    public ApartmentSubBill mapRow(ResultSet resultSet, int i) throws SQLException {
         ApartmentSubBill apartmentSubBill = new ApartmentSubBillBuilder()
                 .withSubBillId(new BigInteger(resultSet.getString("sub_bill_id")))
                 .withBalance(Double.valueOf(resultSet.getString("balance")))
