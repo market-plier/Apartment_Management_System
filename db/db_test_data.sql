@@ -654,3 +654,15 @@ VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
 
 commit ;
 -----------------------------------------------END----------------------------------------------------------------------
+
+-----------------------------------------------MANAGER_BILL-------------------------------------------------------------
+INSERT ALL
+            INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
+            VALUES (obj_id_seq.nextval,NULL,9,'ManagerBill',null)
+            INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
+            VALUES (19,obj_id_seq.currval,'1234599999',SYSDATE,null)
+            INTO OBJREFERENCE(attr_id, object_id, reference)
+            VALUES (31,(SELECT OBJECT_ID FROM OBJECTS WHERE NAME='Manager_Account'),obj_id_seq.currval)
+SELECT * FROM dual
+
+------------------------------------------------END---------------------------------------------------------------------
