@@ -23,8 +23,6 @@ SELECT *
 FROM OBJTYPE;
 
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
-VALUES (1, NULL, 'ROLE', 'Role', NULL);
-INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
 VALUES (2, 1, 'ACCT', 'Account', NULL);
 
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
@@ -46,7 +44,7 @@ VALUES (9, NULL, 'MNGBLL', 'ManagerBill', NULL);
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
 VALUES (10, NULL, 'CALC', 'CalculationMethod', NULL);
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
-VALUES (11, 10, 'COMUNUTL', 'CommunalUtility', NULL);
+VALUES (11, NULL, 'COMUNUTL', 'CommunalUtility', NULL);
 
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
 VALUES (12, 11, 'SBLL', 'SubBill', NULL);
@@ -90,7 +88,7 @@ CREATE TABLE ATTRTYPE_STAGING  AS
 SELECT * FROM ATTRTYPE;
 
 --Role(OBJECT_TYPE_ID=1) attributes
-INSERT INTO ATTRTYPE_STAGING (ATTR_ID,OBJECT_TYPE_ID,OBJECT_TYPE_ID_REF,CODE,NAME) VALUES (1,1,NULL,'RNAME','role_name');
+INSERT INTO ATTRTYPE_STAGING (ATTR_ID,OBJECT_TYPE_ID,OBJECT_TYPE_ID_REF,CODE,NAME) VALUES (1,2,NULL,'RNAME','role_name');
 
 -- Account(OBJECT_TYPE_ID=2) attributes
 INSERT INTO ATTRTYPE_STAGING (ATTR_ID,OBJECT_TYPE_ID,OBJECT_TYPE_ID_REF,CODE,NAME) VALUES (2,2,NULL,'EMAIL','email');
@@ -225,6 +223,10 @@ insert into LISTS_STAGING (attr_id, list_value_id, value) values(22, 2, 'Constan
 -- List type for 'status'(attr_id=23) OBJ_TYPE CommunalUtility
 insert into LISTS_STAGING (attr_id, list_value_id, value) values(23, 3, 'Enabled');
 insert into LISTS_STAGING (attr_id, list_value_id, value) values(23, 4, 'Disabled');
+
+-- List type for 'status'(attr_id=1) OBJ_TYPE Role
+insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 5, 'Owner');
+insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 6, 'Manager');
 
 -- Merge with ATTRTYPE table
 MERGE INTO Lists x
