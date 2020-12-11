@@ -26,7 +26,7 @@ public class ManagerMapper implements RowMapper<Manager> {
                 .withEmail(rs.getString("email"))
                 .withPassword(rs.getString("password"))
                 .withPhoneNumber(rs.getString("phone"))
-                .withRole(new Role(new BigInteger(rs.getString("role_id")), rs.getString("role_name")))
+                .withRole(Role.valueOf(rs.getString("role_name")))
                 .build();
 
         return manager;

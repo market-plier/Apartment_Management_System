@@ -50,7 +50,6 @@ public class ApartmentDaoImpl implements ApartmentDao {
         try {
             jdbcTemplate.update(CREATE_APARTMENT_OBJECT);
             jdbcTemplate.update(CREATE_APARTMENT_ATTRIBUTES,
-                    apartment.getRole().getName(),
                     apartment.getEmail(),
                     apartment.getPassword(),
                     apartment.getFirstName(),
@@ -80,5 +79,4 @@ public class ApartmentDaoImpl implements ApartmentDao {
             throw new DaoAccessException(EXCEPTION_UPDATE_APARTMENT, e.getCause());
         }
     }
-
 }

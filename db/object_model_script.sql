@@ -225,8 +225,8 @@ insert into LISTS_STAGING (attr_id, list_value_id, value) values(23, 3, 'Enabled
 insert into LISTS_STAGING (attr_id, list_value_id, value) values(23, 4, 'Disabled');
 
 -- List type for 'status'(attr_id=1) OBJ_TYPE Role
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 5, 'Owner');
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 6, 'Manager');
+insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 5, 'OWNER');
+insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 6, 'MANAGER');
 
 -- Merge with ATTRTYPE table
 MERGE INTO Lists x

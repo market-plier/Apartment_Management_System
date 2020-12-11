@@ -23,7 +23,7 @@ public class ApartmentMapper implements RowMapper<Apartment> {
                 .withEmail(resultSet.getString("email"))
                 .withPassword(resultSet.getString("password"))
                 .withPhoneNumber(resultSet.getString("phone_number"))
-                .withRole( new Role(new BigInteger(resultSet.getString("account_id")),resultSet.getString("role_name")))
+                .withRole(Role.valueOf(resultSet.getString("role_name")))
                 .build();
         return apartment;
     }

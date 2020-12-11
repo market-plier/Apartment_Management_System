@@ -15,62 +15,65 @@ public interface ApartmentDao {
 
     void updateApartment(Apartment apartment);
 
-    String GET_ALL_APARTMENTS = "SELECT APRT.OBJECT_ID account_id,\n" +
-            "                               APTNUM.VALUE   apartment_number,\n" +
-            "                               SQUARE.VALUE   square_metres,\n" +
-            "                               FLOOR.VALUE    floor,\n" +
-            "                               PPLCOUNT.VALUE people_count,\n" +
-            "                               EMAIL.VALUE    email,\n" +
-            "                               PASW.VALUE     password,\n" +
-            "                               FNAME.VALUE    first_name,\n" +
-            "                               LNAME.VALUE    last_name,\n" +
-            "                               PHNUM.VALUE    phone_number,\n" +
-            "                               ROLE.VALUE  role_name\n" +
-            "                        FROM OBJECTS APRT,\n" +
-            "                             ATTRIBUTES APTNUM,\n" +
-            "                             ATTRIBUTES SQUARE,\n" +
-            "                             ATTRIBUTES FLOOR,\n" +
-            "                             ATTRIBUTES PPLCOUNT,\n" +
-            "                             ATTRIBUTES EMAIL,\n" +
-            "                             ATTRIBUTES PASW,\n" +
-            "                             ATTRIBUTES FNAME,\n" +
-            "                             ATTRIBUTES LNAME,\n" +
-            "                             ATTRIBUTES PHNUM,\n" +
-            "                             ATTRIBUTES ROLE\n" +
-            "                        WHERE APRT.OBJECT_TYPE_ID = 7\n" +
-            "                          AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND APTNUM.ATTR_ID = 15\n" +
-            "                          AND SQUARE.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND SQUARE.ATTR_ID = 16\n" +
-            "                          AND FLOOR.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND FLOOR.ATTR_ID = 17\n" +
-            "                          AND PPLCOUNT.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND PPLCOUNT.ATTR_ID = 18\n" +
-            "                          AND EMAIL.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND EMAIL.ATTR_ID = 2\n" +
-            "                          AND PASW.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND PASW.ATTR_ID = 3\n" +
-            "                          AND FNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND FNAME.ATTR_ID = 4\n" +
-            "                          AND LNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND LNAME.ATTR_ID = 5\n" +
-            "                          AND PHNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND PHNUM.ATTR_ID = 6\n" +
-            "                          AND ROLE.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "                          AND ROLE.ATTR_ID = 1";
-
-    String GET_APARTMENT_BY_ID = "SELECT APRT.OBJECT_ID account_id,\n" +
-            "       APTNUM.VALUE   apartment_number,\n" +
-            "       SQUARE.VALUE   square_metres,\n" +
-            "       FLOOR.VALUE    floor,\n" +
-            "       PPLCOUNT.VALUE people_count,\n" +
-            "       EMAIL.VALUE    email,\n" +
-            "       PASW.VALUE     password,\n" +
-            "       FNAME.VALUE    first_name,\n" +
-            "       LNAME.VALUE    last_name,\n" +
-            "       PHNUM.VALUE    phone_number,\n" +
-            "       ROLE.VALUE     role_name\n" +
+    String GET_ALL_APARTMENTS = "SELECT APRT.OBJECT_ID  account_id,\n" +
+            "       APTNUM.VALUE    apartment_number,\n" +
+            "       SQUARE.VALUE    square_metres,\n" +
+            "       FLOOR.VALUE     floor,\n" +
+            "       PPLCOUNT.VALUE  people_count,\n" +
+            "       EMAIL.VALUE     email,\n" +
+            "       PASW.VALUE      password,\n" +
+            "       FNAME.VALUE     first_name,\n" +
+            "       LNAME.VALUE     last_name,\n" +
+            "       PHNUM.VALUE     phone_number,\n" +
+            "       ROLE_LIST.VALUE role_name\n" +
             "FROM OBJECTS APRT,\n" +
+            "     LISTS ROLE_LIST,\n" +
+            "     ATTRIBUTES APTNUM,\n" +
+            "     ATTRIBUTES SQUARE,\n" +
+            "     ATTRIBUTES FLOOR,\n" +
+            "     ATTRIBUTES PPLCOUNT,\n" +
+            "     ATTRIBUTES EMAIL,\n" +
+            "     ATTRIBUTES PASW,\n" +
+            "     ATTRIBUTES FNAME,\n" +
+            "     ATTRIBUTES LNAME,\n" +
+            "     ATTRIBUTES PHNUM,\n" +
+            "     ATTRIBUTES ROLE\n" +
+            "WHERE APRT.OBJECT_TYPE_ID = 7\n" +
+            "  AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND APTNUM.ATTR_ID = 15\n" +
+            "  AND SQUARE.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND SQUARE.ATTR_ID = 16\n" +
+            "  AND FLOOR.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND FLOOR.ATTR_ID = 17\n" +
+            "  AND PPLCOUNT.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND PPLCOUNT.ATTR_ID = 18\n" +
+            "  AND EMAIL.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND EMAIL.ATTR_ID = 2\n" +
+            "  AND PASW.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND PASW.ATTR_ID = 3\n" +
+            "  AND FNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND FNAME.ATTR_ID = 4\n" +
+            "  AND LNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND LNAME.ATTR_ID = 5\n" +
+            "  AND PHNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND PHNUM.ATTR_ID = 6\n" +
+            "  AND APRT.OBJECT_ID = ROLE.OBJECT_ID\n" +
+            "  AND ROLE.LIST_VALUE_ID = 5\n" +
+            "  AND ROLE.LIST_VALUE_ID = ROLE_LIST.LIST_VALUE_ID";
+
+    String GET_APARTMENT_BY_ID = "SELECT APRT.OBJECT_ID  account_id,\n" +
+            "       APTNUM.VALUE    apartment_number,\n" +
+            "       SQUARE.VALUE    square_metres,\n" +
+            "       FLOOR.VALUE     floor,\n" +
+            "       PPLCOUNT.VALUE  people_count,\n" +
+            "       EMAIL.VALUE     email,\n" +
+            "       PASW.VALUE      password,\n" +
+            "       FNAME.VALUE     first_name,\n" +
+            "       LNAME.VALUE     last_name,\n" +
+            "       PHNUM.VALUE     phone_number,\n" +
+            "       ROLE_LIST.VALUE role_name\n" +
+            "FROM OBJECTS APRT,\n" +
+            "     LISTS ROLE_LIST,\n" +
             "     ATTRIBUTES APTNUM,\n" +
             "     ATTRIBUTES SQUARE,\n" +
             "     ATTRIBUTES FLOOR,\n" +
@@ -101,8 +104,9 @@ public interface ApartmentDao {
             "  AND LNAME.ATTR_ID = 5\n" +
             "  AND PHNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
             "  AND PHNUM.ATTR_ID = 6\n" +
-            "  AND ROLE.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "  AND ROLE.ATTR_ID = 1";
+            "  AND APRT.OBJECT_ID = ROLE.OBJECT_ID\n" +
+            "  AND ROLE.LIST_VALUE_ID = 5\n" +
+            "  AND ROLE.LIST_VALUE_ID = ROLE_LIST.LIST_VALUE_ID";
 
     String CREATE_APARTMENT_OBJECT = "MERGE INTO OBJECTS old\n" +
             "USING (SELECT seq_obj_next()                 OBJECT_ID,\n" +
@@ -127,10 +131,7 @@ public interface ApartmentDao {
             "    VALUES (seq_obj_curr(), new.PARENT_ID, new.OBJECT_TYPE_ID, new.NAME, new.DESCRIPTION)";
 
     String CREATE_APARTMENT_ATTRIBUTES = "MERGE INTO ATTRIBUTES old\n" +
-            "USING (SELECT 1 ATTR_ID, seq_obj_curr() OBJECT_ID, ? VALUE, NULL DATE_VALUE\n" +
-            "       FROM DUAL\n" +
-            "       UNION ALL\n" +
-            "       SELECT 2, seq_obj_curr(), ?, NULL FROM DUAL\n" +
+            "USING (SELECT 2 ATTR_ID, seq_obj_curr()  OBJECT_ID, ? VALUE, 5  list_value_id FROM DUAL\n" +
             "       UNION ALL\n" +
             "       SELECT 3, seq_obj_curr(), ?, NULL FROM DUAL\n" +
             "       UNION ALL\n" +
@@ -152,12 +153,12 @@ public interface ApartmentDao {
             "WHEN MATCHED THEN\n" +
             "    UPDATE\n" +
             "    SET old.VALUE      = new.VALUE,\n" +
-            "        old.DATE_VALUE = new.DATE_VALUE\n" +
+            "        old.list_value_id = new.list_value_id\n" +
             "    WHERE old.VALUE <> new.VALUE\n" +
-            "       OR old.DATE_VALUE <> new.DATE_VALUE\n" +
+            "       OR old.list_value_id <> new.list_value_id\n" +
             "WHEN NOT MATCHED THEN\n" +
-            "    INSERT (old.ATTR_ID, old.OBJECT_ID, old.VALUE, old.DATE_VALUE)\n" +
-            "    VALUES (new.ATTR_ID, new.OBJECT_ID, new.VALUE, new.DATE_VALUE)";
+            "    INSERT (old.ATTR_ID, old.OBJECT_ID, old.VALUE, old.list_value_id)\n" +
+            "    VALUES (new.ATTR_ID, new.OBJECT_ID, new.VALUE, new.list_value_id)";
 
     String UPDATE_APARTMENT = "MERGE INTO ATTRIBUTES x\n" +
             "USING (\n" +
