@@ -1,13 +1,9 @@
 package com.netcracker.dao.impl;
 
 import com.netcracker.dao.ApartmentSubBillDao;
-import com.netcracker.dao.mapper.ApartmentOperationMapper;
 import com.netcracker.dao.mapper.ApartmentSubBillMapper;
-import com.netcracker.dao.mapper.DebtPaymentOperationMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.ApartmentSubBill;
-import com.netcracker.models.DebtPaymentOperation;
-import com.netcracker.models.ApartmentOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,8 +14,6 @@ import javax.sql.DataSource;
 import java.math.BigInteger;
 import java.util.List;
 
-import static com.netcracker.dao.ApartmentOperationDao.selectApartmentOperationsBySubBillId;
-import static com.netcracker.dao.DebtPaymentOperationDao.getDebtPaymentOperationBySubBillId;
 
 @Repository
 @Transactional
