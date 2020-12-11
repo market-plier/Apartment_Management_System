@@ -2,8 +2,8 @@
 --Apartment 1
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_1', NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'masha@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -26,8 +26,8 @@ VALUES (18, obj_id_seq.currval, '2');
 -- Apartment3
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_3', NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'artem@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -50,8 +50,8 @@ VALUES (18, obj_id_seq.currval, '4');
 -- Apartment2
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_2', NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'dasha@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -75,8 +75,8 @@ VALUES (18, obj_id_seq.currval, '2');
 ----------------------------------------------------Test data for Manager-----------------------------------------------
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 8, 'Manager_Account', NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Manager');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 6);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'manager@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -484,8 +484,8 @@ SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_4', NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -532,8 +532,8 @@ SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_5', NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -580,8 +580,8 @@ SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_6', NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -628,8 +628,8 @@ SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_7' , NULL);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (1, obj_id_seq.currval, 'Owner');
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
