@@ -7,13 +7,13 @@ import java.math.BigInteger;
 import java.util.Date;
 
 public class ApartmentOperationBuilder {
-    private BigInteger operationId;
+    private BigInteger apartmentOperationId;
     private Double sum;
     private Date createdAt;
     private ApartmentSubBill apartmentSubBill;
 
     public ApartmentOperationBuilder withOperationId(BigInteger operationId) {
-        this.operationId = operationId;
+        this.apartmentOperationId = operationId;
         return this;
     }
 
@@ -33,6 +33,6 @@ public class ApartmentOperationBuilder {
     }
 
     public ApartmentOperation build() {
-        return new ApartmentOperation(operationId, sum, createdAt, apartmentSubBill);
+        return new ApartmentOperation(apartmentOperationId, sum, createdAt, apartmentSubBill);
     }
 }

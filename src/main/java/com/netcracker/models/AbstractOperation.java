@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.util.Date;
 
 @Data
-public class AbstractOperation {
+public abstract class AbstractOperation {
     protected BigInteger operationId;
     protected Double sum;
     protected Date createdAt;

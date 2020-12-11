@@ -10,6 +10,9 @@ public interface Constants {
     BigInteger VOTING_OPTION_OBJECT_TYPE_ID = BigInteger.valueOf(6);
     BigInteger APARTMENT_OBJECT_TYPE_ID = BigInteger.valueOf(7);
     BigInteger APARTMENT_SUB_BILL_OBJECT_TYPE_ID = BigInteger.valueOf(13);
+    BigInteger OPERATION_OBJECT_TYPE_ID = BigInteger.valueOf(15);
+    BigInteger APARTMENT_OPERATION_OBJECT_TYPE_ID = BigInteger.valueOf(17);
+    BigInteger DEBT_PAYMENT_OPERATION_OBJECT_TYPE_ID = BigInteger.valueOf(16);
 
     //Announcement attributes
     BigInteger ANNOUNCEMENT_TITLE_ATTR_ID = BigInteger.valueOf(7);
@@ -31,7 +34,7 @@ public interface Constants {
     BigInteger PEOPLE_COUNT_ATTR_ID = BigInteger.valueOf(18);
 
     //SubBill attributes
-    BigInteger BALANCE_ATTR_ID=BigInteger.valueOf(25);
+    BigInteger BALANCE_ATTR_ID = BigInteger.valueOf(25);
     //ApartmentSubBill attributes
     BigInteger DEBT_ATTR_ID = BigInteger.valueOf(38);
     //Comment_TYPE
@@ -46,4 +49,15 @@ public interface Constants {
     BigInteger MANAGER_BILL_ATTR_CARD_NUMBER = BigInteger.valueOf(19);
     BigInteger MANAGER_BILL_ATTR_OWNER_REF = BigInteger.valueOf(31);
 
+
+    //Operation attributes
+    BigInteger OPERATION_SUM = BigInteger.valueOf(26);
+    BigInteger OPERATION_CREATED_AT = BigInteger.valueOf(27);
+
+    //ApartmentOperation attributes
+    BigInteger APARTMENT_OPERATION_TRANSFERS = BigInteger.valueOf(34);
+
+    //DebtPaymentOperation attributes
+    BigInteger DEBT_PAYMENT_OPERATION_Receives = BigInteger.valueOf(37);
+    BigInteger DEBT_PAYMENT_OPERATION_PAYS = BigInteger.valueOf(35);
 }

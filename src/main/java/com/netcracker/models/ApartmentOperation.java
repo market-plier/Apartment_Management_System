@@ -11,11 +11,8 @@ import java.util.Date;
 public class ApartmentOperation extends AbstractOperation {
     private ApartmentSubBill apartmentSubBill;
 
-    public ApartmentOperation(){
-
-    }
-    public ApartmentOperation(BigInteger operationId, Double sum, Date createdAt, ApartmentSubBill apartmentSubBill){
-        super(operationId, sum, createdAt);
+    public ApartmentOperation(BigInteger apartmentOperationId, Double sum, Date createdAt, ApartmentSubBill apartmentSubBill){
+        super(apartmentOperationId, sum, createdAt);
         this.apartmentSubBill = apartmentSubBill;
     }
 }
