@@ -41,7 +41,7 @@ public interface ApartmentOperationDao {
             "INSERT ALL\n" +
                     "INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION) VALUES (OBJ_ID_SEQ.nextval, NULL, 17, 'AparmentOperation_'||OBJ_ID_SEQ.currval, NULL)\n" +
                     "INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID) VALUES (26, OBJ_ID_SEQ.currval, ?, NULL, NULL)\n" +
-                    "INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID) VALUES (27, OBJ_ID_SEQ.currval, NULL, ?, NULL)\n" +
+                    "INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID) VALUES (27, OBJ_ID_SEQ.currval, NULL, SYSDATE, NULL)\n" +
                     "INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE) VALUES (34, OBJ_ID_SEQ.currval, ?)\n" +
                     "SELECT * FROM DUAL;\n";
 

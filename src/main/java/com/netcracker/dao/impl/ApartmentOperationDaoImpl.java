@@ -44,7 +44,6 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
         try {
             jdbcTemplate.update(insertApartmentOperation,
                     apartmentOperation.getSum(),
-                    new java.sql.Date(apartmentOperation.getCreatedAt().getTime()),
                     apartmentOperation.getApartmentSubBill().getSubBillId());
         } catch (DataAccessException e){
             throw new DaoAccessException(EXCEPTION_INSERT_APARTMENT_OPERATION, e.getCause());
