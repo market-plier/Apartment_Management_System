@@ -174,4 +174,9 @@ public interface ApartmentDao {
             "    UPDATE\n" +
             "    SET x.VALUE = y.VALUE\n" +
             "    WHERE x.VALUE <> y.VALUE";
+
+    String EXCEPTION_GET_ALL_APARTMENTS = "Can't get apartments";
+    String EXCEPTION_GET_APARTMENT_BY_ACCOUNT_ID = "Can't get apartment with this id";
+    String EXCEPTION_UPDATE_APARTMENT = "Cant update apartment with id";
+    String EXCEPTION_CREATE_APARTMENT = "Cant create apartment";
 }
