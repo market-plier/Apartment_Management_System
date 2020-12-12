@@ -31,7 +31,7 @@ public class ManagerDaoImpl implements ManagerDao {
     public void updateManager(Manager manager) {
             try {
         jdbcTemplate.update(UPDATE_MANAGER,
-                manager.getManagerBill(),
+                manager.getManagerBill().getManagerBillId(),
                 manager.getAccountId());
             } catch (DataAccessException e) {
                 throw new DaoAccessException(EXCEPTION_UPDATE_MANAGER, e.getCause());
