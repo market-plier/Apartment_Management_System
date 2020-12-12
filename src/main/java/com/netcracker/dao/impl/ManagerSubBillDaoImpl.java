@@ -19,7 +19,6 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-
     @Override
     public Collection<ManagerSubBill> getAllManagerSubBills() throws DaoAccessException {
         try {
@@ -43,7 +42,8 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
     public void updateManagerSubBill(ManagerSubBill managerSubBill) throws DaoAccessException {
         try {
             jdbcTemplate.update(UPDATE_MANAGER_SUB_BILL,
-                    managerSubBill.getBalance());
+                    managerSubBill.getBalance(),
+                    managerSubBill.getSubBillId());
         } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_UPDATE_MANAGER_SUB_BILL, e.getCause());
         }
@@ -52,7 +52,8 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
     @Override
     public void createManagerSubBill(ManagerSubBill managerSubBill) throws DaoAccessException {
         try {
-            jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_OBJECTS);
+            jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_OBJECTS,
+                    managerSubBill.getCommunalUtility().getCommunalUtilityId());
             jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_ATTRIBUTES,
                     managerSubBill.getBalance());
             jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_REFERENCE,

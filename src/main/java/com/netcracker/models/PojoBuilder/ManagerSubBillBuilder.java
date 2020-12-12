@@ -1,9 +1,6 @@
 package com.netcracker.models.PojoBuilder;
 
-import com.netcracker.models.CommunalUtility;
-import com.netcracker.models.DebtPaymentOperation;
-import com.netcracker.models.ManagerSpendingOperation;
-import com.netcracker.models.ManagerSubBill;
+import com.netcracker.models.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -16,6 +13,7 @@ public class ManagerSubBillBuilder {
     private List<ManagerSpendingOperation> managerSpendingOperations;
     private List<DebtPaymentOperation> debtPaymentOperations;
     private CommunalUtility communalUtility;
+    private Manager manager;
 
 
     public ManagerSubBillBuilder withSubBillId(BigInteger subBillId)
@@ -41,15 +39,22 @@ public class ManagerSubBillBuilder {
         this.debtPaymentOperations = debtPaymentOperations;
         return this;
     }
+
     public ManagerSubBillBuilder withCommunalUtility(CommunalUtility communalUtility)
     {
         this.communalUtility = communalUtility;
         return this;
     }
 
+    public ManagerSubBillBuilder withManager(Manager manager)
+    {
+        this.manager = manager;
+        return this;
+    }
+
     public ManagerSubBill build()
     {
-        return new ManagerSubBill(subBillId,balance,communalUtility,managerSpendingOperations,debtPaymentOperations);
+        return new ManagerSubBill(subBillId,balance,communalUtility,managerSpendingOperations,debtPaymentOperations, manager);
     }
 
 

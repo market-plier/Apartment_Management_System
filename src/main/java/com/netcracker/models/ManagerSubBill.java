@@ -14,10 +14,11 @@ public class ManagerSubBill extends SubBill {
 
     public ManagerSubBill(BigInteger subBillId, Double balance, CommunalUtility communalUtility,
                           List<ManagerSpendingOperation> managerSpendingOperations,
-                          List<DebtPaymentOperation> debtPaymentOperations) {
+                          List<DebtPaymentOperation> debtPaymentOperations, Manager manager) {
         super(subBillId, balance, communalUtility);
         this.managerSpendingOperations = managerSpendingOperations;
         this.debtPaymentOperations = debtPaymentOperations;
+        this.manager = manager;
     }
 
 
