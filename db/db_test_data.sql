@@ -365,6 +365,22 @@ INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (35, obj_id_seq.c
                                                                 (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='SubBill_11'));
 INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (37, obj_id_seq.currval,
                                                                 (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='MANAGERSUBBIL_1'));
+
+INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) VALUES (obj_id_seq.nextval,NULL,16,'DebtPaymentOperation2',NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(26, obj_id_seq.currval, 3000);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(27, obj_id_seq.currval, '01.01.2001');
+INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (35, obj_id_seq.currval,
+                                                                (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='SubBill_13'));
+INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (37, obj_id_seq.currval,
+                                                                (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='MANAGERSUBBIL_3'));
+
+INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) VALUES (obj_id_seq.nextval,NULL,16,'DebtPaymentOperation3',NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(26, obj_id_seq.currval, 5000);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value) VALUES(27, obj_id_seq.currval, '02.02.2002');
+INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (35, obj_id_seq.currval,
+                                                                (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='SubBill_21'));
+INSERT INTO OBJREFERENCE(attr_id, object_id, reference) VALUES (37, obj_id_seq.currval,
+                                                                (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='MANAGERSUBBIL_1'));
 -------------------------------------------------------END-------------------------------------------------------------
 
 -----------------------------------Announcement, HouseVoting, VotingOption------------------------------------------
