@@ -103,69 +103,78 @@ INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (31,obj_id_seq.cur
 --CalculationMethod_1 and CommunalUtility_1
 INSERT ALL
     INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL,10,'CalculationMethod_1',null)
+VALUES (obj_id_seq.nextval, NULL, 10, 'CalculationMethod_1', null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES(20,obj_id_seq.currval,'newMethod'||obj_id_seq.currval,null,null)
-SELECT * FROM DUAL;
+VALUES (20, obj_id_seq.currval, 'newMethod' || obj_id_seq.currval, null, null)
+SELECT *
+FROM DUAL;
 
-INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
-VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility_1',NULL);
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, NULL, 11, 'CommunalUtility_1', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
+VALUES (21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
-VALUES(22, obj_id_seq.currval, null,1);
+VALUES (22, obj_id_seq.currval, null, 1);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
-VALUES(23, obj_id_seq.currval, null,3 );
+VALUES (23, obj_id_seq.currval, null, 3);
 INSERT INTO ATTRIBUTES(attr_id, object_id, DATE_VALUE)
-VALUES(24, obj_id_seq.currval, DATE '2021-01-12');
-
+VALUES (24, obj_id_seq.currval, DATE '2021-01-12');
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+VALUES (39, OBJ_ID_SEQ.currval, OBJ_ID_SEQ.currval - 1);
 --CalculationMethod_2 and CommunalUtility_2
 INSERT ALL
     INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL,10,'CalculationMethod_2',null)
+VALUES (obj_id_seq.nextval, NULL, 10, 'CalculationMethod_2', null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES(20,obj_id_seq.currval,'newMethod'||obj_id_seq.currval,null,null)
-SELECT * FROM DUAL;
+VALUES (20, obj_id_seq.currval, 'newMethod' || obj_id_seq.currval, null, null)
+SELECT *
+FROM DUAL;
 
-INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
-VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility_2',NULL);
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, obj_id_seq.currval - 1, 11, 'CommunalUtility_2', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
-VALUES(22, obj_id_seq.currval, null,2);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
-VALUES(23, obj_id_seq.currval, null, 3 );
+VALUES (21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
+VALUES (22, obj_id_seq.currval, null, 2);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
+VALUES (23, obj_id_seq.currval, null, 3);
 INSERT INTO ATTRIBUTES(attr_id, object_id, DATE_VALUE)
-VALUES(24, obj_id_seq.currval, DATE '2021-01-3');
-
+VALUES (24, obj_id_seq.currval, DATE '2021-01-3');
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+VALUES (39, OBJ_ID_SEQ.currval, OBJ_ID_SEQ.currval - 1);
 --CalculationMethod_3 and CommunalUtility_3
 INSERT ALL
     INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL,10,'CalculationMethod_3',null)
+VALUES (obj_id_seq.nextval, NULL, 10, 'CalculationMethod_3', null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES(20,obj_id_seq.currval,'newMethod'||obj_id_seq.currval,null,null)
-SELECT * FROM DUAL;
+VALUES (20, obj_id_seq.currval, 'newMethod' || obj_id_seq.currval, null, null)
+SELECT *
+FROM DUAL;
 
-INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION)
-VALUES (obj_id_seq.nextval,obj_id_seq.currval-1,11,'CommunalUtility_3',NULL);
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, obj_id_seq.currval - 1, 11, 'CommunalUtility_3', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES(21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
-INSERT INTO ATTRIBUTES(attr_id, object_id, value,LIST_VALUE_ID)
-VALUES(22, obj_id_seq.currval, null,2);
+VALUES (21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
-VALUES(23, obj_id_seq.currval, null,4);
+VALUES (22, obj_id_seq.currval, null, 2);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
+VALUES (23, obj_id_seq.currval, null, 4);
 INSERT INTO ATTRIBUTES(attr_id, object_id, DATE_VALUE)
-VALUES(24, obj_id_seq.currval, DATE '2021-01-6');
+VALUES (24, obj_id_seq.currval, DATE '2021-01-6');
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+VALUES (39, OBJ_ID_SEQ.currval, OBJ_ID_SEQ.currval - 1);
 -------------------------------------------------------END--------------------------------------------------------------
 
 ----------------------------------------------Test data for ManagerSubBill----------------------------------------------
 --ManagerSubBill for CommunalUtility_1
 INSERT ALL
     INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval,(SELECT OBJECT_ID FROM OBJECTS WHERE NAME='CommunalUtility_1'),14,'MANAGERSUBBIL_1',NULL)
+VALUES (obj_id_seq.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'CommunalUtility_1'), 14, 'MANAGERSUBBIL_1',
+        NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
-VALUES(25,obj_id_seq.currval,'9999991'||obj_id_seq.currval,null,null)
-select * from dual;
+VALUES (25, obj_id_seq.currval, '9999991' || obj_id_seq.currval, null, null)
+select *
+from dual;
 --Reference
 INSERT INTO OBJREFERENCE (ATTR_ID,OBJECT_ID,REFERENCE) VALUES (32,obj_id_seq.currval,
                                                                (SELECT OBJECT_ID FROM OBJECTS WHERE NAME='Manager_Account'));

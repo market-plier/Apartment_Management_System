@@ -70,8 +70,8 @@ public class CalculationMethodDaoImpl implements CalculationMethodDao {
         }
     }
 
-//    @Override
-//    public void deleteCalculationMethod(BigInteger id) {
-//        jdbcTemplate.update(deleteCalculationMethod, id);
-//    }
+    @Override
+    public void deleteCalculationMethod(BigInteger id) {
+        jdbcTemplate.update(deleteCalculationMethod, id);
+    }
 }

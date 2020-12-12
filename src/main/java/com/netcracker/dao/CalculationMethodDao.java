@@ -34,8 +34,8 @@ public interface CalculationMethodDao {
             "insert (x.ATTR_ID,x.VALUE,x.OBJECT_ID)\n" +
             "VALUES ( y.ATTR_ID,y.VALUE,y.OBJECT_ID)";
 
-//    String deleteCalculationMethod = "delete from OBJECTS\n" +
-//            "where OBJECT_ID = ?";
+    String deleteCalculationMethod = "delete from OBJECTS\n" +
+            "where OBJECT_ID = ?";
 
     String getCalculationMethodById = "select calcname.OBJECT_ID calc_id, calcname.VALUE calc_name from\n" +
             "ATTRIBUTES calcname\n" +
@@ -68,5 +68,5 @@ public interface CalculationMethodDao {
 
     void createCalculationMethod(CalculationMethod calculationMethod);
 
-    //void deleteCalculationMethod(BigInteger id);
+    void deleteCalculationMethod(BigInteger id);
 }
