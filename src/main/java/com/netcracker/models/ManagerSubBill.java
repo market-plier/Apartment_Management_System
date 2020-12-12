@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class ManagerSubBill extends SubBill {
+    private Manager manager;
     private List<ManagerSpendingOperation> managerSpendingOperations;
     private List<DebtPaymentOperation> debtPaymentOperations;
 
