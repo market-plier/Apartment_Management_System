@@ -18,7 +18,8 @@ public interface ApartmentOperationDao {
                     "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
                     "AND APOP_TRANSFERS.ATTR_ID = 34\n" +
                     "AND APOP_TRANSFERS.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_TRANSFERS.REFERENCE = ?";
+                    "AND APOP_TRANSFERS.REFERENCE = ?" +
+                    "ORDER BY APOP_CREATED_AT.VALUE";
 
     String selectApartmentOperationsByApartmentId =
             "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
@@ -35,7 +36,8 @@ public interface ApartmentOperationDao {
                     "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
                     "AND APOP_TRANSFERS.ATTR_ID = 34\n" +
                     "AND APOP_TRANSFERS.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_TRANSFERS.REFERENCE = APSB.OBJECT_ID";
+                    "AND APOP_TRANSFERS.REFERENCE = APSB.OBJECT_ID\n" +
+                    "ORDER BY APOP_CREATED_AT.VALUE";
 
     String insertApartmentOperation =
             "INSERT ALL\n" +
@@ -61,7 +63,8 @@ public interface ApartmentOperationDao {
                     "AND APOP_TRANSFERS.REFERENCE = APSB.OBJECT_ID\n" +
                     "AND APOP_CREATED_AT.ATTR_ID = 27\n" +
                     "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_CREATED_AT.VALUE BETWEEN ? AND ?";
+                    "AND APOP_CREATED_AT.VALUE BETWEEN ? AND ?\n" +
+                    "ORDER BY APOP_CREATED_AT.VALUE";
 
     String selectApartmentOperationsByDateRangeAndApartmentSubBillId =
             "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
@@ -74,7 +77,8 @@ public interface ApartmentOperationDao {
                     "AND APOP_TRANSFERS.REFERENCE = ?\n" +
                     "AND APOP_CREATED_AT.ATTR_ID = 27\n" +
                     "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_CREATED_AT.VALUE BETWEEN ? AND ?";
+                    "AND APOP_CREATED_AT.VALUE BETWEEN ? AND ?\n" +
+                    "ORDER BY APOP_CREATED_AT.VALUE";
 
     String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_SUB_BILL_ID = "Couldn't find Apartment operation with sub_bill_id";
     String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_ID = "Couldn't find Apartment operation with sub_bill_id";
