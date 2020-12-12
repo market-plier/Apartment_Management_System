@@ -42,7 +42,6 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
         try {
             apartmentSubBill = jdbcTemplate.queryForObject(
                     GET_APARTMENT_SUB_BILL_BY_ID, new ApartmentSubBillMapper(), apartmentSubBillId);
-            // apartmentSubBill=withOperations(apartmentSubBill);
             return apartmentSubBill;
         } catch (
                 DataAccessException e) {
@@ -89,19 +88,4 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
             throw new DaoAccessException(EXCEPTION_UPDATE_APARTMENT_SUB_BILL, e.getCause());
         }
     }
-
-    /*private ApartmentSubBill withOperations(ApartmentSubBill apartmentSubBill) {
-        List<ApartmentOperation> list_apt = jdbcTemplate.query(selectApartmentOperationsBySubBillId,
-                new ApartmentOperationMapper(),
-                apartmentSubBill.getSubBillId()
-        );
-        List<DebtPaymentOperation> list_dept = jdbcTemplate.query(getDebtPaymentOperationBySubBillId,
-                new DebtPaymentOperationMapper(),
-                apartmentSubBill.getSubBillId()
-        );
-        apartmentSubBill.setApartmentOperation(list_apt);
-        apartmentSubBill.setDebtPaymentOperation(list_dept);
-        return apartmentSubBill;
-    }*/
-
 }

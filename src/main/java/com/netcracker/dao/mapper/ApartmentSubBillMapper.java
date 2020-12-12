@@ -29,7 +29,7 @@ public class ApartmentSubBillMapper implements RowMapper<ApartmentSubBill> {
                         .withName(resultSet.getString("communal_name"))
                         .withDurationType(CommunalUtility.Duration.valueOf(resultSet.getString("duration_type")))
                         .withStatus(CommunalUtility.Status.valueOf(resultSet.getString("status")))
-                        .withDeadline(Date.valueOf(resultSet.getString("dead_line")))
+                        .withDeadline((resultSet.getDate("dead_line")))
                         .withCalculationMethod(new CalculationMethod(
                                 new BigInteger(resultSet.getString("calc_method_id")),
                                 resultSet.getString("calc_name")
