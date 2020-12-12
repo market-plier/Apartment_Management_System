@@ -79,8 +79,8 @@ public interface ApartmentOperationDao {
     String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_SUB_BILL_ID = "Couldn't find Apartment operation with sub_bill_id";
     String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_ID = "Couldn't find Apartment operation with sub_bill_id";
     String EXCEPTION_INSERT_APARTMENT_OPERATION = "Can't insert Apartment Operation";
-    String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_ID = "Couldn't find Apartment operation within date range or with apartment_id";
-    String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_SUB_BILL_ID = "Couldn't find Apartment operation within date range or with apartment_sub_bill_id";
+    String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_ID = "Couldn't find Apartment operation within date range and with apartment_id";
+    String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_SUB_BILL_ID = "Couldn't find Apartment operation within date range and with apartment_sub_bill_id";
 
     List<ApartmentOperation> getAllApartmentOperationsBySubBillId(BigInteger subBillId);
 

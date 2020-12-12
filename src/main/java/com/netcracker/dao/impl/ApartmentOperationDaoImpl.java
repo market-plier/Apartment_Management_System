@@ -34,7 +34,7 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     public List<ApartmentOperation> getAllApartmentOperationsByApartmentId(BigInteger apartmentId) {
         try {
             return jdbcTemplate.query(selectApartmentOperationsByApartmentId, new ApartmentOperationMapper(), apartmentId);
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_ID, apartmentId, e.getCause());
         }
     }
@@ -45,7 +45,7 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
             jdbcTemplate.update(insertApartmentOperation,
                     apartmentOperation.getSum(),
                     apartmentOperation.getApartmentSubBill().getSubBillId());
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_INSERT_APARTMENT_OPERATION, e.getCause());
         }
     }
@@ -54,7 +54,7 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentId(BigInteger apartmentId, Date from, Date to) {
         try {
             return jdbcTemplate.query(selectApartmentOperationsByDateRangeAndApartmentId, new ApartmentOperationMapper(), apartmentId, from, to);
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_ID, apartmentId, e.getCause());
         }
     }
@@ -63,7 +63,7 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     public List<ApartmentOperation> getAllApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger apartmentSubBillId, Date from, Date to) {
         try {
             return jdbcTemplate.query(selectApartmentOperationsByDateRangeAndApartmentSubBillId, new ApartmentOperationMapper(), apartmentSubBillId, from, to);
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_SUB_BILL_ID, apartmentSubBillId, e.getCause());
         }
     }
