@@ -59,7 +59,7 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
     public List<ManagerSpendingOperation> getAllManagerOperationSpendingSortedByCommunalName(String communalName) {
         try {
             return jdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_NAME, new ManagerSpendingOperationMapper()
-                    , communalName);
+                    ,communalName);
         } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, e.getCause());
         }

@@ -59,9 +59,15 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     public void createComment(Comment comment) throws DaoAccessException {
         try {
-            jdbcTemplate.update(CREATE_COMMENT_OBJECT, comment.getAnnouncement().getAnnouncementId(), Constants.COMMENT_TYPE_ID);
-            jdbcTemplate.update(CREATE_COMMENT_OBJREFERENCE, Constants.COMMENT_ATTR_REF_TO_APARTMENT, comment.getApartment().getAccountId());
-            jdbcTemplate.update(CREATE_COMMENT_ATTRIBUTES, Constants.COMMENT_ATTR_BODY_ID, comment.getBody(), Constants.COMMENT_ATTR_CREATED_AT_ID);
+            jdbcTemplate.update(CREATE_COMMENT_OBJECT,
+                    comment.getAnnouncement().getAnnouncementId(),
+                    Constants.COMMENT_TYPE_ID);
+            jdbcTemplate.update(CREATE_COMMENT_OBJREFERENCE,
+                    Constants.COMMENT_ATTR_REF_TO_APARTMENT,
+                    comment.getApartment().getAccountId());
+            jdbcTemplate.update(CREATE_COMMENT_ATTRIBUTES,
+                    Constants.COMMENT_ATTR_BODY_ID, comment.getBody(),
+                    Constants.COMMENT_ATTR_CREATED_AT_ID);
         } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_CREATE_COMMENT, e.getCause());
         }

@@ -31,7 +31,6 @@ public class AccountDaoImpl implements AccountDao {
         } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_ID, id, e.getCause());
         }
-
     }
 
     @Override

@@ -11,6 +11,11 @@ public enum Role {
     Role(int roleCode) {
         this.roleCode = roleCode;
     }
+
+    public int getRoleCode() {
+        return roleCode;
+    }
+
 }
 
 
