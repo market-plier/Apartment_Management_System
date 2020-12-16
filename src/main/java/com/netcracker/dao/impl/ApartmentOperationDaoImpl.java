@@ -7,11 +7,15 @@ import com.netcracker.models.ApartmentOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
+@Transactional
+@Repository
 public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     private final JdbcTemplate jdbcTemplate;
 
