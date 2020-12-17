@@ -15,6 +15,8 @@ public interface ApartmentDao {
 
     void updateApartment(Apartment apartment);
 
+    List<Apartment> getUniqueApartment(Apartment apartment);
+
     String GET_ALL_APARTMENTS = "SELECT APRT.OBJECT_ID  account_id,\n" +
             "       APTNUM.VALUE    apartment_number,\n" +
             "       SQUARE.VALUE    square_metres,\n" +
@@ -175,6 +177,25 @@ public interface ApartmentDao {
             "    UPDATE\n" +
             "    SET x.VALUE = y.VALUE\n" +
             "    WHERE x.VALUE <> y.VALUE";
+
+    String GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM="SELECT APRT.OBJECT_ID account_id\n" +
+            "FROM OBJECTS APRT,\n" +
+            "     ATTRIBUTES APTNUM,\n" +
+            "     ATTRIBUTES FLOOR,\n" +
+            "     ATTRIBUTES EMAIL\n" +
+            "WHERE APRT.OBJECT_TYPE_ID = 7\n" +
+            "  AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND APTNUM.ATTR_ID = 15\n" +
+            "  AND FLOOR.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND FLOOR.ATTR_ID = 17\n" +
+            "  AND EMAIL.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND EMAIL.ATTR_ID = 2\n" +
+            "  AND (\n" +
+            "        (FLOOR.VALUE = ?\n" +
+            "        AND APTNUM.VALUE = ?)\n" +
+            "        OR\n" +
+            "        (EMAIL.VALUE = ?)\n" +
+            "      )\n";
 
     String EXCEPTION_GET_ALL_APARTMENTS = "Can't get apartments";
     String EXCEPTION_GET_APARTMENT_BY_ACCOUNT_ID = "Can't get apartment with this id";

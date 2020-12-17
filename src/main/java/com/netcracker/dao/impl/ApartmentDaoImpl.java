@@ -37,7 +37,7 @@ public class ApartmentDaoImpl implements ApartmentDao {
     @Override
     public Apartment getApartmentById(BigInteger apartmentId) throws DaoAccessException {
         try {
-            Apartment apartment = (Apartment) jdbcTemplate.queryForObject(GET_APARTMENT_BY_ID, new ApartmentMapper(), apartmentId);
+            Apartment apartment = jdbcTemplate.queryForObject(GET_APARTMENT_BY_ID, new ApartmentMapper(), apartmentId);
             return apartment;
         } catch (
                 DataAccessException e) {
@@ -79,4 +79,9 @@ public class ApartmentDaoImpl implements ApartmentDao {
             throw new DaoAccessException(EXCEPTION_UPDATE_APARTMENT, e.getCause());
         }
     }
+    public List<Apartment> getUniqueApartment(Apartment apartment) throws DaoAccessException {
+        return  jdbcTemplate.query(GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM, new ApartmentMapper(),
+                apartment.getFloor(),apartment.getApartmentNumber(),apartment.getEmail());
+    }
+
 }

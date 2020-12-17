@@ -21,13 +21,13 @@ public class ApartmentInfoService {
     }
 
     public Apartment createApartment(Apartment apartment) throws DaoAccessException {
-        List<Apartment> apartments = apartmentDao.getAllApartments();
-        for (Apartment a : apartments) {
-            if (a.getEmail().equals(apartment.getEmail())) {
+        List<Apartment> apartments = apartmentDao.getUniqueApartment(apartment);
+        for (int i = 0; i < apartments.size(); i++) {
+            Apartment a = apartments.get(i);
+            if (a.getEmail() != null) {
                 throw new DataIntegrityViolationException("This email is already in use");
             }
-            if (a.getFloor().equals(apartment.getFloor())
-                    && a.getApartmentNumber().equals(apartment.getApartmentNumber())) {
+            if (a.getFloor() != null) {
                 throw new DataIntegrityViolationException("This apartment already has an account");
             }
         }
@@ -43,5 +43,4 @@ public class ApartmentInfoService {
         apartmentDao.updateApartment(apartment);
         return apartment;
     }
-
 }
