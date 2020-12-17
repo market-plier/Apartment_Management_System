@@ -22,12 +22,11 @@ public class ApartmentInfoService {
 
     public Apartment createApartment(Apartment apartment) throws DaoAccessException {
         List<Apartment> apartments = apartmentDao.getUniqueApartment(apartment);
-        for (int i = 0; i < apartments.size(); i++) {
-            Apartment a = apartments.get(i);
-            if (a.getEmail() != null) {
+        for (Apartment a : apartments) {
+            if (a.getEmail().equals(apartment.getEmail())) {
                 throw new DataIntegrityViolationException("This email is already in use");
             }
-            if (a.getFloor() != null) {
+            if (a.getFloor().equals(apartment.getFloor())) {
                 throw new DataIntegrityViolationException("This apartment already has an account");
             }
         }

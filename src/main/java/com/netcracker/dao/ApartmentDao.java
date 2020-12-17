@@ -178,7 +178,17 @@ public interface ApartmentDao {
             "    SET x.VALUE = y.VALUE\n" +
             "    WHERE x.VALUE <> y.VALUE";
 
-    String GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM="SELECT APRT.OBJECT_ID account_id\n" +
+    String GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM="SELECT APRT.OBJECT_ID account_id,\n" +
+            "       EMAIL.VALUE    email,\n" +
+            "       FLOOR.VALUE    floor,\n" +
+            "       APTNUM.VALUE   apartment_number,\n" +
+            "       0              square_metres,\n" +
+            "       0              people_count,\n" +
+            "       ''             password,\n" +
+            "       ''             first_name,\n" +
+            "       ''             last_name,\n" +
+            "       ''             phone_number,\n" +
+            "       'OWNER'             role_name\n" +
             "FROM OBJECTS APRT,\n" +
             "     ATTRIBUTES APTNUM,\n" +
             "     ATTRIBUTES FLOOR,\n" +
@@ -192,10 +202,10 @@ public interface ApartmentDao {
             "  AND EMAIL.ATTR_ID = 2\n" +
             "  AND (\n" +
             "        (FLOOR.VALUE = ?\n" +
-            "        AND APTNUM.VALUE = ?)\n" +
+            "            AND APTNUM.VALUE = ?)\n" +
             "        OR\n" +
             "        (EMAIL.VALUE = ?)\n" +
-            "      )\n";
+            "    )";
 
     String EXCEPTION_GET_ALL_APARTMENTS = "Can't get apartments";
     String EXCEPTION_GET_APARTMENT_BY_ACCOUNT_ID = "Can't get apartment with this id";
