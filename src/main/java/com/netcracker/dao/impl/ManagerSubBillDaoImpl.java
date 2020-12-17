@@ -39,6 +39,16 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
     }
 
     @Override
+    public ManagerSubBill getManagerSubBillByCommunalUtilityId(BigInteger id) throws DaoAccessException {
+        try {
+            ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID, new ManagerSubBillMapper(), id);
+            return managerSubBill;
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID, e.getCause());
+        }
+    }
+
+    @Override
     public void updateManagerSubBill(ManagerSubBill managerSubBill) throws DaoAccessException {
         try {
             jdbcTemplate.update(UPDATE_MANAGER_SUB_BILL,
