@@ -133,7 +133,9 @@ public interface ApartmentDao {
             "    VALUES (seq_obj_curr(), new.PARENT_ID, new.OBJECT_TYPE_ID, new.NAME, new.DESCRIPTION)";
 
     String CREATE_APARTMENT_ATTRIBUTES = "MERGE INTO ATTRIBUTES old\n" +
-            "USING (SELECT 2 ATTR_ID, seq_obj_curr()  OBJECT_ID, ? VALUE, 5  list_value_id FROM DUAL\n" +
+            "USING (SELECT 1 ATTR_ID, seq_obj_curr()  OBJECT_ID, NULL VALUE, 5  list_value_id FROM DUAL\n" +
+            "       UNION ALL\n" +
+            "       SELECT 2, seq_obj_curr(), ?, NULL FROM DUAL\n" +
             "       UNION ALL\n" +
             "       SELECT 3, seq_obj_curr(), ?, NULL FROM DUAL\n" +
             "       UNION ALL\n" +
@@ -178,7 +180,7 @@ public interface ApartmentDao {
             "    SET x.VALUE = y.VALUE\n" +
             "    WHERE x.VALUE <> y.VALUE";
 
-    String GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM="SELECT APRT.OBJECT_ID account_id,\n" +
+    String GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM = "SELECT APRT.OBJECT_ID account_id,\n" +
             "       EMAIL.VALUE    email,\n" +
             "       FLOOR.VALUE    floor,\n" +
             "       APTNUM.VALUE   apartment_number,\n" +
