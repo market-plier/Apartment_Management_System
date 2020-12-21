@@ -9,8 +9,8 @@ public class ApartmentSubBillBuilder {
     private BigInteger subBillId;
     private Double balance;
     private Double debt;
-    private List<ApartmentOperation> apartmentOperation;
-    private List<DebtPaymentOperation> debtPaymentOperation;
+    private List<ApartmentOperation> apartmentOperations;
+    private List<DebtPaymentOperation> debtPaymentOperations;
     private CommunalUtility communalUtility;
     private Apartment apartment;
 
@@ -30,13 +30,13 @@ public class ApartmentSubBillBuilder {
         return this;
     }
 
-    public ApartmentSubBillBuilder withApartmentOperation(List<ApartmentOperation> apartmentOperation) {
-        this.apartmentOperation = apartmentOperation;
+    public ApartmentSubBillBuilder withApartmentOperation(List<ApartmentOperation> apartmentOperations) {
+        this.apartmentOperations = apartmentOperations;
         return this;
     }
 
-    public ApartmentSubBillBuilder withDebtPaymentOperation(List<DebtPaymentOperation> debtPaymentOperation) {
-        this.debtPaymentOperation = debtPaymentOperation;
+    public ApartmentSubBillBuilder withDebtPaymentOperation(List<DebtPaymentOperation> debtPaymentOperations) {
+        this.debtPaymentOperations = debtPaymentOperations;
         return this;
     }
     public ApartmentSubBillBuilder withCommunalUtility(CommunalUtility communalUtility)
@@ -51,7 +51,7 @@ public class ApartmentSubBillBuilder {
         return this;
     }
     public ApartmentSubBill build() {
-        return new ApartmentSubBill(subBillId, balance, debt, apartmentOperation, debtPaymentOperation,communalUtility,apartment);
+        return new ApartmentSubBill(subBillId, balance, debt, apartmentOperations, debtPaymentOperations,communalUtility,apartment);
     }
 }
 

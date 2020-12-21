@@ -10,7 +10,6 @@ import com.netcracker.models.PojoBuilder.CommunalUtilityBuilder;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.math.BigInteger;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
