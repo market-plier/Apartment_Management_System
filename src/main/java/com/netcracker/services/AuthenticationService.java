@@ -2,6 +2,7 @@ package com.netcracker.services;
 
 import com.netcracker.models.Account;
 import com.netcracker.secutity.jwt.JwtTokenProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class AuthenticationService {
 
 
@@ -39,6 +41,7 @@ public class AuthenticationService {
 
         if (account == null)
         {
+            log.error("IN Service method login Invalid password or login");
             throw new UsernameNotFoundException("Invalid password or login");
         }
 
