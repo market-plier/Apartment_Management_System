@@ -65,7 +65,7 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     }
 
     @Override
-    public List<ApartmentOperation> getAllApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger apartmentSubBillId, Date from, Date to) {
+    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger apartmentSubBillId, Date from, Date to) {
         try {
             return jdbcTemplate.query(selectApartmentOperationsByDateRangeAndApartmentSubBillId, new ApartmentOperationMapper(), apartmentSubBillId, from, to);
         } catch (DataAccessException e) {

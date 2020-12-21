@@ -94,5 +94,5 @@ public interface ApartmentOperationDao {
 
     List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentId(BigInteger apartmentId, Date from, Date to);
 
-    List<ApartmentOperation> getAllApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger ApartmentSubBillId, Date from, Date to);
+    List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger ApartmentSubBillId, Date from, Date to);
 }
