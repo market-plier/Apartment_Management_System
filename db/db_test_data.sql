@@ -393,8 +393,8 @@ INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(8,obj_id_seq.currval, 'Нам важно Ваше мнение.' )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'false')
-INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(10,obj_id_seq.currval, SYSDATE )
+INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
+VALUES(10,obj_id_seq.currval, null, systimestamp )
 SELECT * FROM DUAL;
 
 INSERT ALL
@@ -446,8 +446,8 @@ INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(8,obj_id_seq.currval, 'Нам важно Ваше мнение.' )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'false')
-INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(10,obj_id_seq.currval, SYSDATE )
+INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
+VALUES(10,obj_id_seq.currval, NULL, systimestamp )
 SELECT * FROM DUAL;
 
 INSERT ALL
@@ -494,8 +494,8 @@ INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
-INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(10,obj_id_seq.currval, SYSDATE )
+INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
+VALUES(10,obj_id_seq.currval, null, systimestamp )
 SELECT * FROM DUAL;
 
 INSERT
@@ -542,8 +542,8 @@ INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
-INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(10,obj_id_seq.currval, SYSDATE )
+INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
+VALUES(10,obj_id_seq.currval, null, systimestamp )
 SELECT * FROM DUAL;
 
 INSERT
@@ -590,8 +590,8 @@ INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
-INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(10,obj_id_seq.currval, SYSDATE )
+INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
+VALUES(10,obj_id_seq.currval, null, systimestamp )
 SELECT * FROM DUAL;
 
 INSERT
@@ -638,8 +638,8 @@ INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
-INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(10,obj_id_seq.currval, SYSDATE )
+INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
+VALUES(10,obj_id_seq.currval, null, systimestamp )
 SELECT * FROM DUAL;
 
 INSERT

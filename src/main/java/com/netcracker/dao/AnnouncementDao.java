@@ -9,39 +9,38 @@ import java.util.List;
 public interface AnnouncementDao {
     String GET_ALL_ANNOUNCEMENTS =
             "SELECT ANNC.OBJECT_ID announcement_id,\n" +
-            "ANNC_TITLE.VALUE title,\n" +
-            "ANNC_BODY.VALUE body,\n" +
-            "ANNC_IS_OPENED.VALUE is_opened,\n" +
-            "ANNC_CREATED_AT.VALUE created_at,\n" +
-            "HVOTING.OBJECT_ID house_voting_id,\n" +
-            "HVOTING_TITLE.VALUE title\n" +
+            "       ANNC_TITLE.VALUE announcement_title,\n" +
+            "       ANNC_BODY.VALUE body,\n" +
+            "       ANNC_IS_OPENED.VALUE is_opened,\n" +
+            "       ANNC_CREATED_AT.DATE_VALUE created_at,\n" +
+            "       HVOTING.OBJECT_ID house_voting_id,\n" +
+            "       HVOTING_TITLE.VALUE house_voting_title\n" +
             "FROM ATTRIBUTES ANNC_TITLE, ATTRIBUTES ANNC_BODY,\n" +
             "     ATTRIBUTES ANNC_IS_OPENED, ATTRIBUTES ANNC_CREATED_AT, OBJECTS ANNC\n" +
-            "LEFT JOIN OBJECTS HVOTING ON (HVOTING.PARENT_ID = ANNC.OBJECT_ID)\n" +
-            "LEFT JOIN ATTRIBUTES HVOTING_TITLE ON (HVOTING_TITLE.OBJECT_ID = HVOTING.OBJECT_ID)\n" +
+            "LEFT JOIN OBJECTS HVOTING ON (HVOTING.OBJECT_TYPE_ID = 5 AND HVOTING.PARENT_ID = ANNC.OBJECT_ID)\n" +
+            "LEFT JOIN ATTRIBUTES HVOTING_TITLE ON (HVOTING_TITLE.ATTR_ID = 13 AND HVOTING_TITLE.OBJECT_ID = HVOTING.OBJECT_ID)\n" +
             "WHERE ANNC.OBJECT_TYPE_ID = 3\n" +
-            "   AND ANNC_TITLE.ATTR_ID = 7\n" +
-            "   AND ANNC_TITLE.OBJECT_ID = ANNC.OBJECT_ID\n" +
-            "   AND ANNC_BODY.ATTR_ID = 8\n" +
-            "   AND ANNC_BODY.OBJECT_ID = ANNC.OBJECT_ID\n" +
-            "   AND ANNC_IS_OPENED.ATTR_ID = 9\n" +
-            "   AND ANNC_IS_OPENED.OBJECT_ID  = ANNC.OBJECT_ID\n" +
-            "   AND ANNC_CREATED_AT.ATTR_ID = 10\n" +
-            "   AND ANNC_CREATED_AT.OBJECT_ID = ANNC.OBJECT_ID\n" +
-            "   AND (HVOTING_TITLE.ATTR_ID = 13 OR HVOTING_TITLE.ATTR_ID IS NULL)";
+            "  AND ANNC_TITLE.ATTR_ID = 7\n" +
+            "  AND ANNC_TITLE.OBJECT_ID = ANNC.OBJECT_ID\n" +
+            "  AND ANNC_BODY.ATTR_ID = 8\n" +
+            "  AND ANNC_BODY.OBJECT_ID = ANNC.OBJECT_ID\n" +
+            "  AND ANNC_IS_OPENED.ATTR_ID = 9\n" +
+            "  AND ANNC_IS_OPENED.OBJECT_ID  = ANNC.OBJECT_ID\n" +
+            "  AND ANNC_CREATED_AT.ATTR_ID = 10\n" +
+            "  AND ANNC_CREATED_AT.OBJECT_ID = ANNC.OBJECT_ID";
 
     String GET_ANNOUNCEMENT_BY_ID =
             "SELECT ANNC.OBJECT_ID announcement_id,\n" +
-            "ANNC_TITLE.VALUE title,\n" +
+            "ANNC_TITLE.VALUE announcement_title,\n" +
             "ANNC_BODY.VALUE body,\n" +
             "ANNC_IS_OPENED.VALUE is_opened,\n" +
-            "ANNC_CREATED_AT.VALUE created_at,\n" +
+            "ANNC_CREATED_AT.DATE_VALUE created_at,\n" +
             "HVOTING.OBJECT_ID house_voting_id,\n" +
-            "HVOTING_TITLE.VALUE title\n" +
+            "HVOTING_TITLE.VALUE house_voting_title\n" +
             "FROM ATTRIBUTES ANNC_TITLE, ATTRIBUTES ANNC_BODY,\n" +
             "     ATTRIBUTES ANNC_IS_OPENED, ATTRIBUTES ANNC_CREATED_AT, OBJECTS ANNC\n" +
-            "LEFT JOIN OBJECTS HVOTING ON (HVOTING.PARENT_ID = ANNC.OBJECT_ID)\n" +
-            "LEFT JOIN ATTRIBUTES HVOTING_TITLE ON (HVOTING_TITLE.OBJECT_ID = HVOTING.OBJECT_ID)\n" +
+            "LEFT JOIN OBJECTS HVOTING ON (HVOTING.OBJECT_TYPE_ID = 5 AND HVOTING.PARENT_ID = ANNC.OBJECT_ID)\n" +
+            "LEFT JOIN ATTRIBUTES HVOTING_TITLE ON (HVOTING_TITLE.ATTR_ID = 13 AND HVOTING_TITLE.OBJECT_ID = HVOTING.OBJECT_ID)\n" +
             "   WHERE ANNC.OBJECT_ID = ?\n" +
             "   AND ANNC_TITLE.ATTR_ID = 7\n" +
             "   AND ANNC_TITLE.OBJECT_ID = ANNC.OBJECT_ID\n" +
@@ -50,8 +49,7 @@ public interface AnnouncementDao {
             "   AND ANNC_IS_OPENED.ATTR_ID = 9\n" +
             "   AND ANNC_IS_OPENED.OBJECT_ID  = ANNC.OBJECT_ID\n" +
             "   AND ANNC_CREATED_AT.ATTR_ID = 10\n" +
-            "   AND ANNC_CREATED_AT.OBJECT_ID = ANNC.OBJECT_ID\n" +
-            "   AND (HVOTING_TITLE.ATTR_ID = 13 OR HVOTING_TITLE.ATTR_ID IS NULL)";
+            "   AND ANNC_CREATED_AT.OBJECT_ID = ANNC.OBJECT_ID";
 
     String CREATE_ANNOUNCEMENT_OBJECT =
             "MERGE INTO OBJECTS old\n" +
