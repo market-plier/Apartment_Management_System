@@ -14,8 +14,9 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
-@Transactional
+
 @Repository
+@Transactional
 public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     private final JdbcTemplate jdbcTemplate;
 
