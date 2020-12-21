@@ -1,4 +1,4 @@
-package com.netcracker.services;
+package com.netcracker.exception;
 
 import java.math.BigInteger;
 
