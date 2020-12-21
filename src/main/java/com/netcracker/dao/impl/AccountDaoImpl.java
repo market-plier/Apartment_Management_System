@@ -4,6 +4,8 @@ import com.netcracker.dao.AccountDao;
 import com.netcracker.dao.mapper.AccountMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Account;
+import lombok.extern.log4j.Log4j;
+import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +16,7 @@ import java.math.BigInteger;
 
 
 @Repository
+@Log4j
 public class AccountDaoImpl implements AccountDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -29,7 +32,9 @@ public class AccountDaoImpl implements AccountDao {
         try {
             return jdbcTemplate.queryForObject(GET_ACCOUNT_BY_ID, new AccountMapper(), id);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_ID, id, e.getCause());
+            e = new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_ID, id, e.getCause());
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -38,7 +43,9 @@ public class AccountDaoImpl implements AccountDao {
         try {
             return jdbcTemplate.queryForObject(GET_ACCOUNT_BY_EMAIL, new AccountMapper(), email);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_EMAIL + email, e.getCause());
+            e = new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_EMAIL + email, e.getCause());
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
         }
 
     }
