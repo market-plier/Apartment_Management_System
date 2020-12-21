@@ -5,11 +5,8 @@ import com.netcracker.models.ApartmentSubBill;
 import com.netcracker.models.DebtPaymentOperation;
 import com.netcracker.models.ManagerSubBill;
 import com.netcracker.models.PojoBuilder.DebtPaymentOperationBuilder;
-import com.netcracker.services.exceptions.CreationException;
-import com.netcracker.services.exceptions.DataNotFoundException;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +31,7 @@ public class DebtPaymentOperationService {
         return debtPaymentOperationDao.getDebtPaymentOperationsByApartmentId(apartmentId);
     }
 
-    public List<DebtPaymentOperation> getDebtPaymentOperationsByApartmentSubBillId(BigInteger apartmentSubBillId){
+    public List<DebtPaymentOperation> getDebtPaymentOperationsByApartmentSubBillId(BigInteger apartmentSubBillId) {
         return debtPaymentOperationDao.getDebtPaymentOperationsByApartmentSubBillId(apartmentSubBillId);
     }
 
@@ -55,14 +52,14 @@ public class DebtPaymentOperationService {
     }
 
     public void createDebtPaymentOperation(ApartmentSubBill apartmentSubBill, Double sum) {
-            ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBillByCommunalUtilityId(apartmentSubBill.getCommunalUtility().getCommunalUtilityId());
-            managerSubBill.setBalance(managerSubBill.getBalance() + sum);
+        ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBillByCommunalUtilityId(apartmentSubBill.getCommunalUtility().getCommunalUtilityId());
+        managerSubBill.setBalance(managerSubBill.getBalance() + sum);
 
-            managerSubBillService.updateManagerSubBill(managerSubBill);
-            debtPaymentOperationDao.createDebtPaymentOperation(new DebtPaymentOperationBuilder()
-                    .withApartmentSubBill(apartmentSubBill)
-                    .withManagerSubBill(managerSubBill)
-                    .withSum(sum)
-                    .build());
+        managerSubBillService.updateManagerSubBill(managerSubBill);
+        debtPaymentOperationDao.createDebtPaymentOperation(new DebtPaymentOperationBuilder()
+                .withApartmentSubBill(apartmentSubBill)
+                .withManagerSubBill(managerSubBill)
+                .withSum(sum)
+                .build());
     }
 }
