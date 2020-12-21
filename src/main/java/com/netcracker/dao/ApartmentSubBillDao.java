@@ -3,7 +3,9 @@ package com.netcracker.dao;
 import com.netcracker.models.ApartmentSubBill;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface ApartmentSubBillDao {
     List<ApartmentSubBill> getAllApartmentSubBills();
@@ -15,6 +17,56 @@ public interface ApartmentSubBillDao {
     void updateApartmentSubBill(ApartmentSubBill apartmentSubBill);
 
     void createApartmentSubBill(ApartmentSubBill apartmentSubBill);
+
+    List<ApartmentSubBill> getApartmentSubBillsByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communaUtill);
+
+    String GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST = "SELECT APT_SUB_BILL.OBJECT_ID   sub_bill_id,\n" +
+            "       COMMUNAL_UTILL.OBJECT_ID communal_util_id,\n" +
+            "       CALC_NAME.OBJECT_ID      calc_method_id,\n" +
+            "       BALANCE.VALUE            balance,\n" +
+            "       DEBT.VALUE               debt,\n" +
+            "       APT.OBJECT_ID            account_id,\n" +
+            "       COMMUNAL_NAME.VALUE      communal_name,\n" +
+            "       DURATION_LIST.VALUE      duration_type,\n" +
+            "       STATUS_LIST.VALUE        status,\n" +
+            "       DEAD_LINE.DATE_VALUE     dead_line,\n" +
+            "       CALC_NAME.VALUE          calc_name\n" +
+            "FROM OBJECTS APT_SUB_BILL,\n" +
+            "     OBJECTS COMMUNAL_UTILL,\n" +
+            "     OBJREFERENCE CAL_METHOD_REF,\n" +
+            "     OBJECTS APT,\n" +
+            "     OBJREFERENCE APT_REF,\n" +
+            "     LISTS DURATION_LIST,\n" +
+            "     LISTS STATUS_LIST,\n" +
+            "     ATTRIBUTES BALANCE,\n" +
+            "     ATTRIBUTES DEBT,\n" +
+            "     ATTRIBUTES COMMUNAL_NAME,\n" +
+            "     ATTRIBUTES DURATION_TYPE,\n" +
+            "     ATTRIBUTES STATUS,\n" +
+            "     ATTRIBUTES DEAD_LINE,\n" +
+            "     ATTRIBUTES CALC_NAME\n" +
+            "WHERE APT.OBJECT_ID = (:account_id)\n" +
+            "  AND APT_SUB_BILL.OBJECT_ID = APT_REF.OBJECT_ID\n" +
+            "  AND APT.OBJECT_ID = APT_REF.REFERENCE\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_ID = APT_SUB_BILL.PARENT_ID\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_TYPE_ID = 11\n" +
+            "  AND BALANCE.OBJECT_ID = APT_SUB_BILL.OBJECT_ID\n" +
+            "  AND BALANCE.ATTR_ID = 25\n" +
+            "  AND DEBT.OBJECT_ID = APT_SUB_BILL.OBJECT_ID\n" +
+            "  AND DEBT.ATTR_ID = 38\n" +
+            "  AND COMMUNAL_NAME.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND COMMUNAL_NAME.ATTR_ID = 21\n" +
+            "  AND DURATION_LIST.LIST_VALUE_ID = DURATION_TYPE.LIST_VALUE_ID\n" +
+            "  AND DURATION_TYPE.ATTR_ID = 22\n" +
+            "  AND DURATION_TYPE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND STATUS_LIST.LIST_VALUE_ID = STATUS.LIST_VALUE_ID\n" +
+            "  AND STATUS.ATTR_ID = 23\n" +
+            "  AND STATUS.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND DEAD_LINE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND DEAD_LINE.ATTR_ID = 24\n" +
+            "  AND CALC_NAME.OBJECT_ID = CAL_METHOD_REF.REFERENCE\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_ID=CAL_METHOD_REF.OBJECT_ID\n" +
+            "  AND COMMUNAL_NAME.OBJECT_ID IN (:communal_list)";
 
     String GET_ALL_APARTMENT_SUB_BILLS = "SELECT APT_SUB_BILL.OBJECT_ID   sub_bill_id,\n" +
             "       COMMUNAL_UTILL.OBJECT_ID   communal_util_id,\n" +
@@ -219,4 +271,5 @@ public interface ApartmentSubBillDao {
     String EXCEPTION_GET_ALL_APARTMENT_SUB_BILLS_BY_ACCOUNT_ID = "Can't get apartment's subbill with this account id";
     String EXCEPTION_UPDATE_APARTMENT_SUB_BILL = "Cant update apartment's subbill with id";
     String EXCEPTION_CREATE_APARTMENT_SUB_BILL = "Cant create apartment's subbill";
+    String EXCEPTION_GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST = "Cant get apartment's subbills debt";
 }

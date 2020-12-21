@@ -9,12 +9,16 @@ import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Repository
@@ -23,9 +27,11 @@ import java.util.List;
 public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
 
     private JdbcTemplate jdbcTemplate;
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
     public ApartmentSubBillDaoImpl(DataSource dataSource) {
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -82,6 +88,22 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
         } catch (
                 DataAccessException e) {
             e = new DaoAccessException(EXCEPTION_CREATE_APARTMENT_SUB_BILL, e.getCause());
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @Override
+    public List<ApartmentSubBill> getApartmentSubBillsByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communalList) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("communal_list", communalList);
+        parameters.addValue("account_id", accountId);
+
+        try {
+            return namedParameterJdbcTemplate.query(GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST,
+                    parameters, new ApartmentSubBillMapper());
+        } catch (DataAccessException e) {
+            e = new DaoAccessException(EXCEPTION_GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST, e.getCause());
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
