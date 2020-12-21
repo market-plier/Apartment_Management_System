@@ -33,6 +33,9 @@ public class ManagerSubBillService {
         return managerSubBillDao.getAllManagerSubBills();
     }
 
+    public ManagerSubBill getManagerSubBill(BigInteger id) {
+        return managerSubBillDao.getManagerSubBillById(id);
+    }
 
     public void createManagerSubBill(CommunalUtility communalUtility) {
         Manager manager = managerInfoService.getManager();
@@ -44,12 +47,17 @@ public class ManagerSubBillService {
     }
 
 
-    public ManagerSubBill getManagerSubBill(BigInteger id) {
-        return managerSubBillDao.getManagerSubBillById(id);
+    public void updateManagerSubBill(ManagerSubBill managerSubBill) {
+
+    }
+
+    public ManagerSubBill getManagerSubBillByCommunalUtilityId(BigInteger id) {
+        return null;
     }
 
     public void updateManagerSubBillbyManagerOperation(ManagerSpendingOperation managerSpendingOperation) {
 
     }
-
 }
+
+
