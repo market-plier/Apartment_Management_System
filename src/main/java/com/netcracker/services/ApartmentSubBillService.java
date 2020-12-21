@@ -36,16 +36,16 @@ public class ApartmentSubBillService {
         List<ApartmentSubBill> apartmentSubBills = apartmentSubBillDao.getAllApartmentSubBills();
         for(ApartmentSubBill apartmentSubBill: apartmentSubBills){
             BigInteger apartmentSubBillId = apartmentSubBill.getSubBillId();
-            apartmentSubBill.setApartmentOperation(apartmentOperationService.getAllApartmentOperationsBySubBillId(apartmentSubBillId));
-            apartmentSubBill.setDebtPaymentOperation(debtPaymentOperationService.getDebtPaymentOperationsByApartmentSubBillId(apartmentSubBillId));
+            apartmentSubBill.setApartmentOperations(apartmentOperationService.getAllApartmentOperationsBySubBillId(apartmentSubBillId));
+            apartmentSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByApartmentSubBillId(apartmentSubBillId));
         }
         return apartmentSubBills;
     }
 
     public ApartmentSubBill getApartmentSubBill(BigInteger apartmentSubBillId) {
         ApartmentSubBill apartmentSubBill = apartmentSubBillDao.getApartmentSubBillById(apartmentSubBillId);
-        apartmentSubBill.setApartmentOperation(apartmentOperationService.getAllApartmentOperationsBySubBillId(apartmentSubBillId));
-        apartmentSubBill.setDebtPaymentOperation(debtPaymentOperationService.getDebtPaymentOperationsByApartmentSubBillId(apartmentSubBillId));
+        apartmentSubBill.setApartmentOperations(apartmentOperationService.getAllApartmentOperationsBySubBillId(apartmentSubBillId));
+        apartmentSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByApartmentSubBillId(apartmentSubBillId));
         return apartmentSubBill;
     }
 
