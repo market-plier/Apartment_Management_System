@@ -2,13 +2,19 @@ package com.netcracker.models;
 
 import lombok.Data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Data
 public class Apartment extends Account {
+    @NotNull
     private Integer apartmentNumber;
+    @Min(value = 0)
     private Integer squareMetres;
+    @NotNull
     private Integer floor;
+    @Min(value = 0)
     private Integer peopleCount;
 
     public Apartment(BigInteger accountId, String firstName,
