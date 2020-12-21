@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 public class DaoAccessException extends DataAccessException {
 
-    private String errorMessage;
+    private BigInteger errorMessage;
 
     public DaoAccessException(String msg) {
         super(msg);
@@ -16,18 +16,18 @@ public class DaoAccessException extends DataAccessException {
         super(msg, cause);
     }
 
-    public DaoAccessException(String msg,  BigInteger id, Throwable cause, String errorMessage) {
+    public DaoAccessException(String msg,  BigInteger id, Throwable cause, BigInteger errorMessage) {
         super(createMessage(msg, id), cause);
         this.errorMessage = errorMessage;
     }
 
-    public DaoAccessException(String msg,  BigInteger id, String errorMessage) {
+    public DaoAccessException(String msg,  BigInteger id, BigInteger errorMessage) {
         super(createMessage(msg, id));
         this.errorMessage = errorMessage;
     }
 
 
-    public DaoAccessException(String msg,  String errorMessage) {
+    public DaoAccessException(String msg,  BigInteger errorMessage) {
         super(msg);
         this.errorMessage = errorMessage;
     }
@@ -40,7 +40,7 @@ public class DaoAccessException extends DataAccessException {
         return msg + " { " + id + " } ";
     }
 
-    public String getErrorMessage() {
+    public BigInteger getErrorMessage() {
         return errorMessage;
     }
 }
