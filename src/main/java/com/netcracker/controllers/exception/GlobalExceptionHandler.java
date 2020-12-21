@@ -31,7 +31,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         details = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(error -> error.getField() + " : " + error.getDefaultMessage())
+
+                .map(error ->error.getCode() + error.getField() + " : " + error.getDefaultMessage())
                 .collect(Collectors.toList());
 
         ApiError err = new ApiError(LocalDateTime.now(),
