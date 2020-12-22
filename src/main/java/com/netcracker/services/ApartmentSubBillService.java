@@ -2,13 +2,16 @@
 package com.netcracker.services;
 
 import com.netcracker.dao.ApartmentSubBillDao;
+import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.models.*;
+import com.netcracker.models.PojoBuilder.ApartmentOperationBuilder;
 import com.netcracker.models.PojoBuilder.ApartmentSubBillBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 
@@ -69,6 +72,36 @@ public class ApartmentSubBillService {
                     .withDept((double) 0)
                     .withBalance((double) 0)
                     .build());
+        }
+    }
+
+    public void createApartmentSubBillTransfer(ApartmentSubBill transferFrom, ApartmentSubBill transferTo, Double value) {
+        if (transferFrom.getApartment().getAccountId().equals(transferTo.getApartment().getAccountId())) {
+            ApartmentSubBill subBillFrom = apartmentSubBillDao.getApartmentSubBillById(transferFrom.getSubBillId());
+            ApartmentSubBill subBillTo = apartmentSubBillDao.getApartmentSubBillById(transferTo.getSubBillId());
+            if (subBillFrom != null && subBillTo != null
+                    && subBillFrom.getBalance() >= value) {
+                subBillFrom.setBalance(subBillFrom.getBalance() - value);
+                subBillTo.setBalance(subBillTo.getBalance() + value);
+                apartmentSubBillDao.updateApartmentSubBill(subBillFrom);
+                apartmentSubBillDao.updateApartmentSubBill(subBillTo);
+                apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
+                        .withApartmentSubBill(transferTo)
+                        .withCreatedAt(new Date())
+                        .withSum(value)
+                        .build());
+                apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
+                        .withApartmentSubBill(transferFrom)
+                        .withCreatedAt(new Date())
+                        .withSum(-value)
+                        .build());
+            } else {
+                IllegalArgumentException e = new IllegalArgumentException("Wrong transfer Data");
+                throw e;
+            }
+        } else {
+            NotBelongToAccountException e = new NotBelongToAccountException("Wrong transfer SubBills");
+            throw e;
         }
     }
 
