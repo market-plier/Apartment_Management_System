@@ -43,6 +43,10 @@ public class CommunalUtilityService {
         return utilities;
     }
 
+    public List<CommunalUtility> getAllCommunalUtilities() {
+        return getAllCommunalUtilities(null);
+    }
+
     public CommunalUtility getCommunalUtilityById(BigInteger id) {
         CommunalUtility utility = communalUtilityDao.
                 getCommunalUtilityByIdWithCalculationMethod(id);
