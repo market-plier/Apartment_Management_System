@@ -11,7 +11,7 @@ public interface ApartmentDao {
 
     Apartment getApartmentById(BigInteger apartmentId);
 
-    void createApartment(Apartment apartment);
+    boolean createApartment(Apartment apartment);
 
     void updateApartment(Apartment apartment);
 

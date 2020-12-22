@@ -9,11 +9,18 @@ import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -52,7 +59,7 @@ public class ApartmentDaoImpl implements ApartmentDao {
     }
 
     @Override
-    public void createApartment(Apartment apartment) throws DaoAccessException {
+    public boolean createApartment(Apartment apartment) throws DaoAccessException {
         try {
             jdbcTemplate.update(CREATE_APARTMENT_OBJECT);
             jdbcTemplate.update(CREATE_APARTMENT_ATTRIBUTES,
@@ -71,6 +78,7 @@ public class ApartmentDaoImpl implements ApartmentDao {
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
+        return true;
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.netcracker.models.Apartment;
 import com.netcracker.models.Role;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +16,15 @@ import java.util.List;
 @Service("ApartmentInfoService")
 @Log4j
 public class ApartmentInfoService {
-
+    @Autowired
+    private ApartmentSubBillService apartmentSubBillService;
+    private final AccountService accountService;
     private final ApartmentDao apartmentDao;
     final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public ApartmentInfoService(ApartmentDao apartmentDao, BCryptPasswordEncoder passwordEncoder) {
+    public ApartmentInfoService(AccountService accountService, ApartmentDao apartmentDao, BCryptPasswordEncoder passwordEncoder) {
+        this.accountService = accountService;
         this.apartmentDao = apartmentDao;
         this.passwordEncoder = passwordEncoder;
     }
@@ -34,7 +36,10 @@ public class ApartmentInfoService {
     public Apartment createApartment(Apartment apartment) throws DaoAccessException {
         if (isUnique(apartment)) {
             apartment.setPassword(passwordEncoder.encode(apartment.getPassword()));
-            apartmentDao.createApartment(apartment);
+            if (apartmentDao.createApartment(apartment)) {
+                apartment.setAccountId(accountService.getAccountByEmail(apartment.getEmail()).getAccountId());
+                apartmentSubBillService.addApartmentSubBillsToApartment(apartment);
+            }
             return apartment;
         }
 

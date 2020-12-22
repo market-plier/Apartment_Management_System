@@ -1,16 +1,15 @@
+
 package com.netcracker.services;
 
 import com.netcracker.dao.ApartmentSubBillDao;
 import com.netcracker.models.*;
 import com.netcracker.models.PojoBuilder.ApartmentSubBillBuilder;
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
@@ -21,21 +20,23 @@ public class ApartmentSubBillService {
     private final ApartmentInfoService apartmentInfoService;
     private final ApartmentPaymentService apartmentPaymentService;
     private final DebtPaymentOperationService debtPaymentOperationService;
+    private final CommunalUtilityService communalUtilityService;
 
     @Autowired
     public ApartmentSubBillService(ApartmentSubBillDao apartmentSubBillDao, ApartmentOperationService apartmentOperationService,
                                    ApartmentInfoService apartmentInfoService, ApartmentPaymentService apartmentPaymentService,
-                                   DebtPaymentOperationService debtPaymentOperationService) {
+                                   DebtPaymentOperationService debtPaymentOperationService, CommunalUtilityService communalUtilityService) {
         this.apartmentSubBillDao = apartmentSubBillDao;
         this.apartmentOperationService = apartmentOperationService;
         this.apartmentInfoService = apartmentInfoService;
         this.apartmentPaymentService = apartmentPaymentService;
         this.debtPaymentOperationService = debtPaymentOperationService;
+        this.communalUtilityService = communalUtilityService;
     }
 
     public List<ApartmentSubBill> getAllApartmentSubBills() {
         List<ApartmentSubBill> apartmentSubBills = apartmentSubBillDao.getAllApartmentSubBills();
-        for(ApartmentSubBill apartmentSubBill: apartmentSubBills){
+        for (ApartmentSubBill apartmentSubBill : apartmentSubBills) {
             BigInteger apartmentSubBillId = apartmentSubBill.getSubBillId();
             apartmentSubBill.setApartmentOperations(apartmentOperationService.getAllApartmentOperationsBySubBillId(apartmentSubBillId));
             apartmentSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByApartmentSubBillId(apartmentSubBillId));
@@ -50,15 +51,23 @@ public class ApartmentSubBillService {
         return apartmentSubBill;
     }
 
-    public void createApartmentSubBillTransfer(ApartmentSubBill transferFrom, ApartmentSubBill transferTo, Double value) {
-
-    }
 
     public void createApartmentSubBill(CommunalUtility communalUtility) {
         for (Apartment apartment : apartmentInfoService.getAllApartments()) {
             apartmentSubBillDao.createApartmentSubBill(new ApartmentSubBillBuilder()
                     .withApartment(apartment)
                     .withCommunalUtility(communalUtility)
+                    .build());
+        }
+    }
+
+    public void addApartmentSubBillsToApartment(Apartment apartment) {
+        for (CommunalUtility communalUtility : communalUtilityService.getAllCommunalUtilities()) {
+            apartmentSubBillDao.createApartmentSubBill(new ApartmentSubBillBuilder()
+                    .withApartment(apartment)
+                    .withCommunalUtility(communalUtility)
+                    .withDept((double) 0)
+                    .withBalance((double) 0)
                     .build());
         }
     }
@@ -92,11 +101,4 @@ public class ApartmentSubBillService {
         return apartmentSubBillDao.getAllApartmentSubBillsByAccountId(accountId);
     }
 
-    public List<ApartmentSubBill> getApartmentSubBillsByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communaUtill){
-        return apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountId, communaUtill);
-    }
-
-    Double getApartmentDebtByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communalList){
-        return apartmentSubBillDao.getApartmentDebtByCommunalUtilityList(accountId, communalList);
-    }
 }
