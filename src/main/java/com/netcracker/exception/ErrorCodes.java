@@ -3,9 +3,9 @@ package com.netcracker.exception;
 import java.math.BigInteger;
 
 public interface ErrorCodes {
-    BigInteger _FAIL_TO_INSERT = BigInteger.valueOf(1);
-    BigInteger _FAIL_TO_UPDATE = BigInteger.valueOf(2);
-    BigInteger _FAIL_TO_SELECT = BigInteger.valueOf(3);
+    BigInteger APARTMENT_OPERATION_FAIL_TO_INSERT_ = BigInteger.valueOf(171);
+    BigInteger APARTMENT_OPERATION_FAIL_TO_UPDATE = BigInteger.valueOf(172);
+    BigInteger APARTMENT_OPERATION_FAIL_TO_SELECT = BigInteger.valueOf(173);
 
     BigInteger _FAIL_TO_INSERT_COMMENT = BigInteger.valueOf(51);
     BigInteger _FAIL_TO_UPDATE_COMMENT = BigInteger.valueOf(52);
