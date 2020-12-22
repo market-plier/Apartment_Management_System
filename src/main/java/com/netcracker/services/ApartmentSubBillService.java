@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -89,5 +90,13 @@ public class ApartmentSubBillService {
 
     public List<ApartmentSubBill> getAllApartmentSubBillsByAccountId(BigInteger accountId) {
         return apartmentSubBillDao.getAllApartmentSubBillsByAccountId(accountId);
+    }
+
+    public List<ApartmentSubBill> getApartmentSubBillsByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communaUtill){
+        return apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountId, communaUtill);
+    }
+
+    Double getApartmentDebtByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communalList){
+        return apartmentSubBillDao.getApartmentDebtByCommunalUtilityList(accountId, communalList);
     }
 }
