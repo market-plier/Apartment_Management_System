@@ -100,8 +100,24 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
         parameters.addValue("account_id", accountId);
 
         try {
-            return namedParameterJdbcTemplate.query(GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST,
+            return namedParameterJdbcTemplate.query(GET_APARTMENT_SUB_BILLS_BY_COMMUNAL_UTILS_LIST,
                     parameters, new ApartmentSubBillMapper());
+        } catch (DataAccessException e) {
+            e = new DaoAccessException(EXCEPTION_GET_APARTMENT_SUB_BILLS_BY_COMMUNAL_UTILS_LIST, e.getCause());
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @Override
+    public Double getApartmentDebtByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communalList) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("communal_list", communalList);
+        parameters.addValue("account_id", accountId);
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST,
+                     parameters,Double.class);
         } catch (DataAccessException e) {
             e = new DaoAccessException(EXCEPTION_GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST, e.getCause());
             log.log(Level.ERROR, e.getMessage(), e);

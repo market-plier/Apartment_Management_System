@@ -18,9 +18,26 @@ public interface ApartmentSubBillDao {
 
     void createApartmentSubBill(ApartmentSubBill apartmentSubBill);
 
-    List<ApartmentSubBill> getApartmentSubBillsByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communaUtill);
+    List<ApartmentSubBill> getApartmentSubBillsByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communalList);
 
-    String GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST = "SELECT APT_SUB_BILL.OBJECT_ID   sub_bill_id,\n" +
+    Double getApartmentDebtByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communalList);
+
+    String GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST = "SELECT SUM(DEBT.VALUE) debt\n" +
+            "FROM OBJECTS APT_SUB_BILL,\n" +
+            "     OBJECTS COMMUNAL_UTILL,\n" +
+            "     OBJECTS APT,\n" +
+            "     OBJREFERENCE APT_REF,\n" +
+            "     ATTRIBUTES DEBT\n" +
+            "WHERE APT.OBJECT_ID = (:account_id)\n" +
+            "  AND APT_SUB_BILL.OBJECT_ID = APT_REF.OBJECT_ID\n" +
+            "  AND APT.OBJECT_ID = APT_REF.REFERENCE\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_ID = APT_SUB_BILL.PARENT_ID\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_TYPE_ID = 11\n" +
+            "  AND DEBT.OBJECT_ID = APT_SUB_BILL.OBJECT_ID\n" +
+            "  AND DEBT.ATTR_ID = 38\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_ID IN (:communal_list)";
+
+    String GET_APARTMENT_SUB_BILLS_BY_COMMUNAL_UTILS_LIST = "SELECT APT_SUB_BILL.OBJECT_ID   sub_bill_id,\n" +
             "       COMMUNAL_UTILL.OBJECT_ID communal_util_id,\n" +
             "       CALC_NAME.OBJECT_ID      calc_method_id,\n" +
             "       BALANCE.VALUE            balance,\n" +
@@ -272,4 +289,5 @@ public interface ApartmentSubBillDao {
     String EXCEPTION_UPDATE_APARTMENT_SUB_BILL = "Cant update apartment's subbill with id";
     String EXCEPTION_CREATE_APARTMENT_SUB_BILL = "Cant create apartment's subbill";
     String EXCEPTION_GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST = "Cant get apartment's subbills debt";
+    String EXCEPTION_GET_APARTMENT_SUB_BILLS_BY_COMMUNAL_UTILS_LIST="Cant get apartment's subbills by this list";
 }
