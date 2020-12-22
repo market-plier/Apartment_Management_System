@@ -22,6 +22,10 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_SELECT_MANAGER_BILL = BigInteger.valueOf(93);
     BigInteger _FAIL_TO_DELETE_MANAGER_BILL = BigInteger.valueOf(94);
 
+    BigInteger _FAIL_TO_INSERT_COMMUNAL_UTILITY = BigInteger.valueOf(111);
+    BigInteger _FAIL_TO_UPDATE_COMMUNAL_UTILITY = BigInteger.valueOf(112);
+    BigInteger _FAIL_TO_SELECT_COMMUNAL_UTILITY = BigInteger.valueOf(113);
+
 
     BigInteger _FAIL_TO_SELECT_ACCOUNT = BigInteger.valueOf(23);
 }

@@ -72,6 +72,35 @@ public interface CommunalUtilityDao {
             "    and com_util_durtype_list.attr_id=22\n" +
             "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n";
 
+    String getAllCommunalUtilitiesFilterByStatus = "select com_util_obj.OBJECT_ID com_util_id,\n" +
+            "com_util_name.VALUE com_util_name,\n" +
+            "com_util_status_list.VALUE com_util_status,\n" +
+            "com_util_dline.date_value com_util_dline,\n" +
+            "com_util_durtype_list.Value com_util_durtype\n" +
+            "    from\n" +
+            "    OBJECTS com_util_obj,\n" +
+            "    ATTRIBUTES com_util_name,\n" +
+            "    LISTS com_util_status_list,\n" +
+            "    ATTRIBUTES com_util_status,\n" +
+            "    ATTRIBUTES com_util_dline,\n" +
+            "    LISTS com_util_durtype_list,\n" +
+            "    ATTRIBUTES com_util_durtype\n" +
+            "    where\n" +
+            "    com_util_name.attr_id=21\n" +
+            "    and com_util_obj.OBJECT_TYPE_ID=11\n" +
+            "    and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
+            "    and com_util_status.attr_id=23\n" +
+            "    and com_util_status.object_id = com_util_obj.OBJECT_ID\n" +
+            "    and com_util_status_list.attr_id=23\n" +
+            "    and com_util_status.list_value_id = com_util_status_list.list_value_id\n" +
+            "    and com_util_dline.attr_id = 24\n" +
+            "    and com_util_dline.object_id=com_util_obj.object_id\n" +
+            "    and com_util_durtype.attr_id=22\n" +
+            "    and com_util_durtype.object_id = com_util_obj.OBJECT_ID\n" +
+            "    and com_util_durtype_list.attr_id=22\n" +
+            "    and com_util_status.list_value_id = ?\n" +
+            "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n";
+
     String getCommunalUtilityWithCalculationMethodById = "select com_util_obj.OBJECT_ID com_util_id,\n" +
             "com_util_name.VALUE com_util_name,\n" +
             "com_util_status_list.VALUE com_util_status,\n" +
@@ -227,7 +256,10 @@ public interface CommunalUtilityDao {
     String EXCEPTION_UPDATE_COMMUNAL_UTILITY = "Can't update communal utility";
     String EXCEPTION_CREATE_COMMUNAL_UTILITIES = "Can't create communal utility";
 
+
     List<CommunalUtility> getAllCommunalUtilities();
+
+    List<CommunalUtility> getAllCommunalUtilitiesFilterByStatus(CommunalUtility.Status status);
 
     List<CommunalUtility> getAllCommunalUtilitiesWithCalculationMethod();
 

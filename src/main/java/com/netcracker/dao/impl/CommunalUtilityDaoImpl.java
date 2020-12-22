@@ -31,6 +31,16 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
         }
     }
 
+
+    @Override
+    public List<CommunalUtility> getAllCommunalUtilitiesFilterByStatus(CommunalUtility.Status status) {
+        try {
+            return jdbcTemplate.query(getAllCommunalUtilitiesFilterByStatus, new CommunalUtilityMapper(), status.getStatusCode());
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_GET_ALL_COMMUNAL_UTILITIES, e.getCause());
+        }
+    }
+
     @Override
     public List<CommunalUtility> getAllCommunalUtilitiesWithCalculationMethod() {
         try {

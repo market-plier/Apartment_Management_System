@@ -26,8 +26,13 @@ public class CommunalUtilityService {
         this.calculationMethodDao = calculationMethodDao;
     }
 
-    public List<CommunalUtility> getAllCommunalUtilities() {
-        List<CommunalUtility> utilities = communalUtilityDao.getAllCommunalUtilities();
+    public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) {
+        List<CommunalUtility> utilities;
+        if (status != null) {
+            utilities = communalUtilityDao.getAllCommunalUtilitiesFilterByStatus(status);
+        } else {
+            utilities = communalUtilityDao.getAllCommunalUtilities();
+        }
         for (CommunalUtility utility : utilities
         ) {
             CalculationMethod calc = calculationMethodDao.
