@@ -40,7 +40,10 @@ public class MailService {
         helper.setFrom("noreply@baeldung.com");
         helper.setTo(to);
         helper.setSubject(subject);
-        helper.setText(text);
+
+        //construct the text body part
+        MimeBodyPart textPart = new MimeBodyPart();
+        textPart.setText(text);
 
         //construct the pdf body part
         DataSource dataSource = new ByteArrayDataSource(stream, "application/pdf");
@@ -50,6 +53,7 @@ public class MailService {
 
         //construct the mime multi part
         MimeMultipart mimeMultipart = new MimeMultipart();
+        mimeMultipart.addBodyPart(textPart);
         mimeMultipart.addBodyPart(attachment);
 
         message.setContent(mimeMultipart);
