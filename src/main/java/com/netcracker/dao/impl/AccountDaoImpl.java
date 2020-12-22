@@ -3,6 +3,7 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.AccountDao;
 import com.netcracker.dao.mapper.AccountMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.Account;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Level;
@@ -32,7 +33,7 @@ public class AccountDaoImpl implements AccountDao {
         try {
             return jdbcTemplate.queryForObject(GET_ACCOUNT_BY_ID, new AccountMapper(), id);
         } catch (DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_ID, id, e.getCause());
+            e = new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_ID, id, ErrorCodes._FAIL_TO_SELECT_ACCOUNT);
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
@@ -43,7 +44,7 @@ public class AccountDaoImpl implements AccountDao {
         try {
             return jdbcTemplate.queryForObject(GET_ACCOUNT_BY_EMAIL, new AccountMapper(), email);
         } catch (DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_EMAIL + email, e.getCause());
+            e = new DaoAccessException(EXCEPTION_GET_ACCOUNT_BY_EMAIL + email, ErrorCodes._FAIL_TO_SELECT_ACCOUNT);
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }

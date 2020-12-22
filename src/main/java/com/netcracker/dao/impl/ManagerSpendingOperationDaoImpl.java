@@ -4,25 +4,34 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.ManagerSpendingOperationDao;
 import com.netcracker.dao.mapper.ManagerSpendingOperationMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.ManagerSpendingOperation;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.math.BigInteger;
+import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Repository
+@Log4j
 public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperationDao {
 
 
     private JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
     public ManagerSpendingOperationDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
     }
 
 
@@ -31,7 +40,9 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             return jdbcTemplate.query(GET_ALL_MANAGER_OPERATION_BY_SUBBILL_ID, new ManagerSpendingOperationMapper(), id);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_MANAGER_OPERATIONS_BY_SUB_BILL_ID, id, e.getCause());
+            log.error("IN getAllManagerOperationSpendingByManagerSubBill " + EXCEPTION_GET_MANAGER_OPERATIONS_BY_SUB_BILL_ID);
+            throw new DaoAccessException(EXCEPTION_GET_MANAGER_OPERATIONS_BY_SUB_BILL_ID, id,
+                    ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION);
         }
 
     }
@@ -41,17 +52,20 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             return jdbcTemplate.query(GET_ALL_MANAGER_OPERATION, new ManagerSpendingOperationMapper());
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, e.getCause());
+            log.error("IN getAllManagerOperationSpending " + EXCEPTION_GET_ALL_MANAGER_OPERATIONS);
+            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION);
         }
     }
 
+
     @Override
-    public List<ManagerSpendingOperation> getAllManagerOperationSpendingSortedByCommunalNameAndDate(String communalName) throws DaoAccessException {
+    public List<ManagerSpendingOperation> getAllManagerOperationSpendingSortedByCommunalNameAndDate(String communalName, Date start, Date end) throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_NAME_AND_DATE,
-                    new ManagerSpendingOperationMapper(), communalName);
+                    new ManagerSpendingOperationMapper(), communalName, start, end);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, e.getCause());
+            log.error("IN getAllManagerOperationSpendingSortedByCommunalNameAndDate " + EXCEPTION_GET_ALL_MANAGER_OPERATIONS);
+            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION);
         }
     }
 
@@ -59,9 +73,37 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
     public List<ManagerSpendingOperation> getAllManagerOperationSpendingSortedByCommunalName(String communalName) {
         try {
             return jdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_NAME, new ManagerSpendingOperationMapper()
-                    ,communalName);
+                    , communalName);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, e.getCause());
+            log.error("IN getAllManagerOperationSpendingSortedByCommunalName " + EXCEPTION_GET_ALL_MANAGER_OPERATIONS);
+            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION);
+        }
+
+    }
+
+    @Override
+    public List<ManagerSpendingOperation> getAllManagerOperationByDate(Date start, Date end) {
+        try {
+            return jdbcTemplate.query(GET_MANAGER_OPERATIONS_BY_DATE, new ManagerSpendingOperationMapper()
+                    , start, end);
+        } catch (DataAccessException e) {
+            log.error("IN getAllManagerOperationByDate " + EXCEPTION_GET_ALL_MANAGER_OPERATIONS);
+            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_OPERATIONS, ErrorCodes._FAIL_TO_INSERT_MANAGER_SPENDING_OPERATION);
+        }
+    }
+
+    @Override
+    public List<ManagerSpendingOperation> getAllManagerOperationByDateAndCommunalIdList(Date start, Date end, Set<BigInteger> communalIdList) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("communalId", communalIdList);
+        parameters.addValue("start", start);
+        parameters.addValue("end", end);
+        try {
+            return namedParameterJdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_LIST_NAME_AND_DATE, parameters, new ManagerSpendingOperationMapper());
+        } catch (DataAccessException e) {
+            log.error("IN getAllManagerOperationByDateAndCommunalNameList " + EXCEPTION_GET_MANAGER_OPERATIONS_BY_LIST_COMM_NAME_AND_DATE);
+            throw new DaoAccessException(EXCEPTION_GET_MANAGER_OPERATIONS_BY_LIST_COMM_NAME_AND_DATE,
+                    ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION);
         }
 
     }
@@ -73,7 +115,8 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
             return jdbcTemplate.queryForObject(GET_MANAGER_OPERATION_SPENDING_BY_ID,
                     new ManagerSpendingOperationMapper(), id);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_MANAGER_OPERATION_BY_ID, id, e.getCause());
+            log.error("IN getManagerOperationSpendingById " + EXCEPTION_GET_MANAGER_OPERATION_BY_ID);
+            throw new DaoAccessException(EXCEPTION_GET_MANAGER_OPERATION_BY_ID, id, ErrorCodes._FAIL_TO_SELECT);
         }
     }
 
@@ -83,7 +126,8 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
             jdbcTemplate.update(UPDATE_MANAGER_OPERATION, managerOperationSpending.getDescription()
                     , managerOperationSpending.getSum().toString(), managerOperationSpending.getOperationId());
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_UPDATE_MANAGER_OPERATION, e.getCause());
+            log.error("IN updateManagerOperationSpending " + EXCEPTION_UPDATE_MANAGER_OPERATION);
+            throw new DaoAccessException(EXCEPTION_UPDATE_MANAGER_OPERATION, ErrorCodes._FAIL_TO_UPDATE_MANAGER_SPENDING_OPERATION);
         }
 
     }
@@ -94,7 +138,8 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
             jdbcTemplate.update(CREATE_MANAGER_OPERATION_SPENDING, managerOperationSpending.getDescription(),
                     managerOperationSpending.getSum(), managerOperationSpending.getManagerSubBill().getSubBillId());
         } catch (DaoAccessException e) {
-            throw new DaoAccessException(EXCEPTION_INSERT_MANAGER_OPERATION, e.getCause());
+            log.error("IN createManagerOperationSpending" + EXCEPTION_INSERT_MANAGER_OPERATION);
+            throw new DaoAccessException(EXCEPTION_INSERT_MANAGER_OPERATION, ErrorCodes._FAIL_TO_INSERT_MANAGER_SPENDING_OPERATION);
         }
 
     }

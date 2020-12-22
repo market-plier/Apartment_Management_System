@@ -2,6 +2,7 @@ package com.netcracker.services;
 
 import com.netcracker.models.Account;
 import com.netcracker.secutity.jwt.JwtTokenProvider;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@Slf4j
+@Log4j
 public class AuthenticationService {
 
 
