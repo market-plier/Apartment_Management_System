@@ -47,7 +47,6 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
         } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_GET_COMMUNAL_UTILITY_BY_ID, e.getCause());
         }
-
     }
 
     @Override
@@ -62,14 +61,17 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     @Override
     public void updateCommunalUtility(CommunalUtility communalUtility) {
         try {
-            jdbcTemplate.update(updateCommunalUtility, communalUtility.getName(),
+            jdbcTemplate.update(updateCommunalUtility,
+                    communalUtility.getName(),
                     communalUtility.getDurationType().getDurationCode(),
                     communalUtility.getStatus().getStatusCode(),
                     communalUtility.getDeadline(),
                     communalUtility.getCommunalUtilityId());
-            jdbcTemplate.update(updateCommunalUtilityReference,
-                    communalUtility.getCalculationMethod().getCalculationMethodId(),
-                    communalUtility.getCommunalUtilityId());
+            if (communalUtility.getCalculationMethod() != null) {
+                jdbcTemplate.update(updateCommunalUtilityReference,
+                        communalUtility.getCalculationMethod().getCalculationMethodId(),
+                        communalUtility.getCommunalUtilityId());
+            }
         } catch (DataAccessException e) {
             throw new DaoAccessException(EXCEPTION_UPDATE_COMMUNAL_UTILITY, e.getCause());
         }
@@ -79,6 +81,35 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     public void createCommunalUtility(CommunalUtility communalUtility) {
         try {
             jdbcTemplate.update(createCommunalUtility,
+                    communalUtility.getCalculationMethod().
+                            getCalculationMethodId(),
+                    communalUtility.getName(),
+                    communalUtility.getDurationType().getDurationCode(),
+                    communalUtility.getStatus().getStatusCode(),
+                    communalUtility.getDeadline()
+            );
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_CREATE_COMMUNAL_UTILITIES, e.getCause());
+        }
+    }
+
+    @Override
+    public CommunalUtility getUniqueCommunalUtility(CommunalUtility communalUtility) {
+        try {
+            return jdbcTemplate.queryForObject(getCommunalUtilityUnique, new CommunalUtilityMapper(),
+                    communalUtility.getName(),
+                    communalUtility.getStatus().getStatusCode(),
+                    communalUtility.getDeadline(),
+                    communalUtility.getDurationType().getDurationCode());
+        } catch (DataAccessException e) {
+            throw new DaoAccessException(EXCEPTION_GET_COMMUNAL_UTILITY_BY_ID, e.getCause());
+        }
+    }
+
+    @Override
+    public void createCommunalUtilityWithRef(CommunalUtility communalUtility) {
+        try {
+            jdbcTemplate.update(createCommunalUtilityWithRef,
                     communalUtility.getCalculationMethod().
                             getCalculationMethodId(),
                     communalUtility.getName(),

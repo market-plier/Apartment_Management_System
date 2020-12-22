@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface CommunalUtilityDao {
 
-    //getAllCommunalUtilitiesWithCalculationMethod using OBJREFERENCE
     String getAllCommunalUtilitiesWithCalculationMethod = "select com_util_obj.OBJECT_ID com_util_id,\n" +
             "com_util_name.VALUE com_util_name,\n" +
             "com_util_status_list.VALUE com_util_status,\n" +
@@ -73,7 +72,6 @@ public interface CommunalUtilityDao {
             "    and com_util_durtype_list.attr_id=22\n" +
             "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n";
 
-    //getCommunalUtilityByIdWithCalculationMethod with OBJREFERENCE
     String getCommunalUtilityWithCalculationMethodById = "select com_util_obj.OBJECT_ID com_util_id,\n" +
             "com_util_name.VALUE com_util_name,\n" +
             "com_util_status_list.VALUE com_util_status,\n" +
@@ -140,7 +138,39 @@ public interface CommunalUtilityDao {
             "    and com_util_durtype_list.attr_id=22\n" +
             "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n";
 
-    String createCommunalUtility = "insert all\n" +
+    String getCommunalUtilityUnique = "select com_util_obj.OBJECT_ID com_util_id,\n" +
+            "com_util_name.VALUE com_util_name,\n" +
+            "com_util_status_list.VALUE com_util_status,\n" +
+            "com_util_dline.date_value com_util_dline,\n" +
+            "com_util_durtype_list.Value com_util_durtype\n" +
+            "    from\n" +
+            "    OBJECTS com_util_obj,\n" +
+            "    ATTRIBUTES com_util_name,\n" +
+            "    LISTS com_util_status_list,\n" +
+            "    ATTRIBUTES com_util_status,\n" +
+            "    ATTRIBUTES com_util_dline,\n" +
+            "    LISTS com_util_durtype_list,\n" +
+            "    ATTRIBUTES com_util_durtype\n" +
+            "    where\n" +
+            "    and com_util_name.attr_id=21\n" +
+            "    and com_util_name.Value=?\n" +
+            "    and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
+            "    and com_util_status.attr_id=23\n" +
+            "    and com_util_status.object_id = com_util_obj.OBJECT_ID\n" +
+            "    and com_util_status_list.attr_id=23\n" +
+            "    and com_util_status_list.list_value_id=?\n" +
+            "    and com_util_status.list_value_id = com_util_status_list.list_value_id\n" +
+            "    and com_util_dline.attr_id = 24\n" +
+            "    and com_util_dline.date_value = ?\n" +
+            "    and com_util_dline.object_id=com_util_obj.object_id\n" +
+            "    and com_util_durtype.attr_id=22\n" +
+            "    and com_util_durtype.object_id = com_util_obj.OBJECT_ID\n" +
+            "    and com_util_durtype_list.attr_id=22\n" +
+            "    and com_util_durtype_list.list_value_id=?\n" +
+            "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n";
+
+
+    String createCommunalUtilityWithRef = "insert all\n" +
             "into OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)\n" +
             "VALUES (OBJ_ID_SEQ.nextval ,? ,11 , null,null )\n" +
             "into ATTRIBUTES (attr_id, object_id, value, date_value, list_value_id)\n" +
@@ -153,6 +183,19 @@ public interface CommunalUtilityDao {
             "values (24 ,OBJ_ID_SEQ.currval,null,?,null )\n" +
             "into OBJREFERENCE (ATTR_ID, OBJECT_ID, REFERENCE)\n" +
             "values (39 ,OBJ_ID_SEQ.currval, ?)\n" +
+            "select * from dual";
+
+    String createCommunalUtility = "insert all\n" +
+            "into OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)\n" +
+            "VALUES (OBJ_ID_SEQ.nextval ,? ,11 , null,null )\n" +
+            "into ATTRIBUTES (attr_id, object_id, value, date_value, list_value_id)\n" +
+            "values (21 ,OBJ_ID_SEQ.currval,? ,null,null )\n" +
+            "into ATTRIBUTES (attr_id, object_id, value, date_value, list_value_id)\n" +
+            "values (22 ,OBJ_ID_SEQ.currval,null,null,? )\n" +
+            "into ATTRIBUTES (attr_id, object_id, value, date_value, list_value_id)\n" +
+            "values (23 ,OBJ_ID_SEQ.currval,null,null,? )\n" +
+            "into ATTRIBUTES (attr_id, object_id, value, date_value, list_value_id)\n" +
+            "values (24 ,OBJ_ID_SEQ.currval,null,?,null )\n" +
             "select * from dual";
 
     String updateCommunalUtility = "merge into ATTRIBUTES x\n" +
@@ -195,4 +238,8 @@ public interface CommunalUtilityDao {
     void updateCommunalUtility(CommunalUtility communalUtility);
 
     void createCommunalUtility(CommunalUtility communalUtility);
+
+    CommunalUtility getUniqueCommunalUtility(CommunalUtility communalUtility);
+
+    void createCommunalUtilityWithRef(CommunalUtility communalUtility);
 }
