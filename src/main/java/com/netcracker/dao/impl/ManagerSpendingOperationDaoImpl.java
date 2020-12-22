@@ -116,7 +116,7 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
                     new ManagerSpendingOperationMapper(), id);
         } catch (DataAccessException e) {
             log.error("IN getManagerOperationSpendingById " + EXCEPTION_GET_MANAGER_OPERATION_BY_ID);
-            throw new DaoAccessException(EXCEPTION_GET_MANAGER_OPERATION_BY_ID, id, ErrorCodes._FAIL_TO_SELECT);
+            throw new DaoAccessException(EXCEPTION_GET_MANAGER_OPERATION_BY_ID, id, ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION);
         }
     }
 
