@@ -4,6 +4,7 @@ import com.netcracker.dao.HouseVotingDao;
 import com.netcracker.dao.mapper.HouseVotingMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.HouseVoting;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
+@Slf4j
 @Repository
 @Transactional
 public class HouseVotingDaoImpl implements HouseVotingDao {
@@ -24,6 +26,7 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
             HouseVoting houseVoting = jdbcTemplate.queryForObject(GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID, new HouseVotingMapper(), id);
             return houseVoting;
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID, id, e.getCause());
         }
     }
@@ -36,6 +39,7 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
             jdbcTemplate.update(CREATE_HOUSE_VOTING_ATTRIBUTES,
                     houseVoting.getTitle());
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_CREATE_HOUSE_VOTING, e.getCause());
         }
     }
@@ -45,6 +49,7 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
         try {
             jdbcTemplate.update(DELETE_HOUSE_VOTING, id);
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_DELETE_HOUSE_VOTING, id, e.getCause());
         }
     }

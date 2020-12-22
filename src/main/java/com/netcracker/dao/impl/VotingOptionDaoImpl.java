@@ -5,6 +5,7 @@ import com.netcracker.dao.mapper.VotingOptionMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Account;
 import com.netcracker.models.VotingOption;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.Collection;
 
+@Slf4j
 @Repository
 @Transactional
 public class VotingOptionDaoImpl implements VotingOptionDao {
@@ -21,10 +23,11 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger id) throws DaoAccessException {
+    public Collection<VotingOption> getAllVotingOptionsByHouseVotingId(BigInteger id) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID, new VotingOptionMapper(), id);
+            return jdbcTemplate.query(GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID, new VotingOptionMapper(), id);
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID, id, e.getCause());
         }
 
@@ -38,18 +41,20 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
             jdbcTemplate.update(CREATE_VOTING_OPTION_ATTRIBUTES,
                     votingOption.getName());
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_CREATE_VOTING_OPTION, e.getCause());
         }
     }
 
     @Override
-    public void addVotedAccount(VotingOption votingOption, Account account) throws DaoAccessException {
+    public void addVote(BigInteger votingOptionId, BigInteger accountId) throws DaoAccessException {
         try {
-        jdbcTemplate.update(ADD_VOTED_ACCOUNT,
-                votingOption.getVotingOptionId(),
-                account.getAccountId());
+        jdbcTemplate.update(ADD_VOTE,
+                votingOptionId,
+                accountId);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_ADD_VOTED_ACCOUNT, votingOption.getVotingOptionId(), e.getCause());
+            log.error(e.getMessage(), e);
+            throw new DaoAccessException(EXCEPTION_ADD_VOTED_ACCOUNT, votingOptionId, e.getCause());
         }
     }
 }

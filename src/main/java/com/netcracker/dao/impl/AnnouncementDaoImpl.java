@@ -4,6 +4,7 @@ import com.netcracker.dao.AnnouncementDao;
 import com.netcracker.dao.mapper.AnnouncementMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Announcement;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static com.netcracker.dao.CommentDao.GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID;
 
+@Slf4j
 @Repository
 @Transactional
 public class AnnouncementDaoImpl implements AnnouncementDao {
@@ -26,6 +28,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
         try {
             return jdbcTemplate.query(GET_ALL_ANNOUNCEMENTS, new AnnouncementMapper());
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_GET_ALL_ANNOUNCEMENTS, e.getCause());
         }
     }
@@ -34,11 +37,9 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     public Announcement getAnnouncementById(BigInteger id) throws DaoAccessException {
         try {
             Announcement announcement = jdbcTemplate.queryForObject(GET_ANNOUNCEMENT_BY_ID, new AnnouncementMapper(), id);
-/*        if (announcement != null) {
-            announcement.setComments(jdbcTemplate.query(GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID, new CommentMapper(), id));
-        }*/
             return announcement;
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_GET_ANNOUNCEMENT_BY_ID, id, e.getCause());
         }
     }
@@ -53,6 +54,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
                     announcement.getIsOpened(),
                     announcement.getCreatedAt());
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_CREATE_ANNOUNCEMENT, e.getCause());
         }
     }
@@ -67,6 +69,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
                     announcement.getCreatedAt(),
                     announcement.getAnnouncementId());
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_UPDATE_ANNOUNCEMENT, announcement.getAnnouncementId(), e.getCause());
         }
     }
@@ -76,6 +79,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
         try {
             jdbcTemplate.update(DELETE_ANNOUNCEMENT, id);
         } catch (DataAccessException e) {
+            log.error(e.getMessage(), e);
             throw new DaoAccessException(EXCEPTION_DELETE_ANNOUNCEMENT, id, e.getCause());
         }
     }

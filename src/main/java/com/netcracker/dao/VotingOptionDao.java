@@ -8,14 +8,14 @@ import java.math.BigInteger;
 import java.util.Collection;
 
 public interface VotingOptionDao {
-    String GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID =
+    String GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID =
             "SELECT VOTING_OPTION.OBJECT_ID voting_option_id,\n" +
             "VOTING_OPTION_NAME.VALUE name,\n" +
             "HVOTING.OBJECT_ID house_voting_id\n" +
             "FROM OBJECTS VOTING_OPTION, OBJECTS HVOTING,\n" +
             "ATTRIBUTES VOTING_OPTION_NAME\n" +
             "    WHERE VOTING_OPTION.OBJECT_TYPE_ID = 6\n" +
-            "    AND HVOTING.PARENT_ID = ?\n" +
+            "    AND HVOTING.OBJECT_ID = ?\n" +
             "    AND VOTING_OPTION.PARENT_ID = HVOTING.OBJECT_ID\n" +
             "    AND VOTING_OPTION_NAME.ATTR_ID = 14\n" +
             "    AND VOTING_OPTION_NAME.OBJECT_ID = VOTING_OPTION.OBJECT_ID";
@@ -45,7 +45,7 @@ public interface VotingOptionDao {
             "   INSERT(old.ATTR_ID, old.OBJECT_ID, old.VALUE)\n" +
             "   VALUES(new.ATTR_ID, new.OBJECT_ID, new.VALUE);";
 
-    String ADD_VOTED_ACCOUNT =
+    String ADD_VOTE =
             "MERGE INTO OBJREFERENCE old\n" +
             "USING (SELECT 30 ATTR_ID, ? OBJECT_ID, ? REFERENCE FROM DUAL) new\n" +
             "ON (old.ATTR_ID = new.ATTR_ID AND old.OBJECT_ID = new.OBJECT_ID)\n" +
@@ -60,9 +60,9 @@ public interface VotingOptionDao {
     String EXCEPTION_CREATE_VOTING_OPTION = "Can't create voting option";
     String EXCEPTION_ADD_VOTED_ACCOUNT = "Can't add vote reference with voting option id: ";
 
-    Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger id) throws DaoAccessException;
+    Collection<VotingOption> getAllVotingOptionsByHouseVotingId(BigInteger id) throws DaoAccessException;
 
     void createVotingOption(VotingOption votingOption) throws DaoAccessException;
 
-    void addVotedAccount(VotingOption votingOption, Account account) throws DaoAccessException;
+    void addVote(BigInteger votingOptionId, BigInteger accountId) throws DaoAccessException;
 }
