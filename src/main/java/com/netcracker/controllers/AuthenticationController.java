@@ -5,6 +5,7 @@ import com.netcracker.controllers.request.AuthenticationRequest;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Account;
 import com.netcracker.services.AuthenticationService;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 @RestController
 @Validated
 @RequestMapping(value = "/auth/")
-@Slf4j
+@Log4j
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -32,17 +33,10 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value="login",method= RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationRequest authenticationRequest)
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationRequest authenticationRequest) throws DaoAccessException,AuthenticationException
     {
-
-        try {
             return ResponseEntity.ok(authenticationService.login(authenticationRequest.getEmail()
                     ,authenticationRequest.getPassword()));
-        } catch (NullPointerException | DaoAccessException | AuthenticationException e) {
-            log.error(e.getMessage(),e);
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
-
-        }
     }
 
     @RequestMapping(value="logout",method= RequestMethod.POST)

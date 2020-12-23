@@ -24,7 +24,6 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
     private Apartment apartment;
 
     public ApartmentsDebtsPdfBuilder(List<ApartmentSubBill> apartmentDebtsList ,Apartment apartment) {
-        super();
         this.apartment = apartment;
         this.apartmentDebtsList = apartmentDebtsList;
     }
@@ -47,7 +46,7 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
     {
 
 
-            Document document = new Document(PageSize.A5);
+            Document document = new Document(PageSize.A4);
             PdfWriter.getInstance(document, out);
             document.open();
             Font font = FontFactory.getFont(FontFactory.COURIER);
@@ -79,7 +78,7 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
             writeTableHeader(table, headerArr);
             writeTableData(table);
             document.add(table);
-            Paragraph totalAmount = new Paragraph("Total Dept: " + sumDept);
+            Paragraph totalAmount = new Paragraph("Total Debt: " + sumDept);
             totalAmount.setSpacingBefore(10f);
             document.add(totalAmount);
             DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");

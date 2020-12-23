@@ -4,6 +4,7 @@ import com.netcracker.dao.CommentDao;
 import com.netcracker.dao.Constants;
 import com.netcracker.dao.mapper.CommentMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.Comment;
 import lombok.extern.log4j.Log4j;
@@ -34,11 +35,14 @@ public class CommentDaoImpl implements CommentDao {
         try {
             return jdbcTemplate.query(CommentDao.GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID, new CommentMapper(), announcementId);
         } catch (DataAccessException e) {
-            log.error("IN getAllCommentsByAnnouncementId: " + EXCEPTION_GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID);
-            throw new DaoAccessException(EXCEPTION_GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID, announcementId,
-                    ErrorCodes._FAIL_TO_SELECT_COMMENT);
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_COMMENT)
+                    .withMessage(EXCEPTION_GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("IN getAllCommentsByAnnouncementId: " + accessException.getMessage());
+            throw accessException;
         }
-
     }
 
     @Override
@@ -46,9 +50,13 @@ public class CommentDaoImpl implements CommentDao {
         try {
             return jdbcTemplate.queryForObject(GET_COMMENT_BY_ID, new CommentMapper(), commentId);
         } catch (DataAccessException e) {
-            log.error("IN getCommentById " + EXCEPTION_GET_COMMENT_BY_ID);
-            throw new DaoAccessException(EXCEPTION_GET_COMMENT_BY_ID, commentId,
-                    ErrorCodes._FAIL_TO_SELECT_COMMENT);
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_COMMENT)
+                    .withMessage(EXCEPTION_GET_COMMENT_BY_ID)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("IN getCommentById " + accessException.getMessage());
+            throw accessException;
         }
     }
 
@@ -57,11 +65,14 @@ public class CommentDaoImpl implements CommentDao {
         try {
             jdbcTemplate.update(UPDATE_COMMENT_BY_ID, comment.getBody(), comment.getCommentId());
         } catch (DataAccessException e) {
-            log.error("IN updateComment" + EXCEPTION_UPDATE_COMMENT);
-            throw new DaoAccessException(EXCEPTION_UPDATE_COMMENT, comment.getCommentId(),
-                    ErrorCodes._FAIL_TO_UPDATE_COMMENT);
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_UPDATE_COMMENT)
+                    .withMessage(EXCEPTION_UPDATE_COMMENT)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("IN updateComment" + accessException.getMessage());
+            throw accessException;
         }
-
     }
 
     @Override
@@ -77,8 +88,13 @@ public class CommentDaoImpl implements CommentDao {
                     Constants.COMMENT_ATTR_BODY_ID, comment.getBody(),
                     Constants.COMMENT_ATTR_CREATED_AT_ID);
         } catch (DataAccessException e) {
-            log.error("IN createComment: " + EXCEPTION_CREATE_COMMENT);
-            throw new DaoAccessException(EXCEPTION_CREATE_COMMENT, e.getCause());
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_COMMENT)
+                    .withMessage(EXCEPTION_CREATE_COMMENT)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("IN createComment: " + accessException.getMessage());
+            throw accessException;
         }
 
     }
@@ -88,9 +104,14 @@ public class CommentDaoImpl implements CommentDao {
         try {
             jdbcTemplate.update(DELETE_COMMENT, commentId);
         } catch (DataAccessException e) {
-            log.error("IN deleteComment: "+EXCEPTION_DELETE_COMMENT);
-            throw new DaoAccessException(EXCEPTION_DELETE_COMMENT, commentId, ErrorCodes._FAIL_TO_DELETE_COMMENT);
-        }
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_DELETE_COMMENT)
+                    .withMessage(EXCEPTION_DELETE_COMMENT)
+                    .withCause(e.getCause())
+                    .build();
 
+            log.error("IN deleteComment: "+accessException.getMessage());
+            throw accessException;
+        }
     }
 }

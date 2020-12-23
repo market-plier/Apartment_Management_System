@@ -7,10 +7,10 @@ public interface ErrorCodes {
     BigInteger APARTMENT_OPERATION_FAIL_TO_UPDATE = BigInteger.valueOf(172);
     BigInteger APARTMENT_OPERATION_FAIL_TO_SELECT = BigInteger.valueOf(173);
 
-    BigInteger _FAIL_TO_INSERT_COMMENT = BigInteger.valueOf(51);
-    BigInteger _FAIL_TO_UPDATE_COMMENT = BigInteger.valueOf(52);
-    BigInteger _FAIL_TO_SELECT_COMMENT = BigInteger.valueOf(53);
-    BigInteger _FAIL_TO_DELETE_COMMENT = BigInteger.valueOf(54);
+    BigInteger _FAIL_TO_INSERT_COMMENT = BigInteger.valueOf(41);
+    BigInteger _FAIL_TO_UPDATE_COMMENT = BigInteger.valueOf(42);
+    BigInteger _FAIL_TO_SELECT_COMMENT = BigInteger.valueOf(43);
+    BigInteger _FAIL_TO_DELETE_COMMENT = BigInteger.valueOf(44);
 
     BigInteger _FAIL_TO_INSERT_MANAGER_SPENDING_OPERATION = BigInteger.valueOf(181);
     BigInteger _FAIL_TO_UPDATE_MANAGER_SPENDING_OPERATION = BigInteger.valueOf(182);
@@ -35,4 +35,6 @@ public interface ErrorCodes {
 
 
     BigInteger _FAIL_TO_SELECT_ACCOUNT = BigInteger.valueOf(23);
+
+
 }
