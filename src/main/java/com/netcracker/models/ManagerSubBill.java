@@ -3,11 +3,13 @@ package com.netcracker.models;
 import lombok.Data;
 
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
 
 @Data
 public class ManagerSubBill extends SubBill {
+    @NotNull(message = "Manager cant be null")
     private Manager manager;
     private List<ManagerSpendingOperation> managerSpendingOperations;
     private List<DebtPaymentOperation> debtPaymentOperations;

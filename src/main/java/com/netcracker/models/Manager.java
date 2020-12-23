@@ -3,12 +3,14 @@ package com.netcracker.models;
 import lombok.Data;
 
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 
 @Data
 public class Manager extends Account {
 
+    @NotNull(message = "ManagerBill cannot be null")
     protected ManagerBill managerBill;
 
     public Manager(BigInteger accountId, String firstName, String lastName, String email,

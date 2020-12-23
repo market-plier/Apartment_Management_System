@@ -33,6 +33,15 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_UPDATE_COMMUNAL_UTILITY = BigInteger.valueOf(112);
     BigInteger _FAIL_TO_SELECT_COMMUNAL_UTILITY = BigInteger.valueOf(113);
 
+    BigInteger _FAIL_TO_INSERT_MANAGER_SUB_BILL = BigInteger.valueOf(141);
+    BigInteger _FAIL_TO_UPDATE_MANAGER_SUB_BILL = BigInteger.valueOf(142);
+    BigInteger _FAIL_TO_SELECT_MANAGER_SUB_BILL = BigInteger.valueOf(143);
+    BigInteger _FAIL_TO_DELETE_MANAGER_SUB_BILL = BigInteger.valueOf(144);
+
+    BigInteger _FAIL_TO_INSERT_MANAGER = BigInteger.valueOf(81);
+    BigInteger _FAIL_TO_UPDATE_MANAGER = BigInteger.valueOf(82);
+    BigInteger _FAIL_TO_SELECT_MANAGER = BigInteger.valueOf(83);
+    BigInteger _FAIL_TO_DELETE_MANAGER = BigInteger.valueOf(84);
 
     BigInteger _FAIL_TO_SELECT_ACCOUNT = BigInteger.valueOf(23);
 
