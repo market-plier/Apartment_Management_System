@@ -3,6 +3,7 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.ApartmentSubBillDao;
 import com.netcracker.dao.mapper.ApartmentSubBillMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.models.ApartmentSubBill;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Level;
@@ -16,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +26,7 @@ import java.util.Set;
 @Log4j
 public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -39,9 +39,12 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
     public List<ApartmentSubBill> getAllApartmentSubBills() throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_ALL_APARTMENT_SUB_BILLS, new ApartmentSubBillMapper());
-        } catch (
-                DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_GET_ALL_APARTMENT_SUB_BILLS, e.getCause());
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_ALL_APARTMENT_SUB_BILLS)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(133))
+                    .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
@@ -54,9 +57,13 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
             apartmentSubBill = jdbcTemplate.queryForObject(
                     GET_APARTMENT_SUB_BILL_BY_ID, new ApartmentSubBillMapper(), apartmentSubBillId);
             return apartmentSubBill;
-        } catch (
-                DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_GET_APARTMENT_SUB_BILL_BY_ID, e.getCause());
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_SUB_BILL_BY_ID)
+                    .withCause(e.getCause())
+                    .withId(apartmentSubBillId)
+                    .withErrorMessage(BigInteger.valueOf(133))
+                    .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
@@ -67,9 +74,13 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
         try {
             return jdbcTemplate.query(GET_ALL_APARTMENT_SUB_BILLS_BY_ACCOUNT_ID,
                     new ApartmentSubBillMapper(), accountId);
-        } catch (
-                DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_GET_ALL_APARTMENT_SUB_BILLS_BY_ACCOUNT_ID, e.getCause());
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_ALL_APARTMENT_SUB_BILLS_BY_ACCOUNT_ID)
+                    .withCause(e.getCause())
+                    .withId(accountId)
+                    .withErrorMessage(BigInteger.valueOf(133))
+                    .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
@@ -85,9 +96,12 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
                     apartmentSubBill.getDebt());
             jdbcTemplate.update(CREATE_APARTMENT_SUB_BILL_REFERENCE,
                     apartmentSubBill.getApartment().getAccountId());
-        } catch (
-                DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_CREATE_APARTMENT_SUB_BILL, e.getCause());
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_CREATE_APARTMENT_SUB_BILL)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(131))
+                    .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
@@ -103,7 +117,11 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
             return namedParameterJdbcTemplate.query(GET_APARTMENT_SUB_BILLS_BY_COMMUNAL_UTILS_LIST,
                     parameters, new ApartmentSubBillMapper());
         } catch (DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_GET_APARTMENT_SUB_BILLS_BY_COMMUNAL_UTILS_LIST, e.getCause());
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_SUB_BILLS_BY_COMMUNAL_UTILS_LIST)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(133))
+                    .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
@@ -119,7 +137,12 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
             return namedParameterJdbcTemplate.queryForObject(GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST,
                      parameters,Double.class);
         } catch (DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST, e.getCause());
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_DEBT_BY_COMMUNAL_UTILS_LIST)
+                    .withCause(e.getCause())
+                    .withId(accountId)
+                    .withErrorMessage(BigInteger.valueOf(133))
+                    .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }
@@ -134,7 +157,12 @@ public class ApartmentSubBillDaoImpl implements ApartmentSubBillDao {
                     apartmentSubBill.getSubBillId());
         } catch (
                 DataAccessException e) {
-            e = new DaoAccessException(EXCEPTION_UPDATE_APARTMENT_SUB_BILL, e.getCause());
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_UPDATE_APARTMENT_SUB_BILL)
+                    .withCause(e.getCause())
+                    .withId(apartmentSubBill.getSubBillId())
+                    .withErrorMessage(BigInteger.valueOf(132))
+                    .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
         }

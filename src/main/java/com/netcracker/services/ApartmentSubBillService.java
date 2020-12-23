@@ -65,7 +65,7 @@ public class ApartmentSubBillService {
     }
 
     public void addApartmentSubBillsToApartment(Apartment apartment) {
-        for (CommunalUtility communalUtility : communalUtilityService.getAllCommunalUtilities()) {
+        for (CommunalUtility communalUtility : communalUtilityService.getAllCommunalUtilities(CommunalUtility.Status.Enabled)) {
             apartmentSubBillDao.createApartmentSubBill(new ApartmentSubBillBuilder()
                     .withApartment(apartment)
                     .withCommunalUtility(communalUtility)

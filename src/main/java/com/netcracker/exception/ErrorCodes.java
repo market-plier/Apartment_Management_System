@@ -22,6 +22,13 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_SELECT_MANAGER_BILL = BigInteger.valueOf(93);
     BigInteger _FAIL_TO_DELETE_MANAGER_BILL = BigInteger.valueOf(94);
 
+    BigInteger _FAIL_TO_INSERT_APARTMENT_SUB_BILL = BigInteger.valueOf(131);
+    BigInteger _FAIL_TO_UPDATE_APARTMENT_SUB_BILL = BigInteger.valueOf(132);
+    BigInteger _FAIL_TO_SELECT_APARTMENT_SUB_BILL = BigInteger.valueOf(133);
+
+    BigInteger _FAIL_TO_INSERT_APARTMENT = BigInteger.valueOf(71);
+    BigInteger _FAIL_TO_UPDATE_APARTMENT_ = BigInteger.valueOf(72);
+    BigInteger _FAIL_TO_SELECT_APARTMENT = BigInteger.valueOf(73);
     BigInteger _FAIL_TO_INSERT_COMMUNAL_UTILITY = BigInteger.valueOf(111);
     BigInteger _FAIL_TO_UPDATE_COMMUNAL_UTILITY = BigInteger.valueOf(112);
     BigInteger _FAIL_TO_SELECT_COMMUNAL_UTILITY = BigInteger.valueOf(113);
