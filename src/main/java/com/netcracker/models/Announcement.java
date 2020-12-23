@@ -3,6 +3,8 @@ package com.netcracker.models;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -10,10 +12,17 @@ import java.util.List;
 @Data
 public class Announcement {
     private BigInteger announcementId;
+
+    @NotBlank(message = "Announcement title cannot be empty")
     private String title;
+
     private String body;
     private Boolean isOpened;
+
+
+    @PastOrPresent(message = "Future date cannot be set")
     private Date createdAt;
+
     private List<Comment> comments;
     private HouseVoting houseVoting;
 
