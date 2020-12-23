@@ -35,7 +35,7 @@ public class ManagerOperationSpendingService {
             ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBill(managerSpendingOperation.getManagerSubBill().getSubBillId());
             if (managerSubBill.getBalance() >= managerSpendingOperation.getSum()) {
                 managerSpendingOperationDao.createManagerOperationSpending(managerSpendingOperation);
-                managerSubBillService.updateManagerSubBillbyManagerOperation(managerSpendingOperation);
+                managerSubBillService.updateManagerSubBillByManagerOperation(managerSpendingOperation);
             }
 
         } catch (NullPointerException e) {
