@@ -3,28 +3,49 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.ManagerSubBillDao;
 import com.netcracker.dao.mapper.ManagerSubBillMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.models.ManagerSubBill;
+import lombok.extern.log4j.Log4j;
+import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
-import java.util.Collection;
+import java.util.*;
 
+@Log4j
 @Repository
 @Transactional
 public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
+
+    private final JdbcTemplate jdbcTemplate;
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    public ManagerSubBillDaoImpl(DataSource dataSource) {
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
 
     @Override
     public Collection<ManagerSubBill> getAllManagerSubBills() throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_ALL_MANAGER_SUB_BILL, new ManagerSubBillMapper());
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_ALL_MANAGER_SUB_BILL, e.getCause());
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_ALL_MANAGER_SUB_BILL)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(143))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -34,7 +55,14 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
             ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_ID, new ManagerSubBillMapper(), id);
             return managerSubBill;
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_MANAGER_SUB_BILL_BY_ID, e.getCause());
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_MANAGER_SUB_BILL_BY_ID)
+                    .withId(id)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(143))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -44,7 +72,41 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
             ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID, new ManagerSubBillMapper(), id);
             return managerSubBill;
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID, e.getCause());
+            log.error("IN getManagerSubBillByCommunalUtilityId: " + EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID);
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID)
+                    .withId(id)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(143))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @Override
+    public Map<ManagerSubBill, Double> getManagerSubBillDeptByCommunalUtility(Set<BigInteger> communalUtilityId) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("communal_list", communalUtilityId);
+
+        try {
+            return namedParameterJdbcTemplate.query(ALL_APARTMENT_SUB_BILLS_DEBT_BY_COMMUNAL_UTILS_LIST, parameters, rs -> {
+                Map<ManagerSubBill, Double> managerSubBillMap = new HashMap<>();
+                while (rs.next()) {
+                    ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID,
+                            new ManagerSubBillMapper(), rs.getInt("communal_util_id"));
+                    managerSubBillMap.put(managerSubBill, rs.getDouble("debt"));
+                }
+                return managerSubBillMap;
+            });
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_MANAGER_SUB_BILLS_BY_COMMUNAL_UTILS_LIST)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(143))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -55,7 +117,14 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
                     managerSubBill.getBalance(),
                     managerSubBill.getSubBillId());
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_UPDATE_MANAGER_SUB_BILL, e.getCause());
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_UPDATE_MANAGER_SUB_BILL)
+                    .withId(managerSubBill.getSubBillId())
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(142))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -69,7 +138,14 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
             jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_REFERENCE,
                     managerSubBill.getManager().getAccountId());
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_INSERT_MANAGER_SUB_BILL, e.getCause());
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_INSERT_MANAGER_SUB_BILL)
+                    .withId(managerSubBill.getSubBillId())
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(141))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
         }
     }
 }
