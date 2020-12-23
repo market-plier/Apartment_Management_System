@@ -56,13 +56,22 @@ public interface VotingOptionDao {
             "   INSERT(old.ATTR_ID,old.OBJECT_ID, old.REFERENCE)\n" +
             "   VALUES(new.ATTR_ID,new.OBJECT_ID, new.REFERENCE);";
 
-    String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID = "Can't get voting option with this announcement id: ";
+    String GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID =
+            "SELECT VOTE.REFERENCE\n" +
+            "FROM OBJREFERENCE VOTE\n" +
+            "WHERE VOTE.ATTR_ID = 30\n" +
+            "AND VOTE.OBJECT_ID = ?;";
+
+    String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID = "Can't get voting option with this house voting id: ";
     String EXCEPTION_CREATE_VOTING_OPTION = "Can't create voting option";
     String EXCEPTION_ADD_VOTED_ACCOUNT = "Can't add vote reference with voting option id: ";
+    String EXCEPTION_GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID = "Can't get apartment ids with this voting option id: ";
 
     Collection<VotingOption> getAllVotingOptionsByHouseVotingId(BigInteger id) throws DaoAccessException;
 
     void createVotingOption(VotingOption votingOption) throws DaoAccessException;
 
     void addVote(BigInteger votingOptionId, BigInteger accountId) throws DaoAccessException;
+
+    Collection<BigInteger> getApartmentIdsByVotingOptionId(BigInteger id) throws DaoAccessException;
 }

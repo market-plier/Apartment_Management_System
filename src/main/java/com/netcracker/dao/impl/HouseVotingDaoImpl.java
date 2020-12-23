@@ -4,7 +4,7 @@ import com.netcracker.dao.HouseVotingDao;
 import com.netcracker.dao.mapper.HouseVotingMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.HouseVoting;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
-@Slf4j
+@Log4j
 @Repository
 @Transactional
 public class HouseVotingDaoImpl implements HouseVotingDao {

@@ -4,7 +4,7 @@ import com.netcracker.dao.AnnouncementDao;
 import com.netcracker.dao.mapper.AnnouncementMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Announcement;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,9 +14,7 @@ import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.List;
 
-import static com.netcracker.dao.CommentDao.GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID;
-
-@Slf4j
+@Log4j
 @Repository
 @Transactional
 public class AnnouncementDaoImpl implements AnnouncementDao {

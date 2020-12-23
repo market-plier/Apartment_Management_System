@@ -1,10 +1,13 @@
 package com.netcracker.services;
 
+import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Account;
 import com.netcracker.models.Announcement;
 import com.netcracker.models.CommunalUtility;
 import com.netcracker.models.NotificationBuildInfo;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -15,6 +18,7 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Log4j
 @Service
 public class NotificationService {
     @Autowired
@@ -41,33 +45,45 @@ public class NotificationService {
         );
     }
 
-    public void sendAnnouncementNotificationToAllApartments(Announcement announcement) {
-        for (Account account: apartmentInfoService.getAllApartments()) {
-            mailService.sendMessage(
-                    account.getEmail(),
-                    announcementNotification.getTitle()  + LocalDate.now(),
-                    announcementNotification.getBody() + announcement.getTitle()
-            );
+    public void sendAnnouncementNotificationToAllApartments(Announcement announcement)
+            throws MailException, DaoAccessException, NullPointerException {
+        try {
+            for (Account account : apartmentInfoService.getAllApartments()) {
+                mailService.sendMessage(
+                        account.getEmail(),
+                        announcementNotification.getTitle() + LocalDate.now(),
+                        announcementNotification.getBody() + announcement.getTitle()
+                );
+            }
+        } catch (NullPointerException e) {
+            log.error("NotificationService method sendAnnouncementNotificationToAllApartments: " + e.getMessage(), e);
+            throw e;
         }
     }
 
-    public void sendDebtNotificationToAllApartment() throws IOException, MessagingException {
-        for (Account account: apartmentInfoService.getAllApartments()) {
-            //TODO getAllCommunalUtilitiesByStatus
-            Set<BigInteger> communalUtilityIds = communalUtilityService.getAllCommunalUtilities()
-                    .stream()
-                    .map(CommunalUtility::getCommunalUtilityId)
-                    .collect(Collectors.toSet());
+    public void sendDebtNotificationToAllApartments()
+            throws IOException, MessagingException, DaoAccessException, NullPointerException {
+        try {
+            for (Account account : apartmentInfoService.getAllApartments()) {
+                Set<BigInteger> communalUtilityIds = communalUtilityService
+                        .getAllCommunalUtilities(CommunalUtility.Status.Enabled)
+                        .stream()
+                        .map(CommunalUtility::getCommunalUtilityId)
+                        .collect(Collectors.toSet());
 
-            ByteArrayInputStream arrayInputStream = reportService
-                    .createApartmentDebtReportByCommunalID(account.getAccountId(),communalUtilityIds);
+                ByteArrayInputStream arrayInputStream = reportService
+                        .createApartmentDebtReportByCommunalID(account.getAccountId(), communalUtilityIds);
 
-            mailService.sendMessageWithAttachment(
-                    account.getEmail(),
-                    debtNotification.getTitle() + LocalDate.now(),
-                    debtNotification.getBody(),
-                    "ApartmentDebtsBy" + LocalDate.now(),
-                    arrayInputStream);
+                mailService.sendMessageWithAttachment(
+                        account.getEmail(),
+                        debtNotification.getTitle() + LocalDate.now(),
+                        debtNotification.getBody(),
+                        "ApartmentDebtsBy" + LocalDate.now(),
+                        arrayInputStream);
+            }
+        } catch (NullPointerException e) {
+            log.error("NotificationService method sendDebtNotificationToAllApartments: " + e.getMessage(), e);
+            throw e;
         }
     }
 }
