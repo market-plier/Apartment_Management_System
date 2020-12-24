@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,7 @@ public class NotificationService {
 
     private NotificationBuildInfo announcementNotification;
     private NotificationBuildInfo debtNotification;
+    private NotificationBuildInfo tempCommunalUtilityNotification;
 
     public NotificationService() {
         announcementNotification = new NotificationBuildInfo(
@@ -42,6 +44,11 @@ public class NotificationService {
         debtNotification = new NotificationBuildInfo(
                 "Debts by ",
                 "Please, review debts report of your apartment to date. "
+        );
+
+        tempCommunalUtilityNotification = new NotificationBuildInfo(
+                "New Temporary Communal Utility - ",
+                "Please, review new debts of your apartment to date. "
         );
     }
 
@@ -77,12 +84,35 @@ public class NotificationService {
                 mailService.sendMessageWithAttachment(
                         account.getEmail(),
                         debtNotification.getTitle() + LocalDate.now(),
-                        debtNotification.getBody(),
+                        debtNotification.getBody() + '\n' + LocalDate.now(),
                         "ApartmentDebtsBy" + LocalDate.now(),
                         arrayInputStream);
             }
         } catch (NullPointerException e) {
             log.error("NotificationService method sendDebtNotificationToAllApartments: " + e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    public void sendTempCommunalUtilityNotificationToAllApartments(CommunalUtility communalUtility)
+            throws IOException, MessagingException, DaoAccessException, NullPointerException {
+        try {
+            for (Account account : apartmentInfoService.getAllApartments()) {
+                ByteArrayInputStream arrayInputStream = reportService
+                        .createApartmentDebtReportByCommunalID(
+                                account.getAccountId(),
+                                new HashSet<BigInteger>() {{ add(communalUtility.getCommunalUtilityId()); }}
+                                );
+
+                mailService.sendMessageWithAttachment(
+                        account.getEmail(),
+                        tempCommunalUtilityNotification.getTitle() + communalUtility.getName(),
+                        tempCommunalUtilityNotification.getBody() + '\n' + LocalDate.now(),
+                        communalUtility.getName() + "ApartmentDebtsBy" + LocalDate.now(),
+                        arrayInputStream);
+            }
+        } catch (NullPointerException e) {
+            log.error("NotificationService method sendTempCommunalUtilityNotificationToAllApartments: " + e.getMessage(), e);
             throw e;
         }
     }
