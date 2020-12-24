@@ -5,9 +5,12 @@ import com.netcracker.controllers.web.ResponseEntityBuilder;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.secutity.jwt.JwtAuthenticationException;
+import com.netcracker.services.AuthenticationService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -77,9 +80,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status = HttpStatus.BAD_REQUEST;
             NullPointerException nullPointerException = (NullPointerException) ex;
             return handleNullPointerException(nullPointerException, headers, status, request);
-        } else if (ex instanceof JwtAuthenticationException) {
+        } else if (ex instanceof AuthenticationServiceException) {
             HttpStatus status = HttpStatus.FORBIDDEN;
-            JwtAuthenticationException authenticationException = (JwtAuthenticationException) ex;
+            AuthenticationServiceException authenticationException = (AuthenticationServiceException) ex;
             return handleJwtAccessException(authenticationException,headers,status,request);
         }
         else {
@@ -98,10 +101,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    protected ResponseEntity<ApiError> handleJwtAccessException(JwtAuthenticationException ex, HttpHeaders headers,
+    protected ResponseEntity<ApiError> handleJwtAccessException(AuthenticationServiceException ex, HttpHeaders headers,
                                                                 HttpStatus status, WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
-        return handleExceptionInternal(ex, new ApiError(LocalDateTime.now(), status, "TOKEN IS WRONG OR INSPIRED", errors), headers, status, request);
+        return handleExceptionInternal(ex, new ApiError(LocalDateTime.now(), status, "PASSWORD IS WRONG", errors), headers, status, request);
     }
 
 

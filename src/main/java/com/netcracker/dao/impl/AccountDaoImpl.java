@@ -45,18 +45,17 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public Account getAccountByEmail(String email) throws DaoAccessException {
+    public Account getAccountByEmail(String email) throws DataAccessException {
         try {
             return jdbcTemplate.queryForObject(GET_ACCOUNT_BY_EMAIL, new AccountMapper(), email);
         } catch (DataAccessException e) {
             DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_ACCOUNT)
-                    .withMessage(EXCEPTION_GET_ACCOUNT_BY_EMAIL)
+                    .withMessage(EXCEPTION_GET_ACCOUNT_BY_EMAIL + email)
                     .withCause(e.getCause())
                     .build();
             log.error("getAccountByEmail " + accessException.getMessage(), e);
             throw accessException;
         }
-
     }
 }

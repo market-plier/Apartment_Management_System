@@ -8,6 +8,7 @@ import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.ManagerSpendingOperation;
 import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,13 +41,13 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
     public List<ManagerSpendingOperation> getAllManagerOperationSpendingByManagerSubBill(BigInteger id) throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_ALL_MANAGER_OPERATION_BY_SUBBILL_ID, new ManagerSpendingOperationMapper(), id);
-        } catch (DataAccessException accessException) {
-            accessException =  new DaoAccessExceptionBuilder().withId(id)
+        } catch (DataAccessException e) {
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder().withId(id)
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_ALL_MANAGER_OPERATIONS)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN getAllManagerOperationSpendingByManagerSubBill " + accessException.getMessage(),accessException);
+            log.error("IN getAllManagerOperationSpendingByManagerSubBill " + accessException.getMessage());
             throw accessException;
         }
 
@@ -56,13 +57,13 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
     public List<ManagerSpendingOperation> getAllManagerOperationSpending() throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_ALL_MANAGER_OPERATION, new ManagerSpendingOperationMapper());
-        } catch (DataAccessException accessException) {
-           accessException =  new DaoAccessExceptionBuilder()
+        } catch (DataAccessException e) {
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_ALL_MANAGER_OPERATIONS)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN getAllManagerOperationSpending " + accessException.getMessage(), accessException);
+            log.error("IN getAllManagerOperationSpending " + accessException.getMessage());
             throw accessException;
         }
     }
@@ -73,13 +74,13 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             return jdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_NAME_AND_DATE,
                     new ManagerSpendingOperationMapper(), communalName, start, end);
-        } catch (DataAccessException accessException) {
-            accessException =  new DaoAccessExceptionBuilder()
+        } catch (DataAccessException e) {
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_MANAGER_OPERATIONS_BY_LIST_COMM_NAME_AND_DATE)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN getAllManagerOperationSpendingSortedByCommunalNameAndDate " + accessException.getMessage(), accessException);
+            log.error("IN getAllManagerOperationSpendingSortedByCommunalNameAndDate " + accessException.getMessage(), e);
             throw accessException;
         }
     }
@@ -89,13 +90,13 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             return jdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_NAME, new ManagerSpendingOperationMapper()
                     , communalName);
-        } catch (DataAccessException accessException) {
-             accessException =  new DaoAccessExceptionBuilder()
+        } catch (DataAccessException e) {
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_ALL_MANAGER_OPERATIONS)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN getAllManagerOperationSpendingSortedByCommunalName "  + accessException.getMessage(), accessException);
+            log.error("IN getAllManagerOperationSpendingSortedByCommunalName "  + accessException.getMessage(), e);
             throw accessException;
         }
 
@@ -106,14 +107,14 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             return jdbcTemplate.query(GET_MANAGER_OPERATIONS_BY_DATE, new ManagerSpendingOperationMapper()
                     , start, end);
-        } catch (DataAccessException accessException) {
+        } catch (DataAccessException e) {
 
-             accessException =  new DaoAccessExceptionBuilder()
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_ALL_MANAGER_OPERATIONS)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN getAllManagerOperationByDate " + accessException.getMessage(), accessException);
+            log.error("IN getAllManagerOperationByDate " + accessException.getMessage(), e);
             throw accessException;
         }
     }
@@ -126,14 +127,14 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         parameters.addValue("end", end);
         try {
             return namedParameterJdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_LIST_NAME_AND_DATE, parameters, new ManagerSpendingOperationMapper());
-        } catch (DataAccessException accessException) {
+        } catch (DataAccessException e) {
 
-            accessException =  new DaoAccessExceptionBuilder()
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_MANAGER_OPERATIONS_BY_LIST_COMM_NAME_AND_DATE)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN getAllManagerOperationByDateAndCommunalNameList " + accessException.getMessage(), accessException);
+            log.error("IN getAllManagerOperationByDateAndCommunalNameList " + accessException.getMessage(), e);
             throw accessException;
         }
 
@@ -145,14 +146,14 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             return jdbcTemplate.queryForObject(GET_MANAGER_OPERATION_SPENDING_BY_ID,
                     new ManagerSpendingOperationMapper(), id);
-        } catch (DataAccessException accessException) {
+        } catch (DataAccessException e) {
 
-            accessException =  new DaoAccessExceptionBuilder()
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_MANAGER_OPERATION_BY_ID)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN getManagerOperationSpendingById " + accessException.getMessage(), accessException);
+            log.error("IN getManagerOperationSpendingById " + accessException.getMessage(), e);
             throw accessException;
         }
     }
@@ -162,14 +163,14 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             jdbcTemplate.update(UPDATE_MANAGER_OPERATION, managerOperationSpending.getDescription()
                     , managerOperationSpending.getSum().toString(), managerOperationSpending.getOperationId());
-        } catch (DataAccessException accessException) {
+        } catch (DataAccessException e) {
 
-            accessException =  new DaoAccessExceptionBuilder()
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_UPDATE_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_UPDATE_MANAGER_OPERATION)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN updateManagerOperationSpending " + accessException.getMessage(), accessException);
+            log.error("IN updateManagerOperationSpending " + accessException.getMessage(), e);
             throw accessException;
         }
 
@@ -180,13 +181,13 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
         try {
             jdbcTemplate.update(CREATE_MANAGER_OPERATION_SPENDING, managerOperationSpending.getDescription(),
                     managerOperationSpending.getSum(), managerOperationSpending.getManagerSubBill().getSubBillId());
-        } catch (DaoAccessException accessException) {
-            accessException =  new DaoAccessExceptionBuilder()
+        } catch (DaoAccessException e) {
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_INSERT_MANAGER_OPERATION)
-                    .withCause(accessException.getCause())
+                    .withCause(e.getCause())
                     .build();
-            log.error("IN createManagerOperationSpending: " + accessException.getMessage(), accessException);
+            log.error("IN createManagerOperationSpending: " + accessException.getMessage(), e);
             throw accessException;
         }
 

@@ -35,7 +35,6 @@ public class AccountService {
     public Account getAccountById(BigInteger accountId) throws DaoAccessException {
 
         try {
-
             return accountDao.getAccount(accountId);
         } catch (NullPointerException e) {
             log.error("IN Service method getAccountById: " + e.getMessage(),e);
