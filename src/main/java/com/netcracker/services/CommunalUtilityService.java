@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -19,11 +21,13 @@ import java.util.List;
 public class CommunalUtilityService {
     private final CommunalUtilityDao communalUtilityDao;
     private final CalculationMethodDao calculationMethodDao;
+    private final NotificationService notificationService;
 
     @Autowired
-    public CommunalUtilityService(CommunalUtilityDao communalUtilityDao, CalculationMethodDao calculationMethodDao) {
+    public CommunalUtilityService(CommunalUtilityDao communalUtilityDao, CalculationMethodDao calculationMethodDao, NotificationService notificationService) {
         this.communalUtilityDao = communalUtilityDao;
         this.calculationMethodDao = calculationMethodDao;
+        this.notificationService = notificationService;
     }
 
     public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) throws DaoAccessException, NullPointerException {
@@ -65,7 +69,7 @@ public class CommunalUtilityService {
         }
     }
 
-    public CommunalUtility createCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException {
+    public CommunalUtility createCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException, IOException, MessagingException {
         try {
             CommunalUtility comUtil = communalUtilityDao.
                     getUniqueCommunalUtility(communalUtility);
@@ -83,10 +87,15 @@ public class CommunalUtilityService {
 
             communalUtilityDao.createCommunalUtilityWithRef(communalUtility);
             comUtil = communalUtilityDao.getUniqueCommunalUtility(communalUtility);
+
             comUtil.setCalculationMethod(calculationMethodDao
                     .getCalculationMethodByCommunalUtilityId(comUtil.getCommunalUtilityId()));
+            if (comUtil.getDurationType() == CommunalUtility.Duration.Temporary) {
+                notificationService.sendTempCommunalUtilityNotificationToAllApartments(communalUtility);
+            }
+            //TODO check for duration, then send if temporary
             return comUtil;
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IOException | MessagingException e) {
             log.error("CommunalUtilityService method createCommunalUtility(): " + e.getMessage(), e);
             throw e;
         }
