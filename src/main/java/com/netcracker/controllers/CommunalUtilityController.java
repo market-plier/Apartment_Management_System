@@ -5,7 +5,9 @@ import com.netcracker.models.CommunalUtility;
 import com.netcracker.services.CommunalUtilityService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class CommunalUtilityController {
     }
 
     @PostMapping
-    public CommunalUtility create(@RequestBody @Valid CommunalUtility communalUtility) throws DaoAccessException {
+    public CommunalUtility create(@RequestBody @Valid CommunalUtility communalUtility) throws DaoAccessException, IOException, MessagingException {
         return communalUtilityService.createCommunalUtility(communalUtility);
     }
 }
