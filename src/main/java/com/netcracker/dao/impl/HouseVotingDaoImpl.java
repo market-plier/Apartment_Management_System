@@ -3,6 +3,8 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.HouseVotingDao;
 import com.netcracker.dao.mapper.HouseVotingMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.HouseVoting;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,14 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
             HouseVoting houseVoting = jdbcTemplate.queryForObject(GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID, new HouseVotingMapper(), id);
             return houseVoting;
         } catch (DataAccessException e) {
-            log.error(e.getMessage(), e);
-            throw new DaoAccessException(EXCEPTION_GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID, id, e.getCause());
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_HOUSE_VOTING)
+                    .withMessage(EXCEPTION_GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID)
+                    .withId(id)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("HouseVotingDaoImpl method getHouseVotingByAnnouncementId: " + accessException.getMessage());
+            throw accessException;
         }
     }
 
@@ -39,8 +47,13 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
             jdbcTemplate.update(CREATE_HOUSE_VOTING_ATTRIBUTES,
                     houseVoting.getTitle());
         } catch (DataAccessException e) {
-            log.error(e.getMessage(), e);
-            throw new DaoAccessException(EXCEPTION_CREATE_HOUSE_VOTING, e.getCause());
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_HOUSE_VOTING)
+                    .withMessage(EXCEPTION_CREATE_HOUSE_VOTING)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("HouseVotingDaoImpl method createHouseVoting: " + accessException.getMessage());
+            throw accessException;
         }
     }
 
@@ -49,8 +62,14 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
         try {
             jdbcTemplate.update(DELETE_HOUSE_VOTING, id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage(), e);
-            throw new DaoAccessException(EXCEPTION_DELETE_HOUSE_VOTING, id, e.getCause());
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_DELETE_HOUSE_VOTING)
+                    .withMessage(EXCEPTION_DELETE_HOUSE_VOTING)
+                    .withId(id)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("HouseVotingDaoImpl method deleteHouseVoting: " + accessException.getMessage());
+            throw accessException;
         }
     }
 }

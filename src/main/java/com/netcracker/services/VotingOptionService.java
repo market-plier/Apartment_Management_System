@@ -35,7 +35,7 @@ public class VotingOptionService {
         }
     }
 
-    public void addVote(BigInteger houseVotingId, BigInteger votingOptionId, BigInteger accountId) throws DaoAccessException, NullPointerException  {
+    public void addVote(BigInteger houseVotingId, BigInteger votingOptionId, BigInteger accountId) throws IllegalArgumentException, DaoAccessException, NullPointerException  {
         try {
             if (hasVote(houseVotingId, accountId)) {
                 throw new IllegalArgumentException("This account has already voted");

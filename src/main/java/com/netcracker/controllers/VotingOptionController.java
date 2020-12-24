@@ -43,7 +43,7 @@ public class VotingOptionController {
 
     @PostMapping("/{votingOptionId}/add_vote")
     @PreAuthorize("hasAnyRole('ROLE_OWNER')")
-    public void addVote(@AuthenticationPrincipal JwtAccount account,  @PathVariable BigInteger houseVotingId, @PathVariable BigInteger votingOptionId) throws DaoAccessException, NullPointerException {
+    public void addVote(@AuthenticationPrincipal JwtAccount account,  @PathVariable BigInteger houseVotingId, @PathVariable BigInteger votingOptionId) throws IllegalArgumentException, DaoAccessException, NullPointerException {
         votingOptionService.addVote(houseVotingId, votingOptionId, account.getId());
     }
 }

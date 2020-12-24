@@ -64,7 +64,7 @@ public interface VotingOptionDao {
 
     String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID = "Can't get voting option with this house voting id: ";
     String EXCEPTION_CREATE_VOTING_OPTION = "Can't create voting option";
-    String EXCEPTION_ADD_VOTED_ACCOUNT = "Can't add vote reference with voting option id: ";
+    String EXCEPTION_ADD_VOTE = "Can't add vote reference with voting option id: ";
     String EXCEPTION_GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID = "Can't get apartment ids with this voting option id: ";
 
     Collection<VotingOption> getAllVotingOptionsByHouseVotingId(BigInteger id) throws DaoAccessException;

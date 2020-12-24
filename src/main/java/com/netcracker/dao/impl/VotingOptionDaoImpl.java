@@ -3,6 +3,8 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.VotingOptionDao;
 import com.netcracker.dao.mapper.VotingOptionMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.VotingOption;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,14 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
         try {
             return jdbcTemplate.query(GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID, new VotingOptionMapper(), id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage(), e);
-            throw new DaoAccessException(EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID, id, e.getCause());
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_VOTING_OPTION)
+                    .withMessage(EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID)
+                    .withId(id)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("VotingOptionDaoImpl method getAllVotingOptionsByHouseVotingId: " + accessException.getMessage());
+            throw accessException;
         }
     }
 
@@ -39,8 +47,13 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
             jdbcTemplate.update(CREATE_VOTING_OPTION_ATTRIBUTES,
                     votingOption.getName());
         } catch (DataAccessException e) {
-            log.error(e.getMessage(), e);
-            throw new DaoAccessException(EXCEPTION_CREATE_VOTING_OPTION, e.getCause());
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_VOTING_OPTION)
+                    .withMessage(EXCEPTION_CREATE_VOTING_OPTION)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("VotingOptionDaoImpl method createVotingOption: " + accessException.getMessage());
+            throw accessException;
         }
     }
 
@@ -51,8 +64,13 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
                     votingOptionId,
                     accountId);
         } catch (DataAccessException e) {
-            log.error(e.getMessage(), e);
-            throw new DaoAccessException(EXCEPTION_ADD_VOTED_ACCOUNT, votingOptionId, e.getCause());
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_VOTE_REF)
+                    .withMessage(EXCEPTION_ADD_VOTE)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("VotingOptionDaoImpl method addVote: " + accessException.getMessage());
+            throw accessException;
         }
     }
 
@@ -61,8 +79,14 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
         try {
             return jdbcTemplate.queryForList(GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID, BigInteger.class, id);
         } catch (DataAccessException e) {
-            log.error(e.getMessage(), e);
-            throw new DaoAccessException(EXCEPTION_GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID, id, e.getCause());
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes.APARTMENT_OPERATION_FAIL_TO_SELECT)
+                    .withMessage(EXCEPTION_GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID)
+                    .withId(id)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("VotingOptionDaoImpl method getApartmentIdsByVotingOptionId: " + accessException.getMessage());
+            throw accessException;
         }
     }
 }
