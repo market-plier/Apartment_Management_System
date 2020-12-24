@@ -7,6 +7,7 @@ import com.netcracker.services.ManagerOperationSpendingService;
 import com.netcracker.util.DateUtil;
 
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value ="/manager-operation-spending/")
+@PreAuthorize("hasAnyRole('ROLE_MANAGER')")
 @Validated
 public class ManagerSpendingOperationController {
 

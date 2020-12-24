@@ -10,6 +10,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,7 @@ public class ReportController {
 
 
     @RequestMapping(value = "manager-spending/by-date-comm-name", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public ResponseEntity makeReportByDateAndCommunalUtility(@RequestParam @Valid @NotNull @NotEmpty String start,
                                                              @RequestParam @Valid @NotNull @NotEmpty String end,
                                                              @RequestParam @NotNull Set<BigInteger> communalUtility) throws ParseException {
@@ -61,6 +63,7 @@ public class ReportController {
     }
 
     @RequestMapping(value = "manager-spending/by-date",method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public ResponseEntity makeManagerOperationSpendingReportByDate(@RequestParam @Valid @NotNull @NotEmpty String start,
                                                                    @RequestParam @Valid @NotNull @NotEmpty String end) throws ParseException {
 
@@ -79,6 +82,7 @@ public class ReportController {
     }
 
     @RequestMapping(value = "apartment/dept-report",method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_ACCOUNT')")
     public ResponseEntity makeApartmentDeptReport(@RequestParam @NotNull BigInteger accountId,
                                                   @RequestParam @NotNull Set<BigInteger> communalUtility){
 
@@ -97,6 +101,7 @@ public class ReportController {
     }
 
     @RequestMapping(value = "manager/dept-manager-bill",method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public ResponseEntity makeManagerBillDeptReport(@RequestParam @NotNull Set<BigInteger> communalUtility){
 
         ByteArrayInputStream arrayInputStream = reportService
