@@ -1,5 +1,7 @@
 package com.netcracker.models;
 
+import java.math.BigDecimal;
+
 public class CalculationMethodWrapper {
     private final CalculationMethod calculationMethod;
 
@@ -11,8 +13,8 @@ public class CalculationMethodWrapper {
         return calculationMethod.getName();
     }
 
-    public int evaluate(int base,int coefficient){
-        return base*coefficient;
+    public Double evaluate(Double base){
+        return base * calculationMethod.getCoefficient();
     }
 
 }

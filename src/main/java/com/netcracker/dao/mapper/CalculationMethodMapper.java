@@ -13,6 +13,7 @@ public class CalculationMethodMapper implements RowMapper<CalculationMethod> {
         CalculationMethod calculationMethod = new CalculationMethod();
         calculationMethod.setCalculationMethodId(new BigInteger(resultSet.getString("calc_id")));
         calculationMethod.setName(resultSet.getString("calc_name"));
+        calculationMethod.setCoefficient(Double.parseDouble(resultSet.getString("calc_coeff")));
         return calculationMethod;
     }
 }

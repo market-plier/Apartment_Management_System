@@ -41,7 +41,6 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
         }
     }
 
-
     @Override
     public List<CommunalUtility> getAllCommunalUtilitiesFilterByStatus(CommunalUtility.Status status) throws DaoAccessException {
         try {

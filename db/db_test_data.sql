@@ -107,7 +107,7 @@ VALUES (obj_id_seq.nextval, NULL, 10, 'CalculationMethod_1', null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
 VALUES (20, obj_id_seq.currval, 'newMethod' || obj_id_seq.currval, null, null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES (40, obj_id_seq.currval, '0,768', null, null)
+VALUES (40, obj_id_seq.currval, '0.768', null, null)
 SELECT *
 FROM DUAL;
 
@@ -130,7 +130,7 @@ VALUES (obj_id_seq.nextval, NULL, 10, 'CalculationMethod_2', null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
 VALUES (20, obj_id_seq.currval, 'newMethod' || obj_id_seq.currval, null, null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES (40, obj_id_seq.currval, '0,985', null, null)
+VALUES (40, obj_id_seq.currval, '0.985', null, null)
 SELECT *
 FROM DUAL;
 
@@ -153,7 +153,7 @@ VALUES (obj_id_seq.nextval, NULL, 10, 'CalculationMethod_3', null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
 VALUES (20, obj_id_seq.currval, 'newMethod' || obj_id_seq.currval, null, null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES (40, obj_id_seq.currval, '0,456', null, null)
+VALUES (40, obj_id_seq.currval, '0.456', null, null)
 SELECT *
 FROM DUAL;
 

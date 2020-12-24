@@ -44,7 +44,9 @@ public class CalculationMethodDaoImpl implements CalculationMethodDao {
     @Override
     public CalculationMethod getCalculationMethodById(BigInteger id) throws DaoAccessException {
         try {
-            return (jdbcTemplate.queryForObject(getCalculationMethodById, new CalculationMethodMapper(), id));
+            return (jdbcTemplate.queryForObject(getCalculationMethodById,
+                    new CalculationMethodMapper(),
+                    id));
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())
@@ -60,7 +62,9 @@ public class CalculationMethodDaoImpl implements CalculationMethodDao {
     @Override
     public CalculationMethod getCalculationMethodByCommunalUtilityId(BigInteger id) throws DaoAccessException {
         try {
-            return (jdbcTemplate.queryForObject(getCalculationMethodByCommunalUtilityId, new CalculationMethodMapper(), id));
+            return (jdbcTemplate.queryForObject(getCalculationMethodByCommunalUtilityId,
+                    new CalculationMethodMapper(),
+                    id));
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_CALCULATION_METHOD_BY_COMMUNAL_UTILITY_ID)
@@ -78,6 +82,7 @@ public class CalculationMethodDaoImpl implements CalculationMethodDao {
         try {
             jdbcTemplate.update(updateCalculationMethod,
                     calculationMethod.getName(),
+                    calculationMethod.getCoefficient(),
                     calculationMethod.getCalculationMethodId());
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
@@ -94,8 +99,9 @@ public class CalculationMethodDaoImpl implements CalculationMethodDao {
     @Override
     public void createCalculationMethod(CalculationMethod calculationMethod) throws DaoAccessException {
         try {
-            jdbcTemplate.update(createCalculationMethodObject);
-            jdbcTemplate.update(createCalculationMethodAttributes, calculationMethod.getName());
+            jdbcTemplate.update(createCalculationMethodAttributes,
+                    calculationMethod.getName(),
+                    calculationMethod.getCoefficient());
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())
