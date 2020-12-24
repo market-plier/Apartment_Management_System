@@ -33,6 +33,7 @@ public class ReportController {
     private final ReportService reportService;
     private final static String MANAGER_SPENDING_REPORT = "Manager_spending_report";
     private final static String APARTMENT_DEPT_REPORT = "Apartment_dept_report";
+    private final static String MANAGER_DEPT_REPORT = "Manager_bill_dept_report";
     @Autowired
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
@@ -86,6 +87,23 @@ public class ReportController {
 
         HttpHeaders headers = new HttpHeaders();
         String fileName = new Date().getTime() + APARTMENT_DEPT_REPORT + ".pdf";
+        headers.add("Content-Disposition", "inline; filename="+fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(arrayInputStream));
+    }
+
+    @RequestMapping(value = "manager/dept-manager-bill",method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity makeManagerBillDeptReport(@RequestParam @NotNull Set<BigInteger> communalUtility){
+
+        ByteArrayInputStream arrayInputStream = reportService
+                .createManagerSubBillDebtReportByCommunalID(communalUtility);
+
+        HttpHeaders headers = new HttpHeaders();
+        String fileName = new Date().getTime() + MANAGER_DEPT_REPORT+ ".pdf";
         headers.add("Content-Disposition", "inline; filename="+fileName);
 
         return ResponseEntity

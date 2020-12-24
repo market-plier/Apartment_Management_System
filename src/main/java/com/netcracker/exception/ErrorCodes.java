@@ -45,5 +45,7 @@ public interface ErrorCodes {
 
     BigInteger _FAIL_TO_SELECT_ACCOUNT = BigInteger.valueOf(23);
 
+    BigInteger _FAIL_NOT_BELONG_TO_ACCOUNT = BigInteger.valueOf(999);
+
 
 }

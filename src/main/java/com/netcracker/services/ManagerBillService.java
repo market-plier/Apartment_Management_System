@@ -12,8 +12,12 @@ import java.math.BigInteger;
 @Log4j
 public class ManagerBillService {
 
+    private final ManagerBillDao managerBillDao;
+
     @Autowired
-    ManagerBillDao managerBillDao;
+    public ManagerBillService(ManagerBillDao managerBillDao) {
+        this.managerBillDao = managerBillDao;
+    }
 
     public ManagerBill getManagerBillById(BigInteger id) {
         try {

@@ -10,12 +10,13 @@ import java.math.BigInteger;
 public class NotBelongToAccountException extends IllegalArgumentException {
 
     private BigInteger errorCode;
+    private BigInteger id;
 
     public NotBelongToAccountException(String s) {
         super(s);
     }
 
-    public NotBelongToAccountException(String s, BigInteger errorCode) {
+    public NotBelongToAccountException(String s, BigInteger id, BigInteger errorCode) {
         super(s);
         this.errorCode = errorCode;
     }

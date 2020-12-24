@@ -14,6 +14,7 @@ public class ManagerSubBill extends SubBill {
     private List<ManagerSpendingOperation> managerSpendingOperations;
     private List<DebtPaymentOperation> debtPaymentOperations;
 
+
     public ManagerSubBill(BigInteger subBillId, Double balance, CommunalUtility communalUtility,
                           List<ManagerSpendingOperation> managerSpendingOperations,
                           List<DebtPaymentOperation> debtPaymentOperations, Manager manager) {
@@ -23,5 +24,13 @@ public class ManagerSubBill extends SubBill {
         this.manager = manager;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

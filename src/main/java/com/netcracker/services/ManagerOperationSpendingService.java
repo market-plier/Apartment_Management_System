@@ -60,7 +60,7 @@ public class ManagerOperationSpendingService {
     public List<ManagerSpendingOperation> getAllManagerOperationByDate(Date start, Date end) throws DaoAccessException, NullPointerException {
         try {
             return managerSpendingOperationDao.getAllManagerOperationByDate(start, end);
-        } catch (NullPointerException | DaoAccessException e) {
+        } catch (NullPointerException e) {
             log.error("IN Service method getAllManagerOperationByDate: " + e.getMessage());
             throw e;
         }
@@ -79,7 +79,9 @@ public class ManagerOperationSpendingService {
 
     public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException, NullPointerException {
         try {
-            managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);
+            if (managerSpendingOperationDao.getManagerOperationSpendingById(managerSpendingOperation.getOperationId()) != null) {
+                managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);
+            }
         } catch (NullPointerException e) {
             log.error("IN Service method updateManagerOperation: " + e.getMessage());
             throw e;

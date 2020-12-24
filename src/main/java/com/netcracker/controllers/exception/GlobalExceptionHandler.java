@@ -93,7 +93,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                 HttpStatus status, WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
 
-        return handleExceptionInternal(ex, new ApiError(LocalDateTime.now(), status, "NOT BELONG TO USER", errors), headers, status, request);
+        return handleExceptionInternal(ex, new ApiError(LocalDateTime.now(), status, "DAO ACCESS EXCEPTION",
+                errors,ex.getErrorMessage()), headers, status, request);
     }
 
 

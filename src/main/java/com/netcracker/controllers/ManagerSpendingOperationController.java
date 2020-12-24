@@ -30,13 +30,13 @@ public class ManagerSpendingOperationController {
         }
 
         @RequestMapping(method = RequestMethod.POST)
-        public void createManagerOperationSpending(@RequestBody @Valid ManagerSpendingOperation managerSpendingOperation)
+        public void createManagerOperationSpending(@RequestBody @Valid ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException
         {
             managerOperationSpendingService.createManagerOperationSpending(managerSpendingOperation);
         }
 
         @RequestMapping(method = RequestMethod.PUT)
-        public void updateManagerOperationSpending(@RequestBody @Valid ManagerSpendingOperation managerSpendingOperation)
+        public void updateManagerOperationSpending(@RequestBody @Valid ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException
         {
             managerOperationSpendingService.updateManagerOperation(managerSpendingOperation);
         }

@@ -39,7 +39,7 @@ public class AccountDaoImpl implements AccountDao {
                     .withMessage(EXCEPTION_GET_ACCOUNT_BY_ID)
                     .withCause(e.getCause())
                     .build();
-            log.error("IN getAccount " + accessException.getMessage());
+            log.error("IN getAccount " + accessException.getMessage(), e);
             throw accessException;
         }
     }
@@ -54,7 +54,7 @@ public class AccountDaoImpl implements AccountDao {
                     .withMessage(EXCEPTION_GET_ACCOUNT_BY_EMAIL)
                     .withCause(e.getCause())
                     .build();
-            log.error("getAccountByEmail " + accessException.getMessage());
+            log.error("getAccountByEmail " + accessException.getMessage(), e);
             throw accessException;
         }
 

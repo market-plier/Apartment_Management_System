@@ -1,11 +1,9 @@
 package com.netcracker.services;
 
 import com.netcracker.dao.ApartmentSubBillDao;
+import com.netcracker.dao.ManagerSubBillDao;
 import com.netcracker.exception.DaoAccessException;
-import com.netcracker.models.Apartment;
-import com.netcracker.models.ApartmentSubBill;
-import com.netcracker.models.ManagerSpendingOperation;
-import com.netcracker.models.ManagerSubBill;
+import com.netcracker.models.*;
 import com.netcracker.services.PDFBuilders.ApartmentsDebtsPdfBuilder;
 import com.netcracker.services.PDFBuilders.ManagerSpendingOperationPdfBuilder;
 import com.netcracker.services.PDFBuilders.ManagerSubBillDebtsPdfBuilder;
@@ -15,12 +13,9 @@ import org.springframework.stereotype.Service;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.sql.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -30,12 +25,14 @@ public class ReportService {
     private final ManagerOperationSpendingService managerOperationSpendingService;
     private final ApartmentSubBillDao apartmentSubBillDao;
     private final ApartmentInfoService apartmentInfoService;
+    private final ManagerSubBillDao managerSubBillDao;
 
     @Autowired
-    public ReportService(ManagerOperationSpendingService managerOperationSpendingService, ApartmentSubBillDao apartmentSubBillDao, ApartmentInfoService apartmentInfoService) {
+    public ReportService(ManagerOperationSpendingService managerOperationSpendingService, ApartmentSubBillDao apartmentSubBillDao, ApartmentInfoService apartmentInfoService, ManagerSubBillDao managerSubBillDao) {
         this.managerOperationSpendingService = managerOperationSpendingService;
         this.apartmentSubBillDao = apartmentSubBillDao;
         this.apartmentInfoService = apartmentInfoService;
+        this.managerSubBillDao = managerSubBillDao;
     }
 
 
@@ -51,7 +48,7 @@ public class ReportService {
                 return managerSpendingOperationPdfBuilder.exportToPdf();
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method createManagerOperationSpendingReportByCommNameAndDate: " + e.getMessage());
+            log.error("IN Service method createManagerOperationSpendingReportByCommNameAndDate: " + e.getMessage(),e);
             throw e;
         }
 
@@ -69,7 +66,7 @@ public class ReportService {
                 return managerSpendingOperationPdfBuilder.exportToPdf();
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method createManagerOperationSpendingReportByDate: " + e.getMessage());
+            log.error("IN Service method createManagerOperationSpendingReportByDate: " + e.getMessage(),e);
             throw e;
         }
 
@@ -87,21 +84,30 @@ public class ReportService {
             return apartmentsDebtsPdfBuilder.exportToPdf();
         }
         } catch (NullPointerException e) {
-            log.error("IN Service method createApartmentDebtReportByCommunalID: " + e.getMessage());
+            log.error("IN Service method createApartmentDebtReportByCommunalID: " + e.getMessage(),e);
             throw e;
         }
 
         return null;
     }
 
-    public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(BigInteger accountID, Set<BigInteger> communalUtility)
+    public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(Set<BigInteger> communalUtility)
     {
-        Map<ManagerSubBill,Double> managerDebtMap=null;
-        if (managerDebtMap!=null)
+
+        Map<ManagerSubBill,Double> managerDebtMap =  managerSubBillDao.getManagerSubBillDeptByCommunalUtility(communalUtility);
+
+        try {
+            if (managerDebtMap!=null)
+            {
+                ManagerSubBillDebtsPdfBuilder managerSubBillDebtsPdfBuilder = new ManagerSubBillDebtsPdfBuilder(managerDebtMap);
+                return managerSubBillDebtsPdfBuilder.exportToPdf();
+            }
+        }catch (NullPointerException e)
         {
-            ManagerSubBillDebtsPdfBuilder managerSubBillDebtsPdfBuilder = new ManagerSubBillDebtsPdfBuilder(managerDebtMap);
-            return managerSubBillDebtsPdfBuilder.exportToPdf();
+            log.error("IN createManagerSubBillDebtReportByCommunalID: "+ e.getMessage(),e);
+            throw e;
         }
+
         return null;
     }
 

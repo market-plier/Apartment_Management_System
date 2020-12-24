@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 public class Announcement {
+
     private BigInteger announcementId;
 
     @NotBlank(message = "Announcement title cannot be empty")

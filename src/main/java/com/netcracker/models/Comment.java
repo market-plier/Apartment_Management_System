@@ -17,7 +17,7 @@ public class Comment {
 
     private Apartment apartment;
 
-    @NotBlank
+    @NotBlank(message = "Message cant be blank")
     @Size(min = 1, message = "Length comment must be more than 1: ")
     private String body;
 

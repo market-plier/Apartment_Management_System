@@ -3,7 +3,9 @@ package com.netcracker.services;
 
 import com.netcracker.dao.CommentDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.exception.NotBelongToAccountException;
+import com.netcracker.exception.NotBelongToAccountExceptionBuilder;
 import com.netcracker.models.Comment;
 import com.netcracker.models.PojoBuilder.ApartmentBuilder;
 import lombok.extern.log4j.Log4j;
@@ -32,7 +34,7 @@ public class CommentService {
             comment.setApartment(new ApartmentBuilder().withAccountId(accountId).build());
             commentDao.createComment(comment);
         } catch (NullPointerException e) {
-            log.error("IN Service method createComment: " + e.getMessage());
+            log.error("IN Service method createComment: " + e.getMessage(),e);
             throw e;
         }
 
@@ -43,12 +45,16 @@ public class CommentService {
             if (commentDao.getCommentById(commentId).getApartment().getAccountId().equals(accountId)) {
                 commentDao.deleteComment(commentId);
             } else {
-                NotBelongToAccountException accountException = new NotBelongToAccountException("Comment not belong to user");
-                log.error("IN Service method deleteComment: " + accountException.getMessage());
+                NotBelongToAccountException accountException = new NotBelongToAccountExceptionBuilder()
+                        .withId(accountId)
+                        .withMessage("Comment not belong to account")
+                        .withErrorCode(ErrorCodes._FAIL_NOT_BELONG_TO_ACCOUNT)
+                        .build();
+                log.error("IN Service method deleteComment: " + accountException.getMessage(),accountException);
                 throw accountException;
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method deleteComment: " + e.getMessage());
+            log.error("IN Service method deleteComment: " + e.getMessage(),e);
             throw e;
         }
     }
@@ -58,12 +64,16 @@ public class CommentService {
             if (commentDao.getCommentById(comment.getCommentId()).getApartment().getAccountId().equals(accountId)) {
                 commentDao.updateComment(comment);
             } else {
-                NotBelongToAccountException accountException = new NotBelongToAccountException("Comment not belong to user");
-                log.error("IN Service method updateComment: " + accountException.getMessage());
+                NotBelongToAccountException accountException = new NotBelongToAccountExceptionBuilder()
+                        .withId(accountId)
+                        .withMessage("Comment not belong to account")
+                        .withErrorCode(ErrorCodes._FAIL_NOT_BELONG_TO_ACCOUNT)
+                        .build();
+                log.error("IN Service method updateComment: " + accountException.getMessage(),accountException);
                 throw accountException;
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method updateComment: " + e.getMessage());
+            log.error("IN Service method updateComment: " + e.getMessage(),e);
             throw e;
         }
 
@@ -75,7 +85,7 @@ public class CommentService {
         try {
             return commentDao.getAllCommentsByAnnouncementId(announcementId);
         } catch (NullPointerException e) {
-            log.error("IN Service method getAllCommentsByAnnouncementId: " + e.getMessage());
+            log.error("IN Service method getAllCommentsByAnnouncementId: " + e.getMessage(),e);
             throw e;
         }
     }

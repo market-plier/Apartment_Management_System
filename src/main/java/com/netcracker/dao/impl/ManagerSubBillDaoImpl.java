@@ -4,7 +4,11 @@ import com.netcracker.dao.ManagerSubBillDao;
 import com.netcracker.dao.mapper.ManagerSubBillMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
+import com.netcracker.models.CalculationMethod;
+import com.netcracker.models.CommunalUtility;
 import com.netcracker.models.ManagerSubBill;
+import com.netcracker.models.PojoBuilder.CommunalUtilityBuilder;
+import com.netcracker.models.PojoBuilder.ManagerSubBillBuilder;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,11 +94,19 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
         parameters.addValue("communal_list", communalUtilityId);
 
         try {
-            return namedParameterJdbcTemplate.query(ALL_APARTMENT_SUB_BILLS_DEBT_BY_COMMUNAL_UTILS_LIST, parameters, rs -> {
+            return namedParameterJdbcTemplate.query(GET_GROUPED_MANAGER_SUB_BILL_BY_COMM_UTILL, parameters, rs -> {
                 Map<ManagerSubBill, Double> managerSubBillMap = new HashMap<>();
                 while (rs.next()) {
-                    ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID,
-                            new ManagerSubBillMapper(), rs.getInt("communal_util_id"));
+                    ManagerSubBill managerSubBill = new ManagerSubBillBuilder()
+                            .withCommunalUtility(new CommunalUtilityBuilder()
+                                    .withName(rs.getString("communal_name"))
+                                    .withStatus(CommunalUtility.Status.valueOf(rs.getString("status")))
+                                    .withDurationType(CommunalUtility.Duration.valueOf(rs.getString("duration_type")))
+                                    .withDeadline(rs.getDate("dead_line"))
+                                    .withCalculationMethod(new CalculationMethod(
+                                            null,
+                                            rs.getString("calc_name"))).build())
+                            .build();
                     managerSubBillMap.put(managerSubBill, rs.getDouble("debt"));
                 }
                 return managerSubBillMap;

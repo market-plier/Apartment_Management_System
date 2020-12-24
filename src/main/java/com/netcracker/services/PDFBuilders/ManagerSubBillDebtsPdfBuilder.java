@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class ManagerSubBillDebtsPdfBuilder extends ReportPdfBuilder{
     private Map<ManagerSubBill,Double> managerSubBillMap;
+    private double sumDebts;
 
     public ManagerSubBillDebtsPdfBuilder(Map<ManagerSubBill,Double> managerSubBillMap) {
         super();
@@ -30,12 +31,13 @@ public class ManagerSubBillDebtsPdfBuilder extends ReportPdfBuilder{
         font.setColor(Color.BLACK);
         managerSubBillMap.forEach((k,v)->
         {
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getSubBillId()), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getName()), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(v), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getDurationType()), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getStatus()), font)));
-
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getDeadline()), font)));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getCalculationMethod().getName()), font)));
+            sumDebts+=v;
         });
 
     }
@@ -53,22 +55,24 @@ public class ManagerSubBillDebtsPdfBuilder extends ReportPdfBuilder{
         font.setColor(Color.BLACK);
 
 
-        Paragraph p = new Paragraph("Dept of Manager Bills", font);
+        Paragraph p = new Paragraph("Debt of Manager Bills", font);
         p.setAlignment(Paragraph.ALIGN_CENTER);
 
         document.add(p);
 
-        PdfPTable table = new PdfPTable(4);
+        PdfPTable table = new PdfPTable(6);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[]{ 3.5f, 4.0f, 3.5f, 3.5f});
+        table.setWidths(new float[]{ 3.5f,3.5f, 4.0f, 3.5f, 3.5f, 3.5f});
         table.setSpacingBefore(10);
 
-        String[] headerArr = {"Communal utility","Debt",  "Duration type", "Status"};
+        String[] headerArr = {"Communal utility","Debt",  "Duration type", "Status", "Dead line", "Calc name"};
         writeTableHeader(table, headerArr);
         writeTableData(table);
-
-
+        Paragraph debt = new Paragraph();
+        debt.setSpacingBefore(10f);
+        debt.add("Total Debt: " + sumDebts);
         document.add(table);
+        document.add(debt);
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateTime = dateFormatter.format(new java.util.Date());
         Chunk glue = new Chunk(new VerticalPositionMark());
