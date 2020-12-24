@@ -19,16 +19,19 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class CommunalUtilityService {
-    private final CommunalUtilityDao communalUtilityDao;
-    private final CalculationMethodDao calculationMethodDao;
-    private final NotificationService notificationService;
-
     @Autowired
-    public CommunalUtilityService(CommunalUtilityDao communalUtilityDao, CalculationMethodDao calculationMethodDao, NotificationService notificationService) {
-        this.communalUtilityDao = communalUtilityDao;
-        this.calculationMethodDao = calculationMethodDao;
-        this.notificationService = notificationService;
-    }
+    private  CommunalUtilityDao communalUtilityDao;
+    @Autowired
+    private  CalculationMethodDao calculationMethodDao;
+    @Autowired
+    private  NotificationService notificationService;
+
+//    @Autowired
+//    public CommunalUtilityService(CommunalUtilityDao communalUtilityDao, CalculationMethodDao calculationMethodDao, NotificationService notificationService) {
+//        this.communalUtilityDao = communalUtilityDao;
+//        this.calculationMethodDao = calculationMethodDao;
+//        this.notificationService = notificationService;
+//    }
 
     public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) throws DaoAccessException, NullPointerException {
         try {
