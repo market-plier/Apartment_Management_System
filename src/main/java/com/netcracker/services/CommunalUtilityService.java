@@ -26,79 +26,102 @@ public class CommunalUtilityService {
         this.calculationMethodDao = calculationMethodDao;
     }
 
-    public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) {
-        List<CommunalUtility> utilities;
-        if (status != null) {
-            utilities = communalUtilityDao.getAllCommunalUtilitiesFilterByStatus(status);
-        } else {
-            utilities = communalUtilityDao.getAllCommunalUtilities();
+    public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) throws DaoAccessException, NullPointerException {
+        try {
+            List<CommunalUtility> utilities;
+            if (status != null) {
+                utilities = communalUtilityDao.getAllCommunalUtilitiesFilterByStatus(status);
+            } else {
+                utilities = communalUtilityDao.getAllCommunalUtilities();
+            }
+            for (CommunalUtility utility : utilities
+            ) {
+                CalculationMethod calc = calculationMethodDao.
+                        getCalculationMethodByCommunalUtilityId(utility.getCommunalUtilityId());
+                if (calc != null)
+                    utility.setCalculationMethod(calc);
+            }
+            return utilities;
+        } catch (NullPointerException e) {
+            log.error("CommunalUtilityService method getAllCommunalUtilities(): " + e.getMessage(), e);
+            throw e;
         }
-        for (CommunalUtility utility : utilities
-        ) {
-            CalculationMethod calc = calculationMethodDao.
-                    getCalculationMethodByCommunalUtilityId(utility.getCommunalUtilityId());
-            if (calc != null)
-                utility.setCalculationMethod(calc);
-        }
-        return utilities;
     }
 
-    public List<CommunalUtility> getAllCommunalUtilities() {
+    public List<CommunalUtility> getAllCommunalUtilities() throws DaoAccessException, NullPointerException {
         return getAllCommunalUtilities(null);
     }
 
     public CommunalUtility getCommunalUtilityById(BigInteger id) {
-        CommunalUtility utility = communalUtilityDao.
-                getCommunalUtilityByIdWithCalculationMethod(id);
-        if (utility == null)
-            utility = communalUtilityDao.getCommunalUtilityById(id);
-        return utility;
+        try {
+            CommunalUtility utility = communalUtilityDao.
+                    getCommunalUtilityByIdWithCalculationMethod(id);
+            if (utility == null)
+                utility = communalUtilityDao.getCommunalUtilityById(id);
+            return utility;
+        } catch (NullPointerException e) {
+            log.error("CommunalUtilityService method getCommunalUtilityById(): " + e.getMessage(), e);
+            throw e;
+        }
     }
 
-    public CommunalUtility createCommunalUtility(CommunalUtility communalUtility) {
-        CommunalUtility comUtil = communalUtilityDao.
-                getUniqueCommunalUtility(communalUtility);
-        if (comUtil != null)
-            return comUtil;
-        //TODO
-        //add exception when already created
-
-        if (communalUtility.getCalculationMethod() == null) {
-            communalUtility.setStatus(CommunalUtility.Status.Disabled);
-            communalUtilityDao.createCommunalUtility(communalUtility);
-            return communalUtilityDao.getUniqueCommunalUtility(communalUtility);
-        } else if (!validateCalculationMethodId(communalUtility.getCalculationMethod()))
-            throw new DaoAccessException("No such calculation method as requested");
-
-        communalUtilityDao.createCommunalUtilityWithRef(communalUtility);
-        comUtil = communalUtilityDao.getUniqueCommunalUtility(communalUtility);
-        comUtil.setCalculationMethod(calculationMethodDao
-                .getCalculationMethodByCommunalUtilityId(comUtil.getCommunalUtilityId()));
-        return comUtil;
-    }
-
-    public CommunalUtility updateCommunalUtility(CommunalUtility communalUtility) {
-        CommunalUtility comUtil = communalUtilityDao.
-                getCommunalUtilityById(communalUtility.getCommunalUtilityId());
-        if (comUtil == null) {
+    public CommunalUtility createCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException {
+        try {
+            CommunalUtility comUtil = communalUtilityDao.
+                    getUniqueCommunalUtility(communalUtility);
+            if (comUtil != null)
+                return comUtil;
             //TODO
-            throw new DaoAccessException("Nothing to update");
+            //add exception when already created
+
+            if (communalUtility.getCalculationMethod() == null) {
+                communalUtility.setStatus(CommunalUtility.Status.Disabled);
+                communalUtilityDao.createCommunalUtility(communalUtility);
+                return communalUtilityDao.getUniqueCommunalUtility(communalUtility);
+            } else if (!validateCalculationMethodId(communalUtility.getCalculationMethod()))
+                throw new IllegalArgumentException("No such calculation method as requested");
+
+            communalUtilityDao.createCommunalUtilityWithRef(communalUtility);
+            comUtil = communalUtilityDao.getUniqueCommunalUtility(communalUtility);
+            comUtil.setCalculationMethod(calculationMethodDao
+                    .getCalculationMethodByCommunalUtilityId(comUtil.getCommunalUtilityId()));
+            return comUtil;
+        } catch (NullPointerException e) {
+            log.error("CommunalUtilityService method createCommunalUtility(): " + e.getMessage(), e);
+            throw e;
         }
-        if (comUtil.getCalculationMethod() == null && communalUtility.
-                getCalculationMethod() == null) {
-            communalUtility.setStatus(CommunalUtility.Status.Disabled);
-            communalUtilityDao.updateCommunalUtility(communalUtility);
-            return communalUtilityDao.
+    }
+
+    public CommunalUtility updateCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException {
+        try {
+            CommunalUtility comUtil = communalUtilityDao.
                     getCommunalUtilityById(communalUtility.getCommunalUtilityId());
-
+            if (comUtil == null) {
+                //TODO
+                throw new IllegalArgumentException("Nothing to update with presented ID");
+            }
+            if (comUtil.getCalculationMethod() == null && communalUtility.
+                    getCalculationMethod() == null) {
+                communalUtility.setStatus(CommunalUtility.Status.Disabled);
+                communalUtilityDao.updateCommunalUtility(communalUtility);
+                return communalUtilityDao.
+                        getCommunalUtilityById(communalUtility.getCommunalUtilityId());
+            }
+            communalUtilityDao.updateCommunalUtility(communalUtility);
+            return communalUtilityDao.getCommunalUtilityByIdWithCalculationMethod(communalUtility.getCommunalUtilityId());
+        } catch (NullPointerException e) {
+            log.error("CommunalUtilityService method updateCommunalUtility(): " + e.getMessage(), e);
+            throw e;
         }
-        communalUtilityDao.updateCommunalUtility(communalUtility);
-        return communalUtilityDao.getCommunalUtilityByIdWithCalculationMethod(communalUtility.getCommunalUtilityId());
     }
 
-    private boolean validateCalculationMethodId(CalculationMethod calculationMethod) {
-        return calculationMethodDao.
-                getCalculationMethodById(calculationMethod.getCalculationMethodId()) != null;
+    private boolean validateCalculationMethodId(CalculationMethod calculationMethod) throws DaoAccessException, NullPointerException {
+        try {
+            return calculationMethodDao.
+                    getCalculationMethodById(calculationMethod.getCalculationMethodId()) != null;
+        } catch (NullPointerException e) {
+            log.error("CommunalUtilityService method validateCalculationMethodId(): " + e.getMessage(), e);
+            throw e;
+        }
     }
-
 }

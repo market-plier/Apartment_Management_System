@@ -54,9 +54,11 @@ public interface CalculationMethodDao {
             "where calcname.ATTR_ID = 20";
 
     String EXCEPTION_GET_ALL_CALCULATION_METHODS = "Can't get calculation methods";
-    String EXCEPTION_GET_CALCULATION_METHOD_BY_ID = "Can't get calculation method by id";
-    String EXCEPTION_UPDATE_CALCULATION_METHOD = "Can't update calculation method";
-    String EXCEPTION_CREATE_CALCULATION_METHOD = "Can't create calculation method";
+    String EXCEPTION_DELETE_CALCULATION_METHODS_ = "Can't delete calculation method with id:";
+    String EXCEPTION_GET_CALCULATION_METHOD_BY_ID = "Can't get calculation method with id:";
+    String EXCEPTION_GET_CALCULATION_METHOD_BY_COMMUNAL_UTILITY_ID = "Can't get calculation method with communal utility id:";
+    String EXCEPTION_UPDATE_CALCULATION_METHOD = "Can't update calculation method with id:";
+    String EXCEPTION_CREATE_CALCULATION_METHOD = "Can't create calculation method with id:";
 
     List<CalculationMethod> getAllCalculationMethods();
 

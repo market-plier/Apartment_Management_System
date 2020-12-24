@@ -252,9 +252,11 @@ public interface CommunalUtilityDao {
             "values (y.REFERENCE,y.OBJECT_ID,y.ATTR_ID)";
 
     String EXCEPTION_GET_ALL_COMMUNAL_UTILITIES = "Can't get communal utilities";
-    String EXCEPTION_GET_COMMUNAL_UTILITY_BY_ID = "Can't get communal utility by id";
-    String EXCEPTION_UPDATE_COMMUNAL_UTILITY = "Can't update communal utility";
-    String EXCEPTION_CREATE_COMMUNAL_UTILITIES = "Can't create communal utility";
+    String EXCEPTION_GET_ALL_COMMUNAL_UTILITIES_FILTER_BY_STATUS = "Can't get communal utilities by status: ";
+    String EXCEPTION_GET_COMMUNAL_UTILITY_BY_ID = "Can't get communal utility with id:";
+    String EXCEPTION_GET_COMMUNAL_UTILITY = "Can't get communal utility";
+    String EXCEPTION_UPDATE_COMMUNAL_UTILITY = "Can't update communal utility with id:";
+    String EXCEPTION_CREATE_COMMUNAL_UTILITIES = "Can't create communal utility with id:";
 
 
     List<CommunalUtility> getAllCommunalUtilities();

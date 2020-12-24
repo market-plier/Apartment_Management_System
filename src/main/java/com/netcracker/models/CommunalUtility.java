@@ -2,6 +2,9 @@ package com.netcracker.models;
 
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.sql.Date;
 
@@ -36,10 +39,15 @@ public class CommunalUtility {
     }
 
     private BigInteger communalUtilityId;
+    @Valid
     private CalculationMethod calculationMethod;
+    @NotBlank
     private String name;
+    @NotNull
     private Duration durationType;
+    @NotNull
     private Status status;
+    @NotNull
     private Date deadline;
 
     public CommunalUtility(BigInteger communalUtilityId, CalculationMethod calculationMethod,

@@ -33,6 +33,11 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_UPDATE_COMMUNAL_UTILITY = BigInteger.valueOf(112);
     BigInteger _FAIL_TO_SELECT_COMMUNAL_UTILITY = BigInteger.valueOf(113);
 
+    BigInteger _FAIL_TO_INSERT_CALCULATION_METHOD = BigInteger.valueOf(91);
+    BigInteger _FAIL_TO_UPDATE_CALCULATION_METHOD = BigInteger.valueOf(92);
+    BigInteger _FAIL_TO_SELECT_CALCULATION_METHOD = BigInteger.valueOf(93);
+    BigInteger _FAIL_TO_DELETE_CALCULATION_METHOD = BigInteger.valueOf(94);
+
     BigInteger _FAIL_TO_INSERT_MANAGER_SUB_BILL = BigInteger.valueOf(141);
     BigInteger _FAIL_TO_UPDATE_MANAGER_SUB_BILL = BigInteger.valueOf(142);
     BigInteger _FAIL_TO_SELECT_MANAGER_SUB_BILL = BigInteger.valueOf(143);
