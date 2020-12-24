@@ -6,7 +6,10 @@ import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.models.*;
 import com.netcracker.models.PojoBuilder.ApartmentOperationBuilder;
 import com.netcracker.models.PojoBuilder.ApartmentSubBillBuilder;
+import lombok.extern.log4j.Log4j;
+import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +19,7 @@ import java.util.List;
 
 
 @Service
+@Log4j
 @Transactional
 public class ApartmentSubBillService {
     private final ApartmentSubBillDao apartmentSubBillDao;
@@ -65,49 +69,60 @@ public class ApartmentSubBillService {
     }
 
     public void addApartmentSubBillsToApartment(Apartment apartment) {
-        for (CommunalUtility communalUtility : communalUtilityService.getAllCommunalUtilities(CommunalUtility.Status.Enabled)) {
-            apartmentSubBillDao.createApartmentSubBill(new ApartmentSubBillBuilder()
-                    .withApartment(apartment)
-                    .withCommunalUtility(communalUtility)
-                    .withDept((double) 0)
-                    .withBalance((double) 0)
-                    .build());
+        try {
+            for (CommunalUtility communalUtility : communalUtilityService.getAllCommunalUtilities(CommunalUtility.Status.Enabled)) {
+                apartmentSubBillDao.createApartmentSubBill(new ApartmentSubBillBuilder()
+                        .withApartment(apartment)
+                        .withCommunalUtility(communalUtility)
+                        .withDept((double) 0)
+                        .withBalance((double) 0)
+                        .build());
+            }
+        } catch (NullPointerException e) {
+            log.error("ApartmentSubBillService method addApartmentSubBillsToApartment: " + e.getMessage(), e);
+            throw e;
         }
     }
 
-    public void createApartmentSubBillTransfer(ApartmentSubBill transferFrom, ApartmentSubBill transferTo, Double value) {
-        if (transferFrom.getApartment().getAccountId().equals(transferTo.getApartment().getAccountId())) {
+    public void createApartmentSubBillTransfer(ApartmentSubBill transferFrom, ApartmentSubBill transferTo, Double value)
+            throws IllegalArgumentException, NotBelongToAccountException {
+        try {
+            if (!transferFrom.getApartment().getAccountId().equals(transferTo.getApartment().getAccountId())) {
+                throw new NotBelongToAccountException("Wrong transfer SubBills");
+            }
+
             ApartmentSubBill subBillFrom = apartmentSubBillDao.getApartmentSubBillById(transferFrom.getSubBillId());
             ApartmentSubBill subBillTo = apartmentSubBillDao.getApartmentSubBillById(transferTo.getSubBillId());
-            if (subBillFrom != null && subBillTo != null
-                    && subBillFrom.getBalance() >= value) {
-                subBillFrom.setBalance(subBillFrom.getBalance() - value);
-                subBillTo.setBalance(subBillTo.getBalance() + value);
-                apartmentSubBillDao.updateApartmentSubBill(subBillFrom);
-                apartmentSubBillDao.updateApartmentSubBill(subBillTo);
-                apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
-                        .withApartmentSubBill(transferTo)
-                        .withCreatedAt(new Date())
-                        .withSum(value)
-                        .build());
-                apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
-                        .withApartmentSubBill(transferFrom)
-                        .withCreatedAt(new Date())
-                        .withSum(-value)
-                        .build());
-            } else {
-                IllegalArgumentException e = new IllegalArgumentException("Wrong transfer Data");
-                throw e;
+
+            if (subBillFrom.getBalance() < value) {
+                throw new IllegalArgumentException("Wrong transfer Data");
             }
-        } else {
-            NotBelongToAccountException e = new NotBelongToAccountException("Wrong transfer SubBills");
+            subBillFrom.setBalance(subBillFrom.getBalance() - value);
+            subBillTo.setBalance(subBillTo.getBalance() + value);
+
+            apartmentSubBillDao.updateApartmentSubBill(subBillFrom);
+            apartmentSubBillDao.updateApartmentSubBill(subBillTo);
+
+            apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
+                    .withApartmentSubBill(transferTo)
+                    .withCreatedAt(new Date())
+                    .withSum(value)
+                    .build());
+            apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
+                    .withApartmentSubBill(transferFrom)
+                    .withCreatedAt(new Date())
+                    .withSum(-value)
+                    .build());
+
+        } catch (NullPointerException |
+                IllegalArgumentException e) {
+            log.error("ApartmentSubBillService method createApartmentSubBillTransfer: " + e.getMessage(), e);
             throw e;
         }
     }
 
     public void updateApartmentSubBillByApartmentOperation(ApartmentOperation apartmentOperation) {
         ApartmentSubBill apartmentSubBill = apartmentSubBillDao.getApartmentSubBillById(apartmentOperation.getApartmentSubBill().getSubBillId());
-
 
         apartmentSubBill.setBalance(apartmentSubBill.getBalance() + apartmentOperation.getSum());
         apartmentSubBillDao.updateApartmentSubBill(apartmentSubBill);
@@ -124,7 +139,6 @@ public class ApartmentSubBillService {
             debtPaymentOperationService.createDebtPaymentOperation(apartmentSubBill, oldDebt);
         }
     }
-
 
     public void updateApartmentSubBillsByDebt() {
 

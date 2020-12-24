@@ -30,69 +30,91 @@ public class ApartmentInfoService {
     }
 
     public List<Apartment> getAllApartments() throws DaoAccessException {
-        return apartmentDao.getAllApartments();
+        try {
+            return apartmentDao.getAllApartments();
+        } catch (NullPointerException e) {
+            log.error("ApartmentInfoService method getAllApartments: " + e.getMessage(), e);
+            throw e;
+        }
     }
 
     public Apartment createApartment(Apartment apartment) throws DaoAccessException {
-        if (isUnique(apartment)) {
-            apartment.setPassword(passwordEncoder.encode(apartment.getPassword()));
-            if (apartmentDao.createApartment(apartment)) {
-                apartment.setAccountId(accountService.getAccountByEmail(apartment.getEmail()).getAccountId());
-                apartmentSubBillService.addApartmentSubBillsToApartment(apartment);
+        try {
+            if (isUnique(apartment)) {
+                apartment.setPassword(passwordEncoder.encode(apartment.getPassword()));
+                if (apartmentDao.createApartment(apartment)) {
+                    apartment.setAccountId(accountService.getAccountByEmail(apartment.getEmail()).getAccountId());
+                    apartmentSubBillService.addApartmentSubBillsToApartment(apartment);
+                }
+                return apartment;
             }
-            return apartment;
+            return null;
+        } catch (NullPointerException e) {
+            log.error("ApartmentInfoService method createApartment: " + e.getMessage(), e);
+            throw e;
         }
-
-        return null;
     }
 
     public Apartment getApartmentById(BigInteger accountId) throws DaoAccessException {
-        return apartmentDao.getApartmentById(accountId);
+        try {
+            return apartmentDao.getApartmentById(accountId);
+        } catch (NullPointerException e) {
+            log.error("ApartmentInfoService method getApartmentById: " + e.getMessage(), e);
+            throw e;
+        }
     }
 
     public Apartment updateApartment(Apartment apartment, Account updater) throws DaoAccessException {
-        Apartment old = apartmentDao.getApartmentById(apartment.getAccountId());
+        try {
+            Apartment old = apartmentDao.getApartmentById(apartment.getAccountId());
 
-        //OWNER can only change email or password
-        if (updater.getRole().equals(Role.OWNER)
-                && updater.getAccountId().equals(apartment.getAccountId())) {
-            old.setEmail(apartment.getEmail());
-            if (!old.getPassword().equals(apartment.getPassword())) {
-                old.setPassword(passwordEncoder.encode(apartment.getPassword()));
+            //OWNER can only change email or password
+            if (updater.getRole().equals(Role.OWNER)
+                    && updater.getAccountId().equals(apartment.getAccountId())) {
+                old.setEmail(apartment.getEmail());
+                if (!old.getPassword().equals(apartment.getPassword())) {
+                    old.setPassword(passwordEncoder.encode(apartment.getPassword()));
+                }
             }
-        }
 
-        //MANAGER change all fields
-        if (updater.getRole().equals(Role.MANAGER)) {
-            if (!old.getPassword().equals(apartment.getPassword())) {
-                apartment.setPassword(passwordEncoder.encode(apartment.getPassword()));
+            //MANAGER change all fields
+            if (updater.getRole().equals(Role.MANAGER)) {
+                if (!old.getPassword().equals(apartment.getPassword())) {
+                    apartment.setPassword(passwordEncoder.encode(apartment.getPassword()));
+                }
+                old = apartment;
             }
-            old = apartment;
-        }
 
-        if (isUnique(old)) {
-            apartmentDao.updateApartment(old);
+            if (isUnique(old)) {
+                apartmentDao.updateApartment(old);
+            }
+            return null;
+        } catch (NullPointerException e) {
+            log.error("ApartmentInfoService method updateApartment: " + e.getMessage(), e);
+            throw e;
         }
-
-        return null;
     }
 
     private boolean isUnique(Apartment apartment) throws IllegalArgumentException {
-        List<Apartment> apartments = apartmentDao.getUniqueApartment(apartment);
-        for (Apartment a : apartments) {
-            if (apartment.getAccountId() == null
-                    || !apartment.getAccountId().equals(a.getAccountId())) {
+        try {
+            List<Apartment> apartments = apartmentDao.getUniqueApartment(apartment);
+            for (Apartment a : apartments) {
+                if (apartment.getAccountId() == null
+                        || !apartment.getAccountId().equals(a.getAccountId())) {
 
-                if (a.getEmail().equals(apartment.getEmail())) {
-                    throw new IllegalArgumentException("This email is already in use");
-                }
-                if (a.getFloor().equals(apartment.getFloor())) {
-                    throw new IllegalArgumentException("This apartment already has an account");
-                }
+                    if (a.getEmail().equals(apartment.getEmail())) {
+                        throw new IllegalArgumentException("This email is already in use");
+                    }
+                    if (a.getFloor().equals(apartment.getFloor())) {
+                        throw new IllegalArgumentException("This apartment already has an account");
+                    }
 
+                }
             }
+            return true;
+        } catch (NullPointerException e) {
+            log.error("ApartmentInfoService method isUnique: " + e.getMessage(), e);
+            throw e;
         }
-        return true;
     }
-
 }

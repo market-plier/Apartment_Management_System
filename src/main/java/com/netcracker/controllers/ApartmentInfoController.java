@@ -1,5 +1,7 @@
 package com.netcracker.controllers;
 
+import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.models.Account;
 import com.netcracker.models.Apartment;
 import com.netcracker.models.PojoBuilder.AccountBuilder;
@@ -16,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
 
-@RestController
+@RestController("/apartments")
 public class ApartmentInfoController {
 
     private final ApartmentInfoService apartmentInfoService;
@@ -26,23 +28,26 @@ public class ApartmentInfoController {
         this.apartmentInfoService = apartmentInfoService;
     }
 
-    @PostMapping("/createApartment")
+    @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public Apartment createApartment(@RequestBody @Valid Apartment apartment) {
         return apartmentInfoService.createApartment(apartment);
     }
 
-    @PutMapping("/updateApartment")
+    @PutMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public Apartment updateApartment(@RequestBody @Valid Apartment apartment) {
+    public Apartment updateApartment(@RequestBody @Valid Apartment apartment)
+            throws NullPointerException, DaoAccessException, IllegalArgumentException {
         JwtAccount account = (JwtAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Role role = null;
+
         if (account.getAuthorities().toString().equals("[ROLE_OWNER]")) {
             role = Role.OWNER;
         }
         if (account.getAuthorities().toString().equals("[ROLE_MANAGER]")) {
             role = Role.MANAGER;
         }
+
         Account updater = new AccountBuilder()
                 .withAccountId(account.getId())
                 .withRole(role)
@@ -51,14 +56,14 @@ public class ApartmentInfoController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    @GetMapping("/getApartment/{id}")
-    public Apartment getApartment(@PathVariable @NotNull BigInteger id) {
+    @GetMapping("/{id}")
+    public Apartment getApartment(@PathVariable @NotNull BigInteger id) throws NullPointerException, DaoAccessException {
         return apartmentInfoService.getApartmentById(id);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    @GetMapping("/getAllApartments")
-    public List<Apartment> getAllApartments() {
+    @GetMapping
+    public List<Apartment> getAllApartments() throws NullPointerException, DaoAccessException {
         return apartmentInfoService.getAllApartments();
     }
 
