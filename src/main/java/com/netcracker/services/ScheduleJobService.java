@@ -1,6 +1,7 @@
 package com.netcracker.services;
 
 import com.netcracker.jobs.DebtPaymentsJob;
+import com.netcracker.jobs.NotificationJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -12,15 +13,19 @@ import java.util.concurrent.ScheduledFuture;
 
 @Service
 public class ScheduleJobService {
-    final ThreadPoolTaskScheduler scheduler;
+    private final ThreadPoolTaskScheduler scheduler;
     Map<Integer, ScheduledFuture<?>> jobsMap = new HashMap<>();
 
-    final DebtPaymentsJob debtPaymentsJob;
+    private final DebtPaymentsJob debtPaymentsJob;
+    private final NotificationJob notificationJob;
 
     @Autowired
-    public ScheduleJobService(ThreadPoolTaskScheduler scheduler, DebtPaymentsJob debtPaymentsJob) {
+    public ScheduleJobService(ThreadPoolTaskScheduler scheduler,
+                              DebtPaymentsJob debtPaymentsJob,
+                              NotificationJob notificationJob) {
         this.scheduler = scheduler;
         this.debtPaymentsJob = debtPaymentsJob;
+        this.notificationJob = notificationJob;
         addAllJobs();
     }
 
@@ -39,5 +44,6 @@ public class ScheduleJobService {
 
     void addAllJobs() {
         addJobToScheduler(1, this.debtPaymentsJob.getJob(), this.debtPaymentsJob.getTrigger());
+        addJobToScheduler(2, this.notificationJob.getJob(), this.notificationJob.getTrigger());
     }
 }
