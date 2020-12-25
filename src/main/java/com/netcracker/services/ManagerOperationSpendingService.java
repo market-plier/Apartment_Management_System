@@ -37,7 +37,6 @@ public class ManagerOperationSpendingService {
                 managerSpendingOperationDao.createManagerOperationSpending(managerSpendingOperation);
                 managerSubBillService.updateManagerSubBillByManagerOperation(managerSpendingOperation);
             }
-
         } catch (NullPointerException e) {
             log.error("IN Service method createManagerOperationSpending: " + e.getMessage());
             throw e;
@@ -79,14 +78,22 @@ public class ManagerOperationSpendingService {
 
     public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException, NullPointerException {
         try {
-            if (managerSpendingOperationDao.getManagerOperationSpendingById(managerSpendingOperation.getOperationId()) != null) {
                 managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);
-            }
         } catch (NullPointerException e) {
             log.error("IN Service method updateManagerOperation: " + e.getMessage());
             throw e;
         }
 
+    }
+
+    public List<ManagerSpendingOperation> getAllManagerOperationBySubBillId (BigInteger id)
+    {
+        try {
+           return managerSpendingOperationDao.getAllManagerOperationSpendingByManagerSubBill(id);
+        } catch (NullPointerException e) {
+            log.error("IN Service method updateManagerOperation: " + e.getMessage());
+            throw e;
+        }
     }
 
 
