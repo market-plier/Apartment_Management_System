@@ -30,7 +30,6 @@ public class ApartmentRequestToManagerService {
                         "Call me: \n" +
                         account.getFirstName() + " " + account.getLastName() + '\n' +
                         "Phone: " + account.getPhoneNumber();
-
                 mailService.sendMessage(managerInfoService.getManager().getEmail(), subject, text);
             }
         } catch (NullPointerException e) {

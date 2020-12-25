@@ -18,7 +18,8 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
 
-@RestController("/apartments")
+@RestController
+@RequestMapping("/apartments")
 public class ApartmentInfoController {
 
     private final ApartmentInfoService apartmentInfoService;
@@ -28,13 +29,20 @@ public class ApartmentInfoController {
         this.apartmentInfoService = apartmentInfoService;
     }
 
-    @PostMapping
+    @PostMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public Apartment createApartment(@RequestBody @Valid Apartment apartment) {
         return apartmentInfoService.createApartment(apartment);
     }
 
-    @PutMapping
+    @PutMapping("/updatePassword")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
+    public Apartment updateApartmentPassword(@RequestBody @Valid Apartment apartment)
+            throws NullPointerException, DaoAccessException {
+        return apartmentInfoService.updateApartmentPassword(apartment);
+    }
+
+    @PutMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
     public Apartment updateApartment(@RequestBody @Valid Apartment apartment)
             throws NullPointerException, DaoAccessException, IllegalArgumentException {
@@ -55,14 +63,14 @@ public class ApartmentInfoController {
         return apartmentInfoService.updateApartment(apartment, updater);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
     public Apartment getApartment(@PathVariable @NotNull BigInteger id) throws NullPointerException, DaoAccessException {
         return apartmentInfoService.getApartmentById(id);
     }
 
+    @GetMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    @GetMapping
     public List<Apartment> getAllApartments() throws NullPointerException, DaoAccessException {
         return apartmentInfoService.getAllApartments();
     }

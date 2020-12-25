@@ -5,7 +5,25 @@ import com.netcracker.models.Account;
 import java.math.BigInteger;
 
 public interface AccountDao {
-    String GET_ACCOUNT_BY_ID = "SELECT ATTR_FIRST_NAME.VALUE first_name, ATTR_LAST_NAME.VALUE last_name, ATTR_EMAIL.VALUE email, ATTR_PASSWORD.VALUE password,\n" +
+    String UPDATE_ACCOUNT ="MERGE INTO ATTRIBUTES x\n" +
+            "USING (\n" +
+            "    SELECT 2 ATTR_ID, ? VALUE FROM DUAL\n" +
+            "    UNION ALL\n" +
+            "    SELECT 3, ? FROM DUAL\n" +
+            "    UNION ALL\n" +
+            "    SELECT 5, ? FROM DUAL\n" +
+            "    UNION ALL\n" +
+            "    SELECT 4, ? FROM DUAL\n" +
+            "    UNION ALL\n" +
+            "    SELECT 6, ? FROM DUAL\n" +
+            ") y\n" +
+            "ON (x.OBJECT_ID = ? AND x.ATTR_ID = y.ATTR_ID)\n" +
+            "WHEN MATCHED THEN\n" +
+            "    UPDATE\n" +
+            "    SET x.VALUE = y.VALUE\n" +
+            "    WHERE x.VALUE <> y.VALUE";
+
+            String GET_ACCOUNT_BY_ID = "SELECT ATTR_FIRST_NAME.VALUE first_name, ATTR_LAST_NAME.VALUE last_name, ATTR_EMAIL.VALUE email, ATTR_PASSWORD.VALUE password,\n" +
             "ATTR_PHONE.VALUE phone, ROLE_VAL.VALUE role_name,ACC_OBJ.OBJECT_ID account_id\n" +
             "FROM ATTRIBUTES ATTR_FIRST_NAME, ATTRIBUTES ATTR_LAST_NAME,\n" +
             "ATTRIBUTES ATTR_PASSWORD, ATTRIBUTES ATTR_EMAIL, ATTRIBUTES ATTR_PHONE, ATTRIBUTES ATTR_ROLE_NAME, OBJECTS ACC_OBJ,LISTS ROLE_VAL\n" +
@@ -48,7 +66,9 @@ public interface AccountDao {
 
     String EXCEPTION_GET_ACCOUNT_BY_ID = "Cant find account with id ";
     String EXCEPTION_GET_ACCOUNT_BY_EMAIL = "Cant find account with email: ";
+    String EXCEPTION_UPDATE_ACCOUNT = "Cant update account";
 
     Account getAccount(BigInteger id);
     Account getAccountByEmail(String email);
+    Account updateAccount(Account account);
 }
