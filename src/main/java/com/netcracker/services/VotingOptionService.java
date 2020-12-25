@@ -16,9 +16,9 @@ public class VotingOptionService {
     @Autowired
     private VotingOptionDao votingOptionDao;
 
-    public Collection<VotingOption> getAllVotingOptionsByHouseVotingId(BigInteger id) throws DaoAccessException, NullPointerException  {
+    public Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger announcementId) throws DaoAccessException, NullPointerException  {
         try {
-            return votingOptionDao.getAllVotingOptionsByHouseVotingId(id);
+            return votingOptionDao.getAllVotingOptionsByAnnouncementId(announcementId);
         } catch (NullPointerException e) {
             log.error("VotingOptionService method getAllVotingOptionsByAnnouncementId: " + e.getMessage(), e);
             throw e;
@@ -35,9 +35,9 @@ public class VotingOptionService {
         }
     }
 
-    public void addVote(BigInteger houseVotingId, BigInteger votingOptionId, BigInteger accountId) throws IllegalArgumentException, DaoAccessException, NullPointerException  {
+    public void addVote(BigInteger announcementId, BigInteger votingOptionId, BigInteger accountId) throws IllegalArgumentException, DaoAccessException, NullPointerException  {
         try {
-            if (hasVote(houseVotingId, accountId)) {
+            if (hasVote(announcementId, accountId)) {
                 throw new IllegalArgumentException("This account has already voted");
             }
 
@@ -48,9 +48,9 @@ public class VotingOptionService {
         }
     }
 
-    private boolean hasVote(BigInteger houseVotingId, BigInteger accountId) {
+    private boolean hasVote(BigInteger announcementId, BigInteger accountId) {
         try {
-            for (VotingOption votingOption: getAllVotingOptionsByHouseVotingId(houseVotingId)) {
+            for (VotingOption votingOption: getAllVotingOptionsByAnnouncementId(announcementId)) {
                 Collection<BigInteger> apartmentIds = votingOptionDao.getApartmentIdsByVotingOptionId(votingOption.getVotingOptionId());
                 if (apartmentIds.contains(accountId)) {
                     return true;

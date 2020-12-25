@@ -73,7 +73,7 @@ public interface AnnouncementDao {
             "   UNION ALL\n" +
             "   SELECT 9, seq_obj_curr, ?, NULL FROM DUAL\n" +
             "   UNION ALL\n" +
-            "   SELECT 10, seq_obj_curr, NULL, ? FROM DUAL) new\n" +
+            "   SELECT 10, seq_obj_curr, NULL, systimestamp FROM DUAL) new\n" +
             "ON (old.OBJECT_ID = new.OBJECT_ID AND old.ATTR_ID = new.ATTR_ID)\n" +
             "WHEN MATCHED THEN\n" +
             "   UPDATE SET old.VALUE = new.VALUE, old.DATE_VALUE = new.DATE_VALUE\n" +
@@ -88,9 +88,7 @@ public interface AnnouncementDao {
             "   UNION ALL\n" +
             "   SELECT 8, ?, NULL FROM DUAL\n" +
             "   UNION ALL\n" +
-            "   SELECT 9, ?, NULL FROM DUAL\n" +
-            "   UNION ALL\n" +
-            "   SELECT 10, NULL, ? FROM DUAL) new\n" +
+            "   SELECT 9, ?, NULL FROM DUAL) new\n" +
             "ON (old.OBJECT_ID = ? AND old.ATTR_ID = new.ATTR_ID)\n" +
             "WHEN MATCHED THEN\n" +
             "   UPDATE SET old.VALUE = new.VALUE, old.DATE_VALUE = new.DATE_VALUE\n" +

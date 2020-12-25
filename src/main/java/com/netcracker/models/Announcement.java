@@ -19,9 +19,6 @@ public class Announcement {
 
     private String body;
     private Boolean isOpened;
-
-
-    @PastOrPresent(message = "Future date cannot be set")
     private Date createdAt;
 
     private List<Comment> comments;

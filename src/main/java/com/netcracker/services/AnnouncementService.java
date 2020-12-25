@@ -20,9 +20,9 @@ public class AnnouncementService{
     @Autowired
     private AnnouncementDao announcementDao;
     @Autowired
-    private HouseVotingDao houseVotingDao;
-    @Autowired
     private CommentDao commentDao;
+    @Autowired
+    private HouseVotingService houseVotingService;
 
     public AnnouncementService(AnnouncementDao announcementDao) {
         this.announcementDao = announcementDao;
@@ -42,7 +42,7 @@ public class AnnouncementService{
             Announcement announcement = announcementDao.getAnnouncementById(id);
 
             if (announcement.getHouseVoting() != null) {
-                HouseVoting houseVoting = houseVotingDao.getHouseVotingByAnnouncementId(id);
+                HouseVoting houseVoting = houseVotingService.getHouseVotingByAnnouncementId(id);
                 announcement.setHouseVoting(houseVoting);
             }
 
@@ -61,7 +61,7 @@ public class AnnouncementService{
             announcementDao.updateAnnouncement(announcement);
             return announcement;
         } catch (NullPointerException e) {
-            log.error("AnnouncementService method getAnnouncementById: " + e.getMessage(), e);
+            log.error("AnnouncementService method updateAnnouncement: " + e.getMessage(), e);
             throw e;
         }
     }
@@ -71,7 +71,7 @@ public class AnnouncementService{
             announcementDao.createAnnouncement(announcement);
             return announcement;
         } catch (NullPointerException e) {
-            log.error("AnnouncementService method getAnnouncementById: " + e.getMessage(), e);
+            log.error("AnnouncementService method createAnnouncement: " + e.getMessage(), e);
             throw e;
         }
     }
@@ -80,7 +80,7 @@ public class AnnouncementService{
         try {
             announcementDao.deleteAnnouncement(id);
         } catch (NullPointerException e) {
-            log.error("AnnouncementService method getAnnouncementById: " + e.getMessage(), e);
+            log.error("AnnouncementService method deleteAnnouncement: " + e.getMessage(), e);
             throw e;
         }
     }

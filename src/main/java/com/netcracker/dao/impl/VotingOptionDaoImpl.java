@@ -24,14 +24,14 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Collection<VotingOption> getAllVotingOptionsByHouseVotingId(BigInteger id) throws DaoAccessException {
+    public Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger announcementId) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID, new VotingOptionMapper(), id);
+            return jdbcTemplate.query(GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID, new VotingOptionMapper(), announcementId);
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_VOTING_OPTION)
-                    .withMessage(EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID)
-                    .withId(id)
+                    .withMessage(EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID)
+                    .withId(announcementId)
                     .withCause(e.getCause())
                     .build();
             log.error("VotingOptionDaoImpl method getAllVotingOptionsByHouseVotingId: " + accessException.getMessage());

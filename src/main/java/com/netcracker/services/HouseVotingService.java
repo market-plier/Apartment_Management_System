@@ -21,11 +21,11 @@ public class HouseVotingService  {
     @Autowired
     private VotingOptionDao votingOptionDao;
 
-    public HouseVoting getHouseVotingByAnnouncementId(BigInteger id) throws DaoAccessException, NullPointerException {
+    public HouseVoting getHouseVotingByAnnouncementId(BigInteger announcementId) throws DaoAccessException, NullPointerException {
         try {
-            HouseVoting houseVoting = houseVotingDao.getHouseVotingByAnnouncementId(id);
+            HouseVoting houseVoting = houseVotingDao.getHouseVotingByAnnouncementId(announcementId);
 
-            Collection<VotingOption> votingOptions = votingOptionDao.getAllVotingOptionsByHouseVotingId(houseVoting.getHouseVotingId());
+            Collection<VotingOption> votingOptions = votingOptionDao.getAllVotingOptionsByAnnouncementId(announcementId);
             houseVoting.setVotingOptions(votingOptions);
 
             return houseVoting;
@@ -45,9 +45,9 @@ public class HouseVotingService  {
         }
     }
 
-    public void deleteHouseVoting(BigInteger id) throws DaoAccessException, NullPointerException {
+    public void deleteHouseVoting(BigInteger announcementId) throws DaoAccessException, NullPointerException {
         try {
-            houseVotingDao.deleteHouseVoting(id);
+            houseVotingDao.deleteHouseVoting(announcementId);
         } catch (NullPointerException e) {
             log.error("HouseVotingService method deleteHouseVoting: " + e.getMessage(), e);
             throw e;

@@ -8,14 +8,15 @@ import java.math.BigInteger;
 import java.util.Collection;
 
 public interface VotingOptionDao {
-    String GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID =
+    String GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID =
             "SELECT VOTING_OPTION.OBJECT_ID voting_option_id,\n" +
             "VOTING_OPTION_NAME.VALUE name,\n" +
             "HVOTING.OBJECT_ID house_voting_id\n" +
-            "FROM OBJECTS VOTING_OPTION, OBJECTS HVOTING,\n" +
+            "FROM OBJECTS VOTING_OPTION, OBJECTS HVOTING, OBJECTS ANNC,\n" +
             "ATTRIBUTES VOTING_OPTION_NAME\n" +
             "    WHERE VOTING_OPTION.OBJECT_TYPE_ID = 6\n" +
-            "    AND HVOTING.OBJECT_ID = ?\n" +
+            "    AND ANNC.OBJECT_ID = ?\n" +
+            "    AND HVOTING.PARENT_ID = ANNC.OBJECT_ID\n" +
             "    AND VOTING_OPTION.PARENT_ID = HVOTING.OBJECT_ID\n" +
             "    AND VOTING_OPTION_NAME.ATTR_ID = 14\n" +
             "    AND VOTING_OPTION_NAME.OBJECT_ID = VOTING_OPTION.OBJECT_ID";
@@ -43,7 +44,7 @@ public interface VotingOptionDao {
             "   WHERE old.VALUE <> new.VALUE\n" +
             "WHEN NOT MATCHED THEN\n" +
             "   INSERT(old.ATTR_ID, old.OBJECT_ID, old.VALUE)\n" +
-            "   VALUES(new.ATTR_ID, new.OBJECT_ID, new.VALUE);";
+            "   VALUES(new.ATTR_ID, new.OBJECT_ID, new.VALUE)";
 
     String ADD_VOTE =
             "MERGE INTO OBJREFERENCE old\n" +
@@ -54,20 +55,20 @@ public interface VotingOptionDao {
             "   WHERE old.REFERENCE <> new.REFERENCE\n" +
             "WHEN NOT MATCHED THEN\n" +
             "   INSERT(old.ATTR_ID,old.OBJECT_ID, old.REFERENCE)\n" +
-            "   VALUES(new.ATTR_ID,new.OBJECT_ID, new.REFERENCE);";
+            "   VALUES(new.ATTR_ID,new.OBJECT_ID, new.REFERENCE)";
 
     String GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID =
             "SELECT VOTE.REFERENCE\n" +
             "FROM OBJREFERENCE VOTE\n" +
             "WHERE VOTE.ATTR_ID = 30\n" +
-            "AND VOTE.OBJECT_ID = ?;";
+            "AND VOTE.OBJECT_ID = ?";
 
-    String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_HOUSE_VOTING_ID = "Can't get voting option with this house voting id: ";
+    String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID = "Can't get voting option with this house voting id: ";
     String EXCEPTION_CREATE_VOTING_OPTION = "Can't create voting option";
     String EXCEPTION_ADD_VOTE = "Can't add vote reference with voting option id: ";
     String EXCEPTION_GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID = "Can't get apartment ids with this voting option id: ";
 
-    Collection<VotingOption> getAllVotingOptionsByHouseVotingId(BigInteger id) throws DaoAccessException;
+    Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger announcementId) throws DaoAccessException;
 
     void createVotingOption(VotingOption votingOption) throws DaoAccessException;
 

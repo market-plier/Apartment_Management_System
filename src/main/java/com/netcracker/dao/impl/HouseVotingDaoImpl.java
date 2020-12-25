@@ -23,15 +23,14 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public HouseVoting getHouseVotingByAnnouncementId(BigInteger id) throws DaoAccessException {
+    public HouseVoting getHouseVotingByAnnouncementId(BigInteger announcementId) throws DaoAccessException {
         try {
-            HouseVoting houseVoting = jdbcTemplate.queryForObject(GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID, new HouseVotingMapper(), id);
-            return houseVoting;
+            return jdbcTemplate.queryForObject(GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID, new HouseVotingMapper(), announcementId);
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_HOUSE_VOTING)
                     .withMessage(EXCEPTION_GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID)
-                    .withId(id)
+                    .withId(announcementId)
                     .withCause(e.getCause())
                     .build();
             log.error("HouseVotingDaoImpl method getHouseVotingByAnnouncementId: " + accessException.getMessage());
@@ -58,14 +57,14 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
     }
 
     @Override
-    public void deleteHouseVoting(BigInteger id) throws DaoAccessException {
+    public void deleteHouseVoting(BigInteger announcementId) throws DaoAccessException {
         try {
-            jdbcTemplate.update(DELETE_HOUSE_VOTING, id);
+            jdbcTemplate.update(DELETE_HOUSE_VOTING, announcementId);
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_DELETE_HOUSE_VOTING)
                     .withMessage(EXCEPTION_DELETE_HOUSE_VOTING)
-                    .withId(id)
+                    .withId(announcementId)
                     .withCause(e.getCause())
                     .build();
             log.error("HouseVotingDaoImpl method deleteHouseVoting: " + accessException.getMessage());

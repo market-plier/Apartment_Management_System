@@ -6,6 +6,8 @@ import com.netcracker.services.HouseVotingService;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,26 +22,30 @@ import java.math.BigInteger;
 
 @Log4j
 @RestController
-@RequestMapping("/announcements/{announcementId}/house_votings")
+@RequestMapping("/announcements/{announcementId}/house_voting")
 public class HouseVotingController {
     @Autowired
     private HouseVotingService houseVotingService;
 
-    @GetMapping("/{id}")
+    @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public HouseVoting getHouseVotingByAnnouncementId(@PathVariable BigInteger id) throws DaoAccessException, NullPointerException {
-        return houseVotingService.getHouseVotingByAnnouncementId(id);
+    public HouseVoting getHouseVotingByAnnouncementId(@PathVariable BigInteger announcementId)
+            throws DaoAccessException, NullPointerException {
+        return houseVotingService.getHouseVotingByAnnouncementId(announcementId);
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public HouseVoting createHouseVoting(@RequestBody @Valid HouseVoting houseVoting) throws DaoAccessException, NullPointerException {
+    public HouseVoting createHouseVoting(@RequestBody @Valid HouseVoting houseVoting)
+            throws DaoAccessException, NullPointerException {
         return houseVotingService.createHouseVoting(houseVoting);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public void deleteHouseVoting(@PathVariable BigInteger id) throws DaoAccessException, NullPointerException {
-        houseVotingService.deleteHouseVoting(id);
+    public ResponseEntity deleteHouseVoting(@PathVariable BigInteger announcementId)
+            throws DaoAccessException, NullPointerException {
+        houseVotingService.deleteHouseVoting(announcementId);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }

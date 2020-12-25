@@ -62,8 +62,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
             jdbcTemplate.update(CREATE_ANNOUNCEMENT_ATTRIBUTES,
                     announcement.getTitle(),
                     announcement.getBody(),
-                    announcement.getIsOpened(),
-                    announcement.getCreatedAt());
+                    announcement.getIsOpened() ? "1" : "0");
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_ANNOUNCEMENT)
@@ -81,8 +80,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
             jdbcTemplate.update(UPDATE_ANNOUNCEMENT,
                     announcement.getTitle(),
                     announcement.getBody(),
-                    announcement.getIsOpened(),
-                    announcement.getCreatedAt(),
+                    announcement.getIsOpened() ? "1" : "0",
                     announcement.getAnnouncementId());
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()

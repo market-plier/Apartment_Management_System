@@ -42,15 +42,15 @@ public interface HouseVotingDao {
             "   INSERT(old.ATTR_ID, old.OBJECT_ID, old.VALUE)\n" +
             "   VALUES(new.ATTR_ID, new.OBJECT_ID, new.VALUE)\n";
 
-    String DELETE_HOUSE_VOTING = "DELETE FROM OBJECTS WHERE OBJECT_ID = ?";
+    String DELETE_HOUSE_VOTING = "DELETE FROM OBJECTS WHERE OBJECT_TYPE_ID = 5 AND PARENT_ID = ?";
 
     String EXCEPTION_GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID = "Can't get house voting with this announcement id: ";
     String EXCEPTION_CREATE_HOUSE_VOTING = "Can't create announcement";
     String EXCEPTION_DELETE_HOUSE_VOTING = "Can't delete announcement with id: ";
 
-    HouseVoting getHouseVotingByAnnouncementId(BigInteger id) throws DaoAccessException;
+    HouseVoting getHouseVotingByAnnouncementId(BigInteger announcementId) throws DaoAccessException;
 
     void createHouseVoting(HouseVoting houseVoting) throws DaoAccessException;
 
-    void deleteHouseVoting(BigInteger id) throws DaoAccessException;
+    void deleteHouseVoting(BigInteger announcementId) throws DaoAccessException;
 }
