@@ -20,35 +20,57 @@ public class ManagerSubBillService {
 
     private final ManagerSubBillDao managerSubBillDao;
     private final ManagerInfoService managerInfoService;
+    private final ManagerOperationSpendingService managerOperationSpendingService;
+    private final DebtPaymentOperationService debtPaymentOperationService;
 
     @Autowired
-    public ManagerSubBillService(ManagerSubBillDao managerSubBillDao, ManagerInfoService managerInfoService) {
+    public ManagerSubBillService(ManagerSubBillDao managerSubBillDao, ManagerInfoService managerInfoService,
+                                 ManagerOperationSpendingService managerOperationSpendingService,
+                                 DebtPaymentOperationService debtPaymentOperationService) {
         this.managerSubBillDao = managerSubBillDao;
         this.managerInfoService = managerInfoService;
+        this.managerOperationSpendingService = managerOperationSpendingService;
+        this.debtPaymentOperationService = debtPaymentOperationService;
     }
 
 
     public Collection<ManagerSubBill> getAllManagerSubBills() {
         try {
-            return managerSubBillDao.getAllManagerSubBills();
+            Collection<ManagerSubBill> managerSubBills = managerSubBillDao.getAllManagerSubBills();
+            for (ManagerSubBill managerSubBill : managerSubBills) {
+                BigInteger managerSubBillId = managerSubBill.getSubBillId();
+                managerSubBill.setManagerSpendingOperations(managerOperationSpendingService.getAllManagerOperationBySubBillId(managerSubBillId));
+                managerSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByManagerSubBillId(managerSubBillId));
+ }
+            return managerSubBills;
         } catch (NullPointerException e) {
             log.error("IN Service method getManagerSubBillByCommunalUtilityId: " + e.getMessage());
             throw e;
         }
     }
 
-    public ManagerSubBill getManagerSubBill(BigInteger id) {
+
+    public ManagerSubBill getManagerSubBill(BigInteger managerSubBillId) {
         try {
-            return managerSubBillDao.getManagerSubBillById(id);
+            ManagerSubBill managerSubBill = managerSubBillDao.getManagerSubBillById(managerSubBillId);
+            managerSubBill.setManagerSpendingOperations(managerOperationSpendingService.getAllManagerOperationBySubBillId(managerSubBillId));
+            managerSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByManagerSubBillId(managerSubBillId));
+
+            return managerSubBill;
         } catch (NullPointerException e) {
             log.error("IN Service method getManagerSubBillByCommunalUtilityId: " + e.getMessage());
             throw e;
         }
     }
 
-    public ManagerSubBill getManagerSubBillByCommunalUtilityId(BigInteger id) {
+    public ManagerSubBill getManagerSubBillByCommunalUtilityId(BigInteger communalUtilityId) {
         try {
-            return managerSubBillDao.getManagerSubBillByCommunalUtilityId(id);
+            ManagerSubBill managerSubBill = managerSubBillDao.getManagerSubBillByCommunalUtilityId(communalUtilityId);
+            BigInteger managerSubBillId = managerSubBill.getSubBillId();
+            managerSubBill.setManagerSpendingOperations(managerOperationSpendingService.getAllManagerOperationBySubBillId(managerSubBillId));
+            managerSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByManagerSubBillId(managerSubBillId));
+
+            return managerSubBill;
         } catch (NullPointerException e) {
             log.error("IN Service method getManagerSubBillByCommunalUtilityId: " + e.getMessage());
             throw e;
