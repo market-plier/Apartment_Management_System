@@ -53,7 +53,7 @@ VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_2', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'dasha@gmail.com');
+VALUES (2, obj_id_seq.currval, 'nonarush1@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (3, obj_id_seq.currval, '$2y$12$4aXoSg7C.BZwxnyOF7fAkuwWUuyzPFswhPXzzmiEhkRDg07OVtksi ');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
