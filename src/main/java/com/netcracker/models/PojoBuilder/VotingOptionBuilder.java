@@ -9,6 +9,7 @@ public class VotingOptionBuilder {
     private BigInteger votingOptionId;
     private HouseVoting houseVoting;
     private String name;
+    private Integer count;
 
     public VotingOptionBuilder withVotingOptionId(BigInteger votingOptionId) {
         this.votingOptionId = votingOptionId;
@@ -25,7 +26,12 @@ public class VotingOptionBuilder {
         return this;
     }
 
+    public VotingOptionBuilder withCount(Integer count) {
+        this.count = count;
+        return this;
+    }
+
     public VotingOption build() {
-        return new VotingOption(votingOptionId, houseVoting, name);
+        return new VotingOption(votingOptionId, houseVoting, name, count);
     }
 }

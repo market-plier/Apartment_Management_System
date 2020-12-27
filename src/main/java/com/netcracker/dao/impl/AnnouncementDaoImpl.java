@@ -56,6 +56,22 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     }
 
     @Override
+    public Announcement getLatestAnnouncement() throws DaoAccessException {
+        try {
+            Announcement announcement = jdbcTemplate.queryForObject(GET_LATEST_ANNOUNCEMENT, new AnnouncementMapper());
+            return announcement;
+        } catch (DataAccessException e) {
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_ANNOUNCEMENT)
+                    .withMessage(EXCEPTION_GET_LATEST_ANNOUNCEMENT)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("AnnouncementDaoImpl method getLatestAnnouncement: " + accessException.getMessage());
+            throw accessException;
+        }
+    }
+
+    @Override
     public void createAnnouncement(Announcement announcement) throws DaoAccessException {
         try {
             jdbcTemplate.update(CREATE_ANNOUNCEMENT_OBJECT);

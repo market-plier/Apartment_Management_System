@@ -8,11 +8,12 @@ import java.math.BigInteger;
 public interface HouseVotingDao {
     String GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID =
             "SELECT HVOTING.OBJECT_ID house_voting_id, \n" +
-            "HVOTING_TITLE.VALUE title, \n" +
-            "ANNC.OBJECT_ID announcement_id \n" +
-            "FROM OBJECTS ANNC, OBJECTS HVOTING, \n" +
-            "ATTRIBUTES HVOTING_TITLE \n" +
-            "   WHERE ANNC.OBJECT_ID = ? \n" +
+            "HVOTING_TITLE.VALUE      title, \n" +
+            "ANNC.OBJECT_ID           announcement_id \n" +
+            "FROM OBJECTS ANNC, \n" +
+            "     OBJECTS HVOTING, \n" +
+            "     ATTRIBUTES HVOTING_TITLE \n" +
+            "WHERE ANNC.OBJECT_ID = ? \n" +
             "   AND HVOTING.PARENT_ID = ANNC.OBJECT_ID \n" +
             "   AND HVOTING_TITLE.ATTR_ID = 13 \n" +
             "   AND HVOTING_TITLE.OBJECT_ID = HVOTING.OBJECT_ID";

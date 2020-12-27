@@ -1,10 +1,12 @@
 package com.netcracker.dao.impl;
 
 import com.netcracker.dao.VotingOptionDao;
+import com.netcracker.dao.mapper.ApartmentForVotingOptionMapper;
 import com.netcracker.dao.mapper.VotingOptionMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
+import com.netcracker.models.Apartment;
 import com.netcracker.models.VotingOption;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.List;
 
 @Log4j
 @Repository
@@ -75,17 +78,17 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
     }
 
     @Override
-    public Collection<BigInteger> getApartmentIdsByVotingOptionId(BigInteger id) throws DaoAccessException {
+    public List<Apartment> getApartmentsByVotingOptionId(BigInteger id) throws DaoAccessException {
         try {
-            return jdbcTemplate.queryForList(GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID, BigInteger.class, id);
+            return jdbcTemplate.query(GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID, new ApartmentForVotingOptionMapper(), id);
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes.APARTMENT_OPERATION_FAIL_TO_SELECT)
-                    .withMessage(EXCEPTION_GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID)
+                    .withMessage(EXCEPTION_GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID)
                     .withId(id)
                     .withCause(e.getCause())
                     .build();
-            log.error("VotingOptionDaoImpl method getApartmentIdsByVotingOptionId: " + accessException.getMessage());
+            log.error("VotingOptionDaoImpl method getApartmentsByVotingOptionId: " + accessException.getMessage());
             throw accessException;
         }
     }

@@ -1,25 +1,31 @@
 package com.netcracker.dao;
 
 import com.netcracker.exception.DaoAccessException;
-import com.netcracker.models.Account;
+import com.netcracker.models.Apartment;
 import com.netcracker.models.VotingOption;
 
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.List;
 
 public interface VotingOptionDao {
     String GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID =
             "SELECT VOTING_OPTION.OBJECT_ID voting_option_id,\n" +
-            "VOTING_OPTION_NAME.VALUE name,\n" +
-            "HVOTING.OBJECT_ID house_voting_id\n" +
-            "FROM OBJECTS VOTING_OPTION, OBJECTS HVOTING, OBJECTS ANNC,\n" +
-            "ATTRIBUTES VOTING_OPTION_NAME\n" +
-            "    WHERE VOTING_OPTION.OBJECT_TYPE_ID = 6\n" +
+            "       VOTING_OPTION_NAME.VALUE       name,\n" +
+            "       HVOTING.OBJECT_ID              house_voting_id,\n" +
+            "       COUNT(VOTE.REFERENCE)          count\n" +
+            "FROM OBJECTS HVOTING,\n" +
+            "     OBJECTS ANNC,\n" +
+            "     ATTRIBUTES VOTING_OPTION_NAME,\n" +
+            "     OBJECTS VOTING_OPTION\n" +
+            "LEFT JOIN  OBJREFERENCE VOTE ON (VOTE.ATTR_ID = 30 AND VOTE.OBJECT_ID = VOTING_OPTION.OBJECT_ID)\n" +
+            "WHERE VOTING_OPTION.OBJECT_TYPE_ID = 6\n" +
             "    AND ANNC.OBJECT_ID = ?\n" +
             "    AND HVOTING.PARENT_ID = ANNC.OBJECT_ID\n" +
             "    AND VOTING_OPTION.PARENT_ID = HVOTING.OBJECT_ID\n" +
             "    AND VOTING_OPTION_NAME.ATTR_ID = 14\n" +
-            "    AND VOTING_OPTION_NAME.OBJECT_ID = VOTING_OPTION.OBJECT_ID";
+            "    AND VOTING_OPTION_NAME.OBJECT_ID = VOTING_OPTION.OBJECT_ID\n" +
+            "GROUP BY VOTING_OPTION.OBJECT_ID, VOTING_OPTION_NAME.VALUE, HVOTING.OBJECT_ID";
 
     String CREATE_VOTING_OPTION_OBJECT =
             "MERGE INTO OBJECTS old\n" +
@@ -57,16 +63,31 @@ public interface VotingOptionDao {
             "   INSERT(old.ATTR_ID,old.OBJECT_ID, old.REFERENCE)\n" +
             "   VALUES(new.ATTR_ID,new.OBJECT_ID, new.REFERENCE)";
 
-    String GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID =
-            "SELECT VOTE.REFERENCE\n" +
-            "FROM OBJREFERENCE VOTE\n" +
+    String GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID =
+            "SELECT APRT.OBJECT_ID  account_id,\n" +
+            "       APTNUM.VALUE    apartment_number,\n" +
+            "       FNAME.VALUE     first_name,\n" +
+            "       LNAME.VALUE     last_name\n" +
+            "FROM OBJREFERENCE VOTE,\n" +
+            "     OBJECTS APRT,\n" +
+            "     ATTRIBUTES APTNUM,\n" +
+            "     ATTRIBUTES FNAME,\n" +
+            "     ATTRIBUTES LNAME\n" +
             "WHERE VOTE.ATTR_ID = 30\n" +
-            "AND VOTE.OBJECT_ID = ?";
+            "    AND VOTE.OBJECT_ID = ?\n" +
+            "    AND VOTE.REFERENCE = APRT.OBJECT_ID\n" +
+            "    AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "    AND APTNUM.ATTR_ID = 15\n" +
+            "    AND FNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "    AND FNAME.ATTR_ID = 4\n" +
+            "    AND LNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "    AND LNAME.ATTR_ID = 5\n" +
+            "ORDER BY apartment_number";
 
-    String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID = "Can't get voting option with this house voting id: ";
+    String EXCEPTION_GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID = "Can't get voting option by this announcement id: ";
     String EXCEPTION_CREATE_VOTING_OPTION = "Can't create voting option";
     String EXCEPTION_ADD_VOTE = "Can't add vote reference with voting option id: ";
-    String EXCEPTION_GET_ALL_APARTMENT_IDS_BY_VOTING_OPTION_ID = "Can't get apartment ids with this voting option id: ";
+    String EXCEPTION_GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID = "Can't get apartments by this voting option id: ";
 
     Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger announcementId) throws DaoAccessException;
 
@@ -74,5 +95,5 @@ public interface VotingOptionDao {
 
     void addVote(BigInteger votingOptionId, BigInteger accountId) throws DaoAccessException;
 
-    Collection<BigInteger> getApartmentIdsByVotingOptionId(BigInteger id) throws DaoAccessException;
+    List<Apartment> getApartmentsByVotingOptionId(BigInteger id) throws DaoAccessException;
 }

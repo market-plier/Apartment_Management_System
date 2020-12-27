@@ -15,6 +15,7 @@ public class VotingOptionMapper implements RowMapper<VotingOption> {
         VotingOption votingOption = new VotingOptionBuilder()
                 .withVotingOptionId(new BigInteger(rs.getString("voting_option_id")))
                 .withName(rs.getString("name"))
+                .withCount(Integer.valueOf(rs.getString("count")))
                 .withHouseVoting(
                         new HouseVotingBuilder()
                         .withHouseVotingId(new BigInteger(rs.getString("house_voting_id")))

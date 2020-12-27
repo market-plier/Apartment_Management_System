@@ -9,7 +9,6 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.math.BigInteger;
 import java.util.Collection;
 
@@ -35,14 +34,28 @@ public class HouseVotingService  {
         }
     }
 
-    public HouseVoting createHouseVoting(HouseVoting houseVoting) throws DaoAccessException, NullPointerException {
+    public HouseVoting createHouseVoting(HouseVoting houseVoting) throws DaoAccessException, NullPointerException, IllegalArgumentException {
         try {
+            BigInteger announcementId = houseVoting.getAnnouncement().getAnnouncementId();
+            if (hasHouseVoting(announcementId)) {
+                throw new IllegalArgumentException("This announcement has already had voting");
+            }
+
             houseVotingDao.createHouseVoting(houseVoting);
-            return houseVoting;
+            return houseVotingDao.getHouseVotingByAnnouncementId(announcementId);
         } catch (NullPointerException e) {
             log.error("HouseVotingService method createHouseVoting: " + e.getMessage(), e);
             throw e;
         }
+    }
+
+    private boolean hasHouseVoting(BigInteger announcementId) {
+        try {
+            houseVotingDao.getHouseVotingByAnnouncementId(announcementId);
+            return true;
+        } catch (DaoAccessException ignored) {}
+
+        return false;
     }
 
     public void deleteHouseVoting(BigInteger announcementId) throws DaoAccessException, NullPointerException {

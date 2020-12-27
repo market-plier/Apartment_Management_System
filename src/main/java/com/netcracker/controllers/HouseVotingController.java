@@ -37,7 +37,7 @@ public class HouseVotingController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public HouseVoting createHouseVoting(@RequestBody @Valid HouseVoting houseVoting)
-            throws DaoAccessException, NullPointerException {
+            throws DaoAccessException, NullPointerException, IllegalArgumentException {
         return houseVotingService.createHouseVoting(houseVoting);
     }
 

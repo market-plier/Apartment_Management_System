@@ -2,6 +2,8 @@ package com.netcracker.services;
 
 import com.netcracker.dao.VotingOptionDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.models.Account;
+import com.netcracker.models.Apartment;
 import com.netcracker.models.VotingOption;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.List;
 
 @Log4j
 @Service
@@ -35,6 +38,15 @@ public class VotingOptionService {
         }
     }
 
+    public List<Apartment> getApartmentsByVotingOptionId(BigInteger votingOptionId) throws DaoAccessException, NullPointerException {
+        try {
+            return votingOptionDao.getApartmentsByVotingOptionId(votingOptionId);
+        } catch (NullPointerException e) {
+            log.error("VotingOptionService method getApartmentsByVotingOptionId: " + e.getMessage(), e);
+            throw e;
+        }
+    }
+
     public void addVote(BigInteger announcementId, BigInteger votingOptionId, BigInteger accountId) throws IllegalArgumentException, DaoAccessException, NullPointerException  {
         try {
             if (hasVote(announcementId, accountId)) {
@@ -51,9 +63,11 @@ public class VotingOptionService {
     private boolean hasVote(BigInteger announcementId, BigInteger accountId) {
         try {
             for (VotingOption votingOption: getAllVotingOptionsByAnnouncementId(announcementId)) {
-                Collection<BigInteger> apartmentIds = votingOptionDao.getApartmentIdsByVotingOptionId(votingOption.getVotingOptionId());
-                if (apartmentIds.contains(accountId)) {
-                    return true;
+                for (Account account: getApartmentsByVotingOptionId(votingOption.getVotingOptionId()))
+                {
+                    if (accountId.equals(account.getAccountId())) {
+                        return true;
+                    }
                 }
             }
         } catch (DaoAccessException ignored) {}

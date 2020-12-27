@@ -2,7 +2,6 @@ package com.netcracker.services;
 
 import com.netcracker.dao.AnnouncementDao;
 import com.netcracker.dao.CommentDao;
-import com.netcracker.dao.HouseVotingDao;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Announcement;
 import com.netcracker.models.Comment;
@@ -10,12 +9,14 @@ import com.netcracker.models.HouseVoting;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.List;
 
 @Log4j
 @Service
+@Transactional
 public class AnnouncementService{
     @Autowired
     private AnnouncementDao announcementDao;
@@ -59,7 +60,13 @@ public class AnnouncementService{
     public Announcement updateAnnouncement(Announcement announcement) throws DaoAccessException, NullPointerException  {
         try {
             announcementDao.updateAnnouncement(announcement);
-            return announcement;
+            BigInteger announcementId = announcement.getAnnouncementId();
+
+            if (!announcement.getIsOpened()) {
+                commentDao.deleteCommentsByAnnouncementId(announcementId);
+            }
+
+            return getAnnouncementById(announcementId);
         } catch (NullPointerException e) {
             log.error("AnnouncementService method updateAnnouncement: " + e.getMessage(), e);
             throw e;
@@ -69,7 +76,7 @@ public class AnnouncementService{
     public Announcement createAnnouncement(Announcement announcement) throws DaoAccessException, NullPointerException  {
         try {
             announcementDao.createAnnouncement(announcement);
-            return announcement;
+            return announcementDao.getLatestAnnouncement();
         } catch (NullPointerException e) {
             log.error("AnnouncementService method createAnnouncement: " + e.getMessage(), e);
             throw e;
