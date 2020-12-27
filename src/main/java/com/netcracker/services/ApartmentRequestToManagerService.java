@@ -1,6 +1,6 @@
 package com.netcracker.services;
 
-import com.netcracker.models.Account;
+import com.netcracker.models.Apartment;
 import com.netcracker.models.ApartmentRequestToManager;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,27 +11,26 @@ import org.springframework.stereotype.Service;
 public class ApartmentRequestToManagerService {
     private final MailService mailService;
     private final ManagerInfoService managerInfoService;
-    private final AccountService accountService;
+    private final ApartmentInfoService apartmentInfoService;
 
     @Autowired
-    public ApartmentRequestToManagerService(AccountService accountService, MailService mailService, ManagerInfoService managerInfoService) {
-        this.accountService = accountService;
+    public ApartmentRequestToManagerService(MailService mailService, ManagerInfoService managerInfoService, ApartmentInfoService apartmentInfoService) {
+        this.apartmentInfoService = apartmentInfoService;
         this.mailService = mailService;
         this.managerInfoService = managerInfoService;
     }
 
     public void generateApartmentRequestToManager(ApartmentRequestToManager request) {
         try {
-            Account account = accountService.getAccountById(request.getApartmentId());
-            if (account != null) {
-                String subject = "Request from " + account.getEmail();
-                String text = request.getText() + '\n' +
-                        "-- \n" +
-                        "Call me: \n" +
-                        account.getFirstName() + " " + account.getLastName() + '\n' +
-                        "Phone: " + account.getPhoneNumber();
-                mailService.sendMessage(managerInfoService.getManager().getEmail(), subject, text);
-            }
+            Apartment apartment = apartmentInfoService.getApartmentById(request.getApartmentId());
+            String subject = "Request from Apartment № " + apartment.getApartmentNumber();
+            String text = request.getText() + '\n' +
+                    "-- \n" +
+                    "Contact me: \n" +
+                    apartment.getFirstName() + " " + apartment.getLastName() + '\n' +
+                    "Phone: " + apartment.getPhoneNumber() + '\n' +
+                    "Email: " + apartment.getEmail();
+            mailService.sendMessage(managerInfoService.getManager().getEmail(), subject, text);
         } catch (NullPointerException e) {
             log.error("ApartmentRequestToManagerService method generateApartmentRequestToManager: " + e.getMessage(), e);
             throw e;

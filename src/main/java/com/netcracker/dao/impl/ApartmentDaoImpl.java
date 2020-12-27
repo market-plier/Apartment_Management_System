@@ -2,6 +2,7 @@ package com.netcracker.dao.impl;
 
 import com.netcracker.dao.ApartmentDao;
 import com.netcracker.dao.mapper.ApartmentMapper;
+import com.netcracker.dao.mapper.ApartmentSubBillMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.models.Apartment;
@@ -10,6 +11,8 @@ import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +24,14 @@ import java.util.List;
 @Transactional
 @Log4j
 public class ApartmentDaoImpl implements ApartmentDao {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
     public ApartmentDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
 
@@ -112,12 +118,47 @@ public class ApartmentDaoImpl implements ApartmentDao {
     public List<Apartment> getUniqueApartment(Apartment apartment) throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM, new ApartmentMapper(),
-                    apartment.getFloor(), apartment.getApartmentNumber(), apartment.getEmail());
+                    apartment.getApartmentNumber(), apartment.getEmail());
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage("Unique Apartments failed")
                     .withCause(e.getCause())
                     .withId(apartment.getAccountId())
+                    .withErrorMessage(BigInteger.valueOf(73))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @Override
+    public Apartment getApartmentByApartmentNumber(int apartmentNumber) {
+        try {
+            return jdbcTemplate.queryForObject(GET_APARTMENT_BY_APARTMENT_NUMBER, new ApartmentMapper(), apartmentNumber);
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_BY_APARTMENT_NUMBER)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(73))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Apartment> getAllApartmentByFloor(List<Integer> floor) {
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("floor_list", floor);
+
+        try {
+            return namedParameterJdbcTemplate.query(GET_ALL_APARTMENTS_BY_FLOOR,
+                    parameters, new ApartmentMapper());
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_ALL_APARTMENTS_BY_FLOOR)
+                    .withCause(e.getCause())
                     .withErrorMessage(BigInteger.valueOf(73))
                     .build();
             log.log(Level.ERROR, e.getMessage(), e);

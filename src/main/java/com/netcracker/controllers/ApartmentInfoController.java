@@ -1,21 +1,24 @@
 package com.netcracker.controllers;
 
 import com.netcracker.exception.DaoAccessException;
-import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.models.Account;
 import com.netcracker.models.Apartment;
 import com.netcracker.models.PojoBuilder.AccountBuilder;
+import com.netcracker.models.PojoBuilder.ApartmentBuilder;
 import com.netcracker.models.Role;
 import com.netcracker.secutity.jwt.JwtAccount;
 import com.netcracker.services.ApartmentInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,22 +34,32 @@ public class ApartmentInfoController {
 
     @PostMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public Apartment createApartment(@RequestBody @Valid Apartment apartment) {
-        return apartmentInfoService.createApartment(apartment);
+    public ResponseEntity<Apartment> createApartment(@Valid @RequestBody Apartment apartment)
+            throws NullPointerException, DaoAccessException, ValidationException {
+        if (apartment.getPassword() == null || apartment.getPassword().length() > 3900 || apartment.getPassword().length() < 8) {
+            throw new ValidationException("Password length is not correct");
+        }
+        Apartment apart = apartmentInfoService.createApartment(apartment);
+
+        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.CREATED);
     }
 
     @PutMapping("/updatePassword")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public Apartment updateApartmentPassword(@RequestBody @Valid Apartment apartment)
-            throws NullPointerException, DaoAccessException {
-        return apartmentInfoService.updateApartmentPassword(apartment);
+    public ResponseEntity<Apartment> updateApartmentPassword(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
+            throws NullPointerException, DaoAccessException, ValidationException {
+
+        if (apartment.getPassword() == null || apartment.getPassword().length() > 3900 || apartment.getPassword().length() < 8) {
+            throw new ValidationException("Password length is not correct");
+        }
+        Apartment apart = apartmentInfoService.updateApartmentPassword(account, apartment);
+        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.ACCEPTED);
     }
 
     @PutMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public Apartment updateApartment(@RequestBody @Valid Apartment apartment)
+    public ResponseEntity<Apartment> updateApartment(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
             throws NullPointerException, DaoAccessException, IllegalArgumentException {
-        JwtAccount account = (JwtAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Role role = null;
 
         if (account.getAuthorities().toString().equals("[ROLE_OWNER]")) {
@@ -54,25 +67,59 @@ public class ApartmentInfoController {
         }
         if (account.getAuthorities().toString().equals("[ROLE_MANAGER]")) {
             role = Role.MANAGER;
+            if (apartment.getApartmentNumber() == null ||
+                    apartment.getEmail() == null) {
+                throw new IllegalArgumentException("For updating apartment enter: Apartment`s number and Email");
+            }
         }
 
         Account updater = new AccountBuilder()
                 .withAccountId(account.getId())
                 .withRole(role)
                 .build();
-        return apartmentInfoService.updateApartment(apartment, updater);
+        Apartment apart = apartmentInfoService.updateApartment(apartment, updater);
+        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{number}")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public Apartment getApartment(@PathVariable @NotNull BigInteger id) throws NullPointerException, DaoAccessException {
-        return apartmentInfoService.getApartmentById(id);
+    public ResponseEntity<Apartment> getApartment(@PathVariable @NotNull Integer number) throws NullPointerException, DaoAccessException {
+        Apartment apart = apartmentInfoService.getApartmentByApartmentNumber(number);
+        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.FOUND);
     }
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public List<Apartment> getAllApartments() throws NullPointerException, DaoAccessException {
-        return apartmentInfoService.getAllApartments();
+    public ResponseEntity<List<Apartment>> getAllApartments() throws NullPointerException, DaoAccessException {
+        List<Apartment> apartments = new ArrayList<>();
+        for (Apartment a : apartmentInfoService.getAllApartments()) {
+            apartments.add(getApartmentDTO(a));
+        }
+        return new ResponseEntity<>(apartments, HttpStatus.FOUND);
     }
 
+    @GetMapping("apartments-on-floor")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
+    public ResponseEntity<List<Apartment>> getAllApartmentsByFloor(@RequestParam @NotNull List<Integer> floor) throws NullPointerException, DaoAccessException {
+        List<Apartment> apartments = new ArrayList<>();
+        for (Apartment a : apartmentInfoService.getAllApartmentsByFloor(floor)) {
+            apartments.add(getApartmentDTO(a));
+        }
+        return new ResponseEntity<>(apartments, HttpStatus.FOUND);
+    }
+
+
+    private Apartment getApartmentDTO(Apartment apart) {
+        return new ApartmentBuilder()
+                .withApartmentNumber(apart.getApartmentNumber())
+                .withEmail(apart.getEmail())
+                .withFirstName(apart.getFirstName())
+                .withLastName(apart.getLastName())
+                .withPhoneNumber(apart.getPhoneNumber())
+                .withRole(apart.getRole())
+                .withPeopleCount(apart.getPeopleCount())
+                .withFloor(apart.getFloor())
+                .withSquareMeters(apart.getSquareMetres())
+                .build();
+    }
 }

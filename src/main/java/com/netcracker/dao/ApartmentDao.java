@@ -11,11 +11,110 @@ public interface ApartmentDao {
 
     Apartment getApartmentById(BigInteger apartmentId);
 
+    Apartment getApartmentByApartmentNumber(int apartmentNumber);
+
     boolean createApartment(Apartment apartment);
 
     void updateApartment(Apartment apartment);
 
     List<Apartment> getUniqueApartment(Apartment apartment);
+
+    List<Apartment> getAllApartmentByFloor(List<Integer> floor);
+
+    String GET_APARTMENT_BY_APARTMENT_NUMBER = "SELECT APRT.OBJECT_ID  account_id,\n" +
+            "                   APTNUM.VALUE    apartment_number,\n" +
+            "                   SQUARE.VALUE    square_metres,\n" +
+            "                   FLOOR.VALUE     floor,\n" +
+            "                   PPLCOUNT.VALUE  people_count,\n" +
+            "                   EMAIL.VALUE     email,\n" +
+            "                   PASW.VALUE      password,\n" +
+            "                   FNAME.VALUE     first_name,\n" +
+            "                   LNAME.VALUE     last_name,\n" +
+            "                   PHNUM.VALUE     phone_number,\n" +
+            "                   ROLE_LIST.VALUE role_name\n" +
+            "            FROM OBJECTS APRT,\n" +
+            "                 LISTS ROLE_LIST,\n" +
+            "                 ATTRIBUTES APTNUM,\n" +
+            "                 ATTRIBUTES SQUARE,\n" +
+            "                 ATTRIBUTES FLOOR,\n" +
+            "                 ATTRIBUTES PPLCOUNT,\n" +
+            "                 ATTRIBUTES EMAIL,\n" +
+            "                 ATTRIBUTES PASW,\n" +
+            "                 ATTRIBUTES FNAME,\n" +
+            "                 ATTRIBUTES LNAME,\n" +
+            "                 ATTRIBUTES PHNUM,\n" +
+            "                 ATTRIBUTES ROLE\n" +
+            "            WHERE APTNUM.VALUE = ?\n" +
+            "              AND APRT.OBJECT_TYPE_ID = 7\n" +
+            "              AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND APTNUM.ATTR_ID = 15\n" +
+            "              AND SQUARE.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND SQUARE.ATTR_ID = 16\n" +
+            "              AND FLOOR.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND FLOOR.ATTR_ID = 17\n" +
+            "              AND PPLCOUNT.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND PPLCOUNT.ATTR_ID = 18\n" +
+            "              AND EMAIL.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND EMAIL.ATTR_ID = 2\n" +
+            "              AND PASW.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND PASW.ATTR_ID = 3\n" +
+            "              AND FNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND FNAME.ATTR_ID = 4\n" +
+            "              AND LNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND LNAME.ATTR_ID = 5\n" +
+            "              AND PHNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND PHNUM.ATTR_ID = 6\n" +
+            "              AND APRT.OBJECT_ID = ROLE.OBJECT_ID\n" +
+            "              AND ROLE.LIST_VALUE_ID = 5\n" +
+            "              AND ROLE.LIST_VALUE_ID = ROLE_LIST.LIST_VALUE_ID";
+
+    String GET_ALL_APARTMENTS_BY_FLOOR = "SELECT APRT.OBJECT_ID  account_id,\n" +
+            "       APTNUM.VALUE    apartment_number,\n" +
+            "       SQUARE.VALUE    square_metres,\n" +
+            "       FLOOR.VALUE     floor,\n" +
+            "       PPLCOUNT.VALUE  people_count,\n" +
+            "       EMAIL.VALUE     email,\n" +
+            "       PASW.VALUE      password,\n" +
+            "       FNAME.VALUE     first_name,\n" +
+            "       LNAME.VALUE     last_name,\n" +
+            "       PHNUM.VALUE     phone_number,\n" +
+            "       ROLE_LIST.VALUE role_name\n" +
+            "FROM OBJECTS APRT,\n" +
+            "     LISTS ROLE_LIST,\n" +
+            "     ATTRIBUTES APTNUM,\n" +
+            "     ATTRIBUTES SQUARE,\n" +
+            "     ATTRIBUTES FLOOR,\n" +
+            "     ATTRIBUTES PPLCOUNT,\n" +
+            "     ATTRIBUTES EMAIL,\n" +
+            "     ATTRIBUTES PASW,\n" +
+            "     ATTRIBUTES FNAME,\n" +
+            "     ATTRIBUTES LNAME,\n" +
+            "     ATTRIBUTES PHNUM,\n" +
+            "     ATTRIBUTES ROLE\n" +
+            "WHERE FLOOR.VALUE IN (:floor_list)\n" +
+            "  AND APRT.OBJECT_TYPE_ID = 7\n" +
+            "  AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND APTNUM.ATTR_ID = 15\n" +
+            "  AND SQUARE.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND SQUARE.ATTR_ID = 16\n" +
+            "  AND FLOOR.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND FLOOR.ATTR_ID = 17\n" +
+            "  AND PPLCOUNT.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND PPLCOUNT.ATTR_ID = 18\n" +
+            "  AND EMAIL.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND EMAIL.ATTR_ID = 2\n" +
+            "  AND PASW.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND PASW.ATTR_ID = 3\n" +
+            "  AND FNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND FNAME.ATTR_ID = 4\n" +
+            "  AND LNAME.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND LNAME.ATTR_ID = 5\n" +
+            "  AND PHNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "  AND PHNUM.ATTR_ID = 6\n" +
+            "  AND APRT.OBJECT_ID = ROLE.OBJECT_ID\n" +
+            "  AND ROLE.LIST_VALUE_ID = 5\n" +
+            "  AND ROLE.LIST_VALUE_ID = ROLE_LIST.LIST_VALUE_ID" +
+            "  ORDER BY floor";
 
     String GET_ALL_APARTMENTS = "SELECT APRT.OBJECT_ID  account_id,\n" +
             "       APTNUM.VALUE    apartment_number,\n" +
@@ -61,7 +160,8 @@ public interface ApartmentDao {
             "  AND PHNUM.ATTR_ID = 6\n" +
             "  AND APRT.OBJECT_ID = ROLE.OBJECT_ID\n" +
             "  AND ROLE.LIST_VALUE_ID = 5\n" +
-            "  AND ROLE.LIST_VALUE_ID = ROLE_LIST.LIST_VALUE_ID";
+            "  AND ROLE.LIST_VALUE_ID = ROLE_LIST.LIST_VALUE_ID\n" +
+            "ORDER BY floor";
 
     String GET_APARTMENT_BY_ID = "SELECT APRT.OBJECT_ID  account_id,\n" +
             "       APTNUM.VALUE    apartment_number,\n" +
@@ -182,7 +282,7 @@ public interface ApartmentDao {
 
     String GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM = "SELECT APRT.OBJECT_ID account_id,\n" +
             "       EMAIL.VALUE    email,\n" +
-            "       FLOOR.VALUE    floor,\n" +
+            "       0    floor,\n" +
             "       APTNUM.VALUE   apartment_number,\n" +
             "       0              square_metres,\n" +
             "       0              people_count,\n" +
@@ -193,18 +293,14 @@ public interface ApartmentDao {
             "       'OWNER'             role_name\n" +
             "FROM OBJECTS APRT,\n" +
             "     ATTRIBUTES APTNUM,\n" +
-            "     ATTRIBUTES FLOOR,\n" +
             "     ATTRIBUTES EMAIL\n" +
             "WHERE APRT.OBJECT_TYPE_ID = 7\n" +
             "  AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
             "  AND APTNUM.ATTR_ID = 15\n" +
-            "  AND FLOOR.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "  AND FLOOR.ATTR_ID = 17\n" +
             "  AND EMAIL.OBJECT_ID = APRT.OBJECT_ID\n" +
             "  AND EMAIL.ATTR_ID = 2\n" +
-            "  AND (\n" +
-            "        (FLOOR.VALUE = ?\n" +
-            "            AND APTNUM.VALUE = ?)\n" +
+            "  AND (" +
+            "       ( APTNUM.VALUE = ?)\n" +
             "        OR\n" +
             "        (EMAIL.VALUE = ?)\n" +
             "    )";
@@ -213,4 +309,6 @@ public interface ApartmentDao {
     String EXCEPTION_GET_APARTMENT_BY_ACCOUNT_ID = "Can't get apartment with this id";
     String EXCEPTION_UPDATE_APARTMENT = "Cant update apartment with id";
     String EXCEPTION_CREATE_APARTMENT = "Cant create apartment";
+    String EXCEPTION_GET_APARTMENT_BY_APARTMENT_NUMBER = "Can't get apartment with this number";
+    String EXCEPTION_GET_ALL_APARTMENTS_BY_FLOOR = "Can't get apartments on this floor";
 }

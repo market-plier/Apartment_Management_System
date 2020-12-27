@@ -8,4 +8,12 @@ import java.math.BigInteger;
 public class ApartmentRequestToManager {
     private BigInteger apartmentId;
     private String text;
+
+    public ApartmentRequestToManager(BigInteger apartmentId, String text) {
+        this.apartmentId = apartmentId;
+        this.text = text;
+    }
+
+    public ApartmentRequestToManager() {
+    }
 }
