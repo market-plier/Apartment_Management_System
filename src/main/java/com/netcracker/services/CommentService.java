@@ -2,10 +2,7 @@ package com.netcracker.services;
 
 
 import com.netcracker.dao.CommentDao;
-import com.netcracker.exception.DaoAccessException;
-import com.netcracker.exception.ErrorCodes;
-import com.netcracker.exception.NotBelongToAccountException;
-import com.netcracker.exception.NotBelongToAccountExceptionBuilder;
+import com.netcracker.exception.*;
 import com.netcracker.models.Comment;
 import com.netcracker.models.PojoBuilder.ApartmentBuilder;
 import lombok.extern.log4j.Log4j;
@@ -22,23 +19,45 @@ import java.util.List;
 public class CommentService {
 
     private final CommentDao commentDao;
+    private final AnnouncementService announcementService;
 
     @Autowired
-    public CommentService(CommentDao commentDao) {
+    public CommentService(CommentDao commentDao, AnnouncementService announcementService) {
         this.commentDao = commentDao;
+        this.announcementService = announcementService;
     }
 
 
     public void createComment(Comment comment, BigInteger accountId) throws DaoAccessException {
         try {
             comment.setApartment(new ApartmentBuilder().withAccountId(accountId).build());
-            commentDao.createComment(comment);
+            if (announcementService.getAnnouncementById(comment.getAnnouncement().getAnnouncementId()).getIsOpened())
+            {
+                commentDao.createComment(comment);
+            }
+            else
+            {
+
+                throw new AnnouncementClosedException("Announcement is closed for comment",BigInteger.valueOf(9990));
+            }
         } catch (NullPointerException e) {
             log.error("IN Service method createComment: " + e.getMessage(),e);
             throw e;
         }
 
     }
+    public void deleteCommentByAnnouncementId(BigInteger announcementId)
+    {
+        try
+        {
+            commentDao.deleteCommentsByAnnouncementId(announcementId);
+        }catch (NullPointerException e)
+        {
+            log.error("IN Service method createComment: " + e.getMessage(),e);
+            throw e;
+        }
+    }
+
 
     public void deleteComment(BigInteger commentId, BigInteger accountId) throws DaoAccessException, NotBelongToAccountException {
         try {

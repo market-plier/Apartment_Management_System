@@ -114,4 +114,23 @@ public class CommentDaoImpl implements CommentDao {
             throw accessException;
         }
     }
+
+    @Override
+    public void deleteCommentsByAnnouncementId(BigInteger announcementId) {
+        try
+        {
+            jdbcTemplate.update(DELETE_COMMENT_BY_ANNOUNCEMENT_ID, announcementId);
+        }catch (DataAccessException e)
+        {
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_DELETE_COMMENT)
+                    .withMessage(EXCEPTION_DELETE_COMMENT)
+                    .withCause(e.getCause())
+                    .build();
+
+            log.error("IN deleteCommentByAnnouncementId: "+accessException.getMessage(), e);
+            throw accessException;
+        }
+
+    }
 }

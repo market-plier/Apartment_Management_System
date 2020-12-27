@@ -94,6 +94,8 @@ public interface CommentDao {
             "AND ATTR_NUMBER_OF_APART.OBJECT_ID = ATTR_LAST_NAME.OBJECT_ID\n" +
             "AND ATTR_NUMBER_OF_APART.ATTR_ID = 18";
 
+    String DELETE_COMMENT_BY_ANNOUNCEMENT_ID = "Delete from OBJECTS where PARENT_ID = ? and OBJECT_TYPE_ID = 4";
+
     String EXCEPTION_GET_ALL_COMMENTS_BY_ANNOUNCEMENT_ID = "Cant get any comment with Announcement id";
     String EXCEPTION_GET_COMMENT_BY_ID = "Cant get any comment with id";
     String EXCEPTION_UPDATE_COMMENT = "Cant update comment with id";
@@ -109,4 +111,5 @@ public interface CommentDao {
     void createComment(Comment comment);
 
     void deleteComment(BigInteger commentId);
+    void deleteCommentsByAnnouncementId(BigInteger announcementId);
 }
