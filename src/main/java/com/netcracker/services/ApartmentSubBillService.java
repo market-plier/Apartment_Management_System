@@ -87,12 +87,13 @@ public class ApartmentSubBillService {
     public void createApartmentSubBillTransfer(ApartmentSubBill transferFrom, ApartmentSubBill transferTo, Double value)
             throws IllegalArgumentException, NotBelongToAccountException {
         try {
-            if (!transferFrom.getApartment().getAccountId().equals(transferTo.getApartment().getAccountId())) {
-                throw new NotBelongToAccountException("Wrong transfer SubBills");
-            }
 
             ApartmentSubBill subBillFrom = apartmentSubBillDao.getApartmentSubBillById(transferFrom.getSubBillId());
             ApartmentSubBill subBillTo = apartmentSubBillDao.getApartmentSubBillById(transferTo.getSubBillId());
+
+            if (!subBillFrom.getApartment().getAccountId().equals(subBillTo.getApartment().getAccountId())) {
+                throw new NotBelongToAccountException("Wrong transfer SubBills");
+            }
 
             if (subBillFrom.getBalance() < value) {
                 throw new IllegalArgumentException("Wrong transfer Data");

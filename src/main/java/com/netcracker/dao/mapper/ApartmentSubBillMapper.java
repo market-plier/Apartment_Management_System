@@ -18,8 +18,8 @@ public class ApartmentSubBillMapper implements RowMapper<ApartmentSubBill> {
     public ApartmentSubBill mapRow(ResultSet resultSet, int i) throws SQLException {
         ApartmentSubBill apartmentSubBill = new ApartmentSubBillBuilder()
                 .withSubBillId(new BigInteger(resultSet.getString("sub_bill_id")))
-                .withBalance(Double.valueOf(resultSet.getString("balance")))
-                .withDept(Double.valueOf(resultSet.getString("debt")))
+                .withBalance(Double.valueOf(resultSet.getString("balance").replace(",",".")))
+                .withDept(Double.valueOf(resultSet.getString("debt").replace(",",".")))
                 .withApartment(new ApartmentBuilder()
                         .withAccountId(new BigInteger(resultSet.getString("account_id")))
                         .build())

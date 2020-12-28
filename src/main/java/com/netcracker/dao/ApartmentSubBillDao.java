@@ -273,9 +273,9 @@ public interface ApartmentSubBillDao {
 
     String UPDATE_APARTMENT_SUB_BILL = "MERGE INTO ATTRIBUTES old\n" +
             "USING (\n" +
-            "    SELECT 25 ATTR_ID, ? VALUE FROM DUAL\n" +
+            "    SELECT 25 ATTR_ID, TO_CHAR(?) VALUE FROM DUAL\n" +
             "    UNION ALL\n" +
-            "    SELECT 38, ? FROM DUAL\n" +
+            "    SELECT 38, TO_CHAR(?) FROM DUAL\n" +
             ") new\n" +
             "ON (old.OBJECT_ID = ? AND old.ATTR_ID = new.ATTR_ID)\n" +
             "WHEN MATCHED THEN\n" +
