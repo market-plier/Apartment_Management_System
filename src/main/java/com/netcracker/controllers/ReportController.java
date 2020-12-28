@@ -1,6 +1,7 @@
 package com.netcracker.controllers;
 
 
+import com.netcracker.controllers.request.report.ReportByDateAndCommunalUtilityRequest;
 import com.netcracker.services.ReportService;
 import com.netcracker.util.DateUtil;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 import java.text.ParseException;
@@ -35,6 +37,7 @@ public class ReportController {
     private final static String MANAGER_SPENDING_REPORT = "Manager_spending_report";
     private final static String APARTMENT_DEPT_REPORT = "Apartment_dept_report";
     private final static String MANAGER_DEPT_REPORT = "Manager_bill_dept_report";
+
     @Autowired
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
@@ -42,10 +45,15 @@ public class ReportController {
 
 
     @RequestMapping(value = "manager-spending/by-date-comm-name", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity makeReportByDateAndCommunalUtility(@RequestParam @Valid @NotNull @NotEmpty String start,
-                                                             @RequestParam @Valid @NotNull @NotEmpty String end,
-                                                             @RequestParam @NotNull Set<BigInteger> communalUtility) throws ParseException {
+        public ResponseEntity makeReportByDateAndCommunalUtility(@RequestParam
+                                                                 @NotNull(message = "start date cant be null")
+                                                                 @NotEmpty(message = "start date cant be empty") String start,
+                                                                 @RequestParam
+                                                                 @NotNull(message = "end date cant be null")
+                                                                 @NotEmpty(message = "end date cant be empty") String end,
+                                                                 @RequestParam(name = "communalUtility")
+                                                                 @NotNull(message = "Communal Utility date cant be null")
+                                                                 Set<@Positive(message = "Id must be positive value") BigInteger> communalUtility) throws ParseException {
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createManagerOperationSpendingReportByCommNameAndDate(communalUtility,
@@ -63,9 +71,13 @@ public class ReportController {
     }
 
     @RequestMapping(value = "manager-spending/by-date",method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity makeManagerOperationSpendingReportByDate(@RequestParam @Valid @NotNull @NotEmpty String start,
-                                                                   @RequestParam @Valid @NotNull @NotEmpty String end) throws ParseException {
+
+    public ResponseEntity makeManagerOperationSpendingReportByDate(@RequestParam
+                                                                   @NotNull(message = "start date cant be null")
+                                                                   @NotEmpty(message = "start date cant be empty") String start,
+                                                                   @RequestParam
+                                                                   @NotNull(message = "end date cant be null")
+                                                                   @NotEmpty(message = "end date cant be empty") String end) throws ParseException {
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createManagerOperationSpendingReportByDate(DateUtil.provideDateFormat(start), DateUtil.provideDateFormat(end));
@@ -82,9 +94,10 @@ public class ReportController {
     }
 
     @RequestMapping(value = "apartment/dept-report",method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    @PreAuthorize("hasAnyRole('ROLE_ACCOUNT')")
-    public ResponseEntity makeApartmentDeptReport(@RequestParam @NotNull BigInteger accountId,
-                                                  @RequestParam @NotNull Set<BigInteger> communalUtility){
+    public ResponseEntity makeApartmentDeptReport(@RequestParam @NotNull(message = "id cant be null")
+                                                  @Positive(message = "id must be positive value") BigInteger accountId,
+                                                  @RequestParam @NotNull(message = "communal utility cant be null ")
+                                                  Set<@Positive(message = "Id must be positive value") BigInteger> communalUtility){
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createApartmentDebtReportByCommunalID(accountId,communalUtility);
@@ -100,9 +113,10 @@ public class ReportController {
                 .body(new InputStreamResource(arrayInputStream));
     }
 
-    @RequestMapping(value = "manager/dept-manager-bill",method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity makeManagerBillDeptReport(@RequestParam @NotNull Set<BigInteger> communalUtility){
+    @RequestMapping(value = "manager/dept-manager-bill",method = RequestMethod.GET,produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity makeManagerBillDeptReport(@RequestParam
+                                                    @NotNull(message = "communal utility cant be null")
+                                                    Set<@Positive(message = "Id must be positive value") BigInteger> communalUtility){
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createManagerSubBillDebtReportByCommunalID(communalUtility);

@@ -17,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -36,9 +37,13 @@ public class ManagerSpendingOperationPdfBuilder extends ReportPdfBuilder {
         Font font = FontFactory.getFont(FontFactory.COURIER);
         font.setSize(10);
         font.setColor(Color.BLACK);
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setMaximumFractionDigits(3);
+
+
         for (ManagerSpendingOperation operation : managerSpendingOperations) {
             table.addCell(new PdfPCell(new Phrase(String.valueOf(operation.getOperationId()), font)));
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(operation.getSum()), font)));
+            table.addCell(new PdfPCell(new Phrase(decimalFormat.format(operation.getSum()), font)));
             table.addCell(new PdfPCell(new Phrase(operation.getManagerSubBill().getCommunalUtility().getName(), font)));
             table.addCell(new PdfPCell(new Phrase(operation.getDescription(), font)));
             table.addCell(new PdfPCell(new Phrase(operation.getManagerSubBill().getCommunalUtility().getDurationType().name(), font)));

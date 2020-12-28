@@ -244,7 +244,7 @@ VALUES (26,OBJ_ID_SEQ.currval,'909090'||OBJ_ID_SEQ.currval,NULL,NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID)
 VALUES (27,OBJ_ID_SEQ.currval,null,systimestamp,NULL)
 INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
-VALUES (36,OBJ_ID_SEQ.currval,OBJ_ID_SEQ.currval-1)
+VALUES (36,OBJ_ID_SEQ.currval,OBJ_ID_SEQ.currval-2)
 SELECT * FROM DUAL;
 commit ;
 ---------------------------------------------------------END------------------------------------------------------------

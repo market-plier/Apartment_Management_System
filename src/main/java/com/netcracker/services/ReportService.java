@@ -3,6 +3,8 @@ package com.netcracker.services;
 import com.netcracker.dao.ApartmentSubBillDao;
 import com.netcracker.dao.ManagerSubBillDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.*;
 import com.netcracker.services.PDFBuilders.ApartmentsDebtsPdfBuilder;
 import com.netcracker.services.PDFBuilders.ManagerSpendingOperationPdfBuilder;
@@ -48,7 +50,7 @@ public class ReportService {
                 return managerSpendingOperationPdfBuilder.exportToPdf();
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method createManagerOperationSpendingReportByCommNameAndDate: " + e.getMessage(),e);
+            log.error("IN Service method createManagerOperationSpendingReportByCommNameAndDate: " + e.getMessage(), e);
             throw e;
         }
 
@@ -66,7 +68,7 @@ public class ReportService {
                 return managerSpendingOperationPdfBuilder.exportToPdf();
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method createManagerOperationSpendingReportByDate: " + e.getMessage(),e);
+            log.error("IN Service method createManagerOperationSpendingReportByDate: " + e.getMessage(), e);
             throw e;
         }
 
@@ -75,40 +77,33 @@ public class ReportService {
 
     public ByteArrayInputStream createApartmentDebtReportByCommunalID(BigInteger accountID, Set<BigInteger> communalUtility) throws DaoAccessException {
         try {
-        List<ApartmentSubBill> apartmentSubBillList = apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountID, communalUtility);
-        Apartment apartment = apartmentInfoService.getApartmentById(accountID);
-        if (apartmentSubBillList!=null && apartment!=null)
-        {
-            ApartmentsDebtsPdfBuilder apartmentsDebtsPdfBuilder
-                    = new ApartmentsDebtsPdfBuilder(apartmentSubBillList,apartment);
-            return apartmentsDebtsPdfBuilder.exportToPdf();
-        }
+            List<ApartmentSubBill> apartmentSubBillList = apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountID, communalUtility);
+            Apartment apartment = apartmentInfoService.getApartmentById(accountID);
+            if (apartmentSubBillList != null && apartment != null) {
+                ApartmentsDebtsPdfBuilder apartmentsDebtsPdfBuilder
+                        = new ApartmentsDebtsPdfBuilder(apartmentSubBillList, apartment);
+                return apartmentsDebtsPdfBuilder.exportToPdf();
+            }
         } catch (NullPointerException e) {
-            log.error("IN Service method createApartmentDebtReportByCommunalID: " + e.getMessage(),e);
+            log.error("IN Service method createApartmentDebtReportByCommunalID: " + e.getMessage(), e);
             throw e;
         }
 
         return null;
     }
 
-    public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(Set<BigInteger> communalUtility)
-    {
+    public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(Set<BigInteger> communalUtility) {
 
-        Map<ManagerSubBill,Double> managerDebtMap =  managerSubBillDao.getManagerSubBillDeptByCommunalUtility(communalUtility);
+        Map<ManagerSubBill, Double> managerDebtMap = managerSubBillDao.getManagerSubBillDeptByCommunalUtility(communalUtility);
 
         try {
-            if (managerDebtMap!=null)
-            {
-                ManagerSubBillDebtsPdfBuilder managerSubBillDebtsPdfBuilder = new ManagerSubBillDebtsPdfBuilder(managerDebtMap);
-                return managerSubBillDebtsPdfBuilder.exportToPdf();
-            }
-        }catch (NullPointerException e)
-        {
-            log.error("IN createManagerSubBillDebtReportByCommunalID: "+ e.getMessage(),e);
+            ManagerSubBillDebtsPdfBuilder managerSubBillDebtsPdfBuilder = new ManagerSubBillDebtsPdfBuilder(managerDebtMap);
+            return managerSubBillDebtsPdfBuilder.exportToPdf();
+
+        } catch (NullPointerException e) {
+            log.error("IN createManagerSubBillDebtReportByCommunalID: " + e.getMessage(), e);
             throw e;
         }
-
-        return null;
     }
 
 }

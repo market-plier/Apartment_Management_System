@@ -5,14 +5,13 @@ import com.netcracker.controllers.web.ResponseEntityBuilder;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.secutity.jwt.JwtAuthenticationException;
-import com.netcracker.services.AuthenticationService;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -39,13 +38,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .getFieldErrors()
                 .stream()
 
-                .map(error ->error.getCode() + error.getField() + " : " + error.getDefaultMessage())
+                .map(error ->error.getField() + " : " + error.getDefaultMessage())
                 .collect(Collectors.toList());
 
         ApiError err = new ApiError(LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST,
                 "Validation Errors",
-                details);
+                details, BigInteger.valueOf(909));
 
         return ResponseEntityBuilder.build(err);
     }
@@ -55,15 +54,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
         ApiError err = new ApiError(LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST,
-                "Wrong data format",
-                Collections.singletonList("Validation Errors"));
+                "Validation Errors",
+                Collections.singletonList("Not Readable Format"));
         return ResponseEntityBuilder.build(err);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException exception) {
 
-            List<String> details = exception.getConstraintViolations().stream().map(error -> error.getMessage()).collect(Collectors.toList());
+            List<String> details = exception.getConstraintViolations().stream().map(error -> error.getMessageTemplate()).collect(Collectors.toList());
             ApiError err = new ApiError(LocalDateTime.now(),
                     HttpStatus.BAD_REQUEST,
                     "Validation Errors",
@@ -71,10 +70,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             return ResponseEntityBuilder.build(err);
 
     }
-
-
-
-    @ExceptionHandler({DaoAccessException.class, NotBelongToAccountException.class, NullPointerException.class, JwtAuthenticationException.class})
+        @ExceptionHandler({DaoAccessException.class, NotBelongToAccountException.class, NullPointerException.class, JwtAuthenticationException.class})
     public final ResponseEntity<ApiError> handleCustomException(Exception ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
 
@@ -95,7 +91,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         } else if (ex instanceof AuthenticationServiceException) {
             HttpStatus status = HttpStatus.FORBIDDEN;
             AuthenticationServiceException authenticationException = (AuthenticationServiceException) ex;
-            return handleJwtAccessException(authenticationException,headers,status,request);
+            return handleAuthAccessException(authenticationException,headers,status,request);
+        }else if (ex instanceof JwtAuthenticationException)
+        {
+            HttpStatus status = HttpStatus.FORBIDDEN;
+            JwtAuthenticationException jwtAuthenticationException = (JwtAuthenticationException) ex;
+            return handleJwtAccessException(jwtAuthenticationException,headers,status,request);
         }
         else {
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -113,10 +114,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    protected ResponseEntity<ApiError> handleJwtAccessException(AuthenticationServiceException ex, HttpHeaders headers,
-                                                                HttpStatus status, WebRequest request) {
+    protected ResponseEntity<ApiError> handleAuthAccessException(AuthenticationServiceException ex, HttpHeaders headers,
+                                                                 HttpStatus status, WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return handleExceptionInternal(ex, new ApiError(LocalDateTime.now(), status, "PASSWORD IS WRONG", errors), headers, status, request);
+    }
+
+    protected ResponseEntity<ApiError> handleJwtAccessException(JwtAuthenticationException ex, HttpHeaders headers,
+                                                                 HttpStatus status, WebRequest request) {
+        List<String> errors = Collections.singletonList(ex.getMessage());
+        return handleExceptionInternal(ex, new ApiError(LocalDateTime.now(), status, "TOKEN IS WRONG", errors), headers, status, request);
     }
 
 

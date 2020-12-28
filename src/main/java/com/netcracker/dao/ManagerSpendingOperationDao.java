@@ -246,6 +246,7 @@ public interface ManagerSpendingOperationDao {
             "ORDER BY ATTR_OPER_CREATED_AT.DATE_VALUE DESC";
 
 
+
     String EXCEPTION_INSERT_MANAGER_OPERATION = "Cant insert Manager Spending Operation";
     String EXCEPTION_UPDATE_MANAGER_OPERATION = "Cant update Manager Spending Operation";
     String EXCEPTION_GET_MANAGER_OPERATION_BY_ID = "Couldn't find Manager spending operation with id";

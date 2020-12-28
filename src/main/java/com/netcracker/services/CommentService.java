@@ -31,29 +31,26 @@ public class CommentService {
     public void createComment(Comment comment, BigInteger accountId) throws DaoAccessException {
         try {
             comment.setApartment(new ApartmentBuilder().withAccountId(accountId).build());
-            if (announcementService.getAnnouncementById(comment.getAnnouncement().getAnnouncementId()).getIsOpened())
-            {
+            if (announcementService.getAnnouncementById(comment.getAnnouncement().getAnnouncementId()).getIsOpened()) {
                 commentDao.createComment(comment);
-            }
-            else
-            {
-
-                throw new AnnouncementClosedException("Announcement is closed for comment",BigInteger.valueOf(9990));
+            } else {
+                AnnouncementClosedException announcementClosedException = new AnnouncementClosedException("Announcement is closed for comment",
+                        BigInteger.valueOf(9990));
+                log.error("IN create comment" + announcementClosedException.getMessage(), announcementClosedException);
+                throw announcementClosedException;
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method createComment: " + e.getMessage(),e);
+            log.error("IN Service method createComment: " + e.getMessage(), e);
             throw e;
         }
 
     }
-    public void deleteCommentByAnnouncementId(BigInteger announcementId)
-    {
-        try
-        {
+
+    public void deleteCommentByAnnouncementId(BigInteger announcementId) {
+        try {
             commentDao.deleteCommentsByAnnouncementId(announcementId);
-        }catch (NullPointerException e)
-        {
-            log.error("IN Service method createComment: " + e.getMessage(),e);
+        } catch (NullPointerException e) {
+            log.error("IN Service method createComment: " + e.getMessage(), e);
             throw e;
         }
     }
@@ -69,11 +66,11 @@ public class CommentService {
                         .withMessage("Comment not belong to account")
                         .withErrorCode(ErrorCodes._FAIL_NOT_BELONG_TO_ACCOUNT)
                         .build();
-                log.error("IN Service method deleteComment: " + accountException.getMessage(),accountException);
+                log.error("IN Service method deleteComment: " + accountException.getMessage(), accountException);
                 throw accountException;
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method deleteComment: " + e.getMessage(),e);
+            log.error("IN Service method deleteComment: " + e.getMessage(), e);
             throw e;
         }
     }
@@ -88,11 +85,11 @@ public class CommentService {
                         .withMessage("Comment not belong to account")
                         .withErrorCode(ErrorCodes._FAIL_NOT_BELONG_TO_ACCOUNT)
                         .build();
-                log.error("IN Service method updateComment: " + accountException.getMessage(),accountException);
+                log.error("IN Service method updateComment: " + accountException.getMessage(), accountException);
                 throw accountException;
             }
         } catch (NullPointerException e) {
-            log.error("IN Service method updateComment: " + e.getMessage(),e);
+            log.error("IN Service method updateComment: " + e.getMessage(), e);
             throw e;
         }
 
@@ -104,7 +101,7 @@ public class CommentService {
         try {
             return commentDao.getAllCommentsByAnnouncementId(announcementId);
         } catch (NullPointerException e) {
-            log.error("IN Service method getAllCommentsByAnnouncementId: " + e.getMessage(),e);
+            log.error("IN Service method getAllCommentsByAnnouncementId: " + e.getMessage(), e);
             throw e;
         }
     }

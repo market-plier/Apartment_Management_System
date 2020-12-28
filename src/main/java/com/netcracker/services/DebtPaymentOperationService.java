@@ -18,12 +18,12 @@ import java.util.List;
 @Transactional
 public class DebtPaymentOperationService {
     private final DebtPaymentOperationDao debtPaymentOperationDao;
-    private final ManagerSubBillService managerSubBillService;
+    @Autowired
+    private ManagerSubBillService managerSubBillService;
 
     @Autowired
-    public DebtPaymentOperationService(DebtPaymentOperationDao debtPaymentOperationDao, ManagerSubBillService managerSubBillService) {
+    public DebtPaymentOperationService(DebtPaymentOperationDao debtPaymentOperationDao) {
         this.debtPaymentOperationDao = debtPaymentOperationDao;
-        this.managerSubBillService = managerSubBillService;
     }
 
     public List<DebtPaymentOperation> getDebtPaymentOperationsByApartmentId(BigInteger apartmentId) throws DaoAccessException {

@@ -11,6 +11,7 @@ import com.netcracker.models.ManagerSubBill;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
@@ -29,10 +30,12 @@ public class ManagerSubBillDebtsPdfBuilder extends ReportPdfBuilder{
         Font font = FontFactory.getFont(FontFactory.COURIER);
         font.setSize(10);
         font.setColor(Color.BLACK);
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setMaximumFractionDigits(3);
         managerSubBillMap.forEach((k,v)->
         {
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getName()), font)));
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(v), font)));
+            table.addCell(new PdfPCell(new Phrase(decimalFormat.format(v), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getDurationType()), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getStatus()), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getDeadline()), font)));

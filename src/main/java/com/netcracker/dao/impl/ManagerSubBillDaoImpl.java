@@ -4,6 +4,7 @@ import com.netcracker.dao.ManagerSubBillDao;
 import com.netcracker.dao.mapper.ManagerSubBillMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.CalculationMethod;
 import com.netcracker.models.CommunalUtility;
 import com.netcracker.models.ManagerSubBill;
@@ -94,7 +95,7 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
         parameters.addValue("communal_list", communalUtilityId);
 
         try {
-            return namedParameterJdbcTemplate.query(GET_GROUPED_MANAGER_SUB_BILL_BY_COMM_UTILL, parameters, rs -> {
+            Map<ManagerSubBill, Double> managerSubBillDoubleMap = namedParameterJdbcTemplate.query(GET_GROUPED_MANAGER_SUB_BILL_BY_COMM_UTILL, parameters, rs -> {
                 Map<ManagerSubBill, Double> managerSubBillMap = new HashMap<>();
                 while (rs.next()) {
                     ManagerSubBill managerSubBill = new ManagerSubBillBuilder()
@@ -111,14 +112,18 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
                 }
                 return managerSubBillMap;
             });
+            if (managerSubBillDoubleMap == null || managerSubBillDoubleMap.size()<=0)
+            {
+                throw new DaoAccessException("Not found debt");
+            }
+            return managerSubBillDoubleMap;
         } catch (DataAccessException e) {
-            e = new DaoAccessExceptionBuilder()
+            DaoAccessException daoAccessException = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_MANAGER_SUB_BILLS_BY_COMMUNAL_UTILS_LIST)
-                    .withCause(e.getCause())
                     .withErrorMessage(BigInteger.valueOf(143))
-                    .build();
+                    .buildWithOutId();
             log.log(Level.ERROR, e.getMessage(), e);
-            throw e;
+            throw daoAccessException;
         }
     }
 

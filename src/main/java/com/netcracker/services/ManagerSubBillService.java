@@ -20,17 +20,15 @@ public class ManagerSubBillService {
 
     private final ManagerSubBillDao managerSubBillDao;
     private final ManagerInfoService managerInfoService;
-    private final ManagerOperationSpendingService managerOperationSpendingService;
-    private final DebtPaymentOperationService debtPaymentOperationService;
+    @Autowired
+    private ManagerOperationSpendingService managerOperationSpendingService;
+    @Autowired
+    private DebtPaymentOperationService debtPaymentOperationService;
 
     @Autowired
-    public ManagerSubBillService(ManagerSubBillDao managerSubBillDao, ManagerInfoService managerInfoService,
-                                 ManagerOperationSpendingService managerOperationSpendingService,
-                                 DebtPaymentOperationService debtPaymentOperationService) {
+    public ManagerSubBillService(ManagerSubBillDao managerSubBillDao, ManagerInfoService managerInfoService) {
         this.managerSubBillDao = managerSubBillDao;
         this.managerInfoService = managerInfoService;
-        this.managerOperationSpendingService = managerOperationSpendingService;
-        this.debtPaymentOperationService = debtPaymentOperationService;
     }
 
 

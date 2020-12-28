@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -31,12 +32,14 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
         Font font = FontFactory.getFont(FontFactory.COURIER);
         font.setSize(10);
         font.setColor(Color.BLACK);
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setMaximumFractionDigits(3);
 
         for (ApartmentSubBill apartmentDebt : apartmentDebtsList) {
             table.addCell(new PdfPCell(new Phrase(String.valueOf(apartmentDebt.getSubBillId()),font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(apartmentDebt.getCommunalUtility().getName()),font)));
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(apartmentDebt.getDebt()),font)));
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(apartmentDebt.getBalance()),font)));
+            table.addCell(new PdfPCell(new Phrase(decimalFormat.format(apartmentDebt.getDebt()),font)));
+            table.addCell(new PdfPCell(new Phrase(decimalFormat.format(apartmentDebt.getBalance()),font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(apartmentDebt.getCommunalUtility().getDurationType()),font)));
             sumDept +=apartmentDebt.getDebt();
         }

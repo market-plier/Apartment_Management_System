@@ -31,4 +31,6 @@ public class DaoAccessExceptionBuilder {
     public DaoAccessException build(){
         return new DaoAccessException(message, id, cause, errorMessage);
     }
+
+    public DaoAccessException buildWithOutId(){return new DaoAccessException(message,errorMessage);}
 }

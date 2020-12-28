@@ -2,6 +2,7 @@ package com.netcracker.services;
 
 import com.netcracker.dao.ManagerSpendingOperationDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.InsufficientBalanceException;
 import com.netcracker.models.ManagerSpendingOperation;
 import com.netcracker.models.ManagerSubBill;
 import lombok.extern.log4j.Log4j;
@@ -20,13 +21,13 @@ import java.util.Set;
 public class ManagerOperationSpendingService {
 
     private final ManagerSpendingOperationDao managerSpendingOperationDao;
-    private final ManagerSubBillService managerSubBillService;
+    @Autowired
+    private ManagerSubBillService managerSubBillService;
 
 
     @Autowired
-    public ManagerOperationSpendingService(ManagerSpendingOperationDao managerSpendingOperationDao, ManagerSubBillService managerSubBillService) {
+    public ManagerOperationSpendingService(ManagerSpendingOperationDao managerSpendingOperationDao) {
         this.managerSpendingOperationDao = managerSpendingOperationDao;
-        this.managerSubBillService = managerSubBillService;
     }
 
 
@@ -36,6 +37,12 @@ public class ManagerOperationSpendingService {
             if (managerSubBill.getBalance() >= managerSpendingOperation.getSum()) {
                 managerSpendingOperationDao.createManagerOperationSpending(managerSpendingOperation);
                 managerSubBillService.updateManagerSubBillByManagerOperation(managerSpendingOperation);
+            }
+            else
+            {
+                InsufficientBalanceException balanceException =  new InsufficientBalanceException("Not enough money");
+                log.error("IN Service method createManagerOperationSpending: " + balanceException.getMessage());
+                throw balanceException;
             }
         } catch (NullPointerException e) {
             log.error("IN Service method createManagerOperationSpending: " + e.getMessage());
