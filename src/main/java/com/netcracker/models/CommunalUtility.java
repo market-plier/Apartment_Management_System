@@ -1,13 +1,15 @@
 package com.netcracker.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigInteger;
 import java.sql.Date;
-
+@EqualsAndHashCode
 @Data
 public class CommunalUtility {
     public enum Status {
@@ -37,17 +39,18 @@ public class CommunalUtility {
             return this.durationCode;
         }
     }
-
+    @Positive
     private BigInteger communalUtilityId;
     @Valid
     private CalculationMethod calculationMethod;
-    @NotBlank
+    @NotBlank(message = "name not specified")
+    @NotNull(message = "name not specified")
     private String name;
     @NotNull
     private Duration durationType;
-    @NotNull
+    @NotNull(message = "status is null")
     private Status status;
-    @NotNull
+    @NotNull(message = "deadLine is null")
     private Date deadline;
 
     public CommunalUtility(BigInteger communalUtilityId, CalculationMethod calculationMethod,
@@ -59,4 +62,5 @@ public class CommunalUtility {
         this.status = status;
         this.deadline = deadline;
     }
+
 }

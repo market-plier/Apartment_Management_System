@@ -3,9 +3,10 @@ package com.netcracker.services;
 import com.netcracker.dao.CalculationMethodDao;
 import com.netcracker.dao.CommunalUtilityDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.CalculationMethod;
 import com.netcracker.models.CommunalUtility;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,10 @@ import java.util.List;
 
 @Service
 @Transactional
-@Slf4j
+@Log4j
 public class CommunalUtilityService {
     @Autowired
-    private  CommunalUtilityDao communalUtilityDao;
+    private CommunalUtilityDao communalUtilityDao;
     @Autowired
     private  CalculationMethodDao calculationMethodDao;
     @Autowired
@@ -43,13 +44,15 @@ public class CommunalUtilityService {
             }
             for (CommunalUtility utility : utilities
             ) {
-                CalculationMethod calc = calculationMethodDao.
-                        getCalculationMethodByCommunalUtilityId(utility.getCommunalUtilityId());
-                if (calc != null)
-                    utility.setCalculationMethod(calc);
+                try {
+                    utility.setCalculationMethod(calculationMethodDao.
+                            getCalculationMethodByCommunalUtilityId(utility.getCommunalUtilityId()));
+                }catch (DaoAccessException ignored){
+
+                }
             }
             return utilities;
-        } catch (NullPointerException e) {
+        } catch (DaoAccessException e) {
             log.error("CommunalUtilityService method getAllCommunalUtilities(): " + e.getMessage(), e);
             throw e;
         }
@@ -61,79 +64,120 @@ public class CommunalUtilityService {
 
     public CommunalUtility getCommunalUtilityById(BigInteger id) {
         try {
-            CommunalUtility utility = communalUtilityDao.
-                    getCommunalUtilityByIdWithCalculationMethod(id);
-            if (utility == null)
-                utility = communalUtilityDao.getCommunalUtilityById(id);
-            return utility;
-        } catch (NullPointerException e) {
+            try {
+                return communalUtilityDao.
+                        getCommunalUtilityByIdWithCalculationMethod(id);
+            }catch (DaoAccessException ignored){}
+            return communalUtilityDao.getCommunalUtilityById(id);
+        } catch (DaoAccessException e) {
             log.error("CommunalUtilityService method getCommunalUtilityById(): " + e.getMessage(), e);
             throw e;
         }
     }
 
-    public CommunalUtility createCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException, IOException, MessagingException {
+    public void createCalculationMethod(CalculationMethod calculationMethod){
+        calculationMethodDao.createCalculationMethod(calculationMethod);
+    }
+
+    public List<CalculationMethod> getAllCalculationMethods(){
+            return calculationMethodDao.getAllCalculationMethods();
+    }
+
+    public void updateCalculationMethod(CalculationMethod calculationMethod){
+        calculationMethodDao.updateCalculationMethod(calculationMethod);
+    }
+    public void deleteCalculationMethod(BigInteger id){
         try {
-            CommunalUtility comUtil = communalUtilityDao.
-                    getUniqueCommunalUtility(communalUtility);
-            if (comUtil != null)
-                return comUtil;
-            //TODO
-            //add exception when already created
+            calculationMethodDao.getCalculationMethodById(id);
+        }catch (DaoAccessException e){
+            log.error(e.getMessage(),e);
+            throw e;
+        }
+        try {
+            List<CommunalUtility> communalUtilities = communalUtilityDao.getAllCommunalUtilitiesByCalculationMethodId(id);
+            for (CommunalUtility utility: communalUtilities
+                 ) {
+                utility.setStatus(CommunalUtility.Status.Disabled);
+                updateCommunalUtility(utility);
+            }
+        }catch (DaoAccessException ignored){} //no referenced Calculation methods
+        calculationMethodDao.deleteCalculationMethod(id);
+    }
 
-            if (communalUtility.getCalculationMethod() == null) {
-                communalUtility.setStatus(CommunalUtility.Status.Disabled);
+    public void createCommunalUtility(CommunalUtility communalUtility)
+            throws DaoAccessException, NullPointerException, IOException, MessagingException {
+        try {
+            try {
+                communalUtilityDao.getUniqueCommunalUtility(communalUtility);
+                IllegalArgumentException exception = new IllegalArgumentException("Communal utility with such name already exists");
+                log.error(exception.getMessage(),exception);
+                throw exception;
+            }
+            catch (DaoAccessException ignored){
+            }
+            CalculationMethod calculationMethod=null;
+            if (communalUtility.getCalculationMethod() == null){
+                if(communalUtility.getStatus().equals(CommunalUtility.Status.Enabled)) {
+                    IllegalArgumentException exception = new IllegalArgumentException("Communal utility can not be Enabled when calculation method is not declared");
+                    log.error(exception.getMessage(),exception);
+                    throw exception;
+                }
                 communalUtilityDao.createCommunalUtility(communalUtility);
-                return communalUtilityDao.getUniqueCommunalUtility(communalUtility);
-            } else if (!validateCalculationMethodId(communalUtility.getCalculationMethod()))
-                throw new IllegalArgumentException("No such calculation method as requested");
-
-            communalUtilityDao.createCommunalUtilityWithRef(communalUtility);
-            comUtil = communalUtilityDao.getUniqueCommunalUtility(communalUtility);
-
-            comUtil.setCalculationMethod(calculationMethodDao
-                    .getCalculationMethodByCommunalUtilityId(comUtil.getCommunalUtilityId()));
-            if (comUtil.getDurationType() == CommunalUtility.Duration.Temporary) {
+            }else {
+                try {
+                    calculationMethod = calculationMethodDao.getCalculationMethodById(
+                            communalUtility.getCalculationMethod().getCalculationMethodId());
+                } catch (DaoAccessException ex) {
+                    IllegalArgumentException exception = new IllegalArgumentException("Calculation method doesn't exist");
+                    log.error(exception.getMessage(), exception);
+                    throw exception;
+                }
+                communalUtilityDao.createCommunalUtilityWithRef(communalUtility);
+            }
+            CommunalUtility comUtil = communalUtilityDao.getUniqueCommunalUtility(communalUtility);
+            comUtil.setCalculationMethod(calculationMethod);
+            if (comUtil.getDurationType().equals(CommunalUtility.Duration.Temporary)) {
                 notificationService.sendTempCommunalUtilityNotificationToAllApartments(communalUtility);
             }
-            //TODO check for duration, then send if temporary
-            return comUtil;
         } catch (NullPointerException | IOException | MessagingException e) {
             log.error("CommunalUtilityService method createCommunalUtility(): " + e.getMessage(), e);
             throw e;
         }
     }
 
-    public CommunalUtility updateCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException {
+    public void updateCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException {
         try {
-            CommunalUtility comUtil = communalUtilityDao.
-                    getCommunalUtilityById(communalUtility.getCommunalUtilityId());
-            if (comUtil == null) {
-                //TODO
-                throw new IllegalArgumentException("Nothing to update with presented ID");
-            }
-            if (comUtil.getCalculationMethod() == null && communalUtility.
-                    getCalculationMethod() == null) {
-                communalUtility.setStatus(CommunalUtility.Status.Disabled);
-                communalUtilityDao.updateCommunalUtility(communalUtility);
-                return communalUtilityDao.
-                        getCommunalUtilityById(communalUtility.getCommunalUtilityId());
+            if (communalUtility.getCalculationMethod()==null){
+                if (communalUtilityDao.getCommunalUtilityById(
+                        communalUtility.getCommunalUtilityId()).equals(communalUtility))
+                    throw new DaoAccessException("update is the same as existed communal utility");
+                try{
+                   calculationMethodDao.getCalculationMethodByCommunalUtilityId
+                           (communalUtility.getCommunalUtilityId());
+                }catch (DaoAccessException exception){
+                    if (communalUtility.getStatus()== CommunalUtility.Status.Enabled){
+                        IllegalArgumentException ex = new IllegalArgumentException("Status can not be Enabled");
+                        log.error(ex.getMessage(),ex);
+                        throw ex;
+                    }
+                }
+            }else {
+                if (communalUtilityDao.getCommunalUtilityByIdWithCalculationMethod(
+                        communalUtility.getCommunalUtilityId()).equals(communalUtility))
+                    throw new DaoAccessException("update is the same as existed communal utility");
+                try{
+                    calculationMethodDao.getCalculationMethodById(communalUtility
+                            .getCalculationMethod().getCalculationMethodId());
+                }catch (DaoAccessException exception){
+                    log.error(exception.getMessage(),exception);
+                    throw exception;
+                }
             }
             communalUtilityDao.updateCommunalUtility(communalUtility);
-            return communalUtilityDao.getCommunalUtilityByIdWithCalculationMethod(communalUtility.getCommunalUtilityId());
-        } catch (NullPointerException e) {
+        } catch (DaoAccessException e) {
             log.error("CommunalUtilityService method updateCommunalUtility(): " + e.getMessage(), e);
             throw e;
         }
     }
 
-    private boolean validateCalculationMethodId(CalculationMethod calculationMethod) throws DaoAccessException, NullPointerException {
-        try {
-            return calculationMethodDao.
-                    getCalculationMethodById(calculationMethod.getCalculationMethodId()) != null;
-        } catch (NullPointerException e) {
-            log.error("CommunalUtilityService method validateCalculationMethodId(): " + e.getMessage(), e);
-            throw e;
-        }
-    }
 }

@@ -19,7 +19,7 @@ public class CommunalUtilityWithCalculationMethodMapper implements RowMapper<Com
                 .withDeadline(resultSet.getDate("com_util_dline"))
                 .withDurationType(CommunalUtility.Duration.valueOf(resultSet.getString("com_util_durtype")))
                 .withCalculationMethod(new CalculationMethod(new BigInteger(resultSet.getString("calc_id")),
-                        resultSet.getString("calc_name")))
+                        resultSet.getString("calc_name"),Double.parseDouble(resultSet.getString("calc_coeff"))))
                 .build();
 
     }

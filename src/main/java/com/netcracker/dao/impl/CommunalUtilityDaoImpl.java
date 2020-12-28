@@ -8,6 +8,7 @@ import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.CommunalUtility;
 import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -57,9 +58,9 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     }
 
     @Override
-    public List<CommunalUtility> getAllCommunalUtilitiesWithCalculationMethod() throws DaoAccessException {
+    public List<CommunalUtility> getAllCommunalUtilitiesByCalculationMethodId(BigInteger id) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(getAllCommunalUtilitiesWithCalculationMethod, new CommunalUtilityWithCalculationMethodMapper());
+            return jdbcTemplate.query(getAllCommunalUtilitiesByCalculationMethodId, new CommunalUtilityWithCalculationMethodMapper(),id);
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())
@@ -156,15 +157,12 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     public CommunalUtility getUniqueCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException {
         try {
             return jdbcTemplate.queryForObject(getCommunalUtilityUnique, new CommunalUtilityMapper(),
-                    communalUtility.getName(),
-                    communalUtility.getStatus().getStatusCode(),
-                    communalUtility.getDeadline(),
-                    communalUtility.getDurationType().getDurationCode());
+                    communalUtility.getName());
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_COMMUNAL_UTILITY)
-                    .withMessage(EXCEPTION_GET_COMMUNAL_UTILITY)
+                    .withMessage(EXCEPTION_GET_UNIQUE_COMMUNAL_UTILITY)
                     .build();
             log.error(e.getMessage(), exception);
             throw exception;

@@ -26,10 +26,13 @@ public interface CalculationMethodDao {
     String deleteCalculationMethod = "delete from OBJECTS\n" +
             "where OBJECT_ID = ?";
 
-    String getCalculationMethodById = "select calcname.OBJECT_ID calc_id, calcname.VALUE calc_name, calc_coeff.VALUE calc_coeff from\n" +
-            "ATTRIBUTES calcname\n" +
+    String getCalculationMethodById = "select calcname.OBJECT_ID calc_id, " +
+            "calcname.VALUE calc_name, " +
+            "calc_coeff.VALUE calc_coeff " +
+            "from\n" +
+            "ATTRIBUTES calcname,\n" +
             "ATTRIBUTES calc_coeff,\n" +
-            "OBJECTS calc_obj,\n" +
+            "OBJECTS calc_obj\n" +
             "where\n" +
             "calcname.attr_id=20\n" +
             "and calc_obj.OBJECT_TYPE_ID=10\n" +

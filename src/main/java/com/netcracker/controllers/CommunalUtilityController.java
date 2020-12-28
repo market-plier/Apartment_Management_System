@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
-@RequestMapping("/communalutilities")
+@RequestMapping("/communal_utilities")
 @RestController
 public class CommunalUtilityController {
     private final CommunalUtilityService communalUtilityService;
@@ -33,12 +33,12 @@ public class CommunalUtilityController {
     }
 
     @PutMapping
-    public CommunalUtility update(@RequestBody @Valid CommunalUtility communalUtility) throws DaoAccessException {
-        return communalUtilityService.updateCommunalUtility(communalUtility);
+    public void update(@RequestBody @Valid CommunalUtility communalUtility) throws DaoAccessException {
+        communalUtilityService.updateCommunalUtility(communalUtility);
     }
 
     @PostMapping
-    public CommunalUtility create(@RequestBody @Valid CommunalUtility communalUtility) throws DaoAccessException, IOException, MessagingException {
-        return communalUtilityService.createCommunalUtility(communalUtility);
+    public void create(@RequestBody @Valid CommunalUtility communalUtility) throws DaoAccessException, IOException, MessagingException {
+        communalUtilityService.createCommunalUtility(communalUtility);
     }
 }

@@ -1,5 +1,6 @@
 package com.netcracker.dao;
 
+import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.CommunalUtility;
 
 import java.math.BigInteger;
@@ -7,11 +8,9 @@ import java.util.List;
 
 public interface CommunalUtilityDao {
 
-    String getAllCommunalUtilitiesWithCalculationMethod = "select com_util_obj.OBJECT_ID com_util_id,\n" +
+    String getAllCommunalUtilitiesByCalculationMethodId = "select com_util_obj.OBJECT_ID com_util_id,\n" +
             "com_util_name.VALUE com_util_name,\n" +
             "com_util_status_list.VALUE com_util_status,\n" +
-            "calc_obj.OBJECT_ID calc_id,\n" +
-            "calc_name.value calc_name,\n" +
             "com_util_dline.date_value com_util_dline,\n" +
             "com_util_durtype_list.Value com_util_durtype\n" +
             "    from\n" +
@@ -21,14 +20,11 @@ public interface CommunalUtilityDao {
             "    ATTRIBUTES com_util_status,\n" +
             "    ATTRIBUTES com_util_dline,\n" +
             "    LISTS com_util_durtype_list,\n" +
-            "    ATTRIBUTES com_util_durtype,\n" +
-            "    OBJECTS calc_obj,\n" +
-            "    ATTRIBUTES calc_name,\n" +
             "    OBJREFERENCE objref\n" +
             "    where\n" +
             "    com_util_name.attr_id=21\n" +
             "    and com_util_obj.OBJECT_ID = objref.OBJECT_ID\n" +
-            "    and calc_obj.OBJECT_ID = objref.REFERENCE\n" +
+            "    and ? = objref.REFERENCE\n" +
             "    and objref.attr_id = 39\n" +
             "    and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
             "    and com_util_status.attr_id=23\n" +
@@ -40,9 +36,7 @@ public interface CommunalUtilityDao {
             "    and com_util_durtype.attr_id=22\n" +
             "    and com_util_durtype.object_id = com_util_obj.OBJECT_ID\n" +
             "    and com_util_durtype_list.attr_id=22\n" +
-            "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n" +
-            "    and calc_name.attr_id=20\n" +
-            "    and calc_name.object_id=calc_obj.object_id\n";
+            "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id;";
 
     String getAllCommunalUtilities = "select com_util_obj.OBJECT_ID com_util_id,\n" +
             "com_util_name.VALUE com_util_name,\n" +
@@ -106,6 +100,7 @@ public interface CommunalUtilityDao {
             "com_util_status_list.VALUE com_util_status,\n" +
             "calc_obj.OBJECT_ID calc_id,\n" +
             "calc_name.value calc_name,\n" +
+            "calc_coeff.value calc_coeff,\n" +
             "com_util_dline.date_value com_util_dline,\n" +
             "com_util_durtype_list.Value com_util_durtype\n" +
             "    from\n" +
@@ -118,12 +113,15 @@ public interface CommunalUtilityDao {
             "    ATTRIBUTES com_util_durtype,\n" +
             "    OBJECTS calc_obj,\n" +
             "    ATTRIBUTES calc_name,\n" +
+            "    ATTRIBUTES calc_coeff,\n" +
             "    OBJREFERENCE objref\n" +
             "    where\n" +
             "    com_util_obj.OBJECT_ID = ?\n" +
             "    and com_util_obj.OBJECT_ID = objref.OBJECT_ID\n" +
             "    and calc_obj.OBJECT_ID = objref.REFERENCE\n" +
             "    and objref.attr_id = 39\n" +
+            "    and calc_coeff.attr_id=40\n" +
+            "    and calc_coeff.object_id=calc_obj.object_id\n" +
             "    and com_util_name.attr_id=21\n" +
             "    and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
             "    and com_util_status.attr_id=23\n" +
@@ -168,11 +166,11 @@ public interface CommunalUtilityDao {
             "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n";
 
     String getCommunalUtilityUnique = "select com_util_obj.OBJECT_ID com_util_id,\n" +
-            "com_util_name.VALUE com_util_name,\n" +
-            "com_util_status_list.VALUE com_util_status,\n" +
-            "com_util_dline.date_value com_util_dline,\n" +
-            "com_util_durtype_list.Value com_util_durtype\n" +
-            "    from\n" +
+            "       com_util_name.VALUE com_util_name,\n" +
+            "       com_util_status_list.VALUE com_util_status,\n" +
+            "       com_util_dline.date_value com_util_dline,\n" +
+            "       com_util_durtype_list.Value com_util_durtype\n" +
+            "from\n" +
             "    OBJECTS com_util_obj,\n" +
             "    ATTRIBUTES com_util_name,\n" +
             "    LISTS com_util_status_list,\n" +
@@ -180,23 +178,20 @@ public interface CommunalUtilityDao {
             "    ATTRIBUTES com_util_dline,\n" +
             "    LISTS com_util_durtype_list,\n" +
             "    ATTRIBUTES com_util_durtype\n" +
-            "    where\n" +
-            "    and com_util_name.attr_id=21\n" +
-            "    and com_util_name.Value=?\n" +
-            "    and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
-            "    and com_util_status.attr_id=23\n" +
-            "    and com_util_status.object_id = com_util_obj.OBJECT_ID\n" +
-            "    and com_util_status_list.attr_id=23\n" +
-            "    and com_util_status_list.list_value_id=?\n" +
-            "    and com_util_status.list_value_id = com_util_status_list.list_value_id\n" +
-            "    and com_util_dline.attr_id = 24\n" +
-            "    and com_util_dline.date_value = ?\n" +
-            "    and com_util_dline.object_id=com_util_obj.object_id\n" +
-            "    and com_util_durtype.attr_id=22\n" +
-            "    and com_util_durtype.object_id = com_util_obj.OBJECT_ID\n" +
-            "    and com_util_durtype_list.attr_id=22\n" +
-            "    and com_util_durtype_list.list_value_id=?\n" +
-            "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id\n";
+            "where\n" +
+            "        com_util_name.attr_id=21\n" +
+            "  and com_util_name.Value=?\n" +
+            "  and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
+            "  and com_util_status.attr_id=23\n" +
+            "  and com_util_status.object_id = com_util_obj.OBJECT_ID\n" +
+            "  and com_util_status_list.attr_id=23\n" +
+            "  and com_util_status.list_value_id = com_util_status_list.list_value_id\n" +
+            "  and com_util_dline.attr_id = 24\n" +
+            "  and com_util_dline.object_id=com_util_obj.object_id\n" +
+            "  and com_util_durtype.attr_id=22\n" +
+            "  and com_util_durtype.object_id = com_util_obj.OBJECT_ID\n" +
+            "  and com_util_durtype_list.attr_id=22\n" +
+            "  and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id";
 
 
     String createCommunalUtilityWithRef = "insert all\n" +
@@ -247,6 +242,7 @@ public interface CommunalUtilityDao {
             "on ( x.ATTR_ID=y.ATTR_ID AND x.OBJECT_ID=y.OBJECT_ID)\n" +
             "when matched then \n" +
             "update set x.REFERENCE=y.REFERENCE\n" +
+            "where x.REFERENCE <> y.REFERENCE\n" +
             "when not matched then \n" +
             "insert (x.REFERENCE,x.OBJECT_ID,x.ATTR_ID)\n" +
             "values (y.REFERENCE,y.OBJECT_ID,y.ATTR_ID)";
@@ -254,7 +250,7 @@ public interface CommunalUtilityDao {
     String EXCEPTION_GET_ALL_COMMUNAL_UTILITIES = "Can't get communal utilities";
     String EXCEPTION_GET_ALL_COMMUNAL_UTILITIES_FILTER_BY_STATUS = "Can't get communal utilities by status: ";
     String EXCEPTION_GET_COMMUNAL_UTILITY_BY_ID = "Can't get communal utility with id:";
-    String EXCEPTION_GET_COMMUNAL_UTILITY = "Can't get communal utility";
+    String EXCEPTION_GET_UNIQUE_COMMUNAL_UTILITY = "Can't get unique communal utility";
     String EXCEPTION_UPDATE_COMMUNAL_UTILITY = "Can't update communal utility with id:";
     String EXCEPTION_CREATE_COMMUNAL_UTILITIES = "Can't create communal utility with id:";
 
@@ -263,17 +259,21 @@ public interface CommunalUtilityDao {
 
     List<CommunalUtility> getAllCommunalUtilitiesFilterByStatus(CommunalUtility.Status status);
 
-    List<CommunalUtility> getAllCommunalUtilitiesWithCalculationMethod();
+    List<CommunalUtility> getAllCommunalUtilitiesByCalculationMethodId(BigInteger id) throws DaoAccessException;
 
     CommunalUtility getCommunalUtilityById(BigInteger id);
 
     CommunalUtility getCommunalUtilityByIdWithCalculationMethod(BigInteger id);
 
     void updateCommunalUtility(CommunalUtility communalUtility);
-
+    /**
+     * Creates new CommunalUtility w/o calculation method
+     */
     void createCommunalUtility(CommunalUtility communalUtility);
 
     CommunalUtility getUniqueCommunalUtility(CommunalUtility communalUtility);
-
+    /**
+     * Creates new CommunalUtility with calculation method
+     */
     void createCommunalUtilityWithRef(CommunalUtility communalUtility);
 }
