@@ -25,14 +25,13 @@ public class ApartmentInfoService {
     private final AccountService accountService;
     private final ApartmentDao apartmentDao;
     private final AccountDao accountDao;
-    final BCryptPasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public ApartmentInfoService(AccountService accountService, ApartmentDao apartmentDao, AccountDao accountDao, BCryptPasswordEncoder passwordEncoder) {
+    public ApartmentInfoService(AccountService accountService, ApartmentDao apartmentDao, AccountDao accountDao) {
         this.accountService = accountService;
         this.apartmentDao = apartmentDao;
         this.accountDao = accountDao;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Apartment> getAllApartments() throws DaoAccessException {

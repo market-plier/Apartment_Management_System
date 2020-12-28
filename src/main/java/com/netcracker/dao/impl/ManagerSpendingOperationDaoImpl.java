@@ -108,7 +108,6 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
             return jdbcTemplate.query(GET_MANAGER_OPERATIONS_BY_DATE, new ManagerSpendingOperationMapper()
                     , start, end);
         } catch (DataAccessException e) {
-
             DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
                     .withMessage(EXCEPTION_GET_ALL_MANAGER_OPERATIONS)

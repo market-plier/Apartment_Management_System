@@ -22,23 +22,11 @@ public class AccountService {
     }
 
 
-    public Account getAccountByEmail(String email) throws DaoAccessException{
-
-        try {
-            return accountDao.getAccountByEmail(email);
-        } catch (NullPointerException e) {
-            log.error("IN Service method getAccountByEmail: " + e.getMessage(),e);
-            throw e;
-        }
+    public Account getAccountByEmail(String email) throws DaoAccessException {
+        return accountDao.getAccountByEmail(email);
     }
 
     public Account getAccountById(BigInteger accountId) throws DaoAccessException {
-
-        try {
-            return accountDao.getAccount(accountId);
-        } catch (NullPointerException e) {
-            log.error("IN Service method getAccountById: " + e.getMessage(),e);
-            throw e;
-        }
+        return accountDao.getAccount(accountId);
     }
 }

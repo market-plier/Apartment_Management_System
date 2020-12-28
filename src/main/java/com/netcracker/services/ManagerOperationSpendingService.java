@@ -32,75 +32,41 @@ public class ManagerOperationSpendingService {
 
 
     public void createManagerOperationSpending(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException {
-        try {
-            ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBill(managerSpendingOperation.getManagerSubBill().getSubBillId());
-            if (managerSubBill.getBalance() >= managerSpendingOperation.getSum()) {
-                managerSpendingOperationDao.createManagerOperationSpending(managerSpendingOperation);
-                managerSubBillService.updateManagerSubBillByManagerOperation(managerSpendingOperation);
-            }
-            else
-            {
-                InsufficientBalanceException balanceException =  new InsufficientBalanceException("Not enough money");
-                log.error("IN Service method createManagerOperationSpending: " + balanceException.getMessage());
-                throw balanceException;
-            }
-        } catch (NullPointerException e) {
-            log.error("IN Service method createManagerOperationSpending: " + e.getMessage());
-            throw e;
+        ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBill(managerSpendingOperation.getManagerSubBill().getSubBillId());
+        if (managerSubBill.getBalance() >= managerSpendingOperation.getSum()) {
+            managerSpendingOperationDao.createManagerOperationSpending(managerSpendingOperation);
+            managerSubBillService.updateManagerSubBillByManagerOperation(managerSpendingOperation);
+        } else {
+            InsufficientBalanceException balanceException = new InsufficientBalanceException("Not enough money");
+            log.error("IN Service method createManagerOperationSpending: " + balanceException.getMessage());
+            throw balanceException;
         }
-
     }
 
     public List<ManagerSpendingOperation> getAllManagerOperationByDateAndCommunalUtility(Date start, Date end,
                                                                                          Set<BigInteger> communalUtility) throws DaoAccessException, NullPointerException {
-        try {
-            return managerSpendingOperationDao.getAllManagerOperationByDateAndCommunalIdList(start, end, communalUtility);
-        } catch (NullPointerException e) {
-            log.error("IN Service method getAllManagerOperationByDateAndCommunalUtility: " + e.getMessage());
-            throw e;
-        }
+        return managerSpendingOperationDao.getAllManagerOperationByDateAndCommunalIdList(start, end, communalUtility);
 
     }
 
 
     public List<ManagerSpendingOperation> getAllManagerOperationByDate(Date start, Date end) throws DaoAccessException, NullPointerException {
-        try {
-            return managerSpendingOperationDao.getAllManagerOperationByDate(start, end);
-        } catch (NullPointerException e) {
-            log.error("IN Service method getAllManagerOperationByDate: " + e.getMessage());
-            throw e;
-        }
-
+       return managerSpendingOperationDao.getAllManagerOperationByDate(start, end);
 
     }
 
     public ManagerSpendingOperation getManagerSpendingOperation(BigInteger id) throws DaoAccessException, NullPointerException {
-        try {
-            return managerSpendingOperationDao.getManagerOperationSpendingById(id);
-        } catch (NullPointerException e) {
-            log.error("IN Service method getManagerSpendingOperation: " + e.getMessage());
-            throw e;
-        }
+
+        return managerSpendingOperationDao.getManagerOperationSpendingById(id);
     }
 
     public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException, NullPointerException {
-        try {
-                managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);
-        } catch (NullPointerException e) {
-            log.error("IN Service method updateManagerOperation: " + e.getMessage());
-            throw e;
-        }
+        managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);
 
     }
 
-    public List<ManagerSpendingOperation> getAllManagerOperationBySubBillId (BigInteger id)
-    {
-        try {
-           return managerSpendingOperationDao.getAllManagerOperationSpendingByManagerSubBill(id);
-        } catch (NullPointerException e) {
-            log.error("IN Service method updateManagerOperation: " + e.getMessage());
-            throw e;
-        }
+    public List<ManagerSpendingOperation> getAllManagerOperationBySubBillId(BigInteger id) {
+        return managerSpendingOperationDao.getAllManagerOperationSpendingByManagerSubBill(id);
     }
 
 

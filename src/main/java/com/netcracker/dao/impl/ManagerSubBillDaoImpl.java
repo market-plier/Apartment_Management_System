@@ -112,10 +112,6 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
                 }
                 return managerSubBillMap;
             });
-            if (managerSubBillDoubleMap == null || managerSubBillDoubleMap.size()<=0)
-            {
-                throw new DaoAccessException("Not found debt");
-            }
             return managerSubBillDoubleMap;
         } catch (DataAccessException e) {
             DaoAccessException daoAccessException = new DaoAccessExceptionBuilder()

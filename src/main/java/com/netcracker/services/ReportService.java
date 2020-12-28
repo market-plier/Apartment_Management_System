@@ -5,12 +5,14 @@ import com.netcracker.dao.ManagerSubBillDao;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
+import com.netcracker.exception.NotFoundInformationForReportException;
 import com.netcracker.models.*;
 import com.netcracker.services.PDFBuilders.ApartmentsDebtsPdfBuilder;
 import com.netcracker.services.PDFBuilders.ManagerSpendingOperationPdfBuilder;
 import com.netcracker.services.PDFBuilders.ManagerSubBillDebtsPdfBuilder;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 
@@ -40,70 +42,80 @@ public class ReportService {
 
     public ByteArrayInputStream createManagerOperationSpendingReportByCommNameAndDate(Set<BigInteger> communalUtility,
                                                                                       Date start, Date end) throws DaoAccessException {
-        try {
+        List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
+                .getAllManagerOperationByDateAndCommunalUtility(start, end, communalUtility);
 
-            List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
-                    .getAllManagerOperationByDateAndCommunalUtility(start, end, communalUtility);
-            if (managerSpendingOperations != null) {
-                ManagerSpendingOperationPdfBuilder managerSpendingOperationPdfBuilder
-                        = new ManagerSpendingOperationPdfBuilder(start, end, managerSpendingOperations);
-                return managerSpendingOperationPdfBuilder.exportToPdf();
-            }
-        } catch (NullPointerException e) {
-            log.error("IN Service method createManagerOperationSpendingReportByCommNameAndDate: " + e.getMessage(), e);
-            throw e;
+        if (managerSpendingOperations != null && managerSpendingOperations.size() > 0) {
+            ManagerSpendingOperationPdfBuilder managerSpendingOperationPdfBuilder
+                    = new ManagerSpendingOperationPdfBuilder(start, end, managerSpendingOperations);
+            return managerSpendingOperationPdfBuilder.exportToPdf();
+        } else {
+            NotFoundInformationForReportException reportException = new NotFoundInformationForReportException
+                    ("Not found any information for these communal or date", BigInteger.valueOf(8098));
+
+            log.info("IN createManagerOperationSpendingReportByCommNameAndDate: " + reportException.getMessage());
+
+            throw reportException;
         }
 
-        return null;
+
     }
 
     public ByteArrayInputStream createManagerOperationSpendingReportByDate(Date start, Date end) throws DaoAccessException {
-        try {
-            List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
-                    .getAllManagerOperationByDate(start, end);
+        List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
+                .getAllManagerOperationByDate(start, end);
 
-            if (managerSpendingOperations != null) {
-                ManagerSpendingOperationPdfBuilder managerSpendingOperationPdfBuilder
-                        = new ManagerSpendingOperationPdfBuilder(start, end, managerSpendingOperations);
-                return managerSpendingOperationPdfBuilder.exportToPdf();
-            }
-        } catch (NullPointerException e) {
-            log.error("IN Service method createManagerOperationSpendingReportByDate: " + e.getMessage(), e);
-            throw e;
+        if (managerSpendingOperations != null && managerSpendingOperations.size() > 0) {
+            ManagerSpendingOperationPdfBuilder managerSpendingOperationPdfBuilder
+                    = new ManagerSpendingOperationPdfBuilder(start, end, managerSpendingOperations);
+            return managerSpendingOperationPdfBuilder.exportToPdf();
+        } else {
+            NotFoundInformationForReportException reportException = new NotFoundInformationForReportException
+                    ("Not found any information for these date", BigInteger.valueOf(8098));
+
+            log.info("IN createManagerOperationSpendingReportByDate: " + reportException.getMessage());
+
+            throw reportException;
         }
 
-        return null;
+
     }
 
     public ByteArrayInputStream createApartmentDebtReportByCommunalID(BigInteger accountID, Set<BigInteger> communalUtility) throws DaoAccessException {
-        try {
-            List<ApartmentSubBill> apartmentSubBillList = apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountID, communalUtility);
+
+        List<ApartmentSubBill> apartmentSubBillList = apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountID, communalUtility);
+        if (apartmentSubBillList != null && apartmentSubBillList.size() > 0) {
             Apartment apartment = apartmentInfoService.getApartmentById(accountID);
-            if (apartmentSubBillList != null && apartment != null) {
-                ApartmentsDebtsPdfBuilder apartmentsDebtsPdfBuilder
-                        = new ApartmentsDebtsPdfBuilder(apartmentSubBillList, apartment);
-                return apartmentsDebtsPdfBuilder.exportToPdf();
-            }
-        } catch (NullPointerException e) {
-            log.error("IN Service method createApartmentDebtReportByCommunalID: " + e.getMessage(), e);
-            throw e;
+            ApartmentsDebtsPdfBuilder apartmentsDebtsPdfBuilder
+                    = new ApartmentsDebtsPdfBuilder(apartmentSubBillList, apartment);
+            return apartmentsDebtsPdfBuilder.exportToPdf();
+        } else {
+            NotFoundInformationForReportException reportException = new NotFoundInformationForReportException
+                    ("Not found any information for these communal utility", BigInteger.valueOf(8098));
+
+            log.info("IN createApartmentDebtReportByCommunalID: " + reportException.getMessage());
+
+            throw reportException;
         }
 
-        return null;
+
     }
 
     public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(Set<BigInteger> communalUtility) {
-
         Map<ManagerSubBill, Double> managerDebtMap = managerSubBillDao.getManagerSubBillDeptByCommunalUtility(communalUtility);
 
-        try {
+        if (managerDebtMap != null && managerDebtMap.size() > 0) {
             ManagerSubBillDebtsPdfBuilder managerSubBillDebtsPdfBuilder = new ManagerSubBillDebtsPdfBuilder(managerDebtMap);
             return managerSubBillDebtsPdfBuilder.exportToPdf();
+        } else {
+            NotFoundInformationForReportException reportException = new NotFoundInformationForReportException
+                    ("Not found any information for these communal utility", BigInteger.valueOf(8098));
 
-        } catch (NullPointerException e) {
-            log.error("IN createManagerSubBillDebtReportByCommunalID: " + e.getMessage(), e);
-            throw e;
+            log.info("IN createManagerSubBillDebtReportByCommunalID: " + reportException.getMessage());
+
+            throw reportException;
         }
+
     }
 
 }

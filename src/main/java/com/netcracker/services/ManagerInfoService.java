@@ -20,17 +20,15 @@ public class ManagerInfoService {
     private final ManagerDao managerDao;
     private final ManagerBillService managerBillService;
     private final AccountDao accountDao;
-    final BCryptPasswordEncoder passwordEncoder;
     private final AccountService accountService;
 
     @Autowired
     public ManagerInfoService(ManagerDao managerDao, ManagerBillService managerBillService, AccountService accountService,
-                              AccountDao accountDao, BCryptPasswordEncoder passwordEncoder) {
+                              AccountDao accountDao) {
         this.managerDao = managerDao;
         this.managerBillService = managerBillService;
         this.accountService = accountService;
         this.accountDao = accountDao;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public Manager getManager() {
@@ -68,7 +66,7 @@ public class ManagerInfoService {
                 throw new NotBelongToAccountException("Can not change this account password");
             }
 
-            account.setPassword(passwordEncoder.encode(manager.getPassword()));
+            account.setPassword(manager.getPassword());
             accountDao.updateAccount(account);
             return manager;
         } catch (NullPointerException e) {

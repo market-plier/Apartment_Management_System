@@ -237,7 +237,7 @@ public interface ManagerSubBillDao {
     String EXCEPTION_GET_MANAGER_SUB_BILL_BY_ID = "Couldn't find Manager Sub Bill with id";
     String EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID = "Couldn't find Manager Sub Bill with this Communal Utility id";
     String EXCEPTION_GET_ALL_MANAGER_SUB_BILL = "Failed to get any Manager Sub Bill";
-    String EXCEPTION_GET_MANAGER_SUB_BILLS_BY_COMMUNAL_UTILS_LIST = "Couldn't get Manager Sub Bill by this list";
+    String EXCEPTION_GET_MANAGER_SUB_BILLS_BY_COMMUNAL_UTILS_LIST = "Couldn't get Manager Sub Bill debt by these ids";
 
     Collection<ManagerSubBill> getAllManagerSubBills();
 

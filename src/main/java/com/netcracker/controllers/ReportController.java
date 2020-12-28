@@ -1,7 +1,7 @@
 package com.netcracker.controllers;
 
 
-import com.netcracker.controllers.request.report.ReportByDateAndCommunalUtilityRequest;
+
 import com.netcracker.services.ReportService;
 import com.netcracker.util.DateUtil;
 
@@ -11,20 +11,18 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+
+import javax.validation.constraints.*;
 import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Log4j
@@ -53,10 +51,11 @@ public class ReportController {
                                                                  @NotEmpty(message = "end date cant be empty") String end,
                                                                  @RequestParam(name = "communalUtility")
                                                                  @NotNull(message = "Communal Utility date cant be null")
-                                                                 Set<@Positive(message = "Id must be positive value") BigInteger> communalUtility) throws ParseException {
+                                                                 Set<@Min(value = 0, message = "must be positive value")
+                                                                 @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility) throws ParseException {
 
         ByteArrayInputStream arrayInputStream = reportService
-                .createManagerOperationSpendingReportByCommNameAndDate(communalUtility,
+                .createManagerOperationSpendingReportByCommNameAndDate(communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()),
                         DateUtil.provideDateFormat(start), DateUtil.provideDateFormat(end));
 
         HttpHeaders headers = new HttpHeaders();
@@ -97,10 +96,11 @@ public class ReportController {
     public ResponseEntity makeApartmentDeptReport(@RequestParam @NotNull(message = "id cant be null")
                                                   @Positive(message = "id must be positive value") BigInteger accountId,
                                                   @RequestParam @NotNull(message = "communal utility cant be null ")
-                                                  Set<@Positive(message = "Id must be positive value") BigInteger> communalUtility){
+                                                  Set<@Min(value = 0, message = "must be positive value")
+                                                  @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility){
 
         ByteArrayInputStream arrayInputStream = reportService
-                .createApartmentDebtReportByCommunalID(accountId,communalUtility);
+                .createApartmentDebtReportByCommunalID(accountId,communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()));
 
         HttpHeaders headers = new HttpHeaders();
         String fileName = new Date().getTime() + APARTMENT_DEPT_REPORT + ".pdf";
@@ -116,10 +116,11 @@ public class ReportController {
     @RequestMapping(value = "manager/dept-manager-bill",method = RequestMethod.GET,produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity makeManagerBillDeptReport(@RequestParam
                                                     @NotNull(message = "communal utility cant be null")
-                                                    Set<@Positive(message = "Id must be positive value") BigInteger> communalUtility){
+                                                    Set<@Min(value = 0, message = "must be positive value")
+                                                    @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility){
 
         ByteArrayInputStream arrayInputStream = reportService
-                .createManagerSubBillDebtReportByCommunalID(communalUtility);
+                .createManagerSubBillDebtReportByCommunalID(communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()));
 
         HttpHeaders headers = new HttpHeaders();
         String fileName = new Date().getTime() + MANAGER_DEPT_REPORT+ ".pdf";
