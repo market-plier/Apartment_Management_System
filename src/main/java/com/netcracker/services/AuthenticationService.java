@@ -50,6 +50,7 @@ public class AuthenticationService {
 
         Map<Object, Object> response = new HashMap<>();
         response.put("username", account.getEmail());
+        response.put("role", account.getRole());
         response.put("token", token);
         return response;
     }
