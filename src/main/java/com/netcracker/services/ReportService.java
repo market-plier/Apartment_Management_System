@@ -45,7 +45,7 @@ public class ReportService {
         List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
                 .getAllManagerOperationByDateAndCommunalUtility(start, end, communalUtility);
 
-        if (managerSpendingOperations != null && managerSpendingOperations.size() > 0) {
+        if (!managerSpendingOperations.isEmpty()) {
             ManagerSpendingOperationPdfBuilder managerSpendingOperationPdfBuilder
                     = new ManagerSpendingOperationPdfBuilder(start, end, managerSpendingOperations);
             return managerSpendingOperationPdfBuilder.exportToPdf();
@@ -65,14 +65,13 @@ public class ReportService {
         List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
                 .getAllManagerOperationByDate(start, end);
 
-        if (managerSpendingOperations != null && managerSpendingOperations.size() > 0) {
+        if (!managerSpendingOperations.isEmpty()) {
             ManagerSpendingOperationPdfBuilder managerSpendingOperationPdfBuilder
                     = new ManagerSpendingOperationPdfBuilder(start, end, managerSpendingOperations);
             return managerSpendingOperationPdfBuilder.exportToPdf();
         } else {
             NotFoundInformationForReportException reportException = new NotFoundInformationForReportException
                     ("Not found any information for these date", BigInteger.valueOf(8098));
-
             log.info("IN createManagerOperationSpendingReportByDate: " + reportException.getMessage());
 
             throw reportException;
@@ -84,7 +83,7 @@ public class ReportService {
     public ByteArrayInputStream createApartmentDebtReportByCommunalID(BigInteger accountID, Set<BigInteger> communalUtility) throws DaoAccessException {
 
         List<ApartmentSubBill> apartmentSubBillList = apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountID, communalUtility);
-        if (apartmentSubBillList != null && apartmentSubBillList.size() > 0) {
+        if (!apartmentSubBillList.isEmpty()) {
             Apartment apartment = apartmentInfoService.getApartmentById(accountID);
             ApartmentsDebtsPdfBuilder apartmentsDebtsPdfBuilder
                     = new ApartmentsDebtsPdfBuilder(apartmentSubBillList, apartment);
@@ -104,15 +103,13 @@ public class ReportService {
     public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(Set<BigInteger> communalUtility) {
         Map<ManagerSubBill, Double> managerDebtMap = managerSubBillDao.getManagerSubBillDeptByCommunalUtility(communalUtility);
 
-        if (managerDebtMap != null && managerDebtMap.size() > 0) {
+        if (!managerDebtMap.isEmpty()) {
             ManagerSubBillDebtsPdfBuilder managerSubBillDebtsPdfBuilder = new ManagerSubBillDebtsPdfBuilder(managerDebtMap);
             return managerSubBillDebtsPdfBuilder.exportToPdf();
         } else {
             NotFoundInformationForReportException reportException = new NotFoundInformationForReportException
                     ("Not found any information for these communal utility", BigInteger.valueOf(8098));
-
             log.info("IN createManagerSubBillDebtReportByCommunalID: " + reportException.getMessage());
-
             throw reportException;
         }
 
