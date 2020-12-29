@@ -311,4 +311,5 @@ public interface ApartmentDao {
     String EXCEPTION_CREATE_APARTMENT = "Cant create apartment";
     String EXCEPTION_GET_APARTMENT_BY_APARTMENT_NUMBER = "Can't get apartment with this number";
     String EXCEPTION_GET_ALL_APARTMENTS_BY_FLOOR = "Can't get apartments on this floor";
+    String EXCEPTION_NO_APARTMENTS_WERE_FOUND = "No apartments were found";
 }

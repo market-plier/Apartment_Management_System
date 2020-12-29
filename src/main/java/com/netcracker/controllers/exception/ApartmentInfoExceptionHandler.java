@@ -3,48 +3,61 @@ package com.netcracker.controllers.exception;
 import com.netcracker.controllers.ApartmentInfoController;
 import com.netcracker.controllers.web.ApiError;
 import com.netcracker.controllers.web.ResponseEntityBuilder;
+import com.netcracker.exception.ObjectNotUniqueException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.constraints.Null;
 import javax.xml.bind.ValidationException;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @ControllerAdvice(basePackageClasses = {ApartmentInfoController.class})
-public class ApartmentInfoExceptionHandler extends GlobalExceptionHandler {
+public class ApartmentInfoExceptionHandler  extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(value = {IllegalArgumentException.class})
-    public ResponseEntity<ApiError> handleUniqueRegistrationDataException(IllegalArgumentException e, WebRequest request) {
+    @ExceptionHandler(value = {ObjectNotUniqueException.class})
+    public ResponseEntity<Object> handleUniqueRegistrationDataException(ObjectNotUniqueException e, WebRequest request) {
 
         List<String> details = Collections.singletonList(e.getMessage());
 
         ApiError message = new ApiError(LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST,
-                "ARGUMENTS CONFLICT", details);
+                "ARGUMENTS CONFLICT", details,e.getErrorCode());
 
-        return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.CONFLICT);
+        return ResponseEntityBuilder.build(message);
     }
 
-    @ExceptionHandler(value = {javax.validation.ValidationException.class})
-    public ResponseEntity<ApiError> handleUniqueRegistrationDataException(javax.validation.ValidationException e, WebRequest request) {
 
-        List<String> details = Collections.singletonList(e.getLocalizedMessage());
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        List<String> details = new ArrayList<String>();
+        details = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+
+                .map(error ->error.getCode() + error.getField() + " : " + error.getDefaultMessage())
+                .collect(Collectors.toList());
 
         ApiError message = new ApiError(LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST,
-                "WRONG APARTMENT DATA", details);
-        return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.CONFLICT);
+                "WRONG APARTMENT DATA", details,BigInteger.valueOf(75));
+
+        return ResponseEntityBuilder.build(message);
     }
 
     @Override
@@ -54,7 +67,7 @@ public class ApartmentInfoExceptionHandler extends GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST,
                 "Wrong format Apartment`s data",
                 Collections.singletonList("Validation Errors"),
-                BigInteger.valueOf(71));
+                BigInteger.valueOf(75));
         if (ex.getMessage().contains("apartmentNumber")) {
             err.setMessage("Apartment`s number is wrong type");
         }

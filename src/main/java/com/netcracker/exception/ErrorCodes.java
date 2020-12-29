@@ -46,6 +46,10 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_INSERT_APARTMENT = BigInteger.valueOf(71);
     BigInteger _FAIL_TO_UPDATE_APARTMENT_ = BigInteger.valueOf(72);
     BigInteger _FAIL_TO_SELECT_APARTMENT = BigInteger.valueOf(73);
+    BigInteger _FAIL_TO_CREATE_UNIQUE_APARTMENT = BigInteger.valueOf(74);
+    BigInteger _FAIL_TO_SET_APARTMENT_DATA = BigInteger.valueOf(75);
+    BigInteger _FAIL_TO_GET_APARTMENTS = BigInteger.valueOf(76);
+
     BigInteger _FAIL_TO_INSERT_COMMUNAL_UTILITY = BigInteger.valueOf(111);
     BigInteger _FAIL_TO_UPDATE_COMMUNAL_UTILITY = BigInteger.valueOf(112);
     BigInteger _FAIL_TO_SELECT_COMMUNAL_UTILITY = BigInteger.valueOf(113);
@@ -66,6 +70,8 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_DELETE_MANAGER = BigInteger.valueOf(84);
 
     BigInteger _FAIL_TO_SELECT_ACCOUNT = BigInteger.valueOf(23);
+
+    BigInteger _FAIL_TO_SET_REQUEST_DATA = BigInteger.valueOf(301);
 
     BigInteger _FAIL_NOT_BELONG_TO_ACCOUNT = BigInteger.valueOf(999);
 }

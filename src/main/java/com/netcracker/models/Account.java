@@ -8,15 +8,15 @@ import java.math.BigInteger;
 
 @Data
 public class Account {
-    @Positive(message = "Apartment`s id is not correct")
+    @Min(value = 0, message = "Apartment`s id is not correct")
     protected BigInteger accountId;
 
-    @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message = "First name format is not correct")
+    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+(([',. -][а-яА-Яa-zA-Z ])?[а-яА-Яa-zA-Z]*)*$", message = "First name format is not correct")
     @NotEmpty(message = "First name can not be empty")
     @Size(min = 1, max = 255, message = "First name size is not correct. Character length must be between 1 and 255")
     protected String firstName;
 
-    @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message = "Last name format is not correct")
+    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+(([',. -][а-яА-Яa-zA-Z ])?[а-яА-Яa-zA-Z]*)*$", message = "Last name format is not correct")
     @NotEmpty(message = "Last name can not be empty")
     @Size(min = 1, max = 255, message = "Last name size is not correct. Character length must be between 1 and 255")
     protected String lastName;

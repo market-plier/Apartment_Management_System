@@ -21,7 +21,6 @@ public class ApartmentRequestToManagerService {
     }
 
     public void generateApartmentRequestToManager(ApartmentRequestToManager request) {
-        try {
             Apartment apartment = apartmentInfoService.getApartmentById(request.getApartmentId());
             String subject = "Request from Apartment № " + apartment.getApartmentNumber();
             String text = request.getText() + '\n' +
@@ -31,9 +30,5 @@ public class ApartmentRequestToManagerService {
                     "Phone: " + apartment.getPhoneNumber() + '\n' +
                     "Email: " + apartment.getEmail();
             mailService.sendMessage(managerInfoService.getManager().getEmail(), subject, text);
-        } catch (NullPointerException e) {
-            log.error("ApartmentRequestToManagerService method generateApartmentRequestToManager: " + e.getMessage(), e);
-            throw e;
-        }
     }
 }

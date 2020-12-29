@@ -35,7 +35,7 @@ public class ApartmentInfoController {
     @PostMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public ResponseEntity<Apartment> createApartment(@Valid @RequestBody Apartment apartment)
-            throws NullPointerException, DaoAccessException, ValidationException {
+            throws DaoAccessException, ValidationException {
         if (apartment.getPassword() == null || apartment.getPassword().length() > 3900 || apartment.getPassword().length() < 8) {
             throw new ValidationException("Password length is not correct");
         }
@@ -47,7 +47,7 @@ public class ApartmentInfoController {
     @PutMapping("/updatePassword")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
     public ResponseEntity<Apartment> updateApartmentPassword(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
-            throws NullPointerException, DaoAccessException, ValidationException {
+            throws DaoAccessException, ValidationException {
 
         if (apartment.getPassword() == null || apartment.getPassword().length() > 3900 || apartment.getPassword().length() < 8) {
             throw new ValidationException("Password length is not correct");
@@ -59,7 +59,7 @@ public class ApartmentInfoController {
     @PutMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
     public ResponseEntity<Apartment> updateApartment(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
-            throws NullPointerException, DaoAccessException, IllegalArgumentException {
+            throws DaoAccessException, IllegalArgumentException {
         Role role = null;
 
         if (account.getAuthorities().toString().equals("[ROLE_OWNER]")) {
@@ -67,10 +67,6 @@ public class ApartmentInfoController {
         }
         if (account.getAuthorities().toString().equals("[ROLE_MANAGER]")) {
             role = Role.MANAGER;
-            if (apartment.getApartmentNumber() == null ||
-                    apartment.getEmail() == null) {
-                throw new IllegalArgumentException("For updating apartment enter: Apartment`s number and Email");
-            }
         }
 
         Account updater = new AccountBuilder()
@@ -83,14 +79,14 @@ public class ApartmentInfoController {
 
     @GetMapping("{number}")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public ResponseEntity<Apartment> getApartment(@PathVariable @NotNull Integer number) throws NullPointerException, DaoAccessException {
+    public ResponseEntity<Apartment> getApartment(@PathVariable @NotNull Integer number) throws DaoAccessException {
         Apartment apart = apartmentInfoService.getApartmentByApartmentNumber(number);
         return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.FOUND);
     }
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity<List<Apartment>> getAllApartments() throws NullPointerException, DaoAccessException {
+    public ResponseEntity<List<Apartment>> getAllApartments() throws DaoAccessException {
         List<Apartment> apartments = new ArrayList<>();
         for (Apartment a : apartmentInfoService.getAllApartments()) {
             apartments.add(getApartmentDTO(a));
@@ -100,7 +96,8 @@ public class ApartmentInfoController {
 
     @GetMapping("apartments-on-floor")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity<List<Apartment>> getAllApartmentsByFloor(@RequestParam @NotNull List<Integer> floor) throws NullPointerException, DaoAccessException {
+    public ResponseEntity<List<Apartment>> getAllApartmentsByFloor(@RequestParam @NotNull List<Integer> floor) throws DaoAccessException {
+
         List<Apartment> apartments = new ArrayList<>();
         for (Apartment a : apartmentInfoService.getAllApartmentsByFloor(floor)) {
             apartments.add(getApartmentDTO(a));

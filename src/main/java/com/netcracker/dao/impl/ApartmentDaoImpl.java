@@ -2,10 +2,10 @@ package com.netcracker.dao.impl;
 
 import com.netcracker.dao.ApartmentDao;
 import com.netcracker.dao.mapper.ApartmentMapper;
-import com.netcracker.dao.mapper.ApartmentSubBillMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.models.Apartment;
+import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,11 @@ public class ApartmentDaoImpl implements ApartmentDao {
     @Override
     public List<Apartment> getAllApartments() throws DaoAccessException {
         try {
-            return jdbcTemplate.query(GET_ALL_APARTMENTS, new ApartmentMapper());
+            List<Apartment> list = jdbcTemplate.query(GET_ALL_APARTMENTS, new ApartmentMapper());
+            if (list.isEmpty()) {
+                throw new NotFoundException(EXCEPTION_NO_APARTMENTS_WERE_FOUND);
+            }
+            return list;
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_ALL_APARTMENTS)
@@ -47,14 +51,18 @@ public class ApartmentDaoImpl implements ApartmentDao {
                     .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
+        } catch (NotFoundException e) {
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(e.getMessage())
+                    .withErrorMessage(BigInteger.valueOf(76))
+                    .build();
         }
     }
 
     @Override
     public Apartment getApartmentById(BigInteger apartmentId) throws DaoAccessException {
         try {
-            Apartment apartment = jdbcTemplate.queryForObject(GET_APARTMENT_BY_ID, new ApartmentMapper(), apartmentId);
-            return apartment;
+            return jdbcTemplate.queryForObject(GET_APARTMENT_BY_ID, new ApartmentMapper(), apartmentId);
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_APARTMENT_BY_ACCOUNT_ID)
@@ -153,8 +161,12 @@ public class ApartmentDaoImpl implements ApartmentDao {
         parameters.addValue("floor_list", floor);
 
         try {
-            return namedParameterJdbcTemplate.query(GET_ALL_APARTMENTS_BY_FLOOR,
+            List<Apartment> list = namedParameterJdbcTemplate.query(GET_ALL_APARTMENTS_BY_FLOOR,
                     parameters, new ApartmentMapper());
+            if (list.isEmpty()) {
+                throw new NotFoundException(EXCEPTION_NO_APARTMENTS_WERE_FOUND);
+            }
+            return list;
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_ALL_APARTMENTS_BY_FLOOR)
@@ -163,6 +175,11 @@ public class ApartmentDaoImpl implements ApartmentDao {
                     .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
+        } catch (NotFoundException ex) {
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(ex.getMessage())
+                    .withErrorMessage(BigInteger.valueOf(76))
+                    .build();
         }
     }
 }

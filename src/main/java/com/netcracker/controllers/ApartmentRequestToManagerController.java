@@ -13,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.math.BigInteger;
@@ -27,21 +29,16 @@ public class ApartmentRequestToManagerController {
         this.apartmentRequestToManagerService = apartmentRequestToManagerService;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/createApartmentRequestToManager")
+    @PostMapping(value = "/createApartmentRequestToManager")
     @PreAuthorize("hasAnyRole('ROLE_OWNER')")
-    public ResponseEntity<String> createApartmentRequestToManager(@RequestBody String text) {
-
-        if (text.trim().isEmpty()) {
-            throw new IllegalArgumentException("Request text can not be empty");
-        }
+    public ResponseEntity<String> createApartmentRequestToManager(@RequestBody @Valid ApartmentRequestToManager r) {
 
         JwtAccount account = (JwtAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ApartmentRequestToManager request = new ApartmentRequestToManager(account.getId(), text);
+        ApartmentRequestToManager request = new ApartmentRequestToManager(account.getId(), r.getText());
 
         if (account.getId().equals(request.getApartmentId())) {
             apartmentRequestToManagerService.generateApartmentRequestToManager(request);
             return new ResponseEntity<>("Request is successfully sended", HttpStatus.OK);
-
         } else {
             NotBelongToAccountException e = new NotBelongToAccountException("Can not send request from this account");
             log.log(Level.WARN, e.getMessage(), e);
