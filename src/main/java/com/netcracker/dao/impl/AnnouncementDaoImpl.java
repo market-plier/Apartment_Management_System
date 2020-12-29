@@ -9,6 +9,7 @@ import com.netcracker.models.Announcement;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -43,6 +44,8 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
         try {
             Announcement announcement = jdbcTemplate.queryForObject(GET_ANNOUNCEMENT_BY_ID, new AnnouncementMapper(), id);
             return announcement;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_ANNOUNCEMENT)
@@ -60,6 +63,8 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
         try {
             Announcement announcement = jdbcTemplate.queryForObject(GET_LATEST_ANNOUNCEMENT, new AnnouncementMapper());
             return announcement;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_ANNOUNCEMENT)

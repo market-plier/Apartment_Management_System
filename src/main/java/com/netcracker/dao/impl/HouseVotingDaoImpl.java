@@ -9,6 +9,7 @@ import com.netcracker.models.HouseVoting;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,8 @@ public class HouseVotingDaoImpl implements HouseVotingDao {
     public HouseVoting getHouseVotingByAnnouncementId(BigInteger announcementId) throws DaoAccessException {
         try {
             return jdbcTemplate.queryForObject(GET_HOUSE_VOTING_BY_ANNOUNCEMENT_ID, new HouseVotingMapper(), announcementId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_HOUSE_VOTING)

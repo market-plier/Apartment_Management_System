@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigInteger;
 import java.util.Collection;
 
@@ -32,24 +34,31 @@ public class VotingOptionController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public Collection<VotingOption> getAllVotingOptionsByAnnouncementId(@PathVariable BigInteger announcementId)
-            throws DaoAccessException, NullPointerException {
+    public Collection<VotingOption> getAllVotingOptionsByAnnouncementId(@NotNull(message = "Id cannot be null")
+                                                                        @Positive(message = "Id cannot be negative")
+                                                                        @PathVariable BigInteger announcementId)
+            throws DaoAccessException {
         return votingOptionService.getAllVotingOptionsByAnnouncementId(announcementId);
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public VotingOption createVotingOption(@RequestBody @Valid VotingOption votingOption)
-            throws DaoAccessException, NullPointerException {
+    public VotingOption createVotingOption(@NotNull(message = "VotingOption cannot be null")
+                                           @RequestBody @Valid VotingOption votingOption)
+            throws DaoAccessException {
         return votingOptionService.createVotingOption(votingOption);
     }
 
     @PostMapping("/{votingOptionId}/add_vote")
     @PreAuthorize("hasAnyRole('ROLE_OWNER')")
     public ResponseEntity addVote(@AuthenticationPrincipal JwtAccount account,
-                        @PathVariable BigInteger announcementId,
-                        @PathVariable BigInteger votingOptionId)
-            throws IllegalArgumentException, DaoAccessException, NullPointerException {
+                                  @NotNull(message = "announcementId cannot be null")
+                                  @Positive(message = "announcementId cannot be negative")
+                                  @PathVariable BigInteger announcementId,
+                                  @NotNull(message = "votingOptionId cannot be null")
+                                  @Positive(message = "votingOptionId cannot be negative")
+                                  @PathVariable BigInteger votingOptionId)
+            throws IllegalArgumentException, DaoAccessException {
         votingOptionService.addVote(announcementId, votingOptionId, account.getId());
         return ResponseEntity.ok(HttpStatus.OK);
     }

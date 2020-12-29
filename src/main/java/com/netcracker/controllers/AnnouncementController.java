@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -30,35 +32,42 @@ public class AnnouncementController {
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public List<Announcement> getAllAnnouncements() throws DaoAccessException, NullPointerException {
+    public List<Announcement> getAllAnnouncements() throws DaoAccessException {
         return announcementService.getAllAnnouncements();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public Announcement getAnnouncement(@PathVariable BigInteger id)
-            throws DaoAccessException, NullPointerException {
+    public Announcement getAnnouncement(@NotNull(message = "Id cannot be null")
+                                        @Positive(message = "Id cannot be negative")
+                                        @PathVariable BigInteger id) throws DaoAccessException {
         return announcementService.getAnnouncementById(id);
     }
 
     @PostMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public Announcement createAnnouncement(@RequestBody @Valid Announcement announcement)
-            throws DaoAccessException, NullPointerException {
+    public Announcement createAnnouncement(@NotNull(message = "Announcement cannot be null")
+                                           @RequestBody @Valid Announcement announcement) throws DaoAccessException {
         return announcementService.createAnnouncement(announcement);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public Announcement updateAnnouncement(@RequestBody @Valid Announcement announcement,
+    public Announcement updateAnnouncement(@NotNull(message = "Announcement cannot be null")
+                                           @RequestBody @Valid Announcement announcement,
+                                           @NotNull(message = "Id cannot be null")
+                                           @Positive(message = "Id cannot be negative")
                                            @PathVariable BigInteger id)
-            throws DaoAccessException, NullPointerException {
+            throws DaoAccessException {
         return announcementService.updateAnnouncement(announcement);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity deleteAnnouncement(@PathVariable BigInteger id) throws DaoAccessException, NullPointerException {
+    public ResponseEntity deleteAnnouncement(@NotNull(message = "Id cannot be null")
+                                             @Positive(message = "Id cannot be negative")
+                                             @PathVariable BigInteger id)
+            throws DaoAccessException {
         announcementService.deleteAnnouncement(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }

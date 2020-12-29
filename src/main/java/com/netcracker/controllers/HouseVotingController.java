@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigInteger;
 
 @Log4j
@@ -29,22 +31,27 @@ public class HouseVotingController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public HouseVoting getHouseVotingByAnnouncementId(@PathVariable BigInteger announcementId)
-            throws DaoAccessException, NullPointerException {
+    public HouseVoting getHouseVotingByAnnouncementId(@NotNull(message = "Id cannot be null")
+                                                      @Positive(message = "Id cannot be negative")
+                                                      @PathVariable BigInteger announcementId)
+            throws DaoAccessException {
         return houseVotingService.getHouseVotingByAnnouncementId(announcementId);
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public HouseVoting createHouseVoting(@RequestBody @Valid HouseVoting houseVoting)
-            throws DaoAccessException, NullPointerException, IllegalArgumentException {
+    public HouseVoting createHouseVoting(@NotNull(message = "HouseVoting cannot be null")
+                                         @RequestBody @Valid HouseVoting houseVoting)
+            throws DaoAccessException, IllegalArgumentException {
         return houseVotingService.createHouseVoting(houseVoting);
     }
 
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity deleteHouseVoting(@PathVariable BigInteger announcementId)
-            throws DaoAccessException, NullPointerException {
+    public ResponseEntity deleteHouseVoting(@NotNull(message = "Id cannot be null")
+                                            @Positive(message = "Id cannot be negative")
+                                            @PathVariable BigInteger announcementId)
+            throws DaoAccessException {
         houseVotingService.deleteHouseVoting(announcementId);
         return ResponseEntity.ok(HttpStatus.OK);
     }

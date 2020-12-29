@@ -11,6 +11,7 @@ import com.netcracker.models.VotingOption;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +31,8 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
     public Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger announcementId) throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID, new VotingOptionMapper(), announcementId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_VOTING_OPTION)
