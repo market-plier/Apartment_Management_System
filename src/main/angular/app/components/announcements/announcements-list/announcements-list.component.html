@@ -1,0 +1,48 @@
+<div class="list row p-2">
+    <div class="col-md-6">
+        <div class="p-2">
+            <h4>Announcement List</h4>
+            <br/>
+            <a type="button" class="btn btn-outline-success"
+               routerLink="create">Create Announcement</a>
+            <br/>
+        </div>
+
+        <ul class="list-group">
+            <li
+                    class="list-group-item"
+                    *ngFor="let announcement of announcements; let i = index"
+                    [class.active]="i == currentIndex"
+                    (click)="setActiveAnnouncement(announcement, i)"
+            >
+                {{ announcement.title }}
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6 p-2">
+        <div *ngIf="currentAnnouncement">
+            <h4>Announcement</h4>
+            <div>
+                <label><strong>Title:</strong></label> {{ currentAnnouncement.title }}
+            </div>
+            <div>
+                <label><strong>Body:</strong></label> {{ currentAnnouncement.body }}
+            </div>
+            <div>
+                <label><strong>Created at:</strong></label> {{ currentAnnouncement.createdAt | date:'shortDate' }}
+            </div>
+
+            <a type="button" class="btn btn-outline-dark"
+               routerLink="">Show</a>
+            <a type="button" class="btn btn-outline-info"
+               routerLink="">Edit</a>
+            <a type="button" class="btn btn-outline-danger"
+               routerLink="">Delete</a>
+        </div>
+
+        <div *ngIf="!currentAnnouncement">
+            <br/>
+            <p>Please click on a Announcement...</p>
+        </div>
+    </div>
+</div>
