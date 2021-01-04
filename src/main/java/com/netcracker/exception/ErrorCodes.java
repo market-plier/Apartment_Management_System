@@ -11,6 +11,7 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_UPDATE_ANNOUNCEMENT = BigInteger.valueOf(32);
     BigInteger _FAIL_TO_SELECT_ANNOUNCEMENT = BigInteger.valueOf(33);
     BigInteger _FAIL_TO_DELETE_ANNOUNCEMENT = BigInteger.valueOf(34);
+    BigInteger _NOT_FOUND_ANNOUNCEMENT = BigInteger.valueOf(35);
 
     BigInteger _FAIL_TO_INSERT_COMMENT = BigInteger.valueOf(41);
     BigInteger _FAIL_TO_UPDATE_COMMENT = BigInteger.valueOf(42);
@@ -21,6 +22,7 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_UPDATE_HOUSE_VOTING = BigInteger.valueOf(52);
     BigInteger _FAIL_TO_SELECT_HOUSE_VOTING = BigInteger.valueOf(53);
     BigInteger _FAIL_TO_DELETE_HOUSE_VOTING = BigInteger.valueOf(54);
+    BigInteger _NOT_FOUND_HOUSE_VOTING = BigInteger.valueOf(55);
 
     BigInteger _FAIL_TO_INSERT_VOTING_OPTION = BigInteger.valueOf(61);
     BigInteger _FAIL_TO_UPDATE_VOTING_OPTION = BigInteger.valueOf(62);

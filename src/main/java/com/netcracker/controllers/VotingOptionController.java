@@ -62,4 +62,14 @@ public class VotingOptionController {
         votingOptionService.addVote(announcementId, votingOptionId, account.getId());
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
+    @GetMapping("/get_vote")
+    @PreAuthorize("hasAnyRole('ROLE_OWNER')")
+    public VotingOption getVotingOption(@AuthenticationPrincipal JwtAccount account,
+                                        @NotNull(message = "announcementId cannot be null")
+                                        @Positive(message = "announcementId cannot be negative")
+                                        @PathVariable BigInteger announcementId)
+            throws DaoAccessException {
+        return votingOptionService.getVotingOption(announcementId, account.getId());
+    }
 }

@@ -3,6 +3,8 @@ package com.netcracker.services;
 import com.netcracker.dao.HouseVotingDao;
 import com.netcracker.dao.VotingOptionDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.ErrorCodes;
+import com.netcracker.exception.ObjectNotFoundException;
 import com.netcracker.models.HouseVoting;
 import com.netcracker.models.VotingOption;
 import lombok.extern.log4j.Log4j;
@@ -24,6 +26,14 @@ public class HouseVotingService {
     public HouseVoting getHouseVotingByAnnouncementId(BigInteger announcementId) throws DaoAccessException {
         HouseVoting houseVoting = houseVotingDao.getHouseVotingByAnnouncementId(announcementId);
 
+        if (houseVoting == null) {
+            ObjectNotFoundException exception = new ObjectNotFoundException(
+                    "HouseVoting was not found with announcementId: " + announcementId,
+                    ErrorCodes._NOT_FOUND_HOUSE_VOTING);
+            log.error(exception.getMessage(), exception);
+            throw exception;
+        }
+
         Collection<VotingOption> votingOptions = votingOptionDao.getAllVotingOptionsByAnnouncementId(announcementId);
         houseVoting.setVotingOptions(votingOptions);
 
@@ -32,8 +42,11 @@ public class HouseVotingService {
 
     public HouseVoting createHouseVoting(HouseVoting houseVoting) throws DaoAccessException, IllegalArgumentException {
         BigInteger announcementId = houseVoting.getAnnouncement().getAnnouncementId();
+
         if (hasHouseVoting(announcementId)) {
-            throw new IllegalArgumentException("This announcement has already had voting");
+            IllegalArgumentException exception = new IllegalArgumentException("This announcement has already had voting");
+            log.error("HouseVotingService method createHouseVoting: " + exception.getMessage(), exception);
+            throw exception;
         }
 
         houseVotingDao.createHouseVoting(houseVoting);

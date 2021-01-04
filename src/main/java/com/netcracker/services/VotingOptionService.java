@@ -35,10 +35,20 @@ public class VotingOptionService {
     public void addVote(BigInteger announcementId, BigInteger votingOptionId, BigInteger accountId)
             throws IllegalArgumentException, DaoAccessException {
         if (hasVote(announcementId, accountId)) {
-            throw new IllegalArgumentException("This account has already voted");
+            IllegalArgumentException exception = new IllegalArgumentException("This account has already voted");
+            log.error("VotingOptionService method addVote: " + exception.getMessage(), exception);
+            throw exception;
         }
 
         votingOptionDao.addVote(votingOptionId, accountId);
+    }
+
+    public VotingOption getVotingOption(BigInteger announcementId, BigInteger accountId) throws DaoAccessException {
+        if (hasVote(announcementId, accountId)) {
+            return votingOptionDao.getVotingOption(announcementId, accountId);
+        }
+
+        return null;
     }
 
     private boolean hasVote(BigInteger announcementId, BigInteger accountId) {

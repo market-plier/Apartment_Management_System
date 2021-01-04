@@ -3,6 +3,8 @@ package com.netcracker.services;
 import com.netcracker.dao.AnnouncementDao;
 import com.netcracker.dao.CommentDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.ErrorCodes;
+import com.netcracker.exception.ObjectNotFoundException;
 import com.netcracker.models.Announcement;
 import com.netcracker.models.Comment;
 import com.netcracker.models.HouseVoting;
@@ -35,6 +37,13 @@ public class AnnouncementService {
 
     public Announcement getAnnouncementById(BigInteger id) throws DaoAccessException {
         Announcement announcement = announcementDao.getAnnouncementById(id);
+
+        if (announcement == null) {
+            ObjectNotFoundException exception = new ObjectNotFoundException(
+                    "Announcement was not found with id: " + id,  ErrorCodes._NOT_FOUND_ANNOUNCEMENT);
+            log.error("AnnouncementService method getAnnouncementById: " + exception.getMessage(), exception);
+            throw exception;
+        }
 
         if (announcement.getHouseVoting() != null) {
             HouseVoting houseVoting = houseVotingService.getHouseVotingByAnnouncementId(id);

@@ -55,13 +55,35 @@ public interface VotingOptionDao {
     String ADD_VOTE =
             "MERGE INTO OBJREFERENCE old\n" +
             "USING (SELECT 30 ATTR_ID, ? OBJECT_ID, ? REFERENCE FROM DUAL) new\n" +
-            "ON (old.ATTR_ID = new.ATTR_ID AND old.OBJECT_ID = new.OBJECT_ID)\n" +
+            "ON (old.ATTR_ID = new.ATTR_ID AND old.REFERENCE = new.REFERENCE)\n" +
             "WHEN MATCHED THEN\n" +
-            "   UPDATE SET old.REFERENCE = new.REFERENCE\n" +
-            "   WHERE old.REFERENCE <> new.REFERENCE\n" +
+            "   UPDATE SET old.OBJECT_ID = new.OBJECT_ID\n" +
+            "   WHERE old.OBJECT_ID <> new.OBJECT_ID\n" +
             "WHEN NOT MATCHED THEN\n" +
             "   INSERT(old.ATTR_ID,old.OBJECT_ID, old.REFERENCE)\n" +
             "   VALUES(new.ATTR_ID,new.OBJECT_ID, new.REFERENCE)";
+
+    String GET_VOTING_OPTION_BY_ANNOUNCEMENT_ID_ACCOUNT_ID =
+            "SELECT VOTING_OPTION.OBJECT_ID voting_option_id,\n" +
+            "       VOTING_OPTION_NAME.VALUE       name,\n" +
+            "       HVOTING.OBJECT_ID              house_voting_id,\n" +
+            "       COUNT(VOTE.REFERENCE)          count\n" +
+            "FROM OBJECTS HVOTING,\n" +
+            "     OBJECTS ANNC,\n" +
+            "     ATTRIBUTES VOTING_OPTION_NAME,\n" +
+            "     OBJECTS VOTING_OPTION,\n" +
+            "     OBJREFERENCE VOTE \n" +
+            "WHERE VOTING_OPTION.OBJECT_TYPE_ID = 6\n" +
+            "    AND ANNC.OBJECT_ID = ?\n" +
+            "    AND HVOTING.PARENT_ID = ANNC.OBJECT_ID\n" +
+            "    AND VOTING_OPTION.PARENT_ID = HVOTING.OBJECT_ID\n" +
+            "    AND VOTING_OPTION_NAME.ATTR_ID = 14\n" +
+            "    AND VOTING_OPTION_NAME.OBJECT_ID = VOTING_OPTION.OBJECT_ID\n" +
+            "    AND VOTING_OPTION_NAME.OBJECT_ID = VOTING_OPTION.OBJECT_ID\n" +
+            "    AND VOTE.ATTR_ID = 30 \n" +
+            "    AND VOTE.REFERENCE = ? \n" +
+            "    AND VOTE.OBJECT_ID = VOTING_OPTION.OBJECT_ID\n"+
+            "GROUP BY VOTING_OPTION.OBJECT_ID, VOTING_OPTION_NAME.VALUE, HVOTING.OBJECT_ID";
 
     String GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID =
             "SELECT APRT.OBJECT_ID  account_id,\n" +
@@ -88,12 +110,15 @@ public interface VotingOptionDao {
     String EXCEPTION_CREATE_VOTING_OPTION = "Can't create voting option";
     String EXCEPTION_ADD_VOTE = "Can't add vote reference with voting option id: ";
     String EXCEPTION_GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID = "Can't get apartments by this voting option id: ";
+    String EXCEPTION_GET_VOTING_OPTION_BY_ANNOUNCEMENT_ID_ACCOUNT_ID = "Can't get voting option by these announcement id and account id: ";
 
     Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger announcementId) throws DaoAccessException;
 
     void createVotingOption(VotingOption votingOption) throws DaoAccessException;
 
     void addVote(BigInteger votingOptionId, BigInteger accountId) throws DaoAccessException;
+
+    VotingOption getVotingOption(BigInteger announcementId, BigInteger accountId) throws DaoAccessException;
 
     List<Apartment> getApartmentsByVotingOptionId(BigInteger id) throws DaoAccessException;
 }

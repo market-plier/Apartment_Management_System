@@ -2,6 +2,7 @@ package com.netcracker.dao.impl;
 
 import com.netcracker.dao.VotingOptionDao;
 import com.netcracker.dao.mapper.ApartmentForVotingOptionMapper;
+import com.netcracker.dao.mapper.HouseVotingMapper;
 import com.netcracker.dao.mapper.VotingOptionMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
@@ -31,8 +32,6 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
     public Collection<VotingOption> getAllVotingOptionsByAnnouncementId(BigInteger announcementId) throws DaoAccessException {
         try {
             return jdbcTemplate.query(GET_ALL_VOTING_OPTIONS_BY_ANNOUNCEMENT_ID, new VotingOptionMapper(), announcementId);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_VOTING_OPTION)
@@ -73,6 +72,7 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_VOTE_REF)
                     .withMessage(EXCEPTION_ADD_VOTE)
+                    .withId(votingOptionId)
                     .withCause(e.getCause())
                     .build();
             log.error("VotingOptionDaoImpl method addVote: " + accessException.getMessage());
@@ -81,9 +81,28 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
     }
 
     @Override
+    public VotingOption getVotingOption(BigInteger announcementId, BigInteger accountId) throws DaoAccessException {
+        try {
+            return jdbcTemplate.queryForObject(GET_VOTING_OPTION_BY_ANNOUNCEMENT_ID_ACCOUNT_ID,
+                    new VotingOptionMapper(),
+                    announcementId,
+                    accountId);
+        } catch (DataAccessException e) {
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_VOTING_OPTION)
+                    .withMessage(EXCEPTION_GET_VOTING_OPTION_BY_ANNOUNCEMENT_ID_ACCOUNT_ID)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("VotingOptionDaoImpl method getVote: " + accessException.getMessage());
+            throw accessException;
+        }
+    }
+
+    @Override
     public List<Apartment> getApartmentsByVotingOptionId(BigInteger id) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID, new ApartmentForVotingOptionMapper(), id);
+            List<Apartment> list = jdbcTemplate.query(GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID, new ApartmentForVotingOptionMapper(), id);
+            return list;
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes.APARTMENT_OPERATION_FAIL_TO_SELECT)
