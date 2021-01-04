@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {TokenStorageService} from '../../services/token-storage.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
     selector: 'app-login',
@@ -10,49 +10,47 @@ import {Router} from "@angular/router";
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    form: any = {
-        email: null,
-        password: null
-    };
-    isLoggedIn = false;
-    isLoginFailed = false;
-    errorMessage = '';
-    role: string = '';
 
-    constructor(private authService: AuthService,
+
+    form:FormGroup;
+    message:string;
+
+
+
+    constructor(public authService: AuthService,
                 private tokenStorage: TokenStorageService,
-                private router: Router) {
+                private router: Router,
+                private route:ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        if (this.tokenStorage.getToken()) {
-            console.log(this.tokenStorage.getToken())
-            this.isLoggedIn = true;
-            this.role = this.tokenStorage.getUser().role;
-        }
+
+        this.route.queryParams.subscribe((params:Params)=>
+        {
+            if(params['loginAgain'])
+            {
+                this.message = 'Please, enter data (unauthorized)'
+            }
+
+        })
+
+
+        this.form = new FormGroup({
+            email: new FormControl('',[Validators.required, Validators.email]),
+            password: new FormControl('',[Validators.required, Validators.minLength(6)])
+        })
     }
 
     onSubmit(): void {
-        const {email, password} = this.form;
 
-        this.authService.login(email, password).subscribe(
+
+        this.authService.login(this.form.value.email, this.form.value.password, ).subscribe(
 
             data => {
-
                 this.tokenStorage.saveToken(data.token);
                 this.tokenStorage.saveUser(data);
-
-                this.isLoginFailed = false;
-                this.isLoggedIn = true;
-                this.role = this.tokenStorage.getUser().role;
                 this.redirectPage()
             },
-            err => {
-                this.errorMessage = err.error.message;
-                this.isLoginFailed = true;
-            },
-
-
         );
     }
 

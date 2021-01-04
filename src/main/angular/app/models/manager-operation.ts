@@ -7,4 +7,5 @@ export class ManagerOperation {
     createdAt: Date;
     sum:number
     managerSubBill: ManagerSubBill;
+
 }

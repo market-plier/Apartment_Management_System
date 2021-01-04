@@ -7,18 +7,19 @@ import {AnnouncementsShowComponent} from "./components/announcements/announcemen
 //import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
 import {ManagerOperationListComponent} from "./components/manager-operation/manager-operation-list/manager-operation-list.component";
 import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
+import {AuthGuard} from "./services/auth.guard";
 
 
 const routes: Routes = [
-    {path: '', component: LoginComponent},
-    {path: 'manager-operation', component: ManagerOperationListComponent},
-    {path: 'manager-operation/create', component: ManagerOperationCreateComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'announcements', component: AnnouncementsListComponent},
-    {path: 'announcements/create', component: AnnouncementsCreateComponent},
-    {path: 'announcements/:id', component:AnnouncementsShowComponent},
-   // {path: 'announcements/:id/update', component: AnnouncementsUpdateComponent}
+    {path: '', component: LoginComponent },
+    {path: 'manager-operation', component: ManagerOperationListComponent, canActivate:[AuthGuard]},
+    {path: 'manager-operation/create', component: ManagerOperationCreateComponent, canActivate:[AuthGuard]},
+    {path: 'announcements', component: AnnouncementsListComponent, canActivate:[AuthGuard]},
+    {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate:[AuthGuard]},
+    {path: 'announcements/:id', component:AnnouncementsShowComponent, canActivate:[AuthGuard]},
 ];
+
+
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

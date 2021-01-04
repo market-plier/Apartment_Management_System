@@ -41,4 +41,8 @@ export class TokenStorageService {
 
         return {};
     }
+    isAuthenticated(): boolean {
+        console.log(!!this.getToken());
+        return !!this.getToken()
+    }
 }

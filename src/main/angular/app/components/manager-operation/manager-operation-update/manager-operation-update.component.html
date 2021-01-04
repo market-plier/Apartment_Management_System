@@ -1,1 +1,29 @@
-<p>manager-operation-update works!</p>
+
+<div  fxLayoutAlign = "center center" fxFlexFill>
+    <mat-card fxFlex="60">
+        <form fxLayoutAlign="center" fxLayout="column" [formGroup]="form"  (ngSubmit) = "onClickSubmit()">
+            <mat-form-field>
+                <mat-label>Enter Description</mat-label>
+                <textarea formControlName="description" matInput></textarea>
+            </mat-form-field>
+            <mat-error *ngIf="form.get('description').invalid && form.get('description').touched">
+                <small *ngIf="form.get('description').errors.required">Description is required</small>
+                <small *ngIf="form.get('description').errors.minlength">Description length must be more than 1</small>
+            </mat-error>
+
+            <mat-form-field>
+                <mat-label>Enter sum of spending</mat-label>
+                <input formControlName="sum" min="0" type="number" matInput ngModel>
+                <span matPrefix>₴&nbsp;</span>
+            </mat-form-field>
+
+            <mat-error *ngIf="form.get('sum').invalid && form.get('sum').touched">
+                <small *ngIf="form.get('sum').errors.required">Sum is required</small>
+            </mat-error>
+
+            <button [disabled]="form.invalid" mat-raised-button type = "submit" color="primary">
+                Make spending
+            </button>
+        </form>
+    </mat-card>
+</div>

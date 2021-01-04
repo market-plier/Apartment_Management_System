@@ -33,6 +33,7 @@ import {ManagerOperationListComponent } from './components/manager-operation/man
 import {ManagerOperationCreateComponent } from './components/manager-operation/manager-operation-create/manager-operation-create.component';
 import {ManagerOperationUpdateComponent } from './components/manager-operation/manager-operation-update/manager-operation-update.component';
 import {AnnouncementsShowComponent} from "./components/announcements/announcements-show/announcements-show.component";
+import {AuthGuard} from "./services/auth.guard";
 
 @NgModule({
     declarations: [
@@ -80,7 +81,7 @@ import {AnnouncementsShowComponent} from "./components/announcements/announcemen
         MatSelectModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-        JwtHelperService,],
+        JwtHelperService, AuthGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

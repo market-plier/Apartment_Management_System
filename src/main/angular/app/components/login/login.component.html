@@ -1,41 +1,47 @@
 
-<div class ="login-background">
+<div class ="row p-5 login-background">
+    <div class="col-md-12">
+
+        <div class="alert alert-info" *ngIf="message">
+            {{message}}
+        </div>
+
+
 
     <div  fxLayoutAlign = "center center" fxFlexFill>
-        <mat-card fxFlex="38">
-            <mat-card-title>Login</mat-card-title>
-            <form fxLayoutAlign="center" fxLayout="column" *ngIf="!isLoggedIn" name="form"
-                  (ngSubmit)="f.form.valid && onSubmit()"
-                  #f="ngForm"
-                  novalidate >
+        <mat-card fxFlex="30">
+            <mat-card-title>
+                Login
+            </mat-card-title>
+
+            <form fxLayoutAlign="center" [formGroup]="form"  (ngSubmit) = "onSubmit()" fxLayout="column"  name="form">
 
                     <mat-form-field>
-                    <input matInput type="email" name="email"
-                           [(ngModel)]="form.email"
-                           placeholder="Email"
-                           #email="ngModel"
+                    <input matInput type="email" placeholder="Email" name="email"
+                          formControlName="email"
                     />
                 </mat-form-field>
 
+                <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">
+                    <small *ngIf="form.get('email').errors.required">Email is required</small>
+                    <small *ngIf="form.get('email').errors.email">Field must be email</small>
+                </mat-error>
+
 
                 <mat-form-field>
-                    <input matInput type="password" name="password"
-                           [(ngModel)]="form.password"
-                           placeholder="Password"
-                           minlength="6"
-                           #password="ngModel"/>
+                    <input matInput type="password" name="password" placeholder="Password" formControlName="password"/>
                 </mat-form-field>
 
-                <div role="alert"
-                     *ngIf="password.errors && f.submitted">
-
-                    <small *ngIf="password.errors.minlength">
-                        <mat-form-field>Password must be at least 6 characters</mat-form-field>
-                    </small>
-                </div>
+                <mat-error *ngIf="form.get('password').invalid && form.get('password').touched">
+                    <small *ngIf="form.get('password').errors.required">Password is required</small>
+                    <small *ngIf="form.get('password').errors.minlength">Password must be more than 6 characters</small>
+                </mat-error>
 
 
-                <button mat-raised-button type = "submit" color="primary">
+                <mat-error *ngIf="authService.error$ | async as error">
+                    <small><strong>{{error}}</strong></small>
+                </mat-error>
+                <button mat-raised-button [disabled]="form.invalid" class="my-3" type = "submit" color="primary">
                     Login
                 </button>
 
@@ -44,20 +50,20 @@
 
 
 
-                    <div role="alert"
-                         *ngIf="f.submitted && isLoginFailed"
-                    >
-                        <mat-error> Wrong password or email</mat-error>
-                    </div>
+<!--                    <div role="alert"-->
+<!--                         *ngIf="f.submitted && isLoginFailed"-->
+<!--                    >-->
+<!--                        <mat-error> Wrong password or email</mat-error>-->
+<!--                    </div>-->
 
 
             </form>
 
-            <div class="alert alert-success" *ngIf="isLoggedIn">
-                Logged in as {{ role }}.
-            </div>
+<!--            <div class="alert alert-success" *ngIf="isLoggedIn">-->
+<!--                Logged in as {{ role }}.-->
+<!--            </div>-->
 
         </mat-card>
     </div>
 </div>
-
+</div>
