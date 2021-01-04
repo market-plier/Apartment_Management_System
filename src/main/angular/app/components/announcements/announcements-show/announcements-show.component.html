@@ -1,0 +1,74 @@
+<div>
+    <mat-card class="p-2">
+        <div *ngIf="announcement">
+            <mat-card-header>
+                <mat-card-title>{{ announcement.title }}</mat-card-title>
+                <mat-card-subtitle>Created at {{ announcement.createdAt }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{ announcement.body }}
+                </p>
+                <mat-divider></mat-divider>
+                <div *ngIf="announcement.houseVoting" class="p-2">
+                    <mat-card *ngIf="announcement.houseVoting" class="p-2" style="background-color:#F7F7F7;">
+                        <mat-card-header class="mat-primary">
+                            <h3>{{announcement.houseVoting.title}}</h3>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div *ngIf="getUser().role == 'MANAGER' || (getUser().role == 'OWNER' && currentVotingOption)">
+                                <div *ngFor="let votingOption of announcement.houseVoting.votingOptions; let i = index">
+                                    <p>{{votingOption.name}}: {{ votingOption.count}} votes</p>
+                                    <mat-progress-bar class="col-md-6" mode="determinate" value="{{votingOption.percent}}"></mat-progress-bar>
+                                </div>
+
+                            </div>
+                            <div *ngIf="getUser().role == 'OWNER' && !currentVotingOption">
+                                <mat-radio-group labelPosition="after">
+                                    <mat-list>
+                                        <mat-list-item *ngFor="let votingOption of announcement.houseVoting.votingOptions; let i = index">
+                                            <mat-radio-button value="{{votingOption.votingOptionId}}" [(ngModel)]="selectedVotingOptionId">
+                                                {{votingOption.name}}
+                                            </mat-radio-button>
+                                        </mat-list-item>
+                                    </mat-list>
+                                </mat-radio-group>
+                                <button mat-flat-button color="primary" (click)="addVote()">Vote</button>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-card-content>
+            <mat-card-actions class="p-2" align="end">
+                <button mat-flat-button color="accent">Edit</button>
+                <button mat-stroked-button color="warn"
+                        (click)="deleteAnnouncement(announcement.announcementId)">
+                    Delete
+                </button>
+            </mat-card-actions>
+        </div>
+    </mat-card>
+    <mat-expansion-panel *ngIf="announcement.isOpened"
+                         (opened)="commentsOpenState = true"
+                         (closed)="commentsOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Comments
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let comment of announcement.comments; let i = index">
+            <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>Apt. {{ comment.apartment?.apartmentNumber  }}: {{comment.apartment?.firstName}} {{comment.apartment?.lastName}}</mat-card-title>
+                        <mat-card-subtitle>Created at {{ comment.createdAt }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>
+                            {{ comment.body }}
+                        </p>
+                    </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-expansion-panel>
+</div>

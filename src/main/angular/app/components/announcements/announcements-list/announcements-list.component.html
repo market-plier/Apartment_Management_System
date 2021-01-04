@@ -1,48 +1,48 @@
 <div class="list row p-2">
     <div class="col-md-6">
-        <div class="p-2">
-            <h4>Announcement List</h4>
-            <br/>
-            <a type="button" class="btn btn-outline-success"
-               routerLink="create">Create Announcement</a>
-            <br/>
-        </div>
+        <section class="row p-2">
+            <h1>Announcement List</h1>
+            <button mat-icon-button routerLink="create" color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </section>
 
-        <ul class="list-group">
-            <li
-                    class="list-group-item"
-                    *ngFor="let announcement of announcements; let i = index"
+        <mat-selection-list [multiple]="false">
+            <mat-list-option
+                    *ngFor="let announcement of
+                    (announcements | slice: lowValue : highValue); let i = index"
                     [class.active]="i == currentIndex"
                     (click)="setActiveAnnouncement(announcement, i)"
             >
                 {{ announcement.title }}
-            </li>
-        </ul>
+                <mat-divider></mat-divider>
+            </mat-list-option>
+            <mat-paginator  [length]="announcements.length" pageSize=5
+                            (page)="getPaginatorData($event)" [pageSizeOptions]="[5, 10]"></mat-paginator>
+        </mat-selection-list>
     </div>
-    <div class="col-md-6 p-2">
+    <mat-card class="col-md-6 p-2">
         <div *ngIf="currentAnnouncement">
-            <h4>Announcement</h4>
-            <div>
-                <label><strong>Title:</strong></label> {{ currentAnnouncement.title }}
-            </div>
-            <div>
-                <label><strong>Body:</strong></label> {{ currentAnnouncement.body }}
-            </div>
-            <div>
-                <label><strong>Created at:</strong></label> {{ currentAnnouncement.createdAt | date:'shortDate' }}
-            </div>
-
-            <a type="button" class="btn btn-outline-dark"
-               routerLink="">Show</a>
-            <a type="button" class="btn btn-outline-info"
-               routerLink="">Edit</a>
-            <a type="button" class="btn btn-outline-danger"
-               routerLink="">Delete</a>
+            <mat-card-header>
+                <mat-card-title>{{ currentAnnouncement.title }}</mat-card-title>
+                <mat-card-subtitle>Created at {{ currentAnnouncement.createdAt }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{ currentAnnouncement.body }}
+                </p>
+            </mat-card-content>
+            <mat-card-actions class="p-2">
+                <button mat-stroked-button routerLink="{{currentAnnouncement.announcementId}}">Show Full</button>
+                <button mat-stroked-button color="warn" (click)="deleteAnnouncement(currentAnnouncement.announcementId)">Delete</button>
+            </mat-card-actions>
         </div>
+
 
         <div *ngIf="!currentAnnouncement">
             <br/>
-            <p>Please click on a Announcement...</p>
+            <p>Click on a Announcement...</p>
         </div>
-    </div>
+    </mat-card>
+
 </div>

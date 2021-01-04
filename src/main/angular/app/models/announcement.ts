@@ -1,4 +1,5 @@
 import {Comment} from "./comment";
+import {HouseVoting} from "./house-voting";
 
 export class Announcement {
     announcementId?: number;
@@ -7,4 +8,5 @@ export class Announcement {
     isOpened?: Boolean;
     createdAt?: Date;
     comments?: Comment[];
+    houseVoting?: HouseVoting;
 }

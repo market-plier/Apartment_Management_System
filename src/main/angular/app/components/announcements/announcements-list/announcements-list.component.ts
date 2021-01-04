@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
+// @ts-ignore
+import {PageEvent} from "@angular/material";
 
 @Component({
     selector: 'app-announcements-list',
@@ -13,11 +15,19 @@ export class AnnouncementsListComponent implements OnInit {
     currentIndex: number = -1;
     title = '';
 
-    constructor(private announcementService: AnnouncementService) {
-    }
+    lowValue = 0;
+    highValue = 10;
+
+    constructor(private announcementService: AnnouncementService) {}
 
     ngOnInit(): void {
         this.retrieveAnnouncements();
+    }
+
+    public getPaginatorData(event: PageEvent): PageEvent {
+        this.lowValue = event.pageIndex * event.pageSize;
+        this.highValue = this.lowValue + event.pageSize;
+        return event;
     }
 
     retrieveAnnouncements(): void {
@@ -41,5 +51,17 @@ export class AnnouncementsListComponent implements OnInit {
     setActiveAnnouncement(announcement: Announcement, index: number): void {
         this.currentAnnouncement = announcement;
         this.currentIndex = index;
+    }
+
+    deleteAnnouncement(announcementId: number): void {
+        this.announcementService.deleteAnnouncement(announcementId)
+            .subscribe(
+                response => {
+                    console.log(response);
+                    this.refreshList();
+                },
+                error => {
+                    console.log(error);
+                });
     }
 }

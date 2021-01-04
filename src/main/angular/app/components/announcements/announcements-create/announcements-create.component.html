@@ -1,40 +1,40 @@
 <div>
-    <div class="submit-form">
+    <form  class="announcement-form">
         <div *ngIf="!submitted">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="title"
-                        required
-                        [(ngModel)]="announcement.title"
-                        name="title"
+            <p>
+            <mat-form-field class="announcement-full-width">
+                <mat-label>Title</mat-label>
+                <input matInput
+                       id="title"
+                       name="title"
+                       [formControl]="titleFormControl"
+                       [(ngModel)]="announcement.title"
                 />
-            </div>
+            </mat-form-field>
 
-            <div class="form-group">
-                <label for="description">Body</label>
-                <input
-                        class="form-control"
-                        id="description"
-                        required
-                        [(ngModel)]="announcement.body"
-                        name="description"
-                />
-            </div>
+            <mat-form-field class="announcement-full-width">
+                <mat-label>Body</mat-label>
+                <textarea matInput
+                          id="body"
+                          name="body"
+                          [formControl]="titleFormControl"
+                          [(ngModel)]="announcement.body">
+                </textarea>
+            </mat-form-field >
+            </p>
 
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="isOpened" [(ngModel)]="announcement.isOpened">
-                <label class="form-check-label" for="isOpened">Open for Comments</label>
-            </div>
+            <mat-form-field class="announcement-full-width">
+                <mat-checkbox id="isOpened" [(ngModel)]="announcement.isOpened">
+                    Open for Comments
+                </mat-checkbox>
+            </mat-form-field>
 
-            <button (click)="saveAnnouncement()" class="btn btn-success">Submit</button>
+            <button mat-flat-button color="primary" (click)="saveAnnouncement()">Submit</button>
         </div>
 
         <div *ngIf="submitted">
             <h4>Announcement was submitted successfully!</h4>
-            <a type="button" class="btn btn-outline-success" routerLink="../">Back to Announcements</a>
+            <button mat-flat-button color="primary" routerLink="../">Back to Announcements</button>
         </div>
-    </div>
+    </form>
 </div>

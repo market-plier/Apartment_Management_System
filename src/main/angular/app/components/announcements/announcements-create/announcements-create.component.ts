@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-announcements-create',
@@ -14,12 +15,14 @@ export class AnnouncementsCreateComponent implements OnInit {
         isOpened: false
     };
     submitted = false;
+    titleFormControl = new FormControl('', [
+        Validators.required,
+    ]);
 
-    constructor(private announcementService: AnnouncementService) {
-    }
 
-    ngOnInit(): void {
-    }
+    constructor(private announcementService: AnnouncementService) {}
+
+    ngOnInit(): void {}
 
     saveAnnouncement(): void {
         const data = {

@@ -25,11 +25,11 @@ export class AnnouncementService {
         return this.http.post(this.baseUrl, announcement);
     }
 
-    updateAnnouncement(id: number | undefined, value: Announcement): Observable<any> {
+    updateAnnouncement(id: number, value: Announcement): Observable<any> {
         return this.http.put(`${this.baseUrl}/${id}`, value);
     }
 
-    deleteAnnouncement(id: number | undefined): Observable<any> {
+    deleteAnnouncement(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`);
     }
 }
