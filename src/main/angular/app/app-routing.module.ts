@@ -7,7 +7,7 @@ import {AnnouncementsShowComponent} from "./components/announcements/announcemen
 //import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
 import {ManagerOperationListComponent} from "./components/manager-operation/manager-operation-list/manager-operation-list.component";
 import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
-import {AuthGuard} from "./services/auth.guard";
+import {AuthGuard} from "./services/guard/auth.guard";
 
 
 const routes: Routes = [

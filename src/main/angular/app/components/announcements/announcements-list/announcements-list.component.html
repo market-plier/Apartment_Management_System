@@ -17,8 +17,8 @@
                 {{ announcement.title }}
                 <mat-divider></mat-divider>
             </mat-list-option>
-            <mat-paginator  [length]="announcements.length" pageSize=5
-                            (page)="getPaginatorData($event)" [pageSizeOptions]="[5, 10]"></mat-paginator>
+            <mat-paginator  [length]="announcements.length" pageSize=10
+                            (page)="getPaginatorData($event)" [pageSizeOptions]="[10]"></mat-paginator>
         </mat-selection-list>
     </div>
     <mat-card class="col-md-6 p-2">
