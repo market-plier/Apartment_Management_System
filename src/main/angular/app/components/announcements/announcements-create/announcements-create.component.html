@@ -1,40 +1,42 @@
-<div>
-    <form  class="announcement-form">
-        <div *ngIf="!submitted">
-            <p>
-            <mat-form-field class="announcement-full-width">
+<div  fxLayoutAlign = "center center" fxFlexFill>
+    <mat-card fxFlex="60">
+        <form xLayoutAlign="center" fxLayout="column"[formGroup]="form" (ngSubmit)="saveAnnouncement()">
+
+            <mat-form-field>
                 <mat-label>Title</mat-label>
-                <input matInput
-                       id="title"
-                       name="title"
-                       [formControl]="titleFormControl"
-                       [(ngModel)]="announcement.title"
+                <input matInput type="text"
+                       formControlName="title"
                 />
             </mat-form-field>
 
-            <mat-form-field class="announcement-full-width">
+            <mat-error *ngIf="form.get('title').invalid && form.get('title').touched">
+                <small *ngIf="form.get('title').errors.required">Title is required</small>
+                <small *ngIf="form.get('title').errors.minlength">Title length must be more than 1</small>
+                <small *ngIf="form.get('title').errors.maxlength">Title length must be less than 256</small>
+            </mat-error>
+
+            <mat-form-field>
                 <mat-label>Body</mat-label>
                 <textarea matInput
-                          id="body"
-                          name="body"
-                          [formControl]="titleFormControl"
-                          [(ngModel)]="announcement.body">
+                          formControlName="body">
                 </textarea>
-            </mat-form-field >
-            </p>
-
-            <mat-form-field class="announcement-full-width">
-                <mat-checkbox id="isOpened" [(ngModel)]="announcement.isOpened">
-                    Open for Comments
-                </mat-checkbox>
             </mat-form-field>
 
-            <button mat-flat-button color="primary" (click)="saveAnnouncement()">Submit</button>
-        </div>
+            <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">
+                <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1024</small>
+            </mat-error>
 
-        <div *ngIf="submitted">
-            <h4>Announcement was submitted successfully!</h4>
-            <button mat-flat-button color="primary" routerLink="../">Back to Announcements</button>
-        </div>
-    </form>
+                <mat-checkbox formControlName="isOpened">
+                    Open for Comments
+                </mat-checkbox>
+
+            <mat-error *ngIf="form.get('isOpened').invalid && form.get('isOpened').touched">
+                <small *ngIf="form.get('isOpened').errors.required">isOpened is required</small>
+            </mat-error>
+
+            <button [disabled]="form.invalid"  mat-flat-button color="primary" type="submit">Submit</button>
+
+        </form>
+    </mat-card>
+
 </div>

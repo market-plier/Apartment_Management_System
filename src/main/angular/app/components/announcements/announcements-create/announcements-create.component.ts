@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-announcements-create',
@@ -9,45 +10,32 @@ import {FormControl, Validators} from "@angular/forms";
     styleUrls: ['./announcements-create.component.css']
 })
 export class AnnouncementsCreateComponent implements OnInit {
-    announcement: Announcement = {
-        title: '',
-        body: '',
-        isOpened: false
-    };
-    submitted = false;
-    titleFormControl = new FormControl('', [
-        Validators.required,
-    ]);
+    form: FormGroup;
 
+    constructor(private announcementService: AnnouncementService,
+                private router: Router) {}
 
-    constructor(private announcementService: AnnouncementService) {}
-
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.form = new FormGroup({
+            title: new FormControl('',[
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(255)
+            ]),
+            body:new FormControl('',Validators.maxLength(1023)),
+            isOpened:new FormControl('',Validators.required)
+        })
+    }
 
     saveAnnouncement(): void {
-        const data = {
-            title: this.announcement.title,
-            body: this.announcement.body,
-            isOpened: this.announcement.isOpened
-        };
-
-        this.announcementService.createAnnouncement(data)
+        this.announcementService.createAnnouncement(this.form.value)
             .subscribe(
                 response => {
                     console.log(response);
-                    this.submitted = true;
+                    this.router.navigateByUrl('announcements');
                 },
                 error => {
                     console.log(error);
                 });
-    }
-
-    newAnnouncement(): void {
-        this.submitted = false;
-        this.announcement = {
-            title: '',
-            body: '',
-            isOpened: false
-        };
-    }
+    };
 }
