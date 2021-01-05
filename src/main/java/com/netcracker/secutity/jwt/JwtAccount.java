@@ -1,6 +1,7 @@
 package com.netcracker.secutity.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.netcracker.models.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.math.BigInteger;
@@ -39,6 +40,11 @@ public class JwtAccount implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
         return Collections.singleton(authorities);
+    }
+
+    public String getRole()
+    {
+        return authorities.getAuthority();
     }
 
     @Override
