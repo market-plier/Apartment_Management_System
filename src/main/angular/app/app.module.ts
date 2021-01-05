@@ -21,8 +21,12 @@ import {MatSelectModule} from "@angular/material/select";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+
 import {AnnouncementsListComponent} from './components/announcements/announcements-list/announcements-list.component';
 import {AnnouncementsCreateComponent} from './components/announcements/announcements-create/announcements-create.component';
+import {AnnouncementsShowComponent} from "./components/announcements/announcements-show/announcements-show.component";
+import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
+
 import {LoginComponent} from './components/login/login.component';
 
 import {authInterceptorProviders} from './helpers/auth.interceptor';
@@ -32,7 +36,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ManagerOperationListComponent } from './components/manager-operation/manager-operation-list/manager-operation-list.component';
 import {ManagerOperationCreateComponent } from './components/manager-operation/manager-operation-create/manager-operation-create.component';
 import {ManagerOperationUpdateComponent } from './components/manager-operation/manager-operation-update/manager-operation-update.component';
-import {AnnouncementsShowComponent} from "./components/announcements/announcements-show/announcements-show.component";
 import {AuthGuard} from "./services/guard/auth.guard";
 import {OwnerGuard} from "./services/guard/owner.guard";
 import {ManagerGuard} from "./services/guard/manager.guard";
@@ -43,6 +46,7 @@ import {ManagerGuard} from "./services/guard/manager.guard";
         AnnouncementsListComponent,
         AnnouncementsShowComponent,
         AnnouncementsCreateComponent,
+        AnnouncementsUpdateComponent,
         LoginComponent,
         ManagerOperationListComponent,
         ManagerOperationCreateComponent,

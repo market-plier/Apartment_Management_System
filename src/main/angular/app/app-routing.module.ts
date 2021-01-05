@@ -8,6 +8,8 @@ import {AnnouncementsShowComponent} from "./components/announcements/announcemen
 import {ManagerOperationListComponent} from "./components/manager-operation/manager-operation-list/manager-operation-list.component";
 import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
 import {AuthGuard} from "./services/guard/auth.guard";
+import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
+import {ManagerGuard} from "./services/guard/manager.guard";
 
 
 const routes: Routes = [
@@ -15,8 +17,9 @@ const routes: Routes = [
     {path: 'manager-operation', component: ManagerOperationListComponent, canActivate:[AuthGuard]},
     {path: 'manager-operation/create', component: ManagerOperationCreateComponent, canActivate:[AuthGuard]},
     {path: 'announcements', component: AnnouncementsListComponent, canActivate:[AuthGuard]},
-    {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate:[AuthGuard]},
+    {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate:[AuthGuard, ManagerGuard]},
     {path: 'announcements/:id', component:AnnouncementsShowComponent, canActivate:[AuthGuard]},
+    {path: 'announcements/:id/update', component:AnnouncementsUpdateComponent, canActivate:[AuthGuard, ManagerGuard]},
 ];
 
 

@@ -1,0 +1,56 @@
+import {Component, OnInit} from '@angular/core';
+import {Announcement} from "../../../models/announcement";
+import {AnnouncementService} from "../../../services/announcement.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+
+@Component({
+    selector: 'app-announcements-update',
+    templateUrl: './announcements-update.component.html',
+    styleUrls: ['./announcements-update.component.css']
+})
+export class AnnouncementsUpdateComponent implements OnInit {
+    form: FormGroup;
+    id: number;
+    announcement: Announcement;
+
+    constructor(private announcementService: AnnouncementService,
+                private router: Router,
+                private route: ActivatedRoute) {
+    }
+
+    ngOnInit(): void {
+        this.id = this.route.snapshot.params['id'];
+        this.announcementService.getAnnouncement(this.id)
+            .subscribe(
+                data => {
+                    this.announcement = data;
+                    console.log(data);
+                },
+                error => {
+                    console.log(error);
+                });
+
+        this.form = new FormGroup({
+            title: new FormControl('',[
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(255)
+            ]),
+            body:new FormControl('',Validators.maxLength(1023)),
+            isOpened:new FormControl('',Validators.required)
+        })
+    }
+
+    saveAnnouncement(): void {
+        this.announcementService.updateAnnouncement(this.id, this.announcement)
+            .subscribe(
+                response => {
+                    console.log(response);
+                    this.router.navigateByUrl('announcements/' + this.id);
+                },
+                error => {
+                    console.log(error);
+                });
+    };
+}

@@ -3,6 +3,7 @@ import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
 // @ts-ignore
 import {PageEvent} from "@angular/material";
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 @Component({
     selector: 'app-announcements-list',
@@ -18,7 +19,8 @@ export class AnnouncementsListComponent implements OnInit {
     lowValue = 0;
     highValue = 10;
 
-    constructor(private announcementService: AnnouncementService) {}
+    constructor(private announcementService: AnnouncementService,
+                private tokenStorageService: TokenStorageService) {}
 
     ngOnInit(): void {
         this.retrieveAnnouncements();
@@ -28,6 +30,10 @@ export class AnnouncementsListComponent implements OnInit {
         this.lowValue = event.pageIndex * event.pageSize;
         this.highValue = this.lowValue + event.pageSize;
         return event;
+    }
+
+    getUser(): any {
+        return this.tokenStorageService.getUser();
     }
 
     retrieveAnnouncements(): void {
