@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
             return true
         } else {
             this.tokenService.signOut()
-            this.router.navigate([''], {
+            this.router.navigate(['/login'], {
                 queryParams: {
                     loginAgain: true
                 }

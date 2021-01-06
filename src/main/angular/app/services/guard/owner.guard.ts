@@ -23,7 +23,7 @@ export class OwnerGuard implements CanActivate {
             }
             console.log('not authenticated');
             this.tokenService.signOut();
-            this.router.navigateByUrl('');
+            this.router.navigateByUrl('login');
             return false;
         }));
     }

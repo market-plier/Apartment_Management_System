@@ -22,7 +22,7 @@ export class ManagerGuard implements CanActivate {
             return true;
         }
         this.tokenService.signOut()
-        this.router.navigate([''], {
+        this.router.navigate(['/login'], {
             queryParams: {
                 loginAgain: true
             }
