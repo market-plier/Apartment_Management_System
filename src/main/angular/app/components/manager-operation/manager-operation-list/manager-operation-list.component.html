@@ -33,15 +33,15 @@
             </form>
         </div>
 
-
-    <div class="col-md-9">
+    <h1 [hidden]="dataSource.data.length">No data, please enter date or communal utility</h1>
+    <div class="col-md-9" [hidden]="!dataSource.data.length">
 
 
 
 
 
         <div class="mat-elevation-z8" >
-            <table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length">
+            <table mat-table [dataSource]="dataSource" >
 
                 <!-- Position Column -->
                 <ng-container matColumnDef="position">
@@ -53,8 +53,8 @@
                 <ng-container matColumnDef="description">
                     <th mat-header-cell *matHeaderCellDef> Description </th>
                     <ng-container *matCellDef="let element">
-                    <td mat-cell *ngIf="!isHidden(element.operationId)"> {{element.description}} </td>
-                    <td mat-cell *ngIf="isHidden(element.operationId)"> <input formControlName="description" value="Enter Description" placeholder="{{element.description}}"></td>
+                    <td mat-cell [hidden]="isHidden(element.operationId)"> {{element.description}} </td>
+                    <td mat-cell [hidden]="!isHidden(element.operationId)"> <input formControlName="description" value="Enter Description" placeholder="{{element.description}}"></td>
                     </ng-container>
                 </ng-container>
 
@@ -62,8 +62,8 @@
                 <ng-container  matColumnDef="sum">
                     <th mat-header-cell *matHeaderCellDef> Sum</th>
                     <ng-container *matCellDef="let element">
-                    <td mat-cell *ngIf="!isHidden(element.operationId)"> {{element.sum}} </td>
-                    <td mat-cell *ngIf="isHidden(element.operationId)" > <input min="0" type="number" formControlName="sum" placeholder="Enter Sum"></td>
+                    <td mat-cell [hidden]="isHidden(element.operationId)"> {{element.sum}} </td>
+                    <td mat-cell [hidden]="!isHidden(element.operationId)" > <input min="0" type="number" formControlName="sum" placeholder="Enter Sum"></td>
                     </ng-container>
                 </ng-container>
 
@@ -85,9 +85,9 @@
                     <th mat-header-cell *matHeaderCellDef> Operation </th>
                     <ng-container *matCellDef="let element">
                     <td mat-cell>
-                        <button *ngIf="!isHidden(element.operationId)" (click)="update(element.operationId)" mat-button><i class="fas fa-edit"></i></button>
-                        <button [disabled]="form.invalid" *ngIf="isHidden(element.operationId)" (click)="onSubmit()" type = "submit" mat-button>Send</button>
-                        <button *ngIf="isHidden(element.operationId)" (click)="cancel()" mat-button>🗙</button>
+                        <button [hidden]="isHidden(element.operationId)" (click)="update(element.operationId)" mat-button><i class="fas fa-edit"></i></button>
+                        <button [disabled]="form.invalid" [hidden]="!isHidden(element.operationId)" (click)="onSubmit()" type = "submit" mat-button>Send</button>
+                        <button [hidden]="!isHidden(element.operationId)" (click)="cancel()" mat-button>🗙</button>
                     </td>
                     </ng-container>
                 </ng-container>
@@ -98,7 +98,9 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             </table>
-            <mat-paginator  *ngIf="paginateHide()" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            <div [hidden] = " !paginateHide() " >
+            <mat-paginator  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
         </div>
     </div>
     </div>

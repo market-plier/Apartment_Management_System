@@ -1,10 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport
+    <mat-sidenav  #drawer class="sidenav" fixedInViewport
                  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                  [mode]="(isHandset$ | async) ? 'push' : 'side'"
                  [opened]="false">
-        <div *ngIf="getIsLoggedIn() ">
-            <mat-toolbar>
+        <div >
+            <mat-toolbar *ngIf="getIsLoggedIn()">
                 <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
             </mat-toolbar>
             <mat-nav-list>
@@ -15,7 +15,7 @@
                    routerLink="/apartment-request-to-manager">Request</a>
                 <a mat-list-item class="hover-link" routerLink="/reports">Reports</a>
                 <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartments">Apartments</a>
-                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/spending">Spending</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/manager-operation">Spending</a>
             </mat-nav-list>
         </div>
     </mat-sidenav>
@@ -39,7 +39,7 @@
                 <button mat-menu-item>Edit</button>
             </mat-menu>
 
-            <button mat-raised-button (click)="logout()">LogOut</button>
+            <button mat-raised-button *ngIf="getIsLoggedIn()" (click)="logout()">LogOut</button>
         </mat-toolbar>
 
         <div class="site">

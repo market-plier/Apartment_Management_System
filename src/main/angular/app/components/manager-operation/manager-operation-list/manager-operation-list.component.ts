@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {ManagerOperation} from "../../../models/manager-operation";
 import {ManagerOperationService} from "../../../services/manager-operation.service";;
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -23,12 +23,18 @@ export class ManagerOperationListComponent implements OnInit {
   form: FormGroup;
   utility:FormGroup;
 
+
   communals: CommunalUtility[] = []
   pSub: Subscription
   constructor(private managerService: ManagerOperationService) {
   }
 
+
   ngOnInit(): void {
+
+
+    this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
+
     this.range = new FormGroup({
      start: new FormControl('',Validators.required),
       end: new FormControl('',Validators.required)
@@ -69,8 +75,7 @@ export class ManagerOperationListComponent implements OnInit {
     this.dateRangeEnd = dateRangeEnd;
     if (this.range.valid && this.utility.invalid) {
       this.oSub = this.managerService.getAllByDate(this.dateRangeStart.value, this.dateRangeEnd.value).subscribe(operations => {
-        this.operations = operations
-        this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
+        this.dataSource.data = operations;
         this.dataSource.paginator = this.paginator;
         console.log(this.dataSource)
       })
@@ -147,7 +152,7 @@ export class ManagerOperationListComponent implements OnInit {
 
   paginateHide()
   {
-    return this.operations.length>0
+    return this.dataSource.data.length>0
   }
 
 
