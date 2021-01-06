@@ -25,6 +25,7 @@ export class NavComponent {
 
     role?: string;
     isLoggedIn = false;
+    isOpen = false;
     username?: string;
 
     ngOnInit(): void {
@@ -46,6 +47,7 @@ export class NavComponent {
     logout(): void {
         this.tokenStorageService.signOut();
         this.isLoggedIn=false;
+        this.isOpen=false;
         this.redirectPage();
     }
 

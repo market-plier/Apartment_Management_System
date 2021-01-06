@@ -46,6 +46,14 @@
 .page-footer {
     background: #191923;
     color: #EBEBEB;
-    width: 100%;
-    position: absolute;
+}
+
+.site{
+    display: flex;
+    flex-direction: column;
+    min-height: 94vh;
+}
+
+.content{
+    flex: 1;
 }
