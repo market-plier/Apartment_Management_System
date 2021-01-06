@@ -28,7 +28,6 @@ import {AnnouncementsShowComponent} from "./components/announcements/announcemen
 import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
 
 import {LoginComponent} from './components/login/login.component';
-
 import {authInterceptorProviders} from './helpers/auth.interceptor';
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -39,6 +38,21 @@ import {ManagerOperationUpdateComponent } from './components/manager-operation/m
 import {AuthGuard} from "./services/guard/auth.guard";
 import {OwnerGuard} from "./services/guard/owner.guard";
 import {ManagerGuard} from "./services/guard/manager.guard";
+import {ApartmentsComponent} from "./components/apartments/apartments-list/apartments.component";
+import {ApartmentRegistrationComponent} from "./components/apartments/apartment-registration/apartment-registration/apartment-registration.component";
+import {ManagerApartmentInfoEditComponent} from "./components/apartments/manager-apartment-info-edit/manager-apartment-info-edit.component";
+import {NavComponent} from "./components/nav/nav.component";
+import {HomeComponent} from "./components/home/home.component";
+import {NotFoundComponent} from "./components/not-found/not-found.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {LayoutModule} from "@angular/cdk/layout";
+import {TextMaskModule} from "angular2-text-mask";
+
 
 @NgModule({
     declarations: [
@@ -51,6 +65,12 @@ import {ManagerGuard} from "./services/guard/manager.guard";
         ManagerOperationListComponent,
         ManagerOperationCreateComponent,
         ManagerOperationUpdateComponent,
+        ApartmentsComponent,
+        ApartmentRegistrationComponent,
+        ManagerApartmentInfoEditComponent,
+        NavComponent,
+        HomeComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,
@@ -84,7 +104,15 @@ import {ManagerGuard} from "./services/guard/manager.guard";
         MatTableModule,
         MatPaginatorModule,
         MatIconModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatStepperModule,
+        TextMaskModule,
+        LayoutModule,
+        MatGridListModule,
+        MatMenuModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard],

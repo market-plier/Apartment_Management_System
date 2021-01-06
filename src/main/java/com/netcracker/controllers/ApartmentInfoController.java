@@ -34,34 +34,34 @@ public class ApartmentInfoController {
 
     @PostMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity<Apartment> createApartment(@Valid @RequestBody Apartment apartment)
+    public Apartment createApartment(@Valid @RequestBody Apartment apartment)
             throws DaoAccessException, ValidationException {
         if (apartment.getPassword() == null || apartment.getPassword().length() > 3900 || apartment.getPassword().length() < 8) {
             throw new ValidationException("Password length is not correct");
         }
         Apartment apart = apartmentInfoService.createApartment(apartment);
 
-        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.CREATED);
+        return getApartmentDTO(apart);
     }
 
     @PutMapping("/updatePassword")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public ResponseEntity<Apartment> updateApartmentPassword(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
+    public Apartment updateApartmentPassword(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
             throws DaoAccessException, ValidationException {
 
         if (apartment.getPassword() == null || apartment.getPassword().length() > 3900 || apartment.getPassword().length() < 8) {
             throw new ValidationException("Password length is not correct");
         }
         Apartment apart = apartmentInfoService.updateApartmentPassword(account, apartment);
-        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.ACCEPTED);
+        return getApartmentDTO(apart);
     }
 
     @PutMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public ResponseEntity<Apartment> updateApartment(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
+    public Apartment updateApartment(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
             throws DaoAccessException, IllegalArgumentException {
         Role role = null;
-
+        System.out.println("АПДЕЙТИМ");
         if (account.getAuthorities().toString().equals("[ROLE_OWNER]")) {
             role = Role.OWNER;
         }
@@ -74,35 +74,35 @@ public class ApartmentInfoController {
                 .withRole(role)
                 .build();
         Apartment apart = apartmentInfoService.updateApartment(apartment, updater);
-        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.ACCEPTED);
+        return getApartmentDTO(apart);
     }
 
     @GetMapping("{number}")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public ResponseEntity<Apartment> getApartment(@PathVariable @NotNull Integer number) throws DaoAccessException {
+    public Apartment getApartment(@PathVariable @NotNull Integer number) throws DaoAccessException {
         Apartment apart = apartmentInfoService.getApartmentByApartmentNumber(number);
-        return new ResponseEntity<>(getApartmentDTO(apart), HttpStatus.FOUND);
+        return  getApartmentDTO(apart);
     }
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity<List<Apartment>> getAllApartments() throws DaoAccessException {
+    public List<Apartment> getAllApartments() throws DaoAccessException {
         List<Apartment> apartments = new ArrayList<>();
         for (Apartment a : apartmentInfoService.getAllApartments()) {
             apartments.add(getApartmentDTO(a));
         }
-        return new ResponseEntity<>(apartments, HttpStatus.FOUND);
+        return apartments;
     }
 
     @GetMapping("apartments-on-floor")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    public ResponseEntity<List<Apartment>> getAllApartmentsByFloor(@RequestParam @NotNull List<Integer> floor) throws DaoAccessException {
+    public List<Apartment> getAllApartmentsByFloor(@RequestParam @NotNull List<Integer> floor) throws DaoAccessException {
 
         List<Apartment> apartments = new ArrayList<>();
         for (Apartment a : apartmentInfoService.getAllApartmentsByFloor(floor)) {
             apartments.add(getApartmentDTO(a));
         }
-        return new ResponseEntity<>(apartments, HttpStatus.FOUND);
+        return apartments;
     }
 
 

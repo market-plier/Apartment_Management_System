@@ -1,0 +1,51 @@
+.sidenav-container {
+    height: 100%;
+    background-color: #FFFAFF;
+}
+
+.mat-icon-account {
+    height: 24px;
+    width: 24px;
+    font-size: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+}
+
+.sidenav {
+    width: 200px;
+    background: #EBEBEB;
+}
+
+.navbar-text {
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    z-index: 10;
+}
+
+.sidenav .mat-toolbar {
+    background: inherit;
+}
+
+.hover-link:hover {
+    background-color: lightcoral; /* Цвет ссылки при наведении на нее курсора мыши */
+}
+
+.hover-link:active {
+    background-color: lightcoral !important; /* Цвет ссылки при наведении на нее курсора мыши */
+}
+
+.mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #7A28CB;
+}
+
+.page-footer {
+    background: #191923;
+    color: #EBEBEB;
+    width: 100%;
+    position: absolute;
+}

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ValidationException;
 import javax.validation.constraints.Null;
-import javax.xml.bind.ValidationException;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 
 @ControllerAdvice(basePackageClasses = {ApartmentInfoController.class})
-public class ApartmentInfoExceptionHandler  extends ResponseEntityExceptionHandler {
+public class ApartmentInfoExceptionHandler  extends GlobalExceptionHandler {
 
 
     @ExceptionHandler(value = {ObjectNotUniqueException.class})
@@ -42,6 +42,17 @@ public class ApartmentInfoExceptionHandler  extends ResponseEntityExceptionHandl
         return ResponseEntityBuilder.build(message);
     }
 
+    @ExceptionHandler(value = {ValidationException.class})
+    public ResponseEntity<Object> handleUniqueRegistrationDataException(ValidationException e, WebRequest request) {
+
+        List<String> details = Collections.singletonList(e.getMessage());
+
+        ApiError message = new ApiError(LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST,
+                "ARGUMENTS CONFLICT", details,BigInteger.valueOf(71));
+
+        return ResponseEntityBuilder.build(message);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -60,41 +71,5 @@ public class ApartmentInfoExceptionHandler  extends ResponseEntityExceptionHandl
         return ResponseEntityBuilder.build(message);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ApiError err = new ApiError(LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST,
-                "Wrong format Apartment`s data",
-                Collections.singletonList("Validation Errors"),
-                BigInteger.valueOf(75));
-        if (ex.getMessage().contains("apartmentNumber")) {
-            err.setMessage("Apartment`s number is wrong type");
-        }
-        if (ex.getMessage().contains("floor")) {
-            err.setMessage("Apartment`s floor is wrong type");
-        }
-        if (ex.getMessage().contains("peopleCount")) {
-            err.setMessage("Apartment`s peopleCount is wrong type");
-        }
-        if (ex.getMessage().contains("squareMetres")) {
-            err.setMessage("Apartment`s squareMetres is wrong type");
-        }
-        if (ex.getMessage().contains("role")) {
-            err.setMessage("Role is wrong type, should be empty or OWNER");
-        }
-        if (ex.getMessage().contains("accountId")) {
-            err.setMessage("AccountId is wrong type, should be null");
-        }
-        if (ex.getMessage().contains("firstName")) {
-            err.setMessage("First name is wrong type, there must be letters");
-        }
-        if (ex.getMessage().contains("lastName")) {
-            err.setMessage("Last Name is wrong type, there must be letters");
-        }
-        if (ex.getMessage().contains("email")) {
-            err.setMessage("Email is wrong type, there must be valid email");
-        }
-        return ResponseEntityBuilder.build(err);
-    }
+
 }
