@@ -48,6 +48,7 @@ export class NavComponent {
         this.tokenStorageService.signOut();
         this.isLoggedIn=false;
         this.isOpen=false;
+        window.location.reload();
         this.redirectPage();
     }
 
