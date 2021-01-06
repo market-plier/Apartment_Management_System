@@ -6,6 +6,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {ManagerSubBill} from "../../../models/manager-sub-bill";
+import {CommunalUtility} from "../../../models/communal-utility";
 
 
 @Component({
@@ -20,7 +21,9 @@ export class ManagerOperationListComponent implements OnInit {
   hidden: boolean = false;
   id:number;
   form: FormGroup;
-  subBills: ManagerSubBill[] = []
+  utility:FormGroup;
+
+  communals: CommunalUtility[] = []
   pSub: Subscription
   constructor(private managerService: ManagerOperationService) {
   }
@@ -37,8 +40,14 @@ export class ManagerOperationListComponent implements OnInit {
       operationId: new FormControl('')
     })
 
-    this.pSub = this.managerService.getAllManagerSubBill().subscribe(subBills => {
-      this.subBills = subBills
+    this.utility = new FormGroup({
+      communalUtilityId: new FormControl('',[Validators.required])
+    })
+
+
+
+    this.pSub = this.managerService.getAllCommunalUtility().subscribe(communal => {
+      this.communals = communal
     })
 
     }
@@ -58,13 +67,16 @@ export class ManagerOperationListComponent implements OnInit {
   dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
     this.dateRangeStart = dateRangeStart;
     this.dateRangeEnd = dateRangeEnd;
-    if (!this.range.invalid) {
+    if (this.range.valid && this.utility.invalid) {
       this.oSub = this.managerService.getAllByDate(this.dateRangeStart.value, this.dateRangeEnd.value).subscribe(operations => {
         this.operations = operations
         this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
         this.dataSource.paginator = this.paginator;
+        console.log(this.dataSource)
       })
     }
+
+    this.filterManagerOperation()
   }
 
 
@@ -99,12 +111,43 @@ export class ManagerOperationListComponent implements OnInit {
     this.form.controls['operationId'].setValue(this.id);
     this.managerService.updateSpending(this.form.value)
     this.cancel()
-    this.dateRangeChange(this.dateRangeStart, this.dateRangeEnd);
+    if (this.utility.invalid && this.range.valid)
+    {
+      this.dateRangeChange(this.dateRangeStart, this.dateRangeEnd);
+    }
+
+    this.filterManagerOperation()
   }
 
   filterManagerOperation()
   {
 
+    if (this.range.invalid && this.utility.valid)
+    {
+      this.oSub = this.managerService.filterByCommunalUtility(this.utility.value).subscribe(operations => {
+        console.log(operations)
+        this.operations = operations
+        this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
+        this.dataSource.paginator = this.paginator;
+      })
+    }
+    if (this.range.valid && this.utility.valid) {
+      console.log(this.utility.value)
+      console.log(this.range.value)
+
+      this.oSub = this.managerService.filterByDateAndCommunalUtility(this.utility.value, this.dateRangeStart.value, this.dateRangeEnd.value).subscribe(operations => {
+        console.log(operations)
+        this.operations = operations
+        this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
+        this.dataSource.paginator = this.paginator;
+      })
+    }
+  }
+
+
+  paginateHide()
+  {
+    return this.operations.length>0
   }
 
 

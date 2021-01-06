@@ -26,6 +26,12 @@ public class CommunalUtilityController {
         return communalUtilityService.getAllCommunalUtilities(status);
     }
 
+    @GetMapping(value = "/comm-util")
+    public List<CommunalUtility> getAllCommunalUtilitiesWithOutCalcMeth()
+            throws DaoAccessException {
+        return communalUtilityService.getAllCommunalUtilitiesWithOutCalcMethod();
+    }
+
     @GetMapping("/{id}")
     public CommunalUtility getCommunalUtilityById(@PathVariable BigInteger id)
             throws DaoAccessException {

@@ -46,7 +46,7 @@ public class AuthenticationService {
             throw new UsernameNotFoundException("Invalid password or login");
         }
 
-        String token = jwtTokenProvider.createToken(email,account.getRole());
+        String token = jwtTokenProvider.createToken(email,account.getRole(), account.getAccountId());
 
         Map<Object, Object> response = new HashMap<>();
         response.put("username", account.getEmail());

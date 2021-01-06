@@ -58,6 +58,17 @@ public class CommunalUtilityService {
         }
     }
 
+    public List<CommunalUtility> getAllCommunalUtilitiesWithOutCalcMethod() throws DaoAccessException {
+        try {
+
+            return communalUtilityDao.getAllCommunalUtilities();
+
+        } catch (DaoAccessException e) {
+            log.error("CommunalUtilityService method getAllCommunalUtilities(): " + e.getMessage(), e);
+            throw e;
+        }
+    }
+
     public List<CommunalUtility> getAllCommunalUtilities() throws DaoAccessException, NullPointerException {
         return getAllCommunalUtilities(null);
     }

@@ -3,6 +3,7 @@ package com.netcracker.controllers.request.manager_spending;
 import lombok.Data;
 
 import javax.validation.constraints.*;
+import java.math.BigInteger;
 
 @Data
 public class ManagerOperationUpdateRequest {
@@ -13,7 +14,7 @@ public class ManagerOperationUpdateRequest {
 
     @NotNull(message = "Id cant be null")
     @Positive(message = "Id must be positive value")
-    private String managerOperationId;
+    private BigInteger operationId;
 
     @NotNull(message = "description cant be null")
     @NotBlank(message = "description cant be blank")

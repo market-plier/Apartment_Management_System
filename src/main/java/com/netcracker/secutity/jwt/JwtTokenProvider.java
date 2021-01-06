@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,10 +50,11 @@ public class JwtTokenProvider {
     }
 
 
-    public String createToken(String email, Role role)
+    public String createToken(String email, Role role, BigInteger accountId)
     {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role.getRoleName());
+        claims.put("accountId",accountId);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityTime);
 

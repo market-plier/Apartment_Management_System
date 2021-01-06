@@ -14,7 +14,7 @@ import {ManagerGuard} from "./services/guard/manager.guard";
 
 const routes: Routes = [
     {path: '', component: LoginComponent },
-    {path: 'manager-operation', component: ManagerOperationListComponent, canActivate:[AuthGuard]},
+    {path: 'manager-operation', component: ManagerOperationListComponent, canActivate:[AuthGuard, ManagerGuard]},
     {path: 'manager-operation/create', component: ManagerOperationCreateComponent, canActivate:[AuthGuard]},
     {path: 'announcements', component: AnnouncementsListComponent, canActivate:[AuthGuard]},
     {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate:[AuthGuard, ManagerGuard]},

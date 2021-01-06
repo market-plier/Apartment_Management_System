@@ -47,9 +47,7 @@ export class AuthService {
        return  this.http.post<Account>(USER_API,httpOptions);
     }
 
-
-
-
+    
 
     private handleError(error: HttpErrorResponse)
     {

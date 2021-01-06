@@ -102,6 +102,8 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
 
     }
 
+
+
     @Override
     public List<ManagerSpendingOperation> getAllManagerOperationByDate(Date start, Date end) {
         try {
@@ -137,6 +139,26 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
             throw accessException;
         }
 
+    }
+
+    @Override
+    public List<ManagerSpendingOperation> getAllManagerOperationSpendingSortedByCommunalNameList(Set<BigInteger> communalNameId) {
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("communalId", communalNameId);
+        try {
+            return namedParameterJdbcTemplate.query(GET_MANAGER_OPERATION_BY_COMMUNAL_NAME_LIST, parameters,
+                    new ManagerSpendingOperationMapper());
+        } catch (DataAccessException e) {
+
+            DaoAccessException accessException =  new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_MANAGER_SPENDING_OPERATION)
+                    .withMessage(EXCEPTION_GET_MANAGER_OPERATIONS_BY_LIST_COMM_NAME_AND_DATE)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("IN getAllManagerOperationSpendingSortedByCommunalNameList " + accessException.getMessage(), e);
+            throw accessException;
+        }
     }
 
     @Override

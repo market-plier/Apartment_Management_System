@@ -16,7 +16,7 @@ export class ManagerOperationCreateComponent implements OnInit {
   pSub: Subscription
   form: FormGroup;
 
-  constructor(private managerService: ManagerOperationService) { }
+  constructor(public managerService: ManagerOperationService) { }
 
   ngOnInit(): void {
 

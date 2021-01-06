@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 
 public interface DateUtil {
 
-    String ISO_DATE_FORMAT_ZERO_OFFSET = "yyyy-MM-dd";
+    String ISO_DATE_FORMAT_ZERO_OFFSET = "MM/dd/yyyy";
 
 
     static Date provideDateFormat(String date) throws ParseException {

@@ -21,12 +21,35 @@ export class TokenStorageService {
     }
 
     public getToken(): string | null {
+
         if (this.jwtHelper.isTokenExpired(window.sessionStorage.getItem(TOKEN_KEY))) {
             this.signOut()
             return null;
         }
         return window.sessionStorage.getItem(TOKEN_KEY);
     }
+
+
+    public getRole(): string | null {
+        if (window.sessionStorage.getItem(TOKEN_KEY)) {
+            return this.jwtHelper.decodeToken(window.sessionStorage.getItem(TOKEN_KEY)).role;
+        }
+        return null;
+    }
+
+    public getEmail(): string | null {
+        if (window.sessionStorage.getItem(TOKEN_KEY)) {
+            return this.jwtHelper.decodeToken(window.sessionStorage.getItem(TOKEN_KEY)).sub;
+        }
+    }
+
+    public getAccountId(): string | null {
+        if (window.sessionStorage.getItem(TOKEN_KEY)) {
+            return this.jwtHelper.decodeToken(window.sessionStorage.getItem(TOKEN_KEY)).accountId;
+        }
+        return null;
+    }
+
 
     public saveUser(user: any): void {
         window.sessionStorage.removeItem(USER_KEY);
@@ -42,7 +65,6 @@ export class TokenStorageService {
         return {};
     }
     isAuthenticated(): boolean {
-        console.log(!!this.getToken());
         return !!this.getToken()
     }
 }

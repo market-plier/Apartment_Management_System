@@ -11,17 +11,17 @@ import com.netcracker.services.ManagerOperationSpendingService;
 import com.netcracker.util.DateUtil;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -37,8 +37,9 @@ public class ManagerSpendingOperationController {
         }
 
         @RequestMapping(method = RequestMethod.POST)
-        public void createManagerOperationSpending(@RequestBody @Valid ManagerOperationCreateRequest managerSpendingOperation) throws DaoAccessException
+        public ResponseEntity createManagerOperationSpending(@RequestBody @Valid ManagerOperationCreateRequest managerSpendingOperation) throws DaoAccessException
         {
+
             managerOperationSpendingService.createManagerOperationSpending(new ManagerSpendingOperationBuilder()
                     .withManagerSubBill(new ManagerSubBillBuilder()
                             .withSubBillId(managerSpendingOperation.getSubBillId())
@@ -46,16 +47,18 @@ public class ManagerSpendingOperationController {
                     .withDescription(managerSpendingOperation.getDescription())
                     .withSum(managerSpendingOperation.getSum())
                     .build());
+            return ResponseEntity.ok("OK");
         }
 
         @RequestMapping(method = RequestMethod.PUT)
-        public void updateManagerOperationSpending(@RequestBody @Valid ManagerOperationUpdateRequest managerSpendingOperation) throws DaoAccessException
+        public ResponseEntity updateManagerOperationSpending(@RequestBody @Valid ManagerOperationUpdateRequest managerSpendingOperation) throws DaoAccessException
         {
             managerOperationSpendingService.updateManagerOperation(new ManagerSpendingOperationBuilder()
                     .withSum(managerSpendingOperation.getSum())
                     .withDescription(managerSpendingOperation.getDescription())
-                    .withOperationId(new BigInteger(managerSpendingOperation.getManagerOperationId()))
+                    .withOperationId(managerSpendingOperation.getOperationId())
                     .build());
+            return ResponseEntity.ok("OK");
         }
 
         @RequestMapping(value = "/get-by-date/",method = RequestMethod.GET)
@@ -80,4 +83,35 @@ public class ManagerSpendingOperationController {
         {
             return managerOperationSpendingService.getManagerSpendingOperation(operationId);
         }
+
+
+    @RequestMapping(value = "/get-by-date-comm-util/",method = RequestMethod.GET)
+    public List<ManagerSpendingOperation> getAllManagerOperationSpendingByDateAndCommunalUtility(@RequestParam
+                                                                                                 @NotNull(message = "start date cant be null")
+                                                                                                 @NotEmpty(message = "start date cant be empty") String start,
+                                                                                                 @RequestParam
+                                                                                                 @NotNull(message = "end date cant be null")
+                                                                                                 @NotEmpty(message = "end date cant be empty") String end,
+                                                                                                 @RequestParam(name = "communalUtilityId")
+                                                                                                 @NotNull(message = "Communal Utility date cant be null")
+                                                                                                 Set<@Min(value = 0, message = "must be positive value")
+                                                                                                 @Digits(integer = 10, fraction = 0,message = "Id must be integer value")String> communalUtility) throws ParseException, DaoAccessException {
+
+        return managerOperationSpendingService.getAllManagerOperationByDateAndCommunalUtility(DateUtil.provideDateFormat(start),
+                DateUtil.provideDateFormat(end),communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()));
+
+    }
+
+    @RequestMapping(value = "/get-by-comm-util/",method = RequestMethod.GET)
+    public List<ManagerSpendingOperation> getAllManagerOperationSpendingByCommunalUtility(@RequestParam(name = "communalUtilityId")
+                                                                                          @NotNull(message = "Communal Utility date cant be null")
+                                                                                          Set<@Min(value = 0, message = "must be positive value")
+                                                                                          @Digits(integer = 10, fraction = 0,message = "Id must be integer value")String> communalUtility) throws DaoAccessException {
+
+        return managerOperationSpendingService
+                .getAllManagerOperationByCommunalUtility(communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()));
+    }
+
+
+
 }

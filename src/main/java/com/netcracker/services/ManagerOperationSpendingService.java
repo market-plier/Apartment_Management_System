@@ -49,18 +49,24 @@ public class ManagerOperationSpendingService {
 
     }
 
+    public List<ManagerSpendingOperation> getAllManagerOperationByCommunalUtility(Set<BigInteger> communalUtility)
+            throws DaoAccessException {
+        return managerSpendingOperationDao.getAllManagerOperationSpendingSortedByCommunalNameList(communalUtility);
 
-    public List<ManagerSpendingOperation> getAllManagerOperationByDate(Date start, Date end) throws DaoAccessException, NullPointerException {
+    }
+
+
+    public List<ManagerSpendingOperation> getAllManagerOperationByDate(Date start, Date end) throws DaoAccessException {
        return managerSpendingOperationDao.getAllManagerOperationByDate(start, end);
 
     }
 
-    public ManagerSpendingOperation getManagerSpendingOperation(BigInteger id) throws DaoAccessException, NullPointerException {
+    public ManagerSpendingOperation getManagerSpendingOperation(BigInteger id) throws DaoAccessException {
 
         return managerSpendingOperationDao.getManagerOperationSpendingById(id);
     }
 
-    public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException, NullPointerException {
+    public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException{
         managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);
 
     }

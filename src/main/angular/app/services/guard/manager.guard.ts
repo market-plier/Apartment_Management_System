@@ -13,21 +13,20 @@ export class ManagerGuard implements CanActivate {
     constructor(
         private tokenService: TokenStorageService,
         private router: Router,
-        private authService: AuthService
 
     ){}
 
-    canActivate(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<boolean>|boolean {
-        return this.authService.getAccount().pipe(map((auth) => {
-            if (auth.role == "ROLE_MANAGER")  {
-                console.log(auth);
-                return true;
+    canActivate(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        if (this.tokenService.getRole() == 'MANAGER')
+        {
+            return true;
+        }
+        this.tokenService.signOut()
+        this.router.navigate([''], {
+            queryParams: {
+                loginAgain: true
             }
-            console.log('not authenticated');
-            this.tokenService.signOut();
-            this.router.navigateByUrl('');
-            return false;
-        }));
+        });
     }
 
 }

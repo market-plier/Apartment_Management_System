@@ -1,6 +1,12 @@
+<div class="container p-5">
 
-<div  fxLayoutAlign = "center center" fxFlexFill>
-    <mat-card fxFlex="60">
+<div class="alert alert-info" *ngIf="managerService.error$ | async as error">
+    {{error}}
+</div>
+
+
+<div  fxLayoutAlign = "center">
+    <mat-card fxFlex="40">
         <form fxLayoutAlign="center" fxLayout="column" [formGroup]="form"  (ngSubmit) = "onClickSubmit()">
                 <mat-form-field>
                     <mat-label>Enter Description</mat-label>
@@ -39,4 +45,5 @@
                 </button>
         </form>
     </mat-card>
+</div>
 </div>
