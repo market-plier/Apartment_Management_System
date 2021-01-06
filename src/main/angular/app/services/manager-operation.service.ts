@@ -23,6 +23,7 @@ export class ManagerOperationService {
 
 
     public error$: Subject<string> = new Subject<string>()
+    public success$: Subject<string> = new Subject<string>()
 
   getAllByDate(startDate: String, endDate: String): Observable<ManagerOperation[]> {
 
@@ -54,10 +55,7 @@ export class ManagerOperationService {
   {
       console.log(managerSpending);
       this.http.post<ManagerOperation>(this.urlCreateManagerOperation, managerSpending).pipe(
-          catchError(this.handleErrorBalance.bind(this))
-      ).subscribe(
-          (res) => console.log(res),
-          (err) => console.log(err)
+          catchError(this.handleErrorBalance.bind(this)),
       );
   }
 
@@ -67,20 +65,24 @@ export class ManagerOperationService {
      return this.http.put<ManagerOperation>(this.urlUpdateManagerOperation,managerOperation).pipe(
           catchError(this.handleErrorBalance.bind(this))
       ).subscribe(
-          (res) => console.log(res),
+
+          (res) => {
+              console.log(res)
+          },
           (err) => console.log(err)
       )
   }
 
-    private handleError(error: HttpErrorResponse)
-    {
-        if (error.error.status == 'BAD_REQUEST')
-        {
-            this.error$.next('Wrong password or email!')
-        }
 
-        return throwError(error)
-    }
+  handleSuccess(result)
+  {
+      console.log(result)
+      if (result.statusCode == 200)
+      {
+          this.success$.next("Manager spending was added")
+      }
+  }
+
 
 
     private handleErrorBalance(error: HttpErrorResponse)

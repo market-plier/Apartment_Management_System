@@ -29,7 +29,7 @@ export class NavComponent {
     username?: string;
 
     ngOnInit(): void {
-        this.isLoggedIn = !!this.tokenStorageService.getToken();
+        this.isLoggedIn = this.tokenStorageService.isAuthenticated();
 
         if (this.isLoggedIn) {
             const user = this.tokenStorageService.getUser();
@@ -41,6 +41,10 @@ export class NavComponent {
 
     getIsLoggedIn() {
         this.ngOnInit();
+        if (!this.isLoggedIn && this.router.url !== '/login') {
+            this.tokenStorageService.signOut()
+            this.router.navigate(['/login']);
+        }
         return this.isLoggedIn;
     }
 

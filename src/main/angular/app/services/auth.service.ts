@@ -27,9 +27,6 @@ export class AuthService {
 
 
     public error$: Subject<string> = new Subject<string>()
-    private account;
-    pSub: Subscription;
-
 
     login(email: string, password: string): Observable<any> {
 
@@ -42,12 +39,9 @@ export class AuthService {
             );
     }
 
-
    getAccount() : Observable<Account>{
        return  this.http.post<Account>(USER_API,httpOptions);
     }
-
-    
 
     private handleError(error: HttpErrorResponse)
     {
