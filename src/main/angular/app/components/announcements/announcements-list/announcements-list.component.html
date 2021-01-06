@@ -3,7 +3,7 @@
         <section class="row p-2">
             <h1>Announcement List</h1>
             <button mat-icon-button routerLink="create" color="primary"
-                    *ngIf="getUser().role == 'MANAGER'">
+                    *ngIf="getRole() == 'MANAGER'">
                 <mat-icon>add</mat-icon>
             </button>
         </section>
@@ -26,7 +26,7 @@
         <div *ngIf="currentAnnouncement">
             <mat-card-header>
                 <mat-card-title>{{ currentAnnouncement.title }}</mat-card-title>
-                <mat-card-subtitle>Created at {{ currentAnnouncement.createdAt }}</mat-card-subtitle>
+                <mat-card-subtitle>Created at {{ currentAnnouncement.createdAt | date:'yyyy-MM-dd, HH:mm ' }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <p>
@@ -36,11 +36,10 @@
             <mat-card-actions class="p-2">
                 <button mat-stroked-button routerLink="{{currentAnnouncement.announcementId}}">Show Full</button>
                 <button mat-stroked-button color="warn"
-                        *ngIf="getUser().role == 'MANAGER'"
+                        *ngIf="getRole() == 'MANAGER'"
                         (click)="deleteAnnouncement(currentAnnouncement.announcementId)">Delete</button>
             </mat-card-actions>
         </div>
-
 
         <div *ngIf="!currentAnnouncement">
             <br/>

@@ -18,13 +18,17 @@ import {MatTableModule} from "@angular/material/table";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from "@angular/material/select";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
 import {AnnouncementsListComponent} from './components/announcements/announcements-list/announcements-list.component';
 import {AnnouncementsCreateComponent} from './components/announcements/announcements-create/announcements-create.component';
-import {AnnouncementsShowComponent} from "./components/announcements/announcements-show/announcements-show.component";
+import {
+    AnnouncementsShowComponent,
+    CommentEditDialog
+} from "./components/announcements/announcements-show/announcements-show.component";
 import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
 
 import {LoginComponent} from './components/login/login.component';
@@ -38,6 +42,7 @@ import {ManagerOperationUpdateComponent } from './components/manager-operation/m
 import {AuthGuard} from "./services/guard/auth.guard";
 import {OwnerGuard} from "./services/guard/owner.guard";
 import {ManagerGuard} from "./services/guard/manager.guard";
+import {MatDialogModule} from "@angular/material/dialog";
 import {ApartmentsComponent} from "./components/apartments/apartments-list/apartments.component";
 import {ApartmentRegistrationComponent} from "./components/apartments/apartment-registration/apartment-registration/apartment-registration.component";
 import {ManagerApartmentInfoEditComponent} from "./components/apartments/manager-apartment-info-edit/manager-apartment-info-edit.component";
@@ -61,6 +66,7 @@ import {TextMaskModule} from "angular2-text-mask";
         AnnouncementsShowComponent,
         AnnouncementsCreateComponent,
         AnnouncementsUpdateComponent,
+        CommentEditDialog,
         LoginComponent,
         ManagerOperationListComponent,
         ManagerOperationCreateComponent,
@@ -77,17 +83,11 @@ import {TextMaskModule} from "angular2-text-mask";
         AppRoutingModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
         MatCardModule,
         HttpClientModule,
         FormsModule,
-        HttpClientModule,
         BrowserAnimationsModule,
-        MatCardModule,
         MatButtonModule,
-        MatIconModule,
         MatListModule,
         MatDividerModule,
         MatFormFieldModule,
@@ -101,9 +101,10 @@ import {TextMaskModule} from "angular2-text-mask";
         ReactiveFormsModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatTableModule,
-        MatPaginatorModule,
         MatIconModule,
+        MatSelectModule,
+        MatButtonToggleModule,
+        MatDialogModule,
         MatSelectModule,
         MatSnackBarModule,
         MatToolbarModule,

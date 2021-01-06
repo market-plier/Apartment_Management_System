@@ -3,27 +3,26 @@
         <div *ngIf="announcement">
             <mat-card-header>
                 <mat-card-title>{{ announcement.title }}</mat-card-title>
-                <mat-card-subtitle>Created at {{ announcement.createdAt }}</mat-card-subtitle>
+                <mat-card-subtitle>Created at {{ announcement.createdAt | date:'yyyy-MM-dd, HH:mm ' }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <p>
                     {{ announcement.body }}
                 </p>
-                <mat-divider></mat-divider>
                 <div *ngIf="announcement.houseVoting" class="p-2">
-                    <mat-card *ngIf="announcement.houseVoting" class="p-2" style="background-color:#F7F7F7;">
+                    <mat-card *ngIf="announcement.houseVoting" class="p-2">
                         <mat-card-header class="mat-primary">
                             <h3>{{announcement.houseVoting.title}}</h3>
                         </mat-card-header>
                         <mat-card-content>
-                            <div *ngIf="getUser().role == 'MANAGER' || (getUser().role == 'OWNER' && currentVotingOption)">
+                            <div *ngIf="getRole() == 'MANAGER' || (getRole() == 'OWNER' && currentVotingOption)">
                                 <div *ngFor="let votingOption of announcement.houseVoting.votingOptions; let i = index">
                                     <p>{{votingOption.name}}: {{ votingOption.count}} votes</p>
                                     <mat-progress-bar class="col-md-6" mode="determinate" value="{{votingOption.percent}}"></mat-progress-bar>
                                 </div>
 
                             </div>
-                            <div *ngIf="getUser().role == 'OWNER' && !currentVotingOption">
+                            <div *ngIf="getRole() == 'OWNER' && !currentVotingOption">
                                 <mat-radio-group labelPosition="after">
                                     <mat-list>
                                         <mat-list-item *ngFor="let votingOption of announcement.houseVoting.votingOptions; let i = index">
@@ -39,9 +38,9 @@
                     </mat-card>
                 </div>
             </mat-card-content>
-            <mat-card-actions *ngIf="getUser().role == 'MANAGER'" class="p-2" align="end">
+            <mat-card-actions *ngIf="getRole() == 'MANAGER'" class="p-2" align="end">
                 <button mat-flat-button color="accent"
-                        routerLink="../{{announcement.announcementId}}/update">Edit</button>
+                        routerLink="update">Edit</button>
                 <button mat-stroked-button color="warn"
                         (click)="deleteAnnouncement(announcement.announcementId)">
                     Delete
@@ -49,28 +48,75 @@
             </mat-card-actions>
         </div>
     </mat-card>
+
     <mat-expansion-panel *ngIf="announcement.isOpened"
-                         (opened)="commentsOpenState = true"
-                         (closed)="commentsOpenState = false"
+                         (opened)="commentsListOpen = true"
+                         (closed)="commentsListOpen = false"
                         class="mt-3">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Comments
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <div *ngFor="let comment of announcement.comments; let i = index">
-            <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>Apt. {{ comment.apartment?.apartmentNumber  }}: {{comment.apartment?.firstName}} {{comment.apartment?.lastName}}</mat-card-title>
-                        <mat-card-subtitle>Created at {{ comment.createdAt }}</mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p>
-                            {{ comment.body }}
-                        </p>
-                    </mat-card-content>
-            </mat-card>
+
+        <button mat-icon-button (click)="commentsCreationOpen = !commentsCreationOpen"
+                color="primary"
+                *ngIf="getRole() == 'OWNER'">
+            <mat-icon>add</mat-icon> Add comment
+        </button>
+
+        <div *ngIf="commentsCreationOpen">
+            <form fxLayoutAlign="center start" fxLayout="column" class="p-2"
+                  [formGroup]="form"
+                  (ngSubmit)="saveComment()">
+
+                <mat-form-field class="col-md-6">
+                    <mat-label>Body</mat-label>
+                    <textarea matInput
+                              formControlName="body"
+                              rows="4"
+                              [(ngModel)]="comment.body">
+                    </textarea>
+                </mat-form-field>
+
+                <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">
+                    <small *ngIf="form.get('body').errors.minlength">Body length must not be empty</small>
+                    <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1000</small>
+                </mat-error>
+                <button [disabled]="form.invalid"  mat-flat-button color="primary" type="submit">Submit</button>
+            </form>
             <mat-divider></mat-divider>
+        </div>
+
+
+        <div *ngFor="let comment of announcement.comments; let i = index">
+            <div class="p-2">
+                <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-card-title>Apt. {{ comment.apartment?.apartmentNumber  }}: {{comment.apartment?.firstName}} {{comment.apartment?.lastName}}</mat-card-title>
+                    <mat-card-subtitle>Created at {{ comment.createdAt | date:'yyyy-MM-dd, HH:mm '  }}</mat-card-subtitle>
+
+                    <div  fxLayout="row" fxLayoutAlign="end start"
+                          *ngIf="getRole() == 'OWNER' && getAccountId() == comment.apartment.accountId">
+                        <button mat-icon-button (click)="openDialog(comment)"
+                                color="accent"
+                        >
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="error" (click)="deleteComment(comment.commentId)">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </div>
+
+
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{ comment.body }}
+                    </p>
+                </mat-card-content>
+                <mat-divider></mat-divider>
+            </div>
+
         </div>
     </mat-expansion-panel>
 </div>

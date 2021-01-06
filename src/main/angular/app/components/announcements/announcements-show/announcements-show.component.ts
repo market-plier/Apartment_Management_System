@@ -1,10 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {VotingOptionService} from "../../../services/voting-option.service";
 import {VotingOption} from "../../../models/voting-option";
+import {Comment} from "../../../models/comment";
+import {CommentService} from "../../../services/comment.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-announcements-show',
@@ -18,25 +22,45 @@ export class AnnouncementsShowComponent implements OnInit {
         isOpened: false,
         comments: []
     };
-    commentsOpenState = false;
+
     selectedVotingOptionId?:number;
     currentVotingOption?:VotingOption;
 
-    constructor(
-        private announcementService: AnnouncementService,
-        private votingOptionService: VotingOptionService,
-        private tokenStorageService: TokenStorageService,
-        private route: ActivatedRoute,
-        private router: Router) {
+    form: FormGroup;
+    commentsListOpen = false;
+    commentsCreationOpen = false;
+    comment: Comment = {
+        body: ''
+    }
+
+    constructor(public dialog: MatDialog,
+                private announcementService: AnnouncementService,
+                private votingOptionService: VotingOptionService,
+                private commentService: CommentService,
+                private tokenStorageService: TokenStorageService,
+                private route: ActivatedRoute,
+                private router: Router) {
     }
 
     ngOnInit(): void {
         this.getAnnouncement(this.route.snapshot.params.id);
         this.getVotingOption(this.route.snapshot.params.id);
+
+        this.form = new FormGroup({
+            body: new FormControl('',[
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(1000)
+            ]),
+        })
     }
 
-    getUser(): any {
-        return this.tokenStorageService.getUser();
+    getRole(): any {
+        return this.tokenStorageService.getRole();
+    }
+
+    getAccountId(): any {
+        return this.tokenStorageService.getAccountId();
     }
 
     getAnnouncement(id: number): void {
@@ -103,6 +127,83 @@ export class AnnouncementsShowComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.router.navigate(["/announcements"]);
+                },
+                error => {
+                    console.log(error);
+                });
+    }
+
+    saveComment() {
+        let currentComment = this.comment;
+        currentComment['announcementId'] = this.announcement.announcementId;
+
+        this.commentService.createComment(currentComment)
+            .subscribe(
+                response => {
+                    console.log(response);
+                    this.getAnnouncement(this.announcement.announcementId);
+                    this.commentsCreationOpen = false;
+                    this.comment.body = '';
+                },
+                error => {
+                    console.log(error);
+                });
+    }
+
+    deleteComment(commentId: number) {
+        this.commentService.deleteComment(commentId)
+            .subscribe(
+                response => {
+                    console.log(response);
+                    this.getAnnouncement(this.announcement.announcementId);
+                },
+                error => {
+                    console.log(error);
+                });
+    }
+
+    openDialog(comment: Comment): void {
+        const dialogRef = this.dialog.open(CommentEditDialog, {
+            data: comment
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            this.getAnnouncement(this.announcement.announcementId);
+        });
+    }
+}
+
+@Component({
+    selector: 'comment-edit-dialog',
+    templateUrl: 'comment-edit-dialog.html',
+})
+
+export class CommentEditDialog {
+    form: FormGroup;
+
+    constructor(private commentService: CommentService,
+                public dialogRef: MatDialogRef<CommentEditDialog>,
+                @Inject(MAT_DIALOG_DATA) public data: Comment) {
+        this.form = new FormGroup({
+            body: new FormControl('',[
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(1000)
+            ]),
+        })
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
+    updateComment() {
+        this.commentService.updateComment(this.data)
+            .subscribe(
+                response => {
+                    console.log(response);
+                    this.dialogRef.close();
                 },
                 error => {
                     console.log(error);

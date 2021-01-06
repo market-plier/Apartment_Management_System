@@ -25,7 +25,7 @@ public class AnnouncementMapper implements RowMapper<Announcement> {
                 .withAnnouncementId(new BigInteger(rs.getString("announcement_id")))
                 .withTitle(rs.getString("announcement_title"))
                 .withBody(rs.getString("body"))
-                .withCreatedAt(rs.getDate("created_at"))
+                .withCreatedAt(rs.getTimestamp("created_at"))
                 .withIsOpened(rs.getBoolean("is_opened"))
                 .withHouseVoting(houseVoting)
                 .build();

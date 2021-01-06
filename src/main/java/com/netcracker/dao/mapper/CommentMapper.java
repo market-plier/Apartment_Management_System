@@ -28,7 +28,7 @@ public class CommentMapper implements RowMapper<Comment> {
                         .withApartmentNumber(new Integer(resultSet.getString("apartment_number")))
                         .build())
                 .withBody(resultSet.getString("comment_body"))
-                .withCreatedAt(resultSet.getDate("created_at"))
+                .withCreatedAt(resultSet.getTimestamp("created_at"))
                 .withAnnouncement(new AnnouncementBuilder()
                         .withAnnouncementId(new BigInteger(resultSet.getString("announcement_id")))
                         .build())

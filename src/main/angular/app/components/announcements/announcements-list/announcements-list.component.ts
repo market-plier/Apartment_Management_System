@@ -32,8 +32,8 @@ export class AnnouncementsListComponent implements OnInit {
         return event;
     }
 
-    getUser(): any {
-        return this.tokenStorageService.getUser();
+    getRole(): any {
+        return this.tokenStorageService.getRole();
     }
 
     retrieveAnnouncements(): void {

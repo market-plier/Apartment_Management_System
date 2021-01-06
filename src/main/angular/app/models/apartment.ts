@@ -1,4 +1,4 @@
-import {Account} from "../../../../../../../NetCreaker/trunk/src/main/angular/app/models/account";
+import {Account} from "./account";
 
 export class Apartment extends Account {
     apartmentNumber?: number;
