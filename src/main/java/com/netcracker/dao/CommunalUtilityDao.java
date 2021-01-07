@@ -8,35 +8,37 @@ import java.util.List;
 
 public interface CommunalUtilityDao {
 
-    String getAllCommunalUtilitiesByCalculationMethodId = "select com_util_obj.OBJECT_ID com_util_id,\n" +
+    String getAllCommunalUtilitiesByCalculationMethodId = "select\n" +
+            "com_util_obj.OBJECT_ID com_util_id,\n" +
             "com_util_name.VALUE com_util_name,\n" +
             "com_util_status_list.VALUE com_util_status,\n" +
             "com_util_dline.date_value com_util_dline,\n" +
             "com_util_durtype_list.Value com_util_durtype\n" +
-            "    from\n" +
-            "    OBJECTS com_util_obj,\n" +
-            "    ATTRIBUTES com_util_name,\n" +
-            "    LISTS com_util_status_list,\n" +
-            "    ATTRIBUTES com_util_status,\n" +
-            "    ATTRIBUTES com_util_dline,\n" +
-            "    LISTS com_util_durtype_list,\n" +
-            "    OBJREFERENCE objref\n" +
-            "    where\n" +
-            "    com_util_name.attr_id=21\n" +
-            "    and com_util_obj.OBJECT_ID = objref.OBJECT_ID\n" +
-            "    and ? = objref.REFERENCE\n" +
-            "    and objref.attr_id = 39\n" +
-            "    and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
-            "    and com_util_status.attr_id=23\n" +
-            "    and com_util_status.object_id = com_util_obj.OBJECT_ID\n" +
-            "    and com_util_status_list.attr_id=23\n" +
-            "    and com_util_status.list_value_id = com_util_status_list.list_value_id\n" +
-            "    and com_util_dline.attr_id = 24\n" +
-            "    and com_util_dline.object_id=com_util_obj.object_id\n" +
-            "    and com_util_durtype.attr_id=22\n" +
-            "    and com_util_durtype.object_id = com_util_obj.OBJECT_ID\n" +
-            "    and com_util_durtype_list.attr_id=22\n" +
-            "    and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id;";
+            "from\n" +
+            "OBJECTS com_util_obj,\n" +
+            "ATTRIBUTES com_util_name,\n" +
+            "LISTS com_util_status_list,\n" +
+            "ATTRIBUTES com_util_status,\n" +
+            "ATTRIBUTES com_util_dline,\n" +
+            "ATTRIBUTES com_util_durtype,\n" +
+            "LISTS com_util_durtype_list,\n" +
+            "OBJREFERENCE objref\n" +
+            "where\n" +
+            "com_util_name.attr_id=21\n" +
+            "and com_util_obj.OBJECT_ID = objref.OBJECT_ID\n" +
+            "and objref.REFERENCE = ?\n" +
+            "and objref.attr_id = 39\n" +
+            "and com_util_name.object_id = com_util_obj.OBJECT_ID\n" +
+            "and com_util_status.attr_id=23\n" +
+            "and com_util_status.object_id = com_util_obj.OBJECT_ID\n" +
+            "and com_util_status_list.attr_id=23\n" +
+            "and com_util_status.list_value_id = com_util_status_list.list_value_id\n" +
+            "and com_util_dline.attr_id = 24\n" +
+            "and com_util_dline.object_id=com_util_obj.object_id\n" +
+            "and com_util_durtype.attr_id=22\n" +
+            "and com_util_durtype.object_id = com_util_obj.OBJECT_ID\n" +
+            "and com_util_durtype_list.attr_id=22\n" +
+            "and com_util_durtype.list_value_id = com_util_durtype_list.list_value_id";
 
     String getAllCommunalUtilities = "select com_util_obj.OBJECT_ID com_util_id,\n" +
             "com_util_name.VALUE com_util_name,\n" +

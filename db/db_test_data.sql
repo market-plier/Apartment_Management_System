@@ -135,7 +135,7 @@ SELECT *
 FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, obj_id_seq.currval - 1, 11, 'CommunalUtility_2', NULL);
+VALUES (obj_id_seq.nextval, null, 11, 'CommunalUtility_2', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
@@ -158,7 +158,7 @@ SELECT *
 FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, obj_id_seq.currval - 1, 11, 'CommunalUtility_3', NULL);
+VALUES (obj_id_seq.nextval, null, 11, 'CommunalUtility_3', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (21, obj_id_seq.currval, 'com_util_name' || obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value, LIST_VALUE_ID)
@@ -683,7 +683,6 @@ VALUES (18, obj_id_seq.currval, '5');
 INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
 VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
 
-commit ;
 -----------------------------------------------END----------------------------------------------------------------------
 
 -----------------------------------------------MANAGER_BILL-------------------------------------------------------------
@@ -697,3 +696,5 @@ INSERT ALL
 SELECT * FROM dual
 
 ------------------------------------------------END---------------------------------------------------------------------
+
+commit ;

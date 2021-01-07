@@ -8,8 +8,8 @@ import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.CommunalUtility;
 import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -60,7 +60,10 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     @Override
     public List<CommunalUtility> getAllCommunalUtilitiesByCalculationMethodId(BigInteger id) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(getAllCommunalUtilitiesByCalculationMethodId, new CommunalUtilityWithCalculationMethodMapper(),id);
+            return jdbcTemplate.query(getAllCommunalUtilitiesByCalculationMethodId,
+                    new CommunalUtilityMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())
@@ -92,6 +95,8 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     public CommunalUtility getCommunalUtilityByIdWithCalculationMethod(BigInteger id) throws DaoAccessException {
         try {
             return jdbcTemplate.queryForObject(getCommunalUtilityWithCalculationMethodById, new CommunalUtilityWithCalculationMethodMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())
@@ -158,6 +163,8 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
         try {
             return jdbcTemplate.queryForObject(getCommunalUtilityUnique, new CommunalUtilityMapper(),
                     communalUtility.getName());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())

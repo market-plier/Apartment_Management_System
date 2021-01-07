@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
-@RequestMapping("/communal_utilities")
+@RequestMapping("/communal-utilities")
 @RestController
 public class CommunalUtilityController {
     private final CommunalUtilityService communalUtilityService;

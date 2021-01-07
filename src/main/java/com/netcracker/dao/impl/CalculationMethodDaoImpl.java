@@ -8,6 +8,7 @@ import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.CalculationMethod;
 import lombok.extern.log4j.Log4j;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -65,6 +66,8 @@ public class CalculationMethodDaoImpl implements CalculationMethodDao {
             return (jdbcTemplate.queryForObject(getCalculationMethodByCommunalUtilityId,
                     new CalculationMethodMapper(),
                     id));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_CALCULATION_METHOD_BY_COMMUNAL_UTILITY_ID)

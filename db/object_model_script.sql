@@ -252,18 +252,18 @@ begin
   exception
   when others then null;
 end;
-
+/
 CREATE SEQUENCE OBJ_ID_SEQ START WITH 1 MAXVALUE 999999 INCREMENT BY 1 NOCACHE CYCLE;
-
+/
 CREATE FUNCTION seq_obj_next RETURN NUMBER RESULT_CACHE IS
 BEGIN
     RETURN OBJ_ID_SEQ.nextval;
 END seq_obj_next;
-
+/
 CREATE FUNCTION seq_obj_curr RETURN NUMBER RESULT_CACHE IS
 BEGIN
     RETURN OBJ_ID_SEQ.currval;
 END seq_obj_curr;
-
+/
 COMMIT;
 
