@@ -106,7 +106,7 @@ public class CommunalUtilityService {
     public void createCommunalUtility(CommunalUtility communalUtility)
             throws DaoAccessException, NullPointerException, IOException, MessagingException {
         try {
-            if (communalUtilityDao.getUniqueCommunalUtility(communalUtility) == null) {
+            if (communalUtilityDao.getUniqueCommunalUtility(communalUtility) != null) {
                 IllegalArgumentException exception = new IllegalArgumentException("Communal utility with such name already exists");
                 log.error(exception.getMessage(), exception);
                 throw exception;

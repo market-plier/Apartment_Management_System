@@ -3,7 +3,7 @@
         <form (ngSubmit)="save()" fxLayout="column" xLayoutAlign="center">
             <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input matInput value="{{utility.calculationMethod.name}}"
+                <input [(ngModel)]="utility.name" matInput name="name"
                 />
             </mat-form-field>
 
@@ -35,8 +35,8 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill">
-                <mat-label>Choose a date</mat-label>
-                <input [matDatepicker]="picker" matInput value="{{utility.deadline}}">
+                <mat-label>Deadline</mat-label>
+                <input [(ngModel)]="utility.deadline" [matDatepicker]="picker" matInput name="deadline">
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

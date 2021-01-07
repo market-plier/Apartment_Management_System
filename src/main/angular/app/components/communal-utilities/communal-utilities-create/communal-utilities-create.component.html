@@ -3,13 +3,13 @@
         <form (ngSubmit)="add()" fxLayout="column" xLayoutAlign="center">
             <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input matInput
+                <input [(ngModel)]="utility.name" matInput name="name"
                 />
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Status</mat-label>
-                <mat-select>
+                <mat-select [(value)]="utility.status">
                     <mat-option *ngFor="let stat of status" [value]="stat">
                         {{stat}}
                     </mat-option>
@@ -18,7 +18,7 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Duration type</mat-label>
-                <mat-select>
+                <mat-select [(value)]="utility.durationType">
                     <mat-option *ngFor="let stat of dyr_type" [value]="stat">
                         {{stat}}
                     </mat-option>
@@ -27,7 +27,7 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Calculation Methods</mat-label>
-                <mat-select>
+                <mat-select [(value)]="utility.calculationMethod.calculationMethodId">
                     <mat-option *ngFor="let stat of calculationMethods" [value]="stat.calculationMethodId">
                         {{stat.name}}
                     </mat-option>
@@ -35,8 +35,8 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill">
-                <mat-label>Choose a date</mat-label>
-                <input [matDatepicker]="picker" matInput>
+                <mat-label>Deadline</mat-label>
+                <input [(ngModel)]="utility.deadline" [matDatepicker]="picker" matInput name="deadline">
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

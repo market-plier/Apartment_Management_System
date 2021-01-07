@@ -3,7 +3,6 @@ package com.netcracker.models;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -41,7 +40,7 @@ public class CommunalUtility {
     }
     @Positive
     private BigInteger communalUtilityId;
-    @Valid
+
     private CalculationMethod calculationMethod;
     @NotBlank(message = "name not specified")
     @NotNull(message = "name not specified")

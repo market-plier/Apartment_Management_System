@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommunalUtilityService} from "../../../services/communal-utility.service";
 import {ActivatedRoute} from "@angular/router";
 import {CommunalUtility} from "../../../models/communal-utility";
@@ -11,8 +11,8 @@ import {CalculationMethod} from "../../../models/calculation-method";
   styleUrls: ['./communal-utilities-show.component.css']
 })
 export class CommunalUtilitiesShowComponent implements OnInit {
-  @Input() calculationMethods: CalculationMethod[];
-  @Input() utility: CommunalUtility;
+  calculationMethods: CalculationMethod[];
+  utility: CommunalUtility;
   submitted = false;
   status: string[] = [
     'Enabled', 'Disabled'

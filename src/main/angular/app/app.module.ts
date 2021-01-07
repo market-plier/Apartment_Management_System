@@ -16,7 +16,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from "@angular/material/table";
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
@@ -118,7 +118,8 @@ import {
         TextMaskModule,
         LayoutModule,
         MatGridListModule,
-        MatMenuModule
+        MatMenuModule,
+        MatRippleModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard],
