@@ -1,0 +1,46 @@
+<div class="p-3" fxFlex="60" fxFlexFill fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch">
+    <mat-card>
+        <form (ngSubmit)="save()" fxLayout="column" xLayoutAlign="center">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput value="{{utility.calculationMethod.name}}"
+                />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select [(value)]="utility.status">
+                    <mat-option *ngFor="let stat of status" [value]="stat">
+                        {{stat}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Duration type</mat-label>
+                <mat-select [(value)]="utility.durationType">
+                    <mat-option *ngFor="let stat of dyr_type" [value]="stat">
+                        {{stat}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Calculation Methods</mat-label>
+                <mat-select [(value)]="utility.calculationMethod.calculationMethodId">
+                    <mat-option *ngFor="let stat of calculationMethods" [value]="stat.calculationMethodId">
+                        {{stat.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Choose a date</mat-label>
+                <input [matDatepicker]="picker" matInput value="{{utility.deadline}}">
+                <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button color="primary" mat-flat-button type="submit">Submit</button>
+        </form>
+    </mat-card>
+</div>

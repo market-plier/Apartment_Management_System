@@ -1,0 +1,40 @@
+<h2>Communal Utilities</h2>
+<div>
+    <a routerLink="/communal-utilities/create">
+        Create Utility
+    </a>
+</div>
+<table [dataSource]="utilities" mat-table>
+    <ng-container matColumnDef="name">
+        <th *matHeaderCellDef mat-header-cell> Name</th>
+        <td *matCellDef="let utility" mat-cell><a routerLink="/communal-utilities/{{utility.communalUtilityId}}">
+            {{utility.name}}
+        </a></td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="status">
+        <th *matHeaderCellDef mat-header-cell> Status</th>
+        <td *matCellDef="let utility" mat-cell> {{utility.status}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="durationType">
+        <th *matHeaderCellDef mat-header-cell> Duration type</th>
+        <td *matCellDef="let utility" mat-cell> {{utility.durationType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="calculation">
+        <th *matHeaderCellDef mat-header-cell> Calculation method</th>
+        <td *matCellDef="let utility" mat-cell> {{utility.calculationMethod.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deadline">
+        <th *matHeaderCellDef mat-header-cell> Deadline</th>
+        <td *matCellDef="let utility" mat-cell> {{utility.deadline}} </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+</table>
+

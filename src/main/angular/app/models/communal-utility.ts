@@ -1,6 +1,10 @@
+import {CalculationMethod} from "./calculation-method";
 
-
-export class CommunalUtility {
+export interface CommunalUtility {
     communalUtilityId?: number;
-    name:string;
+    name?: string;
+    deadline?: Date;
+    calculationMethod?: CalculationMethod;
+    status?: string;
+    durationType?: string;
 }

@@ -25,20 +25,15 @@ import {AppComponent} from './app.component';
 
 import {AnnouncementsListComponent} from './components/announcements/announcements-list/announcements-list.component';
 import {AnnouncementsCreateComponent} from './components/announcements/announcements-create/announcements-create.component';
-import {
-    AnnouncementsShowComponent,
-    CommentEditDialog
-} from "./components/announcements/announcements-show/announcements-show.component";
 import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
-
 import {LoginComponent} from './components/login/login.component';
 import {authInterceptorProviders} from './helpers/auth.interceptor';
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ManagerOperationListComponent } from './components/manager-operation/manager-operation-list/manager-operation-list.component';
-import {ManagerOperationCreateComponent } from './components/manager-operation/manager-operation-create/manager-operation-create.component';
-import {ManagerOperationUpdateComponent } from './components/manager-operation/manager-operation-update/manager-operation-update.component';
+import {ManagerOperationListComponent} from './components/manager-operation/manager-operation-list/manager-operation-list.component';
+import {ManagerOperationCreateComponent} from './components/manager-operation/manager-operation-create/manager-operation-create.component';
+import {ManagerOperationUpdateComponent} from './components/manager-operation/manager-operation-update/manager-operation-update.component';
 import {AuthGuard} from "./services/guard/auth.guard";
 import {OwnerGuard} from "./services/guard/owner.guard";
 import {ManagerGuard} from "./services/guard/manager.guard";
@@ -57,11 +52,21 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {LayoutModule} from "@angular/cdk/layout";
 import {TextMaskModule} from "angular2-text-mask";
+import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
+import {CommunalUtilitiesCreateComponent} from "./components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
+import {CommunalUtilitiesListComponent} from "./components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
+import {
+    AnnouncementsShowComponent,
+    CommentEditDialog
+} from "./components/announcements/announcements-show/announcements-show.component";
 
 
 @NgModule({
     declarations: [
         AppComponent,
+        CommunalUtilitiesShowComponent,
+        CommunalUtilitiesCreateComponent,
+        CommunalUtilitiesListComponent,
         AnnouncementsListComponent,
         AnnouncementsShowComponent,
         AnnouncementsCreateComponent,
