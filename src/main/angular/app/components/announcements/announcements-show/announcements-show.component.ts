@@ -44,7 +44,8 @@ export class AnnouncementsShowComponent implements OnInit {
 
     ngOnInit(): void {
         this.getAnnouncement(this.route.snapshot.params.id);
-        this.getVotingOption(this.route.snapshot.params.id);
+        if (this.getRole() =='OWNER')
+            this.getVotingOption(this.route.snapshot.params.id);
 
         this.form = new FormGroup({
             body: new FormControl('',[
@@ -74,8 +75,6 @@ export class AnnouncementsShowComponent implements OnInit {
                         var votingOptions = this.announcement.houseVoting.votingOptions;
 
                         if(votingOptions != null) {
-                            this.selectedVotingOptionId = votingOptions[0].votingOptionId;
-
                             for(let i = 0; i < votingOptions.length;++i) {
                                 // @ts-ignore
                                 votingOptions[i]["percent"] = votingOptions[i].count/sum*100;
@@ -113,7 +112,7 @@ export class AnnouncementsShowComponent implements OnInit {
                 });
     }
 
-    addVote(): void {
+    addVote() {
         if (this.selectedVotingOptionId != null && this.announcement.announcementId != null)
             this.votingOptionService.addVote(
                 this.announcement.announcementId,

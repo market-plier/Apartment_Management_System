@@ -130,7 +130,9 @@ public interface AnnouncementDao {
             "ON (old.OBJECT_ID = ? AND old.ATTR_ID = new.ATTR_ID)\n" +
             "WHEN MATCHED THEN\n" +
             "   UPDATE SET old.VALUE = new.VALUE, old.DATE_VALUE = new.DATE_VALUE\n" +
-            "   WHERE old.VALUE <> new.VALUE OR old.DATE_VALUE <> new.DATE_VALUE";
+            "   WHERE old.VALUE <> new.VALUE OR old.DATE_VALUE <> new.DATE_VALUE\n" +
+            "   OR old.VALUE IS NULL AND new.VALUE IS NOT NULL\n" +
+            "   OR old.VALUE IS NOT NULL AND new.VALUE IS NULL";
 
     String DELETE_ANNOUNCEMENT = "DELETE FROM OBJECTS WHERE OBJECT_ID = ?";
 

@@ -23,16 +23,16 @@
 
                             </div>
                             <div *ngIf="getRole() == 'OWNER' && !currentVotingOption">
-                                <mat-radio-group labelPosition="after">
+                                <mat-radio-group labelPosition="after" [(ngModel)]="selectedVotingOptionId">
                                     <mat-list>
                                         <mat-list-item *ngFor="let votingOption of announcement.houseVoting.votingOptions; let i = index">
-                                            <mat-radio-button value="{{votingOption.votingOptionId}}" [(ngModel)]="selectedVotingOptionId">
+                                            <mat-radio-button value="{{votingOption.votingOptionId}}">
                                                 {{votingOption.name}}
                                             </mat-radio-button>
                                         </mat-list-item>
                                     </mat-list>
                                 </mat-radio-group>
-                                <button mat-flat-button color="primary" (click)="addVote()">Vote</button>
+                                <button mat-flat-button [disabled]="selectedVotingOptionId==null" color="primary" (click)="addVote()">Vote</button>
                             </div>
                         </mat-card-content>
                     </mat-card>

@@ -1,43 +1,103 @@
 <div class="p-3" fxFlex="60" fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch" fxFlexFill>
     <mat-card >
-        <form xLayoutAlign="center" fxLayout="column" [formGroup]="form" (ngSubmit)="saveAnnouncement()">
+        <mat-vertical-stepper linear="true" #stepper>
+            <mat-step [stepControl]="announcementFormGroup">
+                <form xLayoutAlign="center" fxLayout="column"
+                      [formGroup]="announcementFormGroup">
 
-            <mat-form-field>
-                <mat-label>Title</mat-label>
-                <input matInput type="text"
-                       formControlName="title"
-                />
-            </mat-form-field>
+                    <ng-template matStepLabel>Fill announcement</ng-template>
+                    <mat-form-field>
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text"
+                               formControlName="title"
+                               [(ngModel)]="announcement.title"
+                        />
+                    </mat-form-field>
 
-            <mat-error *ngIf="form.get('title').invalid && form.get('title').touched">
-                <small *ngIf="form.get('title').errors.required">Title is required</small>
-                <small *ngIf="form.get('title').errors.minlength">Title length must be more than 1</small>
-                <small *ngIf="form.get('title').errors.maxlength">Title length must be less than 256</small>
-            </mat-error>
+                    <mat-error *ngIf="announcementFormGroup.get('title').invalid && announcementFormGroup.get('title').touched">
+                        <small *ngIf="announcementFormGroup.get('title').errors.required">Title is required</small>
+                        <small *ngIf="announcementFormGroup.get('title').errors.minlength">Title length must be more than 1</small>
+                        <small *ngIf="announcementFormGroup.get('title').errors.maxlength">Title length must be less than 256</small>
+                    </mat-error>
 
-            <mat-form-field>
-                <mat-label>Body</mat-label>
-                <textarea matInput
-                          formControlName="body"
-                          rows="8">
+                    <mat-form-field>
+                        <mat-label>Body</mat-label>
+                        <textarea matInput
+                                  formControlName="body"
+                                  rows="8"
+                                  [(ngModel)]="announcement.body"
+                        >
                 </textarea>
-            </mat-form-field>
+                    </mat-form-field>
 
-            <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">
-                <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1024</small>
-            </mat-error>
+                    <mat-error *ngIf="announcementFormGroup.get('body').invalid && announcementFormGroup.get('body').touched">
+                        <small *ngIf="announcementFormGroup.get('body').errors.maxlength">Body length must be less than 1024</small>
+                    </mat-error>
 
-                <mat-checkbox formControlName="isOpened">
-                    Open for Comments
+                    <mat-checkbox formControlName="isOpened" [(ngModel)]="announcement.isOpened">
+                        Open for Comments
+                    </mat-checkbox>
+
+                    <mat-error *ngIf="announcementFormGroup.get('isOpened').invalid && announcementFormGroup.get('isOpened').touched">
+                        <small *ngIf="announcementFormGroup.get('isOpened').errors.required">isOpened is required</small>
+                    </mat-error>
+
+                    <div>
+                        <button mat-flat-button [disabled]="announcementFormGroup.invalid"  color="primary" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="hasVoting? votingFormGroup : null">
+                <ng-template matStepLabel>Voting creation</ng-template>
+                <mat-checkbox [(ngModel)]="hasVoting">
+                    Has Voting
                 </mat-checkbox>
 
-            <mat-error *ngIf="form.get('isOpened').invalid && form.get('isOpened').touched">
-                <small *ngIf="form.get('isOpened').errors.required">isOpened is required</small>
-            </mat-error>
+                <form *ngIf="hasVoting" [formGroup]="votingFormGroup">
+                    <mat-form-field>
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text"
+                               formControlName="title"
+                               [(ngModel)]="houseVoting.title"
+                        />
+                    </mat-form-field>
 
-            <button [disabled]="form.invalid"  mat-flat-button color="primary" type="submit">Submit</button>
+                    <mat-error *ngIf="votingFormGroup.get('title').invalid && votingFormGroup.get('title').touched">
+                        <small *ngIf="votingFormGroup.get('title').errors.required">Title is required</small>
+                        <small *ngIf="votingFormGroup.get('title').errors.minlength">Title length must be more than 1</small>
+                        <small *ngIf="votingFormGroup.get('title').errors.maxlength">Title length must be less than 256</small>
+                    </mat-error>
 
-        </form>
+                    <div  *ngFor="let i of counter(votingCount)">
+                        <mat-form-field>
+                            <mat-label>{{i+1}}.Name</mat-label>
+                            <input matInput type="text"
+                                   formControlName="name{{i}}"
+                            />
+                        </mat-form-field>
+
+                        <mat-error *ngIf="votingFormGroup.get('name'+i).invalid && votingFormGroup.get('name'+i).touched">
+                            <small *ngIf="votingFormGroup.get('name'+i).errors.required">Name is required</small>
+                            <small *ngIf="votingFormGroup.get('name'+i).errors.minlength">Name length must be more than 1</small>
+                            <small *ngIf="votingFormGroup.get('name'+i).errors.maxlength">Name length must be less than 256</small>
+                        </mat-error>
+                    </div>
+                </form>
+
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-flat-button [disabled]="hasVoting && votingFormGroup.invalid"  color="primary" matStepperNext>Next</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>Successfully filled.</p>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-flat-button color="primary" (click)="saveAnnouncement()">Submit</button>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
     </mat-card>
 
 </div>

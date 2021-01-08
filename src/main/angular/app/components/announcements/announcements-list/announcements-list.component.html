@@ -1,4 +1,4 @@
-<div class="list row p-2">
+<div class="list row p-2 col-md-10">
     <div class="col-md-6">
         <section class="row p-2">
             <h1>Announcement List</h1>
@@ -18,7 +18,7 @@
                 {{ announcement.title }}
                 <mat-divider></mat-divider>
             </mat-list-option>
-            <mat-paginator  [length]="announcements.length" pageSize=10
+            <mat-paginator  [length]="announcements?.length" pageSize=10
                             (page)="getPaginatorData($event)" [pageSizeOptions]="[10]"></mat-paginator>
         </mat-selection-list>
     </div>
