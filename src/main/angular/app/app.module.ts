@@ -59,6 +59,7 @@ import {
     AnnouncementsShowComponent,
     CommentEditDialog
 } from "./components/announcements/announcements-show/announcements-show.component";
+import {IsAuthGuard} from "./services/guard/isauth.guard";
 
 
 @NgModule({
@@ -122,7 +123,7 @@ import {
         MatRippleModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-        JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard],
+        JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

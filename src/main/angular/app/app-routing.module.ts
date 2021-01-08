@@ -17,12 +17,13 @@ import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {CommunalUtilitiesCreateComponent} from "./components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
 import {CommunalUtilitiesListComponent} from "./components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
 import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
+import {IsAuthGuard} from "./services/guard/isauth.guard";
 
 
 const routes: Routes = [
-    {path: '', redirectTo: '/login', pathMatch: 'full'},
+    {path: '', redirectTo: '/login', pathMatch: 'full', canActivate:[IsAuthGuard]},
     {path: 'apartments', component: ApartmentsComponent, canActivate: [AuthGuard, ManagerGuard]},
-    {path: 'login', component: LoginComponent},
+    {path: 'login', component: LoginComponent, canActivate:[IsAuthGuard]},
     {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
     {path: 'apartments/create', component: ApartmentRegistrationComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'apartments/update/:number', component: ManagerApartmentInfoEditComponent, canActivate: [AuthGuard]},
