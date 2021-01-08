@@ -69,7 +69,7 @@ public class ApartmentInfoService {
             throw new NotBelongToAccountException("Can not change this account password");
         }
         acc.setPassword(apartment.getPassword());
-        accountDao.updateAccount(acc);
+        accountDao.updateAccountPassword(acc);
         return apartment;
     }
 
@@ -97,6 +97,7 @@ public class ApartmentInfoService {
             apartmentToUpdate.setFirstName(account.getFirstName());
             apartmentToUpdate.setLastName(account.getLastName());
             apartmentToUpdate.setPhoneNumber(account.getPhoneNumber());
+
         }
 
         if (isUnique(apartmentToUpdate)) {

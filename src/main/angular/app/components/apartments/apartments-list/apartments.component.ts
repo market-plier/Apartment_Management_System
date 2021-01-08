@@ -2,6 +2,7 @@ import {Apartment} from "../../../models/apartment";
 import {ApartmentInfoService} from "../../../services/apartment-info.service";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -16,7 +17,8 @@ export class ApartmentsComponent implements OnInit {
     selectedFloor?: Number;
 
 
-    constructor(private apartmentInfoService: ApartmentInfoService, private router: Router) {
+    constructor(private apartmentInfoService: ApartmentInfoService, private router: Router
+        , private _snackBar: MatSnackBar) {
     }
 
     getAllApartments() {
@@ -50,16 +52,27 @@ export class ApartmentsComponent implements OnInit {
                 data => {
                     this.apartments = [];
                     this.apartments[0] = data;
+                },
+                error => {
+                    this.openSnackBar("No apartment was found","Input another value");
                 }
             );
         }
     }
 
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
+    }
     getAllApartmentsByFloor() {
         if (this.selectedFloor != null && this.selectedFloor>0) {
             this.apartmentInfoService.getAllApartmentsByFloor(this.selectedFloor).subscribe(
                 data => {
                     this.apartments = data;
+                },
+                error => {
+                    this.openSnackBar("No apartments on this floor","Choose another one");
                 }
             );
         }

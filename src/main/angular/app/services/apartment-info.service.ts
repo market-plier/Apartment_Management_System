@@ -20,9 +20,7 @@ export class ApartmentInfoService {
     }
 
     getApartmentByApartmentNumber(number: Number): Observable<Object> {
-        return this.httpClient.get(`${this.baseURL}/${number}`).pipe(
-            catchError(this.handleError.bind(this))
-        );
+        return this.httpClient.get(`${this.baseURL}/${number}`);
     }
 
     getApartmentByAccountId(id: Number): Observable<Object> {
@@ -38,8 +36,7 @@ export class ApartmentInfoService {
     }
 
     getAllApartmentsByFloor(floor: Number): Observable<Object[]> {
-        return this.httpClient.get<Apartment[]>(`${this.baseURL}/apartments-on-floor?floor=${floor}`)
-            .pipe(catchError(this.handleError.bind(this)));
+        return this.httpClient.get<Apartment[]>(`${this.baseURL}/apartments-on-floor?floor=${floor}`);
     }
 
     createApartment(apartment: Apartment): Observable<Object> {

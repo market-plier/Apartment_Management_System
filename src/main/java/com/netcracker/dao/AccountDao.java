@@ -9,13 +9,21 @@ public interface AccountDao {
             "USING (\n" +
             "    SELECT 2 ATTR_ID, ? VALUE FROM DUAL\n" +
             "    UNION ALL\n" +
-            "    SELECT 3, ? FROM DUAL\n" +
-            "    UNION ALL\n" +
             "    SELECT 5, ? FROM DUAL\n" +
             "    UNION ALL\n" +
             "    SELECT 4, ? FROM DUAL\n" +
             "    UNION ALL\n" +
             "    SELECT 6, ? FROM DUAL\n" +
+            ") y\n" +
+            "ON (x.OBJECT_ID = ? AND x.ATTR_ID = y.ATTR_ID)\n" +
+            "WHEN MATCHED THEN\n" +
+            "    UPDATE\n" +
+            "    SET x.VALUE = y.VALUE\n" +
+            "    WHERE x.VALUE <> y.VALUE";
+
+    String UPDATE_ACCOUNT_PASSWORD ="MERGE INTO ATTRIBUTES x\n" +
+            "USING (\n" +
+            "    SELECT 3 ATTR_ID, ? VALUE FROM DUAL\n" +
             ") y\n" +
             "ON (x.OBJECT_ID = ? AND x.ATTR_ID = y.ATTR_ID)\n" +
             "WHEN MATCHED THEN\n" +
@@ -71,4 +79,5 @@ public interface AccountDao {
     Account getAccount(BigInteger id);
     Account getAccountByEmail(String email);
     Account updateAccount(Account account);
+    Account updateAccountPassword(Account account);
 }

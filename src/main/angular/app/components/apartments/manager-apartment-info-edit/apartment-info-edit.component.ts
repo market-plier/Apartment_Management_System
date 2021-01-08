@@ -44,14 +44,14 @@ export class ApartmentInfoEditComponent implements OnInit {
     public mask = ['+', /[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
 
     updateApartment() {
-
         this.apartmentToSave = Object.assign({}, this.apartment)
         this.service.updateApartment(this.apartmentToSave).subscribe(
             data => {
-                this.openSnackBar('Apartment is created', 'OK');
+                this.openSnackBar('Apartment is updated', 'OK');
             });
         if (this.apartment.password != null) {
             this.service.updatePassword(this.apartmentToSave);
+
         }
 
     }

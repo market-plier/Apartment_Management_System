@@ -61,11 +61,30 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    public Account updateAccountPassword(Account account) throws DaoAccessException {
+        try {
+            jdbcTemplate.update(UPDATE_ACCOUNT_PASSWORD,
+                    account.getPassword(),
+                    account.getAccountId());
+            jdbcTemplate.update("commit");
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_UPDATE_ACCOUNT)
+                    .withCause(e.getCause())
+                    .withId(account.getAccountId())
+                    .withErrorMessage(BigInteger.valueOf(72))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+        return account;
+    }
+
+    @Override
     public Account updateAccount(Account account) throws DaoAccessException {
         try {
             jdbcTemplate.update(UPDATE_ACCOUNT,
                     account.getEmail(),
-                    account.getPassword(),
                     account.getLastName(),
                     account.getFirstName(),
                     account.getPhoneNumber(),
