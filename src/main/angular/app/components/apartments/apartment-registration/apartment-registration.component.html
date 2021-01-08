@@ -39,11 +39,11 @@
                                                            [(ngModel)]="apartment.lastName" required>
                                                     <mat-error
                                                             *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('pattern')">
-                                                        Last name is required
+                                                        Please enter a valid last name
                                                     </mat-error>
                                                     <mat-error
                                                             *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('required')">
-                                                        Please enter a valid last name
+                                                        Last name is required
                                                     </mat-error>
                                                 </mat-form-field>
                                             </div>
@@ -65,7 +65,7 @@
                                                             Please enter a valid email address
                                                         </mat-error>
                                                         <mat-error
-                                                                *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('required')">
+                                                                *ngIf="firstFormGroup.controls['emailCtrl'].hasError('required')">
                                                             Email is required
                                                         </mat-error>
                                                     </mat-form-field>
@@ -114,7 +114,7 @@
                                                     </mat-error>
                                                     <mat-error
                                                             *ngIf="firstFormGroup.controls['passwordCtrl'].hasError('required')">
-                                                        Last name is required
+                                                       Password is required
                                                     </mat-error>
                                                 </mat-form-field>
                                             </div>
@@ -176,7 +176,7 @@
                                                            [(ngModel)]="apartment.squareMetres">
                                                     <mat-error
                                                             *ngIf="secondFormGroup.controls['squareMetresCtrl'].hasError('min')">
-                                                        Please enter a valid last name
+                                                        Square metres value is too low
                                                     </mat-error>
                                                     <mat-error
                                                             *ngIf="secondFormGroup.controls['squareMetresCtrl'].hasError('required')">

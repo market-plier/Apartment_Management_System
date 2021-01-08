@@ -44,7 +44,7 @@ export class TokenStorageService {
         }
     }
 
-    public getAccountId(): string | null {
+    public getAccountId(): number | null {
         if (window.sessionStorage.getItem(TOKEN_KEY)) {
             return this.jwtHelper.decodeToken(window.sessionStorage.getItem(TOKEN_KEY)).accountId;
         }

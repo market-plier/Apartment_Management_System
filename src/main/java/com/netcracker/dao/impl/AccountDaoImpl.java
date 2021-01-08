@@ -70,6 +70,7 @@ public class AccountDaoImpl implements AccountDao {
                     account.getFirstName(),
                     account.getPhoneNumber(),
                     account.getAccountId());
+            jdbcTemplate.update("commit");
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_UPDATE_ACCOUNT)

@@ -25,7 +25,10 @@ import {AppComponent} from './app.component';
 
 import {AnnouncementsListComponent} from './components/announcements/announcements-list/announcements-list.component';
 import {AnnouncementsCreateComponent} from './components/announcements/announcements-create/announcements-create.component';
+// @ts-ignore
+import {AnnouncementsShowComponent, CommentEditDialog} from "./components/announcements/announcements-show/announcements-show.component";
 import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
+import {MatBadgeModule} from '@angular/material/badge';
 import {LoginComponent} from './components/login/login.component';
 import {authInterceptorProviders} from './helpers/auth.interceptor';
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
@@ -39,8 +42,8 @@ import {OwnerGuard} from "./services/guard/owner.guard";
 import {ManagerGuard} from "./services/guard/manager.guard";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ApartmentsComponent} from "./components/apartments/apartments-list/apartments.component";
-import {ApartmentRegistrationComponent} from "./components/apartments/apartment-registration/apartment-registration/apartment-registration.component";
-import {ManagerApartmentInfoEditComponent} from "./components/apartments/manager-apartment-info-edit/manager-apartment-info-edit.component";
+import {ApartmentRegistrationComponent} from "./components/apartments/apartment-registration/apartment-registration.component";
+import {ApartmentInfoEditComponent} from "./components/apartments/apartment-info-edit/apartment-info-edit.component";
 import {NavComponent} from "./components/nav/nav.component";
 import {HomeComponent} from "./components/home/home.component";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
@@ -52,13 +55,10 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {LayoutModule} from "@angular/cdk/layout";
 import {TextMaskModule} from "angular2-text-mask";
+import { ApartmentInfoPageComponent } from './components/apartments/apartment-info-page/apartment-info-page.component';
 import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
 import {CommunalUtilitiesCreateComponent} from "./components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
 import {CommunalUtilitiesListComponent} from "./components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
-import {
-    AnnouncementsShowComponent,
-    CommentEditDialog
-} from "./components/announcements/announcements-show/announcements-show.component";
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 
 
@@ -79,10 +79,11 @@ import {IsAuthGuard} from "./services/guard/isauth.guard";
         ManagerOperationUpdateComponent,
         ApartmentsComponent,
         ApartmentRegistrationComponent,
-        ManagerApartmentInfoEditComponent,
+        ApartmentInfoEditComponent,
         NavComponent,
         HomeComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        ApartmentInfoPageComponent
     ],
     imports: [
         BrowserModule,
@@ -120,7 +121,9 @@ import {IsAuthGuard} from "./services/guard/isauth.guard";
         LayoutModule,
         MatGridListModule,
         MatMenuModule,
-        MatRippleModule
+        MatRippleModule,
+        MatMenuModule,
+        MatBadgeModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard],

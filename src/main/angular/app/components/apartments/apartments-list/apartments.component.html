@@ -1,37 +1,65 @@
 <div class="container">
     <mat-toolbar>
         <span>Apartments</span>
-        <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+
+        <mat-form-field class="form-field">
+            <mat-label>Apartment number</mat-label>
+            <input matInput type="number" min=1 [(ngModel)]="searchValue">
+            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="searchValue=null; getAllApartments()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-icon-button (click)="getApartment()">
             <mat-icon>search</mat-icon>
         </button>
-        <button mat-raised-button routerLink="/apartments/create" color="primary">Create</button>
+
+
+        <mat-form-field class="form-field">
+            <mat-label>Floor</mat-label>
+            <mat-select [(value)]="selectedFloor">
+                <mat-option [value]="-1">All</mat-option>
+                <mat-option *ngFor="let floor of floors" [value]="floor">
+                    {{floor}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-icon-button (click)="getAllApartmentsByFloor()">
+            <mat-icon>filter_list</mat-icon>
+        </button>
+
+        <button mat-raised-button class="create-btn" routerLink="/apartments/create" color="primary">Create Apartment</button>
     </mat-toolbar>
+
+
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div *ngFor="let apartment of apartments" class="card col-4">
             <div class="card-body">
                 <h5 class="card-header"><b>Apartment number: {{apartment.apartmentNumber}}</b></h5>
                 <small class="text-muted">Name : {{apartment.firstName}} {{apartment.lastName}} |
-                    Email: {{apartment.email}}| Phone: {{apartment.phoneNumber}}</small>
+                    Email: {{apartment.email}} | Phone: {{apartment.phoneNumber}}</small>
                 <ul class="ul">
                     <li>Floor: {{apartment.floor}}</li>
                     <li>Square meters: {{apartment.squareMetres}}</li>
                     <li>People count: {{apartment.peopleCount}}</li>
                 </ul>
-                <div class="card-footer  ">
+                <div class="card-footer ">
                     <div class="row">
-                        <div class=" col-md-auto "><a (click)="updateApartment(apartment.apartmentNumber)"
-                                                      class="btn btn-outlined btn-black text-muted bg-transparent"
-                                                      data-wow-delay="0.7s"><img
-                                src="https://img.icons8.com/ios/50/000000/settings.png" width="19" height="19">
-                            <small>EDIT</small></a>
-                            <i class="mdi mdi-settings-outline"></i> <a href="#"
-                                                                        class=" btn-outlined btn-black text-muted"><img
-                                    src="https://img.icons8.com/metro/26/000000/link.png" width="17" height="17"
-                                    id="plus"> <small>HISTORY</small> </a> <a href="#"
-                                                                              class="btn btn-outlined btn-black text-muted "><img
-                                    src="https://img.icons8.com/metro/26/000000/more.png" width="20" height="20"
-                                    class="mr-2 more"><small>MORE</small></a> <span class="vl ml-3"></span>
+                        <div class=" col-md-auto ">
+                            <a (click)="updateApartment(apartment.accountId)"
+                               class="btn btn-outlined btn-black text-muted bg-transparent" data-wow-delay="0.7s">
+                                <mat-icon>settings</mat-icon>
+                                <small>EDIT</small></a>
+
+                            <i class="mdi mdi-settings-outline"></i>
+                            <a class="btn btn-outlined btn-black text-muted bg-transparent" data-wow-delay="0.7s">
+                                <mat-icon>history</mat-icon>
+                                <small>HISTORY</small> </a>
+
+                            <a (click)="apartmentInfo(apartment.accountId)"
+                               class="btn btn-outlined btn-black text-muted ">
+                                <mat-icon>perm_identity</mat-icon>
+                                <small>MORE</small></a> <span class="vl ml-3"></span>
                         </div>
                         <div class="col-md-auto ">
                         </div>

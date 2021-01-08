@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,6 @@ public class ApartmentInfoController {
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
     public Apartment updateApartmentPassword(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
             throws DaoAccessException, ValidationException {
-
         if (apartment.getPassword() == null || apartment.getPassword().length() > 3900 || apartment.getPassword().length() < 8) {
             throw new ValidationException("Password length is not correct");
         }
@@ -61,7 +61,6 @@ public class ApartmentInfoController {
     public Apartment updateApartment(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Apartment apartment)
             throws DaoAccessException, IllegalArgumentException {
         Role role = null;
-        System.out.println("АПДЕЙТИМ");
         if (account.getAuthorities().toString().equals("[ROLE_OWNER]")) {
             role = Role.OWNER;
         }
@@ -79,11 +78,17 @@ public class ApartmentInfoController {
 
     @GetMapping("{number}")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
-    public Apartment getApartment(@PathVariable @NotNull Integer number) throws DaoAccessException {
+    public Apartment getApartmentByApartmentNumber(@PathVariable @NotNull Integer number) throws DaoAccessException {
         Apartment apart = apartmentInfoService.getApartmentByApartmentNumber(number);
         return  getApartmentDTO(apart);
     }
 
+    @GetMapping("/apartment")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
+    public Apartment getApartmentByAccountId(@RequestParam @NotNull BigInteger id) throws DaoAccessException {
+        Apartment apart = apartmentInfoService.getApartmentById(id);
+        return  getApartmentDTO(apart);
+    }
     @GetMapping()
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     public List<Apartment> getAllApartments() throws DaoAccessException {
@@ -108,6 +113,7 @@ public class ApartmentInfoController {
 
     private Apartment getApartmentDTO(Apartment apart) {
         return new ApartmentBuilder()
+                .withAccountId(apart.getAccountId())
                 .withApartmentNumber(apart.getApartmentNumber())
                 .withEmail(apart.getEmail())
                 .withFirstName(apart.getFirstName())

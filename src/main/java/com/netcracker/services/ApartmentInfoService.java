@@ -58,17 +58,16 @@ public class ApartmentInfoService {
     }
 
     public List<Apartment> getAllApartmentsByFloor(List<Integer> floor) throws DaoAccessException {
-       return apartmentDao.getAllApartmentByFloor(floor);
+        return apartmentDao.getAllApartmentByFloor(floor);
     }
 
 
     public Apartment updateApartmentPassword(JwtAccount updater, Apartment apartment) throws DaoAccessException {
-        Account acc = accountService.getAccountByEmail(apartment.getEmail());
+        Account acc = accountService.getAccountById(apartment.getAccountId());
         if (!updater.getId().equals(acc.getAccountId())
                 && !updater.getAuthorities().toString().equals("[ROLE_MANAGER]")) {
             throw new NotBelongToAccountException("Can not change this account password");
         }
-
         acc.setPassword(apartment.getPassword());
         accountDao.updateAccount(acc);
         return apartment;

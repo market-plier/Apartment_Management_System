@@ -25,7 +25,8 @@
             "aot": true,
             "assets": [
               "src/main/angular/favicon.ico",
-              "src/main/angular/assets"
+              "src/main/angular/assets",
+              "src/main/angular/assets/svg"
             ],
             "styles": [
               "src/main/angular/theme.scss",

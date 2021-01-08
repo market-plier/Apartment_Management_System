@@ -1,7 +1,7 @@
 import {Apartment} from "../../../models/apartment";
 import {ApartmentInfoService} from "../../../services/apartment-info.service";
 import {Component, OnInit} from "@angular/core";
-import {NavigationExtras, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -11,6 +11,10 @@ import {NavigationExtras, Router} from "@angular/router";
 })
 export class ApartmentsComponent implements OnInit {
     apartments?: Apartment[];
+    searchValue?: Number;
+    floors?;
+    selectedFloor?: Number;
+
 
     constructor(private apartmentInfoService: ApartmentInfoService, private router: Router) {
     }
@@ -19,23 +23,56 @@ export class ApartmentsComponent implements OnInit {
         this.apartmentInfoService.getAllApartments().subscribe(
             data => {
                 this.apartments = data;
+                this.floors = this.uniqueArray(this.apartments.map(item => item.floor));
             }
         );
+    }
+
+    uniqueArray(ar) {
+        var j = {};
+
+        ar.forEach(function (v) {
+            j[v + '::' + typeof v] = v;
+        });
+
+        return Object.keys(j).map(function (v) {
+            return j[v];
+        });
     }
 
     ngOnInit(): void {
         this.getAllApartments();
     }
 
-    getAllApartmentsByFloor(floor: Number) {
-        this.apartmentInfoService.getAllApartmentsByFloor(floor).subscribe(
-            data => {
-                this.apartments = data;
-            }
-        );
+    getApartment() {
+        if (this.searchValue != null) {
+            this.apartmentInfoService.getApartmentByApartmentNumber(this.searchValue).subscribe(
+                data => {
+                    this.apartments = [];
+                    this.apartments[0] = data;
+                }
+            );
+        }
+    }
+
+    getAllApartmentsByFloor() {
+        if (this.selectedFloor != null && this.selectedFloor>0) {
+            this.apartmentInfoService.getAllApartmentsByFloor(this.selectedFloor).subscribe(
+                data => {
+                    this.apartments = data;
+                }
+            );
+        }
+        if (this.selectedFloor == -1) {
+            this.getAllApartments();
+        }
+    }
+
+    apartmentInfo(id: Number) {
+        this.router.navigate(['/apartment', {id: id}]);
     }
 
     updateApartment(id: Number) {
-        this.router.navigate(['apartments/update',id]);
+        this.router.navigate(['apartments/update', id]);
     }
 }

@@ -1,13 +1,13 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav  #drawer class="sidenav" fixedInViewport
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
                  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                  [mode]="(isHandset$ | async) ? 'push' : 'side'"
                  [opened]="false">
-        <div >
+        <div>
             <mat-toolbar *ngIf="getIsLoggedIn()">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+                <img src="assets/svg/apartment_main.svg" class="img-logo" alt="Apt" >
             </mat-toolbar>
-            <mat-nav-list>
+            <mat-nav-list style=" margin-top:20px;">
                 <a mat-list-item class="hover-link" routerLink="/home">Home</a>
                 <a mat-list-item class="hover-link" routerLink="/apartment-sub-bills">Subbills</a>
                 <a mat-list-item class="hover-link" routerLink="/announcements">Announcements</a>
@@ -15,8 +15,9 @@
                    routerLink="/apartment-request-to-manager">Request</a>
                 <a mat-list-item class="hover-link" routerLink="/reports">Reports</a>
                 <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartments">Apartments</a>
-                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/manager-operation">Spending</a>
-                <a class="hover-link" mat-list-item routerLink="/communal-utilities">Communal utilities</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item
+                   routerLink="/manager-operation">Spending</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/communal-utilities">Communal utilities</a>
             </mat-nav-list>
         </div>
     </mat-sidenav>
@@ -31,28 +32,28 @@
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
-            <span class="navbar-text"> Super-Puper</span>
+            <span class="navbar-text">Apartments Management</span>
 
             <mat-icon *ngIf="getIsLoggedIn()" class="mat-icon-account" [matMenuTriggerFor]="menu">account_circle
             </mat-icon>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>My account</button>
-                <button mat-menu-item>Edit</button>
+                <button mat-menu-item (click)="goToAccountPage()">My account</button>
+                <button mat-menu-item (click)="editAccountPage()">Edit</button>
             </mat-menu>
 
             <button mat-raised-button *ngIf="getIsLoggedIn()" (click)="logout()">LogOut</button>
         </mat-toolbar>
 
         <div class="site">
-        <div class="content">
-            <router-outlet></router-outlet>
-        </div>
-
-        <footer class="page-footer">
-            <div class="footer-copyright text-center py-3">© 2021 Copyright:
-                <a href="https://odessa.edu-netcracker.com/">BestTeamEver</a>
+            <div class="content">
+                <router-outlet></router-outlet>
             </div>
-        </footer>
+
+            <footer class="page-footer">
+                <div class="footer-copyright text-center py-3">© 2021 Copyright:
+                    <a href="https://odessa.edu-netcracker.com/">BestTeamEver</a>
+                </div>
+            </footer>
         </div>
 
     </mat-sidenav-content>

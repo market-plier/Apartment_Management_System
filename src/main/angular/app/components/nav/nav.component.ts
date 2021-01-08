@@ -50,14 +50,32 @@ export class NavComponent {
 
     logout(): void {
         this.tokenStorageService.signOut();
-        this.isLoggedIn=false;
-        this.isOpen=false;
+        this.isLoggedIn = false;
+        this.isOpen = false;
         window.location.reload();
         this.redirectPage();
     }
 
     redirectPage(): void {
         this.router.navigate(['/login/']);
+    }
+
+    editAccountPage(){
+        if (this.role == 'MANAGER') {
+
+        }
+        if (this.role == 'OWNER') {
+            this.router.navigate(['apartments/update/:id', {id: this.tokenStorageService.getAccountId()}]);
+        }
+    }
+
+    goToAccountPage() {
+        if (this.role == 'MANAGER') {
+
+        }
+        if (this.role == 'OWNER') {
+            this.router.navigate(['/apartment', {id: this.tokenStorageService.getAccountId()}]);
+        }
     }
 
 }
