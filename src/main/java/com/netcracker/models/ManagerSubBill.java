@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 public class ManagerSubBill extends SubBill {
+
     @NotNull(message = "Manager cant be null")
     private Manager manager;
     private List<ManagerSpendingOperation> managerSpendingOperations;
@@ -24,13 +25,7 @@ public class ManagerSubBill extends SubBill {
         this.manager = manager;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
+    public ManagerSubBill() {
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 }

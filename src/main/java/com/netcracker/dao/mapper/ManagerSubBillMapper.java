@@ -16,7 +16,7 @@ public class ManagerSubBillMapper implements RowMapper<ManagerSubBill> {
     public ManagerSubBill mapRow(ResultSet rs, int rowNum) throws SQLException {
         ManagerSubBill managerSubBill = new ManagerSubBillBuilder()
                 .withSubBillId(new BigInteger(rs.getString("sub_bill_id")))
-                .withBalance(Double.valueOf(rs.getString("balance")))
+                .withBalance(Double.valueOf(rs.getString("balance").replace(",",".")))
                 .withManager(new ManagerBuilder()
                         .withAccountId(new BigInteger(rs.getString("account_id")))
                         .build())
@@ -35,3 +35,4 @@ public class ManagerSubBillMapper implements RowMapper<ManagerSubBill> {
         return managerSubBill;
     }
 }
+

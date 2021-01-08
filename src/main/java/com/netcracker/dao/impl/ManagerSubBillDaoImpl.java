@@ -55,14 +55,16 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
     }
 
     @Override
-    public ManagerSubBill getManagerSubBillById(BigInteger id) throws DaoAccessException {
+    public ManagerSubBill getManagerSubBillById(BigInteger managerSubBillId) throws DaoAccessException {
+        ManagerSubBill managerSubBill;
         try {
-            ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_ID, new ManagerSubBillMapper(), id);
+            managerSubBill = jdbcTemplate.queryForObject(
+                    GET_MANAGER_SUB_BILL_BY_ID, new ManagerSubBillMapper(), managerSubBillId);
             return managerSubBill;
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_MANAGER_SUB_BILL_BY_ID)
-                    .withId(id)
+                    .withId(managerSubBillId)
                     .withCause(e.getCause())
                     .withErrorMessage(BigInteger.valueOf(143))
                     .build();
@@ -70,6 +72,7 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
             throw e;
         }
     }
+
 
     @Override
     public ManagerSubBill getManagerSubBillByCommunalUtilityId(BigInteger id) throws DaoAccessException {
@@ -81,6 +84,23 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID)
                     .withId(id)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(143))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @Override
+    public ManagerSubBill getManagerSubBillByCommunalUtilityName(String communalUtilityName) throws DaoAccessException {
+        try {
+            ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_NAME, new ManagerSubBillMapper(), communalUtilityName);
+            return managerSubBill;
+        } catch (DataAccessException e) {
+            log.error("IN getManagerSubBillByCommunalUtilityId: " + EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_NAME);
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_NAME)
                     .withCause(e.getCause())
                     .withErrorMessage(BigInteger.valueOf(143))
                     .build();
