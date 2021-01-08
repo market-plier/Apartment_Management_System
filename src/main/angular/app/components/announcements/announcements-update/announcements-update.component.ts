@@ -3,6 +3,7 @@ import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
+import {HouseVotingService} from "../../../services/house-voting.service";
 
 @Component({
     selector: 'app-announcements-update',
@@ -34,12 +35,19 @@ export class AnnouncementsUpdateComponent implements OnInit {
         this.form = new FormGroup({
             title: new FormControl('',[
                 Validators.required,
+                this.noWhitespaceValidator,
                 Validators.minLength(2),
                 Validators.maxLength(255)
             ]),
             body:new FormControl('',Validators.maxLength(1023)),
             isOpened:new FormControl('',Validators.required)
         })
+    }
+
+    public noWhitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     saveAnnouncement(): void {

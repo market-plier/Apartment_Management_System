@@ -34,6 +34,12 @@
                                 </mat-radio-group>
                                 <button mat-flat-button [disabled]="selectedVotingOptionId==null" color="primary" (click)="addVote()">Vote</button>
                             </div>
+                            <div *ngIf="getRole() == 'MANAGER'" align="end">
+                                <button mat-stroked-button color="warn"
+                                        (click)="deleteHouseVoting(announcement.announcementId)">
+                                    Delete Voting
+                                </button>
+                            </div>
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -80,8 +86,9 @@
                 </mat-form-field>
 
                 <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">
-                    <small *ngIf="form.get('body').errors.minlength">Body length must not be empty</small>
-                    <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1000</small>
+                    <small *ngIf="form.get('body').errors.minlength">Body length must not be empty<br></small>
+                    <small *ngIf="form.get('body').errors.whitespace">Body must be filled<br></small>
+                    <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1000<br></small>
                 </mat-error>
                 <button [disabled]="form.invalid"  mat-flat-button color="primary" type="submit">Submit</button>
             </form>

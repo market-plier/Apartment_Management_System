@@ -26,7 +26,9 @@ export class AnnouncementsCreateComponent implements OnInit {
     houseVoting: HouseVoting = {
         title: ''
     };
-    votingCount: number = 2;
+    maxVotingCount: number = 10;
+    minVotingCount: number = 2;
+    currVotingCount: number = this.minVotingCount;
 
     constructor(private announcementService: AnnouncementService,
                 private houseVotingService: HouseVotingService,
@@ -37,10 +39,17 @@ export class AnnouncementsCreateComponent implements OnInit {
         return new Array(i);
     }
 
+    public noWhitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
+    }
+
     ngOnInit(): void {
         this.announcementFormGroup = new FormGroup({
             title: new FormControl('',[
                 Validators.required,
+                this.noWhitespaceValidator,
                 Validators.minLength(2),
                 Validators.maxLength(255)
             ]),
@@ -51,16 +60,18 @@ export class AnnouncementsCreateComponent implements OnInit {
         this.votingFormGroup = new FormGroup({
             title: new FormControl('',[
                 Validators.required,
+                this.noWhitespaceValidator,
                 Validators.minLength(2),
                 Validators.maxLength(255)
             ]),
         })
 
-        for (let i = 0; i < this.votingCount; i++) {
+        for (let i = 0; i < this.currVotingCount; i++) {
             this.votingFormGroup.addControl(
                 'name' + i,
                 new FormControl('',[
                     Validators.required,
+                    this.noWhitespaceValidator,
                     Validators.minLength(2),
                     Validators.maxLength(255)
                 ])
@@ -89,19 +100,22 @@ export class AnnouncementsCreateComponent implements OnInit {
     };
 
     addVotingOptionControl() {
-        this.votingFormGroup.addControl(
-            'name' + this.votingCount++,
-            new FormControl('',[
-                Validators.required,
-                Validators.minLength(2),
-                Validators.maxLength(255)
-            ])
-        )
+        if (this.currVotingCount < this.maxVotingCount) {
+            this.votingFormGroup.addControl(
+                'name' + this.currVotingCount++,
+                new FormControl('',[
+                    Validators.required,
+                    Validators.minLength(2),
+                    Validators.maxLength(255)
+                ])
+            )
+        }
+
     }
 
     deleteVotingOptionControl() {
-        if (this.votingCount > 2) {
-            this.votingFormGroup.removeControl('name' + (--this.votingCount));
+        if (this.currVotingCount > this.minVotingCount) {
+            this.votingFormGroup.removeControl('name' + (--this.currVotingCount));
         }
 
     }
@@ -111,12 +125,16 @@ export class AnnouncementsCreateComponent implements OnInit {
             .subscribe(
                 response => {
                     console.log(response);
-                    for (let i = 0; i < this.votingCount; ++i) {
-                        this.saveVotingOption(
-                            announcementId,
-                            this.votingFormGroup.value['name'+ i]
-                    );
+                    for (let i = 0; i < this.currVotingCount; ++i) {
+                        let votingOption: VotingOption = {
+                            name: this.votingFormGroup.value['name'+ i],
+                            houseVoting: response
+                        };
+
+                        this.saveVotingOption(announcementId, votingOption);
                     }
+
+                    this.router.navigateByUrl('announcements');
                 },
                 error => {
                     console.log(error);
@@ -124,6 +142,7 @@ export class AnnouncementsCreateComponent implements OnInit {
     }
 
     saveVotingOption(announcementId: number, votingOption:VotingOption): void {
+        console.log(votingOption);
         this.votingOptionService.createVotingOption(announcementId, votingOption)
             .subscribe(
                 response => {

@@ -1,11 +1,14 @@
 <div class="p-3" fxFlex="60" fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch" fxFlexFill>
     <mat-card >
+        <mat-card-header>
+            <mat-card-title>Announcement Create</mat-card-title>
+        </mat-card-header>
         <mat-vertical-stepper linear="true" #stepper>
             <mat-step [stepControl]="announcementFormGroup">
                 <form xLayoutAlign="center" fxLayout="column"
                       [formGroup]="announcementFormGroup">
 
-                    <ng-template matStepLabel>Fill announcement</ng-template>
+                    <ng-template matStepLabel>Announcement info</ng-template>
                     <mat-form-field>
                         <mat-label>Title</mat-label>
                         <input matInput type="text"
@@ -15,9 +18,10 @@
                     </mat-form-field>
 
                     <mat-error *ngIf="announcementFormGroup.get('title').invalid && announcementFormGroup.get('title').touched">
-                        <small *ngIf="announcementFormGroup.get('title').errors.required">Title is required</small>
-                        <small *ngIf="announcementFormGroup.get('title').errors.minlength">Title length must be more than 1</small>
-                        <small *ngIf="announcementFormGroup.get('title').errors.maxlength">Title length must be less than 256</small>
+                        <small *ngIf="announcementFormGroup.get('title').errors.required">Title is required<br></small>
+                        <small *ngIf="announcementFormGroup.get('title').errors.whitespace">Title must be filled<br></small>
+                        <small *ngIf="announcementFormGroup.get('title').errors.minlength">Title length must be more than 1<br></small>
+                        <small *ngIf="announcementFormGroup.get('title').errors.maxlength">Title length must be less than 256<br></small>
                     </mat-error>
 
                     <mat-form-field>
@@ -31,7 +35,7 @@
                     </mat-form-field>
 
                     <mat-error *ngIf="announcementFormGroup.get('body').invalid && announcementFormGroup.get('body').touched">
-                        <small *ngIf="announcementFormGroup.get('body').errors.maxlength">Body length must be less than 1024</small>
+                        <small *ngIf="announcementFormGroup.get('body').errors.maxlength">Body length must be less than 1024<br></small>
                     </mat-error>
 
                     <mat-checkbox formControlName="isOpened" [(ngModel)]="announcement.isOpened">
@@ -39,7 +43,7 @@
                     </mat-checkbox>
 
                     <mat-error *ngIf="announcementFormGroup.get('isOpened').invalid && announcementFormGroup.get('isOpened').touched">
-                        <small *ngIf="announcementFormGroup.get('isOpened').errors.required">isOpened is required</small>
+                        <small *ngIf="announcementFormGroup.get('isOpened').errors.required">isOpened is required<br></small>
                     </mat-error>
 
                     <div>
@@ -63,25 +67,38 @@
                     </mat-form-field>
 
                     <mat-error *ngIf="votingFormGroup.get('title').invalid && votingFormGroup.get('title').touched">
-                        <small *ngIf="votingFormGroup.get('title').errors.required">Title is required</small>
-                        <small *ngIf="votingFormGroup.get('title').errors.minlength">Title length must be more than 1</small>
-                        <small *ngIf="votingFormGroup.get('title').errors.maxlength">Title length must be less than 256</small>
+                        <small *ngIf="votingFormGroup.get('title').errors.required">Title is required<br></small>
+                        <small *ngIf="votingFormGroup.get('title').errors.whitespace">Title must be filled<br></small>
+                        <small *ngIf="votingFormGroup.get('title').errors.minlength">Title length must be more than 1<br></small>
+                        <small *ngIf="votingFormGroup.get('title').errors.maxlength">Title length must be less than 256<br></small>
                     </mat-error>
 
-                    <div  *ngFor="let i of counter(votingCount)">
+                    <p>Voting Options:</p>
+                    <div  *ngFor="let item of counter(currVotingCount); let i = index">
                         <mat-form-field>
-                            <mat-label>{{i+1}}.Name</mat-label>
+                            <mat-label>{{i+1}}. Name</mat-label>
                             <input matInput type="text"
                                    formControlName="name{{i}}"
                             />
                         </mat-form-field>
 
                         <mat-error *ngIf="votingFormGroup.get('name'+i).invalid && votingFormGroup.get('name'+i).touched">
-                            <small *ngIf="votingFormGroup.get('name'+i).errors.required">Name is required</small>
-                            <small *ngIf="votingFormGroup.get('name'+i).errors.minlength">Name length must be more than 1</small>
-                            <small *ngIf="votingFormGroup.get('name'+i).errors.maxlength">Name length must be less than 256</small>
+                            <small *ngIf="votingFormGroup.get('name'+i).errors.required">Name is required<br></small>
+                            <small *ngIf="votingFormGroup.get('name'+i).errors.whitespace">Name must be filled<br></small>
+                            <small *ngIf="votingFormGroup.get('name'+i).errors.minlength">Name length must be more than 1<br></small>
+                            <small *ngIf="votingFormGroup.get('name'+i).errors.maxlength">Name length must be less than 256<br></small>
                         </mat-error>
                     </div>
+                    <button mat-icon-button color="primary"
+                            [disabled]="currVotingCount>=maxVotingCount"
+                            (click)="addVotingOptionControl()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary"
+                            [disabled]="currVotingCount<=minVotingCount"
+                            (click)="deleteVotingOptionControl()">
+                        <mat-icon>remove</mat-icon>
+                    </button>
                 </form>
 
                 <div>
@@ -91,7 +108,7 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
-                <p>Successfully filled.</p>
+                <p>Announcement has been successfully filled.</p>
                 <div>
                     <button mat-button matStepperPrevious>Back</button>
                     <button mat-flat-button color="primary" (click)="saveAnnouncement()">Submit</button>

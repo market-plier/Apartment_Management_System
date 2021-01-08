@@ -9,6 +9,7 @@ import {Comment} from "../../../models/comment";
 import {CommentService} from "../../../services/comment.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {HouseVotingService} from "../../../services/house-voting.service";
 
 @Component({
     selector: 'app-announcements-show',
@@ -35,6 +36,7 @@ export class AnnouncementsShowComponent implements OnInit {
 
     constructor(public dialog: MatDialog,
                 private announcementService: AnnouncementService,
+                private houseVotingService: HouseVotingService,
                 private votingOptionService: VotingOptionService,
                 private commentService: CommentService,
                 private tokenStorageService: TokenStorageService,
@@ -50,10 +52,17 @@ export class AnnouncementsShowComponent implements OnInit {
         this.form = new FormGroup({
             body: new FormControl('',[
                 Validators.required,
+                this.noWhitespaceValidator,
                 Validators.minLength(1),
                 Validators.maxLength(1000)
             ]),
         })
+    }
+
+    public noWhitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     getRole(): any {
@@ -113,11 +122,23 @@ export class AnnouncementsShowComponent implements OnInit {
     }
 
     addVote() {
-        if (this.selectedVotingOptionId != null && this.announcement.announcementId != null)
+        if (this.selectedVotingOptionId != null && this.announcement.announcementId != null) {
             this.votingOptionService.addVote(
-                this.announcement.announcementId,
-                this.selectedVotingOptionId
-            );
+                    this.announcement.announcementId,
+                    this.selectedVotingOptionId)
+                .subscribe(
+                data => {
+                    this.currentVotingOption = data;
+                    console.log(data);
+
+                    this.getAnnouncement(this.route.snapshot.params.id);
+                    if (this.getRole() =='OWNER')
+                        this.getVotingOption(this.route.snapshot.params.id);
+                },
+                error => {
+                    console.log(error);
+                });
+        }
     }
 
     deleteAnnouncement(announcementId: number): void {
@@ -130,6 +151,18 @@ export class AnnouncementsShowComponent implements OnInit {
                 error => {
                     console.log(error);
                 });
+    }
+
+    deleteHouseVoting(announcementId: number) {
+        this.houseVotingService.deleteHouseVoting(announcementId)
+            .subscribe(
+            response => {
+                console.log(response);
+                window.location.reload();
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     saveComment() {
@@ -187,6 +220,7 @@ export class CommentEditDialog {
         this.form = new FormGroup({
             body: new FormControl('',[
                 Validators.required,
+                this.noWhitespaceValidator,
                 Validators.minLength(1),
                 Validators.maxLength(1000)
             ]),
@@ -195,6 +229,12 @@ export class CommentEditDialog {
 
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    public noWhitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     updateComment() {

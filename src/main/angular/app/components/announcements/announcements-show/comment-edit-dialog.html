@@ -14,8 +14,9 @@
         </mat-form-field>
 
         <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">
-            <small *ngIf="form.get('body').errors.minlength">Body length must not be empty</small>
-            <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1000</small>
+            <small *ngIf="form.get('body').errors.minlength">Body length must not be empty<br></small>
+            <small *ngIf="form.get('body').errors.whitespace">Body must be filled<br></small>
+            <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1000<br></small>
         </mat-error>
 
     </div>
