@@ -4,19 +4,33 @@ import {ApartmentInfoService} from "../../../services/apartment-info.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 
 @Component({
     selector: 'app-manager-apartment-info-edit',
-    templateUrl: './manager-apartment-info-edit.component.html',
-    styleUrls: ['./manager-apartment-info-edit.component.css']
+    templateUrl: './apartment-info-edit.component.html',
+    styleUrls: ['./apartment-info-edit.component.css']
 })
-export class ManagerApartmentInfoEditComponent implements OnInit {
-    apartment: Apartment = new Apartment();
+export class ApartmentInfoEditComponent implements OnInit {
+    apartment: Apartment = {
+        apartmentNumber: 1,
+        squareMetres: 15,
+        floor: 1,
+        peopleCount: 0,
+        accountId: 0,
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: null,
+        phoneNumber: '',
+        role: 'OWNER'
+    };
+    apartmentToSave?: Apartment;
     hide = true;
 
     constructor(private service: ApartmentInfoService, private route: ActivatedRoute, private router: Router,
-         private _snackBar: MatSnackBar) {
+                private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService) {
     }
 
     firstFormGroup: FormGroup = new FormBuilder().group({
@@ -30,11 +44,16 @@ export class ManagerApartmentInfoEditComponent implements OnInit {
     public mask = ['+', /[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
 
     updateApartment() {
-        this.service.updateApartment(this.apartment);
-        if (this.apartment.password!=null) {
-            this.service.updatePassword(this.apartment);
+
+        this.apartmentToSave = Object.assign({}, this.apartment)
+        this.service.updateApartment(this.apartmentToSave).subscribe(
+            data => {
+                this.openSnackBar('Apartment is created', 'OK');
+            });
+        if (this.apartment.password != null) {
+            this.service.updatePassword(this.apartmentToSave);
         }
-        this.openSnackBar('Apartment updated', 'OK');
+
     }
 
     openSnackBar(message: string, action: string) {
@@ -52,7 +71,7 @@ export class ManagerApartmentInfoEditComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.service.getApartmentByApartmentNumber(this.route.snapshot.params['number']).subscribe(data => {
+        this.service.getApartmentByAccountId(this.route.snapshot.params['id']).subscribe(data => {
             this.apartment = data;
         }, error => console.log(error));
     };

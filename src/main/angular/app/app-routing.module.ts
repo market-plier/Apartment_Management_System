@@ -9,7 +9,7 @@ import {ManagerOperationCreateComponent} from "./components/manager-operation/ma
 import {AuthGuard} from "./services/guard/auth.guard";
 import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
 import {ManagerGuard} from "./services/guard/manager.guard";
-import {ApartmentInfoEditComponent} from "./components/apartments/apartment-info-edit/apartment-info-edit.component";
+import {ApartmentInfoEditComponent} from "./components/apartments/manager-apartment-info-edit/apartment-info-edit.component";
 import {ApartmentRegistrationComponent} from "./components/apartments/apartment-registration/apartment-registration.component";
 import {ApartmentsComponent} from "./components/apartments/apartments-list/apartments.component";
 import {HomeComponent} from "./components/home/home.component";

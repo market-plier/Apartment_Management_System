@@ -7,14 +7,15 @@
             <div method="PUT">
                 <form (ngSubmit)="updateApartment()">
                     <div class="card-body" [formGroup]="firstFormGroup">
-                        <div class="row row-cols-2">
+                        <div *ngIf="tokenStorage.getRole()=='MANAGER'" class="row row-cols-2">
                             <div class="form-row">
                                 <div class="name">First name</div>
                                 <div class="value">
                                     <mat-form-field appearance="standard">
-                                        <input matInput formControlName="firstNameCtrl" type="text"
+                                        <input matInput
+                                               formControlName="firstNameCtrl" type="text"
                                                name="first_name"
-                                               [(ngModel)]="apartment.firstName" required>
+                                               [(ngModel)]="apartment.firstName">
                                         <mat-error
                                                 *ngIf="firstFormGroup.controls['firstNameCtrl'].hasError('pattern')">
                                             Please enter a valid first name
@@ -31,7 +32,7 @@
                                 <div class="value">
                                     <mat-form-field appearance="standard">
                                         <input matInput formControlName="lastNameCtrl" type="text"
-                                               [(ngModel)]="apartment.lastName" required>
+                                               [(ngModel)]="apartment.lastName">
                                         <mat-error
                                                 *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('pattern')">
                                             Last name is required
@@ -54,27 +55,27 @@
                                                    type="email"
                                                    name="email"
                                                    placeholder="example@email.com"
-                                                   [(ngModel)]="apartment.email" required>
+                                                   [(ngModel)]="apartment.email">
                                             <mat-error
                                                     *ngIf="firstFormGroup.controls['emailCtrl'].hasError('pattern')">
                                                 Please enter a valid email address
                                             </mat-error>
                                             <mat-error
-                                                    *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('required')">
+                                                    *ngIf="firstFormGroup.controls['emailCtrl'].hasError('required')">
                                                 Email is required
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div *ngIf="tokenStorage.getRole()=='MANAGER'" class="form-row">
                                 <div class="name">Phone number</div>
                                 <div class="value">
                                     <mat-form-field appearance="standard">
                                         <mat-label>Input your phone number</mat-label>
                                         <input matInput formControlName="phoneNumberCtrl" type="tel"
                                                [(ngModel)]="apartment.phoneNumber"
-                                               [textMask]="{mask: mask, guide: true}" required>
+                                               [textMask]="{mask: mask, guide: true}">
                                         <mat-hint>Format: +XXXYYTTEEQQQ</mat-hint>
                                         <mat-icon matSuffix>phone</mat-icon>
                                         <mat-error
@@ -91,7 +92,7 @@
                             </div>
                         </div>
                         <div class="row row-cols-2">
-                            <div class="form-row">
+                            <div *ngIf="tokenStorage.getRole()=='MANAGER'" class="form-row">
                                 <div class="name">People count</div>
                                 <div class="value">
                                     <mat-form-field appearance="standard">
@@ -116,7 +117,7 @@
                                         <mat-form-field appearance="standard">
                                             <input matInput [type]="hide ? 'password' : 'text'"
                                                    placeholder="" formControlName="passwordCtrl"
-                                                   [(ngModel)]="apartment.password" required>
+                                                   [(ngModel)]="apartment.password">
                                             <button mat-icon-button matSuffix (click)="hide = !hide"
                                                     [attr.aria-label]="'Hide password'"
                                                     [attr.aria-pressed]="hide">
@@ -134,15 +135,6 @@
                         <div class="card-footer">
                             <button mat-raised-button color="primary" type="submit">Update</button>
                         </div>
-                        <mat-expansion-panel hideToggle>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Change password
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <p>This is the primary content of the panel.</p>
-                        </mat-expansion-panel>
-
                     </div>
                 </form>
             </div>

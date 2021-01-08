@@ -43,7 +43,7 @@ import {ManagerGuard} from "./services/guard/manager.guard";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ApartmentsComponent} from "./components/apartments/apartments-list/apartments.component";
 import {ApartmentRegistrationComponent} from "./components/apartments/apartment-registration/apartment-registration.component";
-import {ApartmentInfoEditComponent} from "./components/apartments/apartment-info-edit/apartment-info-edit.component";
+import {ApartmentInfoEditComponent} from "./components/apartments/manager-apartment-info-edit/apartment-info-edit.component";
 import {NavComponent} from "./components/nav/nav.component";
 import {HomeComponent} from "./components/home/home.component";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
