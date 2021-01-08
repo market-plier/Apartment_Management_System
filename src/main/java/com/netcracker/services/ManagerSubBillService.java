@@ -45,6 +45,11 @@ public class ManagerSubBillService {
         return managerSubBills;
     }
 
+    public Collection<ManagerSubBill> getAllManagerSubBillsWithoutOperations() {
+       return managerSubBillDao.getAllManagerSubBillsWithOutManager();
+    }
+
+
 
     public ManagerSubBill getManagerSubBill(BigInteger managerSubBillId) {
 

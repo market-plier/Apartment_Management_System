@@ -54,7 +54,7 @@
                     <th mat-header-cell *matHeaderCellDef> Description </th>
                     <ng-container *matCellDef="let element">
                     <td mat-cell [hidden]="isHidden(element.operationId)"> {{element.description}} </td>
-                    <td mat-cell [hidden]="!isHidden(element.operationId)"> <input formControlName="description" value="Enter Description" placeholder="{{element.description}}"></td>
+                    <td mat-cell [hidden]="!isHidden(element.operationId)"> <input formControlName="description" placeholder="Enter Description"></td>
                     </ng-container>
                 </ng-container>
 
@@ -76,7 +76,7 @@
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="createdAt">
                     <th mat-header-cell *matHeaderCellDef> Created at </th>
-                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'medium'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'short'}} </td>
                 </ng-container>
 
 

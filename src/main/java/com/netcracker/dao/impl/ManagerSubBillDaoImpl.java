@@ -55,6 +55,21 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
     }
 
     @Override
+    public Collection<ManagerSubBill> getAllManagerSubBillsWithOutManager() throws DaoAccessException {
+        try {
+            return jdbcTemplate.query(GET_ALL_MANAGER_SUB_BILL_NO_MANAGER, new ManagerSubBillMapper());
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_ALL_MANAGER_SUB_BILL)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(143))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @Override
     public ManagerSubBill getManagerSubBillById(BigInteger managerSubBillId) throws DaoAccessException {
         ManagerSubBill managerSubBill;
         try {

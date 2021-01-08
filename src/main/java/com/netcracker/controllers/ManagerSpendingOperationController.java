@@ -47,7 +47,7 @@ public class ManagerSpendingOperationController {
                     .withDescription(managerSpendingOperation.getDescription())
                     .withSum(managerSpendingOperation.getSum())
                     .build());
-            return ResponseEntity.ok("OK");
+            return ResponseEntity.ok().build();
         }
 
         @RequestMapping(method = RequestMethod.PUT)
@@ -58,7 +58,7 @@ public class ManagerSpendingOperationController {
                     .withDescription(managerSpendingOperation.getDescription())
                     .withOperationId(managerSpendingOperation.getOperationId())
                     .build());
-            return ResponseEntity.ok("OK");
+            return ResponseEntity.ok().build();
         }
 
         @RequestMapping(value = "/get-by-date/",method = RequestMethod.GET)

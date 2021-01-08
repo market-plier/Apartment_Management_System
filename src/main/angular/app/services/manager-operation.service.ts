@@ -14,12 +14,12 @@ export class ManagerOperationService {
 
   constructor(private http: HttpClient) { }
     private baseUrl = 'http://localhost:8888/manager-operation-spending/get-by-date/';
-    private urlManagerOperation = 'http://localhost:8888/getAllManagerSubBills';
+    private urlManagerOperation = 'http://localhost:8888/get-manager-sub-bill-info';
     private urlCreateManagerOperation = 'http://localhost:8888/manager-operation-spending/';
     private urlUpdateManagerOperation='http://localhost:8888/manager-operation-spending/';
     private urlFilterByDateAndCommunalUtility='http://localhost:8888/manager-operation-spending/get-by-date-comm-util/';
     private urlFilterByCommunalUtility='http://localhost:8888/manager-operation-spending/get-by-comm-util/';
-    private urlGetAllCommUtility='http://localhost:8888/communal_utilities/comm-util/';
+    private urlGetAllCommUtility='http://localhost:8888/communal-utilities/comm-util';
 
 
     public error$: Subject<string> = new Subject<string>()
@@ -53,15 +53,20 @@ export class ManagerOperationService {
 
   makeSpending(managerSpending:ManagerOperation)
   {
-      console.log(managerSpending);
+    console.log(managerSpending)
       this.http.post<ManagerOperation>(this.urlCreateManagerOperation, managerSpending).pipe(
           catchError(this.handleErrorBalance.bind(this)),
+      ).subscribe(
+
+          (res) => {
+              console.log(res)
+          },
+          (err) => console.log(err)
       );
   }
 
   updateSpending(managerOperation:ManagerOperation)
   {
-
      return this.http.put<ManagerOperation>(this.urlUpdateManagerOperation,managerOperation).pipe(
           catchError(this.handleErrorBalance.bind(this))
       ).subscribe(
@@ -87,7 +92,7 @@ export class ManagerOperationService {
 
     private handleErrorBalance(error: HttpErrorResponse)
     {
-        console.log(error.error.errorCode)
+        console.log(error)
         if (error.error.errorCode == 8092)
         {
             this.error$.next('Not enough money')

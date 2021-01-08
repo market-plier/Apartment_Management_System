@@ -4,6 +4,7 @@ import {ManagerOperation} from "../../../models/manager-operation";
 import {ManagerSubBill} from "../../../models/manager-sub-bill";
 import {Subject, Subscription} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'app-manager-operation-create',
@@ -17,17 +18,25 @@ export class ManagerOperationCreateComponent implements OnInit {
   form: FormGroup;
 
   error:Subject<string>;
-  success:Subject<string>;
+  message:string
 
-  constructor(public managerService: ManagerOperationService) { }
+
+  constructor(public managerService: ManagerOperationService, private router: Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params:Params)=>
+    {
+      if(params['addedSuccess'])
+      {
+        this.message = 'Spending added successfully'
+      }
+    })
 
 
-    this.success = this.managerService.success$;
-    this.error = this.managerService.error$;
+    this.error = null;
 
     this.pSub = this.managerService.getAllManagerSubBill().subscribe(subBills => {
+      console.log(subBills);
       this.subBills = subBills
     })
 
@@ -41,8 +50,20 @@ export class ManagerOperationCreateComponent implements OnInit {
   }
   onClickSubmit() {
     this.error = null;
-    this.success = null;
+    console.log(this.form.value)
     this.managerService.makeSpending(this.form.value);
+    this.error = this.managerService.error$;
+    console.log(this.error)
+    if (this.error.observers.length == 0)
+    {
+      this.form.reset();
+      this.router.navigate(['manager-operation/create'], {
+        queryParams: {
+          addedSuccess: true
+        }
+      })
+
+    }
 
   }
 
