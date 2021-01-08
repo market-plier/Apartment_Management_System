@@ -196,7 +196,8 @@ export class AnnouncementsShowComponent implements OnInit {
 
     openDialog(comment: Comment): void {
         const dialogRef = this.dialog.open(CommentEditDialog, {
-            data: comment
+            data: comment,
+            minWidth: 700
         });
 
         dialogRef.afterClosed().subscribe(result => {

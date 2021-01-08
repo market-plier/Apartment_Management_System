@@ -1,27 +1,29 @@
-<h1 mat-dialog-title>Edit comment</h1>
-<form fxLayoutAlign="center start" fxLayout="column" class="p-2"
-      [formGroup]="form"
-      (ngSubmit)="updateComment()">
-    <div mat-dialog-content>
+<div>
+    <h1 mat-dialog-title>Edit comment</h1>
+    <form fxLayoutAlign="center" fxLayout="column" class="p-2"
+          [formGroup]="form"
+          (ngSubmit)="updateComment()">
+        <div mat-dialog-content>
 
-        <mat-form-field>
-            <mat-label>Body</mat-label>
-            <textarea matInput
-                      formControlName="body"
-                      rows="4"
-                      [(ngModel)]="data.body">
+            <mat-form-field  class="col-md-12">
+                <mat-label>Body</mat-label>
+                <textarea matInput
+                          formControlName="body"
+                          rows="4"
+                          [(ngModel)]="data.body">
                     </textarea>
-        </mat-form-field>
+            </mat-form-field>
 
-        <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">
-            <small *ngIf="form.get('body').errors.minlength">Body length must not be empty<br></small>
-            <small *ngIf="form.get('body').errors.whitespace">Body must be filled<br></small>
-            <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1000<br></small>
-        </mat-error>
+            <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">
+                <small *ngIf="form.get('body').errors.minlength">Body length must not be empty<br></small>
+                <small *ngIf="form.get('body').errors.whitespace">Body must be filled<br></small>
+                <small *ngIf="form.get('body').errors.maxlength">Body length must be less than 1000<br></small>
+            </mat-error>
 
-    </div>
-    <div mat-dialog-actions>
-        <button mat-button (click)="onNoClick()">Cancel</button>
-        <button [disabled]="form.invalid" mat-flat-button color="primary" type="submit">Submit</button>
-    </div>
-</form>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancel</button>
+            <button [disabled]="form.invalid" mat-flat-button color="primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
