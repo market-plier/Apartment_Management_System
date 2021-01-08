@@ -1,0 +1,102 @@
+<div class="p-3" fxFlex="60" fxFlexFill fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch">
+    <mat-card>
+        <p *ngIf="getRole() != 'OWNER'">
+            <mat-toolbar color="secondary">
+                <mat-toolbar-row>
+                    <span>Create report</span>
+                    <span class="example-spacer"></span>
+                </mat-toolbar-row>
+                <mat-toolbar-row>
+                    <mat-form-field>
+                        <mat-label>Select an option</mat-label>
+                        <mat-select [(value)]="currentForm">
+                            <mat-option value="date&com">By date and communal utility</mat-option>
+                            <mat-option value="date">Spending report by date</mat-option>
+                            <mat-option value="bill">Bill report</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </p>
+        <form (ngSubmit)="makeManagerBillDeptReport()" *ngIf="currentForm == 'bill'" [formGroup]="formGroup"
+              fxLayout="column" xLayoutAlign="center">
+            <mat-toolbar color="primary">
+                <span>Bill report</span>
+                <span class="example-spacer"></span>
+            </mat-toolbar>
+            <span class="example-spacer"></span>
+            <mat-form-field appearance="fill">
+                <mat-label>Communal utilities</mat-label>
+                <mat-select formControlName="communalUtility" multiple>
+                    <mat-option *ngFor="let stat of utilities" [value]="stat.communalUtilityId">
+                        {{stat.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button color="primary" mat-flat-button type="submit">Submit</button>
+        </form>
+        <form (ngSubmit)="makeManagerOperationSpendingReportByDate()" *ngIf="currentForm == 'date'"
+              [formGroup]="formGroup" fxLayout="column" xLayoutAlign="center">
+            <mat-toolbar color="primary">
+                <span>Operation Spending Report By Date</span>
+                <span class="example-spacer"></span>
+            </mat-toolbar>
+            <span class="example-spacer"></span>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="formGroup" [rangePicker]="picker">
+                    <input formControlName="start" matStartDate placeholder="Start date">
+                    <input formControlName="end" matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-error *ngIf="formGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date
+                </mat-error>
+                <mat-error *ngIf="formGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            </mat-form-field>
+            <button color="primary" mat-flat-button type="submit">Submit</button>
+        </form>
+        <form (ngSubmit)="makeManagerOperationSpendingReportByDateAndCommunalUtility()"
+              *ngIf="currentForm == 'date&com'" [formGroup]="formGroup" fxLayout="column" xLayoutAlign="center">
+            <mat-toolbar color="primary">
+                <span>Operation Spending Report By Date And CommunalUtility</span>
+                <span class="example-spacer"></span>
+            </mat-toolbar>
+            <span class="example-spacer"></span>
+            <mat-form-field appearance="fill">
+                <mat-label>Communal utilities</mat-label>
+                <mat-select formControlName="communalUtility" multiple>
+                    <mat-option *ngFor="let stat of utilities" [value]="stat.communalUtilityId">
+                        {{stat.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="formGroup" [rangePicker]="picker">
+                    <input formControlName="start" matStartDate placeholder="Start date">
+                    <input formControlName="end" matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-error *ngIf="formGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date
+                </mat-error>
+                <mat-error *ngIf="formGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            </mat-form-field>
+            <button color="primary" mat-flat-button type="submit">Submit</button>
+        </form>
+        <form (ngSubmit)="makeApartmentDeptReport()" *ngIf="getRole() == 'OWNER'" [formGroup]="formGroup"
+              fxLayout="column" xLayoutAlign="center">
+            <span>Create report</span>
+            <mat-form-field appearance="fill">
+                <mat-label>Communal utilities</mat-label>
+                <mat-select formControlName="communalUtility" multiple>
+                    <mat-option *ngFor="let stat of utilities" [value]="stat.communalUtilityId">
+                        {{stat.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button color="primary" mat-flat-button type="submit">Submit</button>
+        </form>
+    </mat-card>
+</div>

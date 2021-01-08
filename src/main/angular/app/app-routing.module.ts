@@ -15,17 +15,17 @@ import {ApartmentsComponent} from "./components/apartments/apartments-list/apart
 import {HomeComponent} from "./components/home/home.component";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {ApartmentInfoPageComponent} from "./components/apartments/apartment-info-page/apartment-info-page.component";
-import {OwnerGuard} from "./services/guard/owner.guard";
 import {CommunalUtilitiesCreateComponent} from "./components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
 import {CommunalUtilitiesListComponent} from "./components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
 import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
+import {ReportCreateComponent} from "./components/report-create/report-create.component";
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 
 
 const routes: Routes = [
-    {path: '', redirectTo: '/login', pathMatch: 'full', canActivate:[IsAuthGuard]},
+    {path: '', redirectTo: '/login', pathMatch: 'full', canActivate: [IsAuthGuard]},
     {path: 'apartments', component: ApartmentsComponent, canActivate: [AuthGuard, ManagerGuard]},
-    {path: 'login', component: LoginComponent, canActivate:[IsAuthGuard]},
+    {path: 'login', component: LoginComponent, canActivate: [IsAuthGuard]},
     {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
     {path: 'apartments/create', component: ApartmentRegistrationComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'apartments/update/:id', component: ApartmentInfoEditComponent, canActivate: [AuthGuard]},
@@ -35,10 +35,15 @@ const routes: Routes = [
     {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'announcements/:id', component: AnnouncementsShowComponent, canActivate: [AuthGuard]},
     {path: 'announcements/:id/update', component: AnnouncementsUpdateComponent, canActivate: [AuthGuard, ManagerGuard]},
-    {path: 'communal-utilities/create', component: CommunalUtilitiesCreateComponent, canActivate: [ManagerGuard]},
-    {path: 'communal-utilities', component: CommunalUtilitiesListComponent, canActivate: [AuthGuard, ManagerGuard]},
-    {path: 'communal-utilities/:id', component: CommunalUtilitiesShowComponent, canActivate: [ManagerGuard]},
+    {
+        path: 'communal-utilities/create',
+        component: CommunalUtilitiesCreateComponent,
+        canActivate: [AuthGuard, ManagerGuard]
+    },
+    {path: 'communal-utilities', component: CommunalUtilitiesListComponent, canActivate: [AuthGuard]},
+    {path: 'communal-utilities/:id', component: CommunalUtilitiesShowComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'apartment', component: ApartmentInfoPageComponent},
+    {path: 'reports', component: ReportCreateComponent, canActivate: [AuthGuard]},
     {path: '**', component: NotFoundComponent},
 ];
 
