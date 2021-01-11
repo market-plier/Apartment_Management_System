@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.List;
+
 
 @Log4j
 @Service
@@ -98,27 +98,32 @@ public class ManagerSubBillService {
 
 
     public void updateManagerSubBillSpendingOperation(ManagerSpendingOperation managerSpendingOperation) {
+
         ManagerSubBill managerSubBill = managerSubBillDao.getManagerSubBillById(managerSpendingOperation.getManagerSubBill().getSubBillId());
+        ManagerSpendingOperation oldManagerOperation = managerOperationSpendingService.getManagerSpendingOperation(managerSpendingOperation.getOperationId());
 
-        if (managerSubBill.getManagerSpendingOperations().contains(managerSpendingOperation)) {
-            Double oldSpendingOperation = managerSubBill.getManagerSpendingOperations()
-                    .get(managerSubBill.getManagerSpendingOperations().indexOf(managerSpendingOperation)).getSum();
-            Double newSpendingOperation = managerSpendingOperation.getSum();
+        Double newSpendingOperation = managerSpendingOperation.getSum();
+        Double oldSpendingOperation = oldManagerOperation.getSum();
 
-            if (oldSpendingOperation > newSpendingOperation) {
-                managerSubBill.setBalance(managerSubBill.getBalance() - (oldSpendingOperation - newSpendingOperation));
-            }
+        if (oldManagerOperation.getManagerSubBill().getSubBillId().equals(managerSubBill.getSubBillId())) {
 
             if (oldSpendingOperation < newSpendingOperation) {
-                managerSubBill.setBalance(managerSubBill.getBalance() + (newSpendingOperation - oldSpendingOperation));
+                if (managerSubBill.getBalance() > (newSpendingOperation - oldSpendingOperation)) {
+                    managerSubBill.setBalance(managerSubBill.getBalance() - (newSpendingOperation - oldSpendingOperation));
+                    managerSubBillDao.updateManagerSubBill(managerSubBill);
+                } else {
+                    InsufficientBalanceException balanceException = new InsufficientBalanceException("Insufficient funds on the balance sheet");
+                    log.error("IN Service method updateManagerSubBillSpendingOperation: " + balanceException.getMessage());
+                    throw balanceException;
+                }
+
             }
 
-            managerSubBillDao.updateManagerSubBill(managerSubBill);
+            if (oldSpendingOperation > newSpendingOperation) {
+                managerSubBill.setBalance(managerSubBill.getBalance() + (oldSpendingOperation - newSpendingOperation));
+                managerSubBillDao.updateManagerSubBill(managerSubBill);
+            }
 
-        } else {
-            InsufficientBalanceException balanceException = new InsufficientBalanceException("Insufficient funds on the balance sheet");
-            log.error("IN Service method updateManagerSubBillSpendingOperation: " + balanceException.getMessage());
-            throw balanceException;
         }
     }
 

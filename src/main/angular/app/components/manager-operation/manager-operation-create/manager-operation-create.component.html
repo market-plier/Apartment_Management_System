@@ -1,54 +1,44 @@
-<div class="container p-5">
-
-<div class="alert alert-info" *ngIf="message">
-    {{message}}
-</div>
-
-    <div class="alert alert-danger" *ngIf="error | async as er">
-        <small><strong>{{er}}</strong></small>
-    </div>
 
 
 
-<div  fxLayoutAlign = "center">
-    <mat-card fxFlex="40">
-        <form fxLayoutAlign="center" fxLayout="column" [formGroup]="form"  (ngSubmit) = "onClickSubmit()">
-                <mat-form-field>
-                    <mat-label>Enter Description</mat-label>
-                    <textarea formControlName="description" matInput></textarea>
-                </mat-form-field>
+<mat-dialog-content>
+    <h2 mat-dialog-title>Make Spending</h2>
+        <form  class="width-dialog" fxLayout="column" [formGroup]="form"  (ngSubmit) = "onClickSubmit()">
+            <mat-form-field>
+                <mat-label>Enter Description</mat-label>
+                <textarea formControlName="description" matInput></textarea>
+            </mat-form-field>
             <mat-error *ngIf="form.get('description').invalid && form.get('description').touched">
                 <small *ngIf="form.get('description').errors.required">Description is required</small>
                 <small *ngIf="form.get('description').errors.minlength">Description length must be more than 1</small>
             </mat-error>
 
-                <mat-form-field>
-                    <mat-label>Select communal utility</mat-label>
-                    <mat-select formControlName="subBillId">
-                        <mat-option  *ngFor="let subBill of subBills" value="{{subBill.subBillId}}">Name: {{subBill.communalUtility.name}}&nbsp;  Balance: {{subBill.balance}}</mat-option>
+            <mat-form-field>
+                <mat-label>Select communal utility</mat-label>
+                <mat-select formControlName="subBillId">
+                    <mat-option  *ngFor="let subBill of subBills" value="{{subBill.subBillId}}">Name: {{subBill.communalUtility.name}}&nbsp;  Balance: {{subBill.balance}}</mat-option>
 
-                    </mat-select>
+                </mat-select>
 
-                </mat-form-field>
+            </mat-form-field>
 
             <mat-error *ngIf="form.get('subBillId').invalid && form.get('subBillId').touched">
                 <small *ngIf="form.get('subBillId').errors.required">Communal utility is required</small>
             </mat-error>
 
-                <mat-form-field>
-                    <mat-label>Enter sum of spending</mat-label>
-                    <input formControlName="sum" min="0" type="number" matInput ngModel>
-                    <span matPrefix>₴&nbsp;</span>
-                </mat-form-field>
+            <mat-form-field>
+                <mat-label>Enter sum of spending</mat-label>
+                <input formControlName="sum" min="0" type="number" matInput ngModel>
+                <span matPrefix>₴&nbsp;</span>
+            </mat-form-field>
 
             <mat-error *ngIf="form.get('sum').invalid && form.get('sum').touched">
                 <small *ngIf="form.get('sum').errors.required">Sum is required</small>
             </mat-error>
 
-                <button [disabled]="form.invalid" mat-raised-button type = "submit" color="primary">
-                    Make spending
-                </button>
+            <button [disabled]="form.invalid" mat-raised-button type = "submit" color="primary">
+                Make spending
+            </button>
         </form>
-    </mat-card>
-</div>
-</div>
+
+    </mat-dialog-content>

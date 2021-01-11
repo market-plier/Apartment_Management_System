@@ -39,7 +39,6 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ManagerOperationListComponent} from './components/manager-operation/manager-operation-list/manager-operation-list.component';
 import {ManagerOperationCreateComponent} from './components/manager-operation/manager-operation-create/manager-operation-create.component';
-import {ManagerOperationUpdateComponent} from './components/manager-operation/manager-operation-update/manager-operation-update.component';
 import {AuthGuard} from "./services/guard/auth.guard";
 import {OwnerGuard} from "./services/guard/owner.guard";
 import {ManagerGuard} from "./services/guard/manager.guard";
@@ -64,6 +63,7 @@ import {CommunalUtilitiesCreateComponent} from "./components/communal-utilities/
 import {CommunalUtilitiesListComponent} from "./components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {ReportCreateComponent} from './components/report-create/report-create.component';
+import {DatePipe} from "@angular/common";
 
 
 @NgModule({
@@ -80,7 +80,6 @@ import {ReportCreateComponent} from './components/report-create/report-create.co
         LoginComponent,
         ManagerOperationListComponent,
         ManagerOperationCreateComponent,
-        ManagerOperationUpdateComponent,
         ApartmentsComponent,
         ApartmentRegistrationComponent,
         ApartmentInfoEditComponent,
@@ -131,7 +130,7 @@ import {ReportCreateComponent} from './components/report-create/report-create.co
         MatBadgeModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-        JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard],
+        JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard,DatePipe],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -4,16 +4,15 @@
 
 
         <div class="col-md-3">
-
             <div>
-                <a routerLink="create">  <button routerLink="create" color="primary"  mat-flat-button>Add Spending</button></a>
+                <button (click)="openCreateSpending()" color="primary"  mat-flat-button>Add Spending</button>
             </div>
             <form >
             <mat-form-field class="my-3" appearance="fill" [formGroup]="range">
                 <mat-label>Enter a date range</mat-label>
                 <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
                     <input required matStartDate formControlName="start" placeholder="Start date" #dateRangeStart>
-                    <input required matEndDate formControlName="end" placeholder="End date" #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+                    <input required matEndDate formControlName="end" placeholder="End date"  #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart.value, dateRangeEnd.value)">
                 </mat-date-range-input>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker ></mat-date-range-picker>
@@ -33,14 +32,12 @@
             </form>
         </div>
 
+
     <h1 [hidden]="dataSource.data.length">No data, please enter date or communal utility</h1>
     <div class="col-md-9" [hidden]="!dataSource.data.length">
 
-
-
-
-
         <div class="mat-elevation-z8" >
+            <form [formGroup]="form" (ngSubmit) = "onSubmit()">
             <table mat-table [dataSource]="dataSource" >
 
                 <!-- Position Column -->
@@ -49,21 +46,26 @@
                     <td mat-cell *matCellDef="let element"> {{element.operationId}} </td>
                 </ng-container>
 
-                <form [formGroup]="form" >
-                <ng-container matColumnDef="description">
+
+                <ng-container matColumnDef="description" >
                     <th mat-header-cell *matHeaderCellDef> Description </th>
                     <ng-container *matCellDef="let element">
-                    <td mat-cell [hidden]="isHidden(element.operationId)"> {{element.description}} </td>
-                    <td mat-cell [hidden]="!isHidden(element.operationId)"> <input formControlName="description" placeholder="Enter Description"></td>
+                    <td mat-cell [hidden]="isHidden(element.operationId)"> {{(element.description.length>10) ? ((element.description | slice:0:10)+'...' ) : element.description}} </td>
+                        <td mat-cell [hidden]="!isHidden(element.operationId)"> <textarea class="color-border" matInput [value]="element.description"
+                                                                                          formControlName="description"></textarea></td>
+                        <input hidden formControlName="managerSubBillId" [value]="element.managerSubBill.subBillId" type="text" >
                     </ng-container>
+
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container  matColumnDef="sum">
                     <th mat-header-cell *matHeaderCellDef> Sum</th>
-                    <ng-container *matCellDef="let element">
+                    <ng-container *matCellDef="let element; let i = index">
                     <td mat-cell [hidden]="isHidden(element.operationId)"> {{element.sum}} </td>
-                    <td mat-cell [hidden]="!isHidden(element.operationId)" > <input min="0" type="number" formControlName="sum" placeholder="Enter Sum"></td>
+                    <td mat-cell [hidden]="!isHidden(element.operationId)" > <input class="color-border-input" min="0"
+                                                                                    type="number"
+                                                                                    formControlName="sum"></td>
                     </ng-container>
                 </ng-container>
 
@@ -73,10 +75,16 @@
                         <td mat-cell *matCellDef="let element"> {{element.managerSubBill.communalUtility.name}} </td>
                     </ng-container>
 
+                <ng-container matColumnDef="balance">
+                    <th mat-header-cell *matHeaderCellDef> Balance </th>
+                    <td mat-cell *matCellDef="let element"> {{element.managerSubBill.balance}}</td>
+                </ng-container>
+
+
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="createdAt">
                     <th mat-header-cell *matHeaderCellDef> Created at </th>
-                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'short'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'yyyy-MM-dd, HH:mm:ss ' }} </td>
                 </ng-container>
 
 
@@ -85,24 +93,31 @@
                     <th mat-header-cell *matHeaderCellDef> Operation </th>
                     <ng-container *matCellDef="let element">
                     <td mat-cell>
-                        <button [hidden]="isHidden(element.operationId)" (click)="update(element.operationId)" mat-button><i class="fas fa-edit"></i></button>
-                        <button [disabled]="form.invalid" [hidden]="!isHidden(element.operationId)" (click)="onSubmit()" type = "submit" mat-button>Send</button>
-                        <button [hidden]="!isHidden(element.operationId)" (click)="cancel()" mat-button>🗙</button>
+                        <button type="button" [hidden]="isHidden(element.operationId)"
+                                (click)="update(element.operationId,element.managerSubBill.subBillId);
+                                         setSum(element.sum);
+                                         setDescription(element.description)" mat-button>
+                            <i class="fas fa-edit"></i></button>
+
+                        <button [disabled]="form.invalid" [hidden]="!isHidden(element.operationId)" type = "submit" mat-button>Send</button>
+                        <button type="button" [hidden]="!isHidden(element.operationId)" (click)="cancel()" mat-button>🗙</button>
                     </td>
                     </ng-container>
                 </ng-container>
 
-                </form>
+
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             </table>
+            </form>
             <div [hidden] = " !paginateHide() " >
-            <mat-paginator  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            <mat-paginator  [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
             </div>
         </div>
     </div>
     </div>
+
 
 </div>

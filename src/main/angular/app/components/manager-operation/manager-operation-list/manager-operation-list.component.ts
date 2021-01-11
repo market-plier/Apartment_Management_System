@@ -1,13 +1,16 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {Subject, Subscription} from "rxjs";
+import { Component, OnInit, ViewChild} from '@angular/core';
+import {Subscription} from "rxjs";
 import {ManagerOperation} from "../../../models/manager-operation";
 import {ManagerOperationService} from "../../../services/manager-operation.service";;
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {ManagerSubBill} from "../../../models/manager-sub-bill";
 import {CommunalUtility} from "../../../models/communal-utility";
-import {Router} from "@angular/router";
+import {DatePipe} from "@angular/common";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {ManagerOperationCreateComponent} from "../manager-operation-create/manager-operation-create.component";
+
 
 
 @Component({
@@ -21,14 +24,27 @@ export class ManagerOperationListComponent implements OnInit {
   oSub: Subscription
   hidden: boolean = false;
   id:number;
+  managerSubBillId:number;
   form: FormGroup;
   utility:FormGroup;
-
-
+  displayedColumns: string[] = ['position', 'description', 'sum', 'communalUtility', 'balance','createdAt', 'operation'];
+  dateStart: String;
+  dateEnd: String;
+  dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
   communals: CommunalUtility[] = []
   pSub: Subscription
-  constructor(private managerService: ManagerOperationService) {
+  description: String;
+  sum: number;
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(private managerService: ManagerOperationService,private datePipe: DatePipe,private _snackBar: MatSnackBar,private dialog: MatDialog) {
   }
+
 
 
   ngOnInit(): void {
@@ -36,15 +52,12 @@ export class ManagerOperationListComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
 
-    this.range = new FormGroup({
-     start: new FormControl('',Validators.required),
-      end: new FormControl('',Validators.required)
-    })
 
     this.form = new FormGroup({
       sum:new FormControl('',[Validators.required]),
       description:new FormControl('',[Validators.required,Validators.minLength(2)]),
-      operationId: new FormControl('')
+      operationId: new FormControl(''),
+      managerSubBillId: new FormControl('')
     })
 
     this.utility = new FormGroup({
@@ -52,55 +65,71 @@ export class ManagerOperationListComponent implements OnInit {
     })
 
 
-
     this.pSub = this.managerService.getAllCommunalUtility().subscribe(communal => {
       this.communals = communal
     })
 
+    this.dateEnd =  this.datePipe.transform(Date.now()+ ( 3600 * 1000 * 24),'MM/dd/yyyy');
+    this.dateStart =  this.datePipe.transform(Date.now() - ( 3600 * 1000 * 24),'MM/dd/yyyy');
+
+
+    this.getByDateRange(this.dateStart, this.dateEnd)
     }
 
-  dateRangeStart: HTMLInputElement;
-  dateRangeEnd: HTMLInputElement;
-  dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
 
 
 
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
-  });
 
 
-  dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
-    this.dateRangeStart = dateRangeStart;
-    this.dateRangeEnd = dateRangeEnd;
-    if (this.range.valid && this.utility.invalid) {
-      this.oSub = this.managerService.getAllByDate(this.dateRangeStart.value, this.dateRangeEnd.value).subscribe(operations => {
-        this.dataSource.data = operations;
-        this.dataSource.paginator = this.paginator;
-        console.log(this.dataSource)
-      })
+  dateRangeChange(dateRangeStart, dateRangeEnd) {
+    this.dateStart = dateRangeStart;
+    this.dateEnd = dateRangeEnd;
+    if (this.utility.invalid && (this.range.valid || (this.dateStart !=null && this.dateEnd !=null))) {
+      this.getByDateRange(this.dateStart, this.dateEnd)
     }
-
     this.filterManagerOperation()
   }
 
 
-  displayedColumns: string[] = ['position', 'description', 'sum', 'communalUtility', 'createdAt', 'operation'];
-
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-
-
-
-
-  update(operationId:number)
+  openCreateSpending()
   {
-     this.form.reset();
+   this.dialog.open(ManagerOperationCreateComponent);
+  }
+
+  getByDateRange(start,end)
+  {
+    console.log(start)
+    this.oSub = this.managerService.getAllByDate(start, end).subscribe(operations => {
+      this.dataSource.data = operations;
+      console.log(operations)
+      this.dataSource.paginator = this.paginator;
+    },
+    error => {
+      console.log(error);
+    }
+    )
+  }
+
+  update(operationId:number, managerSubBill:number)
+  {
+      this.managerSubBillId = managerSubBill;
       this.id = operationId;
       this.hidden = true;
   }
+
+  setSum(sum)
+  {
+    this.sum = sum;
+    this.form.get('sum').setValue(sum);
+
+  }
+  setDescription(description)
+  {
+    this.description = description;
+    this.form.get('description').setValue(description);
+  }
+
+
 
   isHidden(operationId:number): boolean {
     return operationId == this.id && this.hidden == true;
@@ -110,20 +139,51 @@ export class ManagerOperationListComponent implements OnInit {
   {
     this.id = 0;
     this.hidden = false;
-    this.form.reset();
+
   }
 
   onSubmit():void {
     this.form.controls['operationId'].setValue(this.id);
-    this.managerService.updateSpending(this.form.value)
-    this.cancel()
-    if (this.utility.invalid && this.range.valid)
-    {
-      this.dateRangeChange(this.dateRangeStart, this.dateRangeEnd);
-    }
+    this.form.controls['managerSubBillId'].setValue(this.managerSubBillId);
 
-    this.filterManagerOperation()
+    console.log(this.form.value)
+    console.log(this.range.valid)
+    console.log(this.utility.invalid && (this.range.valid || (this.dateStart !=null && this.dateEnd !=null)))
+    if (this.description!=this.form.get('description').value || this.sum != this.form.get('sum').value)
+    {
+      this.managerService.updateSpending(this.form.value).subscribe(
+          res => {
+            this.dateRangeChange(this.dateStart, this.dateEnd);
+          },
+          error => {
+            if (error.error.errorCode===8092)
+            {
+              this.openErrorSnackBar('Insufficient funds on the balance sheet, cant update', 'OK')
+            }else if (error.error.errorCode===143)
+            {
+              this.openErrorSnackBar('Not Found Sub Bill', 'OK')
+            }
+            else
+            {
+              this.openErrorSnackBar('Cant update spending!', 'OK')
+            }
+          }
+
+      )
+      this.cancel()
+    }
   }
+
+
+  openErrorSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      panelClass:['.snackBar-fail'],
+      duration: 100000,
+    });
+  }
+
+
+
 
   filterManagerOperation()
   {
@@ -141,7 +201,7 @@ export class ManagerOperationListComponent implements OnInit {
       console.log(this.utility.value)
       console.log(this.range.value)
 
-      this.oSub = this.managerService.filterByDateAndCommunalUtility(this.utility.value, this.dateRangeStart.value, this.dateRangeEnd.value).subscribe(operations => {
+      this.oSub = this.managerService.filterByDateAndCommunalUtility(this.utility.value, this.dateStart, this.dateEnd).subscribe(operations => {
         console.log(operations)
         this.operations = operations
         this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
@@ -155,8 +215,6 @@ export class ManagerOperationListComponent implements OnInit {
   {
     return this.dataSource.data.length>0
   }
-
-
 
 
 

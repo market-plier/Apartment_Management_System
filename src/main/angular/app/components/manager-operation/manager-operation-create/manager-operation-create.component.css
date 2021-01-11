@@ -1,0 +1,9 @@
+.snackBar-fail {
+    color: #ffffff !important;
+    background-color: #cc3333 !important;
+}
+
+.width-dialog
+{
+    width: 400px;
+}

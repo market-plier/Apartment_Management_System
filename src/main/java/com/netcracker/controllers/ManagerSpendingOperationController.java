@@ -57,6 +57,7 @@ public class ManagerSpendingOperationController {
                     .withSum(managerSpendingOperation.getSum())
                     .withDescription(managerSpendingOperation.getDescription())
                     .withOperationId(managerSpendingOperation.getOperationId())
+                        .withManagerSubBill(new ManagerSubBillBuilder().withSubBillId(managerSpendingOperation.getManagerSubBillId()).build())
                     .build());
             return ResponseEntity.ok().build();
         }

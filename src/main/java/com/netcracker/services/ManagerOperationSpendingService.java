@@ -67,8 +67,9 @@ public class ManagerOperationSpendingService {
     }
 
     public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException{
+
+        managerSubBillService.updateManagerSubBillSpendingOperation(managerSpendingOperation);
         managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);
-        //managerSubBillService.updateManagerSubBillSpendingOperation(managerSpendingOperation);
 
     }
 

@@ -32,6 +32,7 @@ export class ManagerOperationService {
         console.log(params);
       return this.http.get(this.baseUrl,{params:params})
         .pipe(map((response: {[key: string]: any}) => {
+            console.log(response)
           return Object
               .keys(response)
               .map(key => ({
@@ -53,15 +54,8 @@ export class ManagerOperationService {
 
   makeSpending(managerSpending:ManagerOperation)
   {
-    console.log(managerSpending)
-      this.http.post<ManagerOperation>(this.urlCreateManagerOperation, managerSpending).pipe(
+      return this.http.post<ManagerOperation>(this.urlCreateManagerOperation, managerSpending).pipe(
           catchError(this.handleErrorBalance.bind(this)),
-      ).subscribe(
-
-          (res) => {
-              console.log(res)
-          },
-          (err) => console.log(err)
       );
   }
 
@@ -69,13 +63,7 @@ export class ManagerOperationService {
   {
      return this.http.put<ManagerOperation>(this.urlUpdateManagerOperation,managerOperation).pipe(
           catchError(this.handleErrorBalance.bind(this))
-      ).subscribe(
-
-          (res) => {
-              console.log(res)
-          },
-          (err) => console.log(err)
-      )
+      );
   }
 
 
@@ -108,12 +96,14 @@ export class ManagerOperationService {
         console.log(params)
         return this.http.get(this.urlFilterByDateAndCommunalUtility,{params:params})
             .pipe(map((response: {[key: string]: any}) => {
+
                 return Object
                     .keys(response)
                     .map(key => ({
                         ...response[key],
                         createdAt: new Date(response[key].createdAt)
                     }))
+
             }))
     }
 
