@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/managerInfo")
+@RequestMapping("/manager-info")
 public class ManagerInfoController {
     @Autowired
     ManagerInfoService managerInfoService;
 
-    @RequestMapping("/Manager")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
+    @RequestMapping("/manager")
     public Manager getManager() throws  DaoAccessException {
         return managerInfoService.getManager();
     }
