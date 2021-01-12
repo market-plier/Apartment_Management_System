@@ -12,7 +12,7 @@
                 <a mat-list-item class="hover-link" routerLink="/apartment-sub-bills">Subbills</a>
                 <a mat-list-item class="hover-link" routerLink="/announcements">Announcements</a>
                 <a *ngIf="role != 'MANAGER'" class="hover-link" mat-list-item
-                   routerLink="/apartment-request-to-manager">Request</a>
+                   routerLink="/request-to-manager">Request</a>
                 <a mat-list-item class="hover-link" routerLink="/reports">Reports</a>
                 <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartments">Apartments</a>
                 <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item

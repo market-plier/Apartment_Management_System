@@ -10,7 +10,7 @@ import {TokenStorageService} from "../../../services/token-storage.service";
 @Component({
     selector: 'app-manager-apartment-info-edit',
     templateUrl: './apartment-info-edit.component.html',
-    styleUrls: ['./apartment-info-edit.component.css']
+    styleUrls: ['./apartment-info-edit.component.scss']
 })
 export class ApartmentInfoEditComponent implements OnInit {
     apartment: Apartment = {
@@ -47,7 +47,8 @@ export class ApartmentInfoEditComponent implements OnInit {
         this.apartmentToSave = Object.assign({}, this.apartment)
         this.service.updateApartment(this.apartmentToSave).subscribe(
             data => {
-                this.openSnackBar('Apartment is updated', 'OK');
+                this.openSnackBar('Apartment is updated', '');
+                this.goToApartmentsList();
             });
         if (this.apartment.password != null) {
             this.service.updatePassword(this.apartmentToSave);
@@ -59,9 +60,6 @@ export class ApartmentInfoEditComponent implements OnInit {
     openSnackBar(message: string, action: string) {
         this._snackBar.open(message, action, {
             duration: 10000,
-        });
-        this._snackBar._openedSnackBarRef.onAction().subscribe(() => {
-            this.goToApartmentsList();
         });
     }
 

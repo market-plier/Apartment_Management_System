@@ -161,7 +161,7 @@ public interface ApartmentDao {
             "  AND APRT.OBJECT_ID = ROLE.OBJECT_ID\n" +
             "  AND ROLE.LIST_VALUE_ID = 5\n" +
             "  AND ROLE.LIST_VALUE_ID = ROLE_LIST.LIST_VALUE_ID\n" +
-            "ORDER BY TO_NUMBER(floor)";
+            "ORDER BY TO_NUMBER(floor) ASC, TO_NUMBER(apartment_number)";
 
     String GET_APARTMENT_BY_ID = "SELECT APRT.OBJECT_ID  account_id,\n" +
             "       APTNUM.VALUE    apartment_number,\n" +

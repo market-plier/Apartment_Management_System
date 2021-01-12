@@ -25,7 +25,6 @@ import {AppComponent} from './app.component';
 
 import {AnnouncementsListComponent} from './components/announcements/announcements-list/announcements-list.component';
 import {AnnouncementsCreateComponent} from './components/announcements/announcements-create/announcements-create.component';
-// @ts-ignore
 import {
     AnnouncementsShowComponent,
     CommentEditDialog
@@ -64,6 +63,7 @@ import {CommunalUtilitiesListComponent} from "./components/communal-utilities/co
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {ReportCreateComponent} from './components/report-create/report-create.component';
 import {DatePipe} from "@angular/common";
+import { RequestComponent } from './components/request/request.component';
 
 
 @NgModule({
@@ -87,7 +87,9 @@ import {DatePipe} from "@angular/common";
         HomeComponent,
         NotFoundComponent,
         ReportCreateComponent,
-        ApartmentInfoPageComponent
+        ApartmentInfoPageComponent,
+        ApartmentInfoPageComponent,
+        RequestComponent
     ],
     imports: [
         BrowserModule,

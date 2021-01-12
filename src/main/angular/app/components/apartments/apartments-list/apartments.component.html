@@ -1,71 +1,74 @@
 <div class="container">
-    <mat-toolbar>
-        <span>Apartments</span>
 
-        <mat-form-field class="form-field">
-            <mat-label>Apartment number</mat-label>
-            <input matInput type="number" min=1 [(ngModel)]="searchValue">
-            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="searchValue=null; getAllApartments()">
-                <mat-icon>close</mat-icon>
+    <div class="row">
+        <mat-card-title class="title-center col-2">APARTMENTS</mat-card-title>
+        <mat-toolbar class="mat-toolbar col-8">
+
+            <mat-form-field class="form-field">
+                <mat-label>Apartment number</mat-label>
+                <input matInput type="number" min=1 [(ngModel)]="searchValue">
+                <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="searchValue=null; getAllApartments()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-icon-button (click)="getApartment()">
+                <mat-icon>search</mat-icon>
             </button>
-        </mat-form-field>
-        <button mat-icon-button (click)="getApartment()">
-            <mat-icon>search</mat-icon>
-        </button>
 
 
-        <mat-form-field class="form-field">
-            <mat-label>Floor</mat-label>
-            <mat-select [(value)]="selectedFloor">
-                <mat-option [value]="-1">All</mat-option>
-                <mat-option *ngFor="let floor of floors" [value]="floor">
-                    {{floor}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <button mat-icon-button (click)="getAllApartmentsByFloor()">
-            <mat-icon>filter_list</mat-icon>
-        </button>
+            <mat-form-field class="form-field">
+                <mat-label>Floor</mat-label>
+                <mat-select [(value)]="selectedFloor">
+                    <mat-option [value]="-1">All</mat-option>
+                    <mat-option *ngFor="let floor of floors" [value]="floor">
+                        {{floor}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button (click)="getAllApartmentsByFloor()">
+                <mat-icon>filter_list</mat-icon>
+            </button>
 
-        <button mat-raised-button class="create-btn" routerLink="/apartments/create" color="primary">Create Apartment</button>
-    </mat-toolbar>
+        </mat-toolbar>
+        <div class="col-1">
+            <button mat-icon-button class="create-btn float-right"
+                    routerLink="/apartments/create">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
 
 
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row row-cols-md-2 row-cols-sm-1 row-cols-lg-2 row-cols-xs-1  g-4">
         <div *ngFor="let apartment of apartments" class="card col-4">
-            <div class="card-body">
-                <h5 class="card-header"><b>Apartment number: {{apartment.apartmentNumber}}</b></h5>
-                <small class="text-muted">Name : {{apartment.firstName}} {{apartment.lastName}} |
-                    Email: {{apartment.email}} | Phone: {{apartment.phoneNumber}}</small>
-                <ul class="ul">
-                    <li>Floor: {{apartment.floor}}</li>
-                    <li>Square meters: {{apartment.squareMetres}}</li>
-                    <li>People count: {{apartment.peopleCount}}</li>
-                </ul>
-                <div class="card-footer ">
-                    <div class="row">
-                        <div class=" col-md-auto ">
-                            <a (click)="updateApartment(apartment.accountId)"
-                               class="btn btn-outlined btn-black text-muted bg-transparent" data-wow-delay="0.7s">
-                                <mat-icon>settings</mat-icon>
-                                <small>EDIT</small></a>
 
-                            <i class="mdi mdi-settings-outline"></i>
-                            <a class="btn btn-outlined btn-black text-muted bg-transparent" data-wow-delay="0.7s">
-                                <mat-icon>history</mat-icon>
-                                <small>HISTORY</small> </a>
-
-                            <a (click)="apartmentInfo(apartment.accountId)"
-                               class="btn btn-outlined btn-black text-muted ">
-                                <mat-icon>perm_identity</mat-icon>
-                                <small>MORE</small></a> <span class="vl ml-3"></span>
-                        </div>
-                        <div class="col-md-auto ">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="res-circle ">
+                        <div class="circle-txt">
+                            {{apartment.apartmentNumber}}
                         </div>
                     </div>
-                </div>
-            </div>
+                    <mat-card-title>{{apartment.firstName}}  {{apartment.lastName}}</mat-card-title>
+                    <mat-card-subtitle> Email: {{apartment.email}}</mat-card-subtitle>
+                    <mat-card-subtitle> Phone: {{apartment.phoneNumber}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <hr>
+                    <ul class="ul">
+                        <li>Floor: {{apartment.floor}}</li>
+                        <li>Square meters: {{apartment.squareMetres}}</li>
+                        <li>People count: {{apartment.peopleCount}}</li>
+                    </ul>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button class="more-btn"><a (click)="apartmentInfo(apartment.accountId)"
+                                                           class="btn btn-outlined btn-black text-muted more-button">
+                        <mat-icon>perm_identity</mat-icon>
+                        <small>MORE</small></a> <span class="vl ml-3"></span></button>
+                </mat-card-actions>
+            </mat-card>
         </div>
 
     </div>

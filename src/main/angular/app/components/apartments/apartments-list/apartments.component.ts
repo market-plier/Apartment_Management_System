@@ -8,7 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
     selector: 'app-apartments',
     templateUrl: './apartments.component.html',
-    styleUrls: ['./apartments.component.css']
+    styleUrls: ['./apartments.component.scss']
 })
 export class ApartmentsComponent implements OnInit {
     apartments?: Apartment[];
@@ -54,7 +54,7 @@ export class ApartmentsComponent implements OnInit {
                     this.apartments[0] = data;
                 },
                 error => {
-                    this.openSnackBar("No apartment was found","Input another value");
+                    this.openSnackBar("No apartment was found", "Input another value");
                 }
             );
         }
@@ -65,14 +65,15 @@ export class ApartmentsComponent implements OnInit {
             duration: 10000,
         });
     }
+
     getAllApartmentsByFloor() {
-        if (this.selectedFloor != null && this.selectedFloor>0) {
+        if (this.selectedFloor != null && this.selectedFloor > 0) {
             this.apartmentInfoService.getAllApartmentsByFloor(this.selectedFloor).subscribe(
                 data => {
                     this.apartments = data;
                 },
                 error => {
-                    this.openSnackBar("No apartments on this floor","Choose another one");
+                    this.openSnackBar("No apartments on this floor", "Choose another one");
                 }
             );
         }
@@ -85,7 +86,4 @@ export class ApartmentsComponent implements OnInit {
         this.router.navigate(['/apartment', {id: id}]);
     }
 
-    updateApartment(id: Number) {
-        this.router.navigate(['apartments/update', id]);
-    }
 }

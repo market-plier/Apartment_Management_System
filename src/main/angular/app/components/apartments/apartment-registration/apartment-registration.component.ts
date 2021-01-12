@@ -8,7 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
     selector: 'app-apartment-registration',
     templateUrl: './apartment-registration.component.html',
-    styleUrls: ['./apartment-registration.component.css']
+    styleUrls: ['./apartment-registration.component.scss']
 })
 export class ApartmentRegistrationComponent implements OnInit {
     apartment: Apartment = {
@@ -55,6 +55,7 @@ export class ApartmentRegistrationComponent implements OnInit {
             data => {
                 this.openSnackBar('Apartment is created', 'OK');
                 this.isCreated = true;
+                this.goToApartmentsList();
             },
             error => {
                 console.log(error)
@@ -65,9 +66,6 @@ export class ApartmentRegistrationComponent implements OnInit {
     openSnackBar(message: string, action: string) {
         this._snackBar.open(message, action, {
             duration: 10000,
-        });
-        this._snackBar._openedSnackBarRef.onAction().subscribe(() => {
-            this.goToApartmentsList();
         });
     }
 

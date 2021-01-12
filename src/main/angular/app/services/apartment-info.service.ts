@@ -5,7 +5,6 @@ import {Apartment} from "../models/apartment";
 import {BackEndError} from "../models/back-end-error";
 import {sha256} from "js-sha256";
 import {catchError} from "rxjs/operators";
-import {Params} from "@angular/router";
 
 
 @Injectable({

@@ -20,6 +20,7 @@ import {CommunalUtilitiesListComponent} from "./components/communal-utilities/co
 import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
 import {ReportCreateComponent} from "./components/report-create/report-create.component";
 import {IsAuthGuard} from "./services/guard/isauth.guard";
+import {RequestComponent} from "./components/request/request.component";
 
 
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
     {path: 'communal-utilities', component: CommunalUtilitiesListComponent, canActivate: [AuthGuard]},
     {path: 'communal-utilities/:id', component: CommunalUtilitiesShowComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'apartment', component: ApartmentInfoPageComponent},
+    {path: 'request-to-manager', component: RequestComponent},
     {path: 'reports', component: ReportCreateComponent, canActivate: [AuthGuard]},
     {path: '**', component: NotFoundComponent},
 ];
