@@ -64,6 +64,7 @@ import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {ReportCreateComponent} from './components/report-create/report-create.component';
 import {DatePipe} from "@angular/common";
 import { RequestComponent } from './components/request/request.component';
+import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { RequestComponent } from './components/request/request.component';
         LoginComponent,
         ManagerOperationListComponent,
         ManagerOperationCreateComponent,
+        ManagerInfoPageComponent,
         ApartmentsComponent,
         ApartmentRegistrationComponent,
         ApartmentInfoEditComponent,
@@ -89,7 +91,8 @@ import { RequestComponent } from './components/request/request.component';
         ReportCreateComponent,
         ApartmentInfoPageComponent,
         ApartmentInfoPageComponent,
-        RequestComponent
+        RequestComponent,
+
     ],
     imports: [
         BrowserModule,

@@ -5,7 +5,6 @@ import {AnnouncementsCreateComponent} from "./components/announcements/announcem
 import {LoginComponent} from "./components/login/login.component";
 import {AnnouncementsShowComponent} from "./components/announcements/announcements-show/announcements-show.component";
 import {ManagerOperationListComponent} from "./components/manager-operation/manager-operation-list/manager-operation-list.component";
-import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
 import {AuthGuard} from "./services/guard/auth.guard";
 import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
 import {ManagerGuard} from "./services/guard/manager.guard";
@@ -21,6 +20,7 @@ import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/co
 import {ReportCreateComponent} from "./components/report-create/report-create.component";
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {RequestComponent} from "./components/request/request.component";
+import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 
 
 const routes: Routes = [
@@ -34,6 +34,7 @@ const routes: Routes = [
     {path: 'announcements', component: AnnouncementsListComponent, canActivate: [AuthGuard]},
     {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'announcements/:id', component: AnnouncementsShowComponent, canActivate: [AuthGuard]},
+    {path: 'manager-info', component: ManagerInfoPageComponent, canActivate: [AuthGuard,ManagerGuard]},
     {path: 'announcements/:id/update', component: AnnouncementsUpdateComponent, canActivate: [AuthGuard, ManagerGuard]},
     {
         path: 'communal-utilities/create',
@@ -53,5 +54,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

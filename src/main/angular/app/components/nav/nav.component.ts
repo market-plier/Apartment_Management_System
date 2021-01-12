@@ -43,7 +43,7 @@ export class NavComponent {
         this.ngOnInit();
         if (!this.isLoggedIn && this.router.url !== '/login') {
             this.tokenStorageService.signOut()
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login'])
         }
         return this.isLoggedIn;
     }
@@ -71,7 +71,7 @@ export class NavComponent {
 
     goToAccountPage() {
         if (this.role == 'MANAGER') {
-
+            this.router.navigate(['/manager-info']);
         }
         if (this.role == 'OWNER') {
             this.router.navigate(['/apartment', {id: this.tokenStorageService.getAccountId()}]);
