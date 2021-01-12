@@ -53,8 +53,8 @@ public class NotificationService {
     }
 
     public void sendAnnouncementNotificationToAllApartments(Announcement announcement)
-            throws MailException, DaoAccessException, NullPointerException {
-        try {
+            throws MailException, DaoAccessException {
+
             for (Account account : apartmentInfoService.getAllApartments()) {
                 mailService.sendMessage(
                         account.getEmail(),
@@ -62,15 +62,11 @@ public class NotificationService {
                         announcementNotification.getBody() + announcement.getTitle()
                 );
             }
-        } catch (NullPointerException e) {
-            log.error("NotificationService method sendAnnouncementNotificationToAllApartments: " + e.getMessage(), e);
-            throw e;
-        }
     }
 
     public void sendDebtNotificationToAllApartments()
-            throws IOException, MessagingException, DaoAccessException, NullPointerException {
-        try {
+            throws IOException, MessagingException, DaoAccessException {
+
             for (Account account : apartmentInfoService.getAllApartments()) {
                 Set<BigInteger> communalUtilityIds = communalUtilityService
                         .getAllCommunalUtilities(CommunalUtility.Status.Enabled)
@@ -88,15 +84,12 @@ public class NotificationService {
                         "ApartmentDebtsBy" + LocalDate.now(),
                         arrayInputStream);
             }
-        } catch (NullPointerException e) {
-            log.error("NotificationService method sendDebtNotificationToAllApartments: " + e.getMessage(), e);
-            throw e;
-        }
+
     }
 
     public void sendTempCommunalUtilityNotificationToAllApartments(CommunalUtility communalUtility)
-            throws IOException, MessagingException, DaoAccessException, NullPointerException {
-        try {
+            throws IOException, MessagingException, DaoAccessException{
+
             for (Account account : apartmentInfoService.getAllApartments()) {
                 ByteArrayInputStream arrayInputStream = reportService
                         .createApartmentDebtReportByCommunalID(
@@ -111,9 +104,5 @@ public class NotificationService {
                         communalUtility.getName() + "ApartmentDebtsBy" + LocalDate.now(),
                         arrayInputStream);
             }
-        } catch (NullPointerException e) {
-            log.error("NotificationService method sendTempCommunalUtilityNotificationToAllApartments: " + e.getMessage(), e);
-            throw e;
-        }
     }
 }

@@ -30,7 +30,6 @@ const routes: Routes = [
     {path: 'apartments/create', component: ApartmentRegistrationComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'apartments/update/:id', component: ApartmentInfoEditComponent, canActivate: [AuthGuard]},
     {path: 'manager-operation', component: ManagerOperationListComponent, canActivate: [AuthGuard, ManagerGuard]},
-    {path: 'manager-operation/create', component: ManagerOperationCreateComponent, canActivate: [AuthGuard]},
     {path: 'announcements', component: AnnouncementsListComponent, canActivate: [AuthGuard]},
     {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'announcements/:id', component: AnnouncementsShowComponent, canActivate: [AuthGuard]},

@@ -44,7 +44,7 @@ public class CommentController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody @Valid CommentCreateRequest comment, @AuthenticationPrincipal JwtAccount account) throws NullPointerException, DaoAccessException {
+    public ResponseEntity create(@RequestBody @Valid CommentCreateRequest comment, @AuthenticationPrincipal JwtAccount account) throws  DaoAccessException {
             commentService.createComment(new CommentBuilder()
                     .withBody(comment.getBody())
                     .withAnnouncement(new AnnouncementBuilder()
@@ -53,18 +53,22 @@ public class CommentController {
              return ResponseEntity.ok(HttpStatus.OK);
     }
 
+
+
     @RequestMapping(value = "{commentId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteComment(@AuthenticationPrincipal JwtAccount account,
                                         @NotNull(message = "cant be null")
                                         @Positive(message = "must be integer value more than 0")
-                                        @PathVariable(value = "commentId") BigInteger commentId) throws NullPointerException, DaoAccessException, NotBelongToAccountException {
+                                        @PathVariable(value = "commentId") BigInteger commentId) throws  DaoAccessException, NotBelongToAccountException {
 
             commentService.deleteComment(commentId, account.getId());
             return ResponseEntity.ok(HttpStatus.OK);
     }
 
+
+
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateComment(@AuthenticationPrincipal JwtAccount account, @Valid @RequestBody CommentUpdateRequest comment) throws NullPointerException,
+    public ResponseEntity updateComment(@AuthenticationPrincipal JwtAccount account, @Valid @RequestBody CommentUpdateRequest comment) throws
                                                                                                       DaoAccessException, NotBelongToAccountException {
             commentService.updateComment(new CommentBuilder()
                     .witCommentId(comment.getCommentId())

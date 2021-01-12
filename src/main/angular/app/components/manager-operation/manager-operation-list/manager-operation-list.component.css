@@ -13,10 +13,12 @@ table {
 .color-border
 {
     border: 1px solid grey;
+    border-radius: 3px;
 }
 
 .color-border-input
 {
     border: 1px solid grey;
     margin-left: 5px;
+    border-radius: 3px;
 }

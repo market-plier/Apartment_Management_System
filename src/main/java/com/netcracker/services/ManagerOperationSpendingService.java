@@ -44,7 +44,7 @@ public class ManagerOperationSpendingService {
     }
 
     public List<ManagerSpendingOperation> getAllManagerOperationByDateAndCommunalUtility(Date start, Date end,
-                                                                                         Set<BigInteger> communalUtility) throws DaoAccessException, NullPointerException {
+                                                                                         Set<BigInteger> communalUtility) throws DaoAccessException {
         return managerSpendingOperationDao.getAllManagerOperationByDateAndCommunalIdList(start, end, communalUtility);
 
     }

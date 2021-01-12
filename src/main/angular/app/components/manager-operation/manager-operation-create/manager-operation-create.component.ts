@@ -45,7 +45,7 @@ export class ManagerOperationCreateComponent implements OnInit {
     })
 
     this.form = new FormGroup({
-      description: new FormControl('',[Validators.required, Validators.minLength(2)]),
+      description: new FormControl('',[Validators.required, Validators.minLength(2),Validators.maxLength(1000)]),
       sum:new FormControl('',Validators.required),
       subBillId:new FormControl('',Validators.required)
     })

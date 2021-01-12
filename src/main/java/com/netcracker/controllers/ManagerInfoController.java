@@ -17,28 +17,28 @@ public class ManagerInfoController {
     ManagerInfoService managerInfoService;
 
     @RequestMapping("/Manager")
-    public Manager getManager() throws NullPointerException, DaoAccessException {
+    public Manager getManager() throws  DaoAccessException {
         return managerInfoService.getManager();
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     @RequestMapping(method = RequestMethod.POST, value = "/updateManager")
     public Manager updateManager(@RequestBody @Valid Manager manager)
-            throws NullPointerException, DaoAccessException, IllegalArgumentException {
+            throws  DaoAccessException, IllegalArgumentException {
         return managerInfoService.updateManager(manager);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     @RequestMapping(method = RequestMethod.POST, value = "/updateManagerPassword")
     public Manager updateManagerPassword(@RequestBody @Valid Manager manager)
-            throws NullPointerException, DaoAccessException {
+            throws DaoAccessException {
         return managerInfoService.updateManagerPassword(manager);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
     @RequestMapping(method = RequestMethod.POST, value = "/updateManagerBill")
     public ManagerBill updateManagerBill (@RequestBody @Valid ManagerBill managerBill)
-            throws NullPointerException, DaoAccessException {
+            throws DaoAccessException {
         return managerInfoService.updateManagerBill(managerBill);
     }
 

@@ -32,57 +32,39 @@ public class ManagerInfoService {
     }
 
     public Manager getManager() {
-        try {
-            return managerDao.getManager();
-        } catch (NullPointerException e) {
-            log.error("IN Service method getManager: " + e.getMessage());
-            throw e;
-        }
+        return managerDao.getManager();
     }
 
     public Manager updateManager(Manager manager) {
-        try {
-            Account account = accountDao.getAccount(manager.getAccountId());
 
-            account.setEmail(manager.getEmail());
-            account.setFirstName(manager.getFirstName());
-            account.setLastName(manager.getLastName());
-            account.setPhoneNumber(manager.getPhoneNumber());
+        Account account = accountDao.getAccount(manager.getAccountId());
 
-            managerDao.updateManager(manager);
-            accountDao.updateAccount(account);
+        account.setEmail(manager.getEmail());
+        account.setFirstName(manager.getFirstName());
+        account.setLastName(manager.getLastName());
+        account.setPhoneNumber(manager.getPhoneNumber());
 
-            return manager;
-        } catch (NullPointerException e) {
-            log.error("IN Service method updateManager: " + e.getMessage());
-            throw e;
-        }
+        managerDao.updateManager(manager);
+        accountDao.updateAccount(account);
+
+        return manager;
     }
 
     public Manager updateManagerPassword(Manager manager) throws DaoAccessException {
-        try {
-            Account account = accountService.getAccountByEmail(manager.getEmail());
-            if (!account.getAccountId().equals(manager.getAccountId())) {
-                throw new NotBelongToAccountException("Can not change this account password");
-            }
-
-            account.setPassword(manager.getPassword());
-            accountDao.updateAccount(account);
-            return manager;
-        } catch (NullPointerException e) {
-            log.error("ApartmentInfoService method updateApartmentPassword: " + e.getMessage(), e);
-            throw e;
+        Account account = accountService.getAccountByEmail(manager.getEmail());
+        if (!account.getAccountId().equals(manager.getAccountId())) {
+            throw new NotBelongToAccountException("Can not change this account password");
         }
+
+        account.setPassword(manager.getPassword());
+        accountDao.updateAccount(account);
+        return manager;
+
     }
 
     public ManagerBill updateManagerBill(ManagerBill managerBill) {
-        try {
-            managerBillService.updateManagerBill(managerBill);
-            return managerBill;
-        } catch (NullPointerException e) {
-            log.error("IN Service method updateManagerBill: " + e.getMessage());
-            throw e;
-        }
+        managerBillService.updateManagerBill(managerBill);
+        return managerBill;
     }
 
 }

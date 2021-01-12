@@ -12,6 +12,7 @@ import com.netcracker.util.DateUtil;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value ="/manager-operation-spending/")
-
+@PreAuthorize("hasAnyRole('ROLE_MANAGER')")
 @Validated
 public class ManagerSpendingOperationController {
 
@@ -50,6 +51,7 @@ public class ManagerSpendingOperationController {
             return ResponseEntity.ok().build();
         }
 
+
         @RequestMapping(method = RequestMethod.PUT)
         public ResponseEntity updateManagerOperationSpending(@RequestBody @Valid ManagerOperationUpdateRequest managerSpendingOperation) throws DaoAccessException
         {
@@ -61,6 +63,9 @@ public class ManagerSpendingOperationController {
                     .build());
             return ResponseEntity.ok().build();
         }
+
+
+
 
         @RequestMapping(value = "/get-by-date/",method = RequestMethod.GET)
         public List<ManagerSpendingOperation> getAllManagerOperationSpending(@RequestParam
@@ -85,7 +90,6 @@ public class ManagerSpendingOperationController {
             return managerOperationSpendingService.getManagerSpendingOperation(operationId);
         }
 
-
     @RequestMapping(value = "/get-by-date-comm-util/",method = RequestMethod.GET)
     public List<ManagerSpendingOperation> getAllManagerOperationSpendingByDateAndCommunalUtility(@RequestParam
                                                                                                  @NotNull(message = "start date cant be null")
@@ -102,6 +106,7 @@ public class ManagerSpendingOperationController {
                 DateUtil.provideDateFormat(end),communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()));
 
     }
+
 
     @RequestMapping(value = "/get-by-comm-util/",method = RequestMethod.GET)
     public List<ManagerSpendingOperation> getAllManagerOperationSpendingByCommunalUtility(@RequestParam(name = "communalUtilityId")

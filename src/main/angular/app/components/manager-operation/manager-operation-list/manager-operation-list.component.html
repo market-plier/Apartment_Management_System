@@ -51,8 +51,8 @@
                     <th mat-header-cell *matHeaderCellDef> Description </th>
                     <ng-container *matCellDef="let element">
                     <td mat-cell [hidden]="isHidden(element.operationId)"> {{(element.description.length>10) ? ((element.description | slice:0:10)+'...' ) : element.description}} </td>
-                        <td mat-cell [hidden]="!isHidden(element.operationId)"> <textarea class="color-border" matInput [value]="element.description"
-                                                                                          formControlName="description"></textarea></td>
+                        <td mat-cell [hidden]="!isHidden(element.operationId)"> <textarea matInput matAutosizeMinRows=2 class="color-border"  [value]="element.description"
+                                                                                          formControlName="description"></textarea> </td>
                         <input hidden formControlName="managerSubBillId" [value]="element.managerSubBill.subBillId" type="text" >
                     </ng-container>
 
@@ -94,7 +94,7 @@
                     <ng-container *matCellDef="let element">
                     <td mat-cell>
                         <button type="button" [hidden]="isHidden(element.operationId)"
-                                (click)="update(element.operationId,element.managerSubBill.subBillId);
+                                (click)="updateButton(element.operationId,element.managerSubBill.subBillId);
                                          setSum(element.sum);
                                          setDescription(element.description)" mat-button>
                             <i class="fas fa-edit"></i></button>

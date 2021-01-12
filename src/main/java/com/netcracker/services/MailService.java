@@ -24,7 +24,7 @@ public class MailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    public void sendMessage(String to, String subject, String text) throws MailException, NullPointerException {
+    public void sendMessage(String to, String subject, String text) throws MailException {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("noreply@baeldung.com");
@@ -32,14 +32,14 @@ public class MailService {
             message.setSubject(subject);
             message.setText(text);
             emailSender.send(message);
-        } catch (NullPointerException | MailException e) {
+        } catch (MailException e) {
             log.error("MailService method sendMessage: " + e.getMessage(), e);
             throw e;
         }
     }
 
     public void sendMessageWithAttachment(String to, String subject, String text, String filename, ByteArrayInputStream stream)
-            throws MessagingException, IOException, NullPointerException {
+            throws MessagingException, IOException{
         try {
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -65,7 +65,7 @@ public class MailService {
 
             message.setContent(mimeMultipart);
             emailSender.send(message);
-        } catch (NullPointerException | MessagingException | IOException e) {
+        } catch (MessagingException | IOException e) {
             log.error("MailService method sendMessageWithAttachment: " + e.getMessage(), e);
             throw e;
         }

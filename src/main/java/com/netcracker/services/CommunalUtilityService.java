@@ -33,7 +33,7 @@ public class CommunalUtilityService {
 //        this.notificationService = notificationService;
 //    }
 
-    public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) throws DaoAccessException, NullPointerException {
+    public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) throws DaoAccessException {
         try {
             List<CommunalUtility> utilities;
             if (status != null) {
@@ -64,7 +64,7 @@ public class CommunalUtilityService {
         }
     }
 
-    public List<CommunalUtility> getAllCommunalUtilities() throws DaoAccessException, NullPointerException {
+    public List<CommunalUtility> getAllCommunalUtilities() throws DaoAccessException {
         return getAllCommunalUtilities(null);
     }
 
@@ -104,7 +104,7 @@ public class CommunalUtilityService {
         calculationMethodDao.deleteCalculationMethod(id);
     }
     public void createCommunalUtility(CommunalUtility communalUtility)
-            throws DaoAccessException, NullPointerException, IOException, MessagingException {
+            throws DaoAccessException, IOException, MessagingException {
         try {
             if (communalUtilityDao.getUniqueCommunalUtility(communalUtility) != null) {
                 IllegalArgumentException exception = new IllegalArgumentException("Communal utility with such name already exists");
@@ -135,13 +135,13 @@ public class CommunalUtilityService {
             if (comUtil.getDurationType().equals(CommunalUtility.Duration.Temporary)) {
                 notificationService.sendTempCommunalUtilityNotificationToAllApartments(communalUtility);
             }
-        } catch (NullPointerException | IOException | MessagingException e) {
+        } catch (IOException | MessagingException e) {
             log.error("CommunalUtilityService method createCommunalUtility(): " + e.getMessage(), e);
             throw e;
         }
     }
 
-    public void updateCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException, NullPointerException {
+    public void updateCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException {
         try {
             if (communalUtility.getCalculationMethod()==null) {
                 if (communalUtilityDao.getCommunalUtilityById(

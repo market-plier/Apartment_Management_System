@@ -55,7 +55,7 @@ export class ManagerOperationListComponent implements OnInit {
 
     this.form = new FormGroup({
       sum:new FormControl('',[Validators.required]),
-      description:new FormControl('',[Validators.required,Validators.minLength(2)]),
+      description:new FormControl('',[Validators.required,Validators.minLength(2), Validators.maxLength(1000)]),
       operationId: new FormControl(''),
       managerSubBillId: new FormControl('')
     })
@@ -73,7 +73,7 @@ export class ManagerOperationListComponent implements OnInit {
     this.dateStart =  this.datePipe.transform(Date.now() - ( 3600 * 1000 * 24),'MM/dd/yyyy');
 
 
-    this.getByDateRange(this.dateStart, this.dateEnd)
+    this.geDataByDateRange(this.dateStart, this.dateEnd)
     }
 
 
@@ -85,7 +85,7 @@ export class ManagerOperationListComponent implements OnInit {
     this.dateStart = dateRangeStart;
     this.dateEnd = dateRangeEnd;
     if (this.utility.invalid && (this.range.valid || (this.dateStart !=null && this.dateEnd !=null))) {
-      this.getByDateRange(this.dateStart, this.dateEnd)
+      this.geDataByDateRange(this.dateStart, this.dateEnd)
     }
     this.filterManagerOperation()
   }
@@ -96,7 +96,7 @@ export class ManagerOperationListComponent implements OnInit {
    this.dialog.open(ManagerOperationCreateComponent);
   }
 
-  getByDateRange(start,end)
+  geDataByDateRange(start, end)
   {
     console.log(start)
     this.oSub = this.managerService.getAllByDate(start, end).subscribe(operations => {
@@ -110,7 +110,7 @@ export class ManagerOperationListComponent implements OnInit {
     )
   }
 
-  update(operationId:number, managerSubBill:number)
+  updateButton(operationId:number, managerSubBill:number)
   {
       this.managerSubBillId = managerSubBill;
       this.id = operationId;
@@ -177,7 +177,7 @@ export class ManagerOperationListComponent implements OnInit {
 
   openErrorSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
-      panelClass:['.snackBar-fail'],
+      panelClass:['snackBar-fail'],
       duration: 100000,
     });
   }
