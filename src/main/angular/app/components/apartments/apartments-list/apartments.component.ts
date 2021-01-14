@@ -3,6 +3,9 @@ import {ApartmentInfoService} from "../../../services/apartment-info.service";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {FormControl} from "@angular/forms";
+import {Observable} from "rxjs";
+import {map, startWith,} from "rxjs/operators";
 
 
 @Component({
@@ -11,11 +14,13 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     styleUrls: ['./apartments.component.scss']
 })
 export class ApartmentsComponent implements OnInit {
-    apartments?: Apartment[];
+    apartments?: Apartment[] = [];
     searchValue?: Number;
     floors?;
     selectedFloor?: Number;
-
+    myControl = new FormControl();
+    options: Number[] = [];
+    filteredOptions: Observable<Number[]>;
 
     constructor(private apartmentInfoService: ApartmentInfoService, private router: Router
         , private _snackBar: MatSnackBar) {
@@ -26,6 +31,7 @@ export class ApartmentsComponent implements OnInit {
             data => {
                 this.apartments = data;
                 this.floors = this.uniqueArray(this.apartments.map(item => item.floor));
+                this.options = this.apartments.map(item => item.apartmentNumber);
             }
         );
     }
@@ -44,7 +50,19 @@ export class ApartmentsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getAllApartments();
+        this.filteredOptions = this.myControl.valueChanges
+            .pipe(
+                startWith(''),
+                map(value => this._filter(value))
+            );
     }
+
+    private _filter(value: Number): Number[] {
+        if (this.options != null && value != null) {
+            return this.options.filter(option => option.toString().includes(value.toString()));
+        }
+    }
+
 
     getApartment() {
         if (this.searchValue != null) {
@@ -85,5 +103,6 @@ export class ApartmentsComponent implements OnInit {
     apartmentInfo(id: Number) {
         this.router.navigate(['/apartment', {id: id}]);
     }
+
 
 }

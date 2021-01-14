@@ -4,13 +4,6 @@ body {
   margin-top: 20px;
   color: #1a202c;
   text-align: left;
-  background-color: #e2e8f0;
-}
-
-.container {
-  box-shadow: 0px 11px 12px 5px rgba(0, 0, 0, 0.34);
-  background-color: mat-color($my-app-background);
-  padding: 0;
 }
 
 .mat-toolbar {
@@ -49,7 +42,6 @@ h6 {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
   background-clip: border-box;
   border: 0 solid rgba(0, 0, 0, .125);
   border-radius: .25rem;
@@ -57,6 +49,7 @@ h6 {
 }
 
 .card-body {
+  background-color: mat-color($my-app-background);
   flex: 1 1 auto;
   min-height: 1px;
   padding: 1rem;

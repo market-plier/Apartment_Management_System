@@ -9,6 +9,9 @@
                        <p></p>
                         <span>MANAGER</span>
                     </div>
+
+
+
                     <div class="app-contact">CONTACT INFO : +bla-bla-bla</div>
                 </div>
                 <div class="screen-body-item col-9">
@@ -24,8 +27,9 @@
                                 <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
                             </mat-form-field>
                         </div>
-
+                        <mat-spinner  [mode]='mode'></mat-spinner>
                         <div class="app-form-group buttons">
+
                             <button routerLink="/home" class="app-form-button">CANCEL</button>
                             <button (click)="sendRequest()" class="app-form-button">SEND</button>
                         </div>

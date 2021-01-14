@@ -1,12 +1,19 @@
-<div class="container">
 
-    <div class="row">
+    <mat-toolbar class="mat-toolbar col-12">
         <mat-card-title class="title-center col-2">APARTMENTS</mat-card-title>
-        <mat-toolbar class="mat-toolbar col-8">
 
             <mat-form-field class="form-field">
                 <mat-label>Apartment number</mat-label>
-                <input matInput type="number" min=1 [(ngModel)]="searchValue">
+                <input type="number" min=1 [(ngModel)]="searchValue"
+                       aria-label="Number"
+                       matInput
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
                 <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
                         (click)="searchValue=null; getAllApartments()">
                     <mat-icon>close</mat-icon>
@@ -30,16 +37,16 @@
                 <mat-icon>filter_list</mat-icon>
             </button>
 
-        </mat-toolbar>
+
         <div class="col-1">
             <button mat-icon-button class="create-btn float-right"
                     routerLink="/apartments/create">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
-    </div>
+    </mat-toolbar>
 
-
+    <div class="container">
     <div class="row row-cols-md-2 row-cols-sm-1 row-cols-lg-2 row-cols-xs-1  g-4">
         <div *ngFor="let apartment of apartments" class="card col-4">
 

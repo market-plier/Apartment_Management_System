@@ -5,6 +5,7 @@ import {Apartment} from "../models/apartment";
 import {BackEndError} from "../models/back-end-error";
 import {sha256} from "js-sha256";
 import {catchError} from "rxjs/operators";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class ApartmentInfoService {
     private baseURL = 'http://localhost:8888/apartments';
     err: BackEndError | undefined;
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
     }
 
     getApartmentByApartmentNumber(number: Number): Observable<Object> {
@@ -45,7 +46,7 @@ export class ApartmentInfoService {
         );
     }
 
-    updateApartment(apartment: Apartment):Observable<Apartment> {
+    updateApartment(apartment: Apartment): Observable<Apartment> {
         return this.httpClient.put(this.baseURL, apartment).pipe(
             catchError(this.handleError.bind(this)));
 
@@ -67,7 +68,14 @@ export class ApartmentInfoService {
         // @ts-ignore
         errorMessage = errorMessage.concat(err.errors);
 
-        window.alert(errorMessage);
-        return throwError(error);
+        this.openSnackBar(errorMessage, "OK");
+    }
+
+    openSnackBar(message: string, action: string) {
+        const config = new MatSnackBarConfig();
+        config.panelClass = ['snack-bar-error'];
+        config.duration = 10000;
+        this._snackBar.open(message, action, config
+        );
     }
 }

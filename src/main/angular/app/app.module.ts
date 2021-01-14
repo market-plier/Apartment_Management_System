@@ -64,6 +64,8 @@ import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {ReportCreateComponent} from './components/report-create/report-create.component';
 import {DatePipe} from "@angular/common";
 import { RequestComponent } from './components/request/request.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 
 
@@ -132,7 +134,9 @@ import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-i
         MatMenuModule,
         MatRippleModule,
         MatMenuModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatProgressSpinnerModule,
+        MatAutocompleteModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard,DatePipe],

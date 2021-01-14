@@ -6,6 +6,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenStorageService} from "../../services/token-storage.service";
 import {Apartment} from "../../models/apartment";
 import {ApartmentInfoService} from "../../services/apartment-info.service";
+import {ThemePalette} from "@angular/material/core";
+import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 
 @Component({
     selector: 'app-request',
@@ -17,6 +19,9 @@ export class RequestComponent implements OnInit {
     request: ApartmentRequestToManager=new ApartmentRequestToManager();
     apartment?: Apartment=new Apartment();
     isSent = false;
+    color: ThemePalette = 'primary';
+    mode: ProgressSpinnerMode = 'determinate';
+    value = 0;
 
     constructor(private service: RequestToManagerService, private apartmentService: ApartmentInfoService, private router: Router,
                 private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService) {
@@ -33,11 +38,14 @@ export class RequestComponent implements OnInit {
     }
 
     sendRequest() {
+        this.mode="indeterminate";
         this.request.apartmentId = this.tokenStorage.getAccountId();
             this.service.sendRequest(this.request).subscribe(
                 data => {
                     this.openSnackBar('Request has been sent', '');
                     this.isSent = true;
+                    this.mode="determinate";
+                    this.value=100;
                 });
 
     }

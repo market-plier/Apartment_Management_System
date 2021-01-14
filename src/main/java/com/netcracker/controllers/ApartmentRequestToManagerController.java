@@ -31,19 +31,19 @@ public class ApartmentRequestToManagerController {
 
     @PostMapping(value = "/createApartmentRequestToManager")
     @PreAuthorize("hasAnyRole('ROLE_OWNER')")
-    public ResponseEntity<String> createApartmentRequestToManager(@RequestBody @Valid ApartmentRequestToManager r) {
+    public ApartmentRequestToManager createApartmentRequestToManager(@RequestBody @Valid ApartmentRequestToManager r) {
 
         JwtAccount account = (JwtAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApartmentRequestToManager request = new ApartmentRequestToManager(account.getId(), r.getText());
 
         if (account.getId().equals(request.getApartmentId())) {
-            apartmentRequestToManagerService.generateApartmentRequestToManager(request);
-            return new ResponseEntity<>("Request is successfully sended", HttpStatus.OK);
+         //   apartmentRequestToManagerService.generateApartmentRequestToManager(request);
         } else {
             NotBelongToAccountException e = new NotBelongToAccountException("Can not send request from this account");
             log.log(Level.WARN, e.getMessage(), e);
             throw e;
         }
+        return r;
     }
 
 }
