@@ -6,33 +6,40 @@
                 <div class="screen-body-item left col-3">
                     <div class="app-title">
                         <span>CONTACT</span>
-                       <p></p>
+                        <p></p>
                         <span>MANAGER</span>
                     </div>
 
-
-
+                    <mat-spinner class="mat-spinner" [mode]='mode'></mat-spinner>
                     <div class="app-contact">CONTACT INFO : +bla-bla-bla</div>
                 </div>
                 <div class="screen-body-item col-9">
-                    <div class="app-form" >
+                    <div class="app-form">
+                        <form [formGroup]="formGroup">
+                            <div class="app-form-group ">
+                                <mat-panel-title class="title">Request to manager</mat-panel-title>
+                            </div>
 
-                        <div class="app-form-group ">
-                                <mat-label>Request to manager</mat-label>
-                        </div>
-                        <div class="app-form-group message">
-                            <mat-form-field class="form-field ">
-                                <mat-label>Leave a request message</mat-label>
-                                <textarea    [(ngModel)]="request.text" #message maxlength="500" matInput placeholder="Ex. It makes me feel..."></textarea>
-                                <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
-                            </mat-form-field>
-                        </div>
-                        <mat-spinner  [mode]='mode'></mat-spinner>
-                        <div class="app-form-group buttons">
+                            <div class="app-form-group message">
+                                <mat-form-field class="form-field ">
+                                    <mat-label>Leave a request message</mat-label>
+                                    <textarea [(ngModel)]="request.text" #message maxlength="500" minlength="1"
+                                              formControlName="requestText"
+                                              matInput placeholder="Ex. It makes me feel..." required></textarea>
+                                    <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
+                                    <mat-error
+                                            *ngIf="formGroup.controls['requestText'].invalid">
+                                        Text is requires
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
 
-                            <button routerLink="/home" class="app-form-button">CANCEL</button>
-                            <button (click)="sendRequest()" class="app-form-button">SEND</button>
-                        </div>
+                            <div class="app-form-group buttons">
+
+                                <button routerLink="/home" class="app-form-button">CANCEL</button>
+                                <button (click)="sendRequest()" class="app-form-button">SEND</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import {Apartment} from "../../models/apartment";
 import {ApartmentInfoService} from "../../services/apartment-info.service";
 import {ThemePalette} from "@angular/material/core";
 import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-request',
@@ -16,12 +17,15 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 })
 export class RequestComponent implements OnInit {
 
-    request: ApartmentRequestToManager=new ApartmentRequestToManager();
-    apartment?: Apartment=new Apartment();
+    request: ApartmentRequestToManager = new ApartmentRequestToManager();
+    apartment?: Apartment = new Apartment();
     isSent = false;
     color: ThemePalette = 'primary';
     mode: ProgressSpinnerMode = 'determinate';
     value = 0;
+    formGroup: FormGroup = new FormBuilder().group({
+        'requestText': ['', [Validators.required, Validators.minLength(1)]]
+    });
 
     constructor(private service: RequestToManagerService, private apartmentService: ApartmentInfoService, private router: Router,
                 private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService) {
@@ -32,22 +36,23 @@ export class RequestComponent implements OnInit {
             .subscribe(
                 data => {
                     this.apartment = data;
-
                 }
             );
     }
 
     sendRequest() {
-        this.mode="indeterminate";
-        this.request.apartmentId = this.tokenStorage.getAccountId();
+        if (this.formGroup.valid && this.request.text.trim().length > 0) {
+            this.mode = "indeterminate";
+            this.request.apartmentId = this.tokenStorage.getAccountId();
             this.service.sendRequest(this.request).subscribe(
                 data => {
                     this.openSnackBar('Request has been sent', '');
                     this.isSent = true;
-                    this.mode="determinate";
-                    this.value=100;
+                    this.mode = "determinate";
+                    this.value = 100;
+                    this.request.text = '';
                 });
-
+        } else this.openSnackBar("Text can not be empty", "OK");
     }
 
     openSnackBar(message: string, action: string) {

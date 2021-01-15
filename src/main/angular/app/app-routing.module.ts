@@ -21,6 +21,7 @@ import {ReportCreateComponent} from "./components/report-create/report-create.co
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {RequestComponent} from "./components/request/request.component";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
+import {JobTriggerComponent} from "./components/job-trigger/job-trigger.component";
 
 
 const routes: Routes = [
@@ -46,6 +47,7 @@ const routes: Routes = [
     {path: 'apartment', component: ApartmentInfoPageComponent},
     {path: 'request-to-manager', component: RequestComponent},
     {path: 'reports', component: ReportCreateComponent, canActivate: [AuthGuard]},
+    {path: 'triggers', component: JobTriggerComponent},
     {path: '**', component: NotFoundComponent},
 ];
 

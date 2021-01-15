@@ -67,6 +67,7 @@ import { RequestComponent } from './components/request/request.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
+import { JobTriggerComponent } from './components/job-trigger/job-trigger.component';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-i
         ApartmentInfoPageComponent,
         ApartmentInfoPageComponent,
         RequestComponent,
+        JobTriggerComponent,
 
     ],
     imports: [
