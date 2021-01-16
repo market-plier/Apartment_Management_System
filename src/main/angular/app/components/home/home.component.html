@@ -1,17 +1,58 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Очень красивый дашборд</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>ДОЛЖЕН ДЕНЕГ А НУ ПЛАТИ</div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+    <h1 class="mat-h1">Dashboard</h1>
+    <mat-grid-list cols="4" rowHeight="400px">
+
+        <mat-grid-tile [colspan]="tiles[0].cols" [rowspan]="tiles[0].rows">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        {{tiles[0].title}}
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <div>Ну тут будут графики успеваемости по сбору средств до дедлайна</div>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="tiles[1].cols" [rowspan]="tiles[1].rows">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        {{tiles[1].title}}
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <div>Самые свежие объявления и новости</div>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngIf="tokenService.getRole()=='OWNER'" [colspan]="tiles[3].cols" [rowspan]="tiles[3].rows">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        {{tiles[3].title}}
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <div>Иетерессная важная инфорация для квартиры</div>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="tiles[2].cols" [rowspan]="tiles[2].rows">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        {{tiles[2].title}}
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <div>Выбирай операции на любой вкус</div>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+    </mat-grid-list>
 </div>

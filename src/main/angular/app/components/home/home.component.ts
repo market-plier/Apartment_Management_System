@@ -1,35 +1,37 @@
 import {Component, OnInit} from '@angular/core';
-import {map} from 'rxjs/operators';
-import {Breakpoints, BreakpointObserver} from '@angular/cdk/layout';
+import {TokenStorageService} from "../../services/token-storage.service";
+import {transferArrayItem} from "@angular/cdk/drag-drop";
+
+export interface Tile {
+    cols: number;
+    rows: number;
+    title: string;
+}
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
-    cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-        map(({matches}) => {
-            if (matches) {
-                return [
-                    {title: 'Subbills', cols: 1, rows: 1},
-                    {title: 'Debts', cols: 1, rows: 1},
-                    {title: 'Announcements', cols: 1, rows: 1},
-                    {title: 'Request', cols: 1, rows: 1}
-                ];
-            }
+export class HomeComponent implements OnInit {
 
-            return [
-                {title: 'Subbills', cols: 2, rows: 1},
-                {title: 'Debts', cols: 1, rows: 1},
-                {title: 'Announcements', cols: 1, rows: 2},
-                {title: 'Request', cols: 1, rows: 1}
-            ];
-        })
-    );
+    tiles: Tile[] = [
+        {title: 'Subbills', cols: 3, rows: 1},
+        {title: 'Announcements', cols: 1, rows: 2},
+        {title: 'Operations', cols: 2, rows: 1},
+        {title: 'Reports or request or something', cols: 1, rows: 1},
+    ];
 
 
-    constructor(private breakpointObserver: BreakpointObserver) {
+    constructor(public tokenService: TokenStorageService) {
 
     }
+
+    ngOnInit(): void {
+        if (this.tokenService.getRole() == 'MANAGER') {
+            this.tiles[2].cols = 3;
+        }
+    }
+
 }
+
