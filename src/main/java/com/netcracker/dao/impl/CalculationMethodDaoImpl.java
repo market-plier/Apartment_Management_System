@@ -19,6 +19,7 @@ import java.util.List;
 @Log4j
 @Repository
 @Transactional
+@Deprecated
 public class CalculationMethodDaoImpl implements CalculationMethodDao {
     final
     JdbcTemplate jdbcTemplate;

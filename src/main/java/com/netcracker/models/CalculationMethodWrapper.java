@@ -1,7 +1,6 @@
 package com.netcracker.models;
 
-import java.math.BigDecimal;
-
+@Deprecated
 public class CalculationMethodWrapper {
     private final CalculationMethod calculationMethod;
 

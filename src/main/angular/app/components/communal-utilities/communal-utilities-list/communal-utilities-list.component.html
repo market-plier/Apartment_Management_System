@@ -26,8 +26,6 @@
                          matRipple>
                         {{utility.name}}
                     </div>
-
-
                 </td>
             </ng-container>
 
@@ -45,7 +43,11 @@
 
             <ng-container matColumnDef="calculation">
                 <th *matHeaderCellDef mat-header-cell> Calculation method</th>
-                <td *matCellDef="let utility" mat-cell> {{utility.calculationMethod.name}} </td>
+                <td *matCellDef="let utility" mat-cell> {{utility.calculationMethod}} </td>
+            </ng-container>
+            <ng-container matColumnDef="coefficient">
+                <th *matHeaderCellDef mat-header-cell> Coefficient</th>
+                <td *matCellDef="let utility" mat-cell> {{utility.coefficient}} </td>
             </ng-container>
 
             <ng-container matColumnDef="deadline">

@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./communal-utilities-list.component.css']
 })
 export class CommunalUtilitiesListComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'status', 'durationType', 'deadline', 'calculation'];
+  displayedColumns: string[] = ['name', 'status', 'durationType', 'deadline', 'calculation', 'coefficient'];
   utilities: CommunalUtility[];
   datasource: MatTableDataSource<CommunalUtility>
   enabledUtilities: CommunalUtility[];

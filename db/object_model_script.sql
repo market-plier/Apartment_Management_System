@@ -42,8 +42,6 @@ INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
 VALUES (9, NULL, 'MNGBLL', 'ManagerBill', NULL);
 
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
-VALUES (10, NULL, 'CALC', 'CalculationMethod', NULL);
-INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
 VALUES (11, NULL, 'COMUNUTL', 'CommunalUtility', NULL);
 
 INSERT INTO OBJTYPE_STAGING (OBJECT_TYPE_ID, PARENT_ID, CODE, NAME, DESCRIPTION)
@@ -130,10 +128,7 @@ INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE,
 VALUES (19, 9, NULL, 'CARDNUM', 'card_number');
 
 --CalculationMethod(OBJECT_TYPE_ID=10) attributes
-INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE, NAME)
-VALUES (20, 10, NULL, 'CALCNAME', 'name');
-INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE, NAME)
-VALUES (40, 10, NULL, 'COEFFICIENT', 'name');
+
 
 --CommunalUtility(OBJECT_TYPE_ID=11) attributes
 INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE, NAME)
@@ -144,9 +139,11 @@ INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE,
 VALUES (23, 11, NULL, 'STATUS', 'status');
 INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE, NAME)
 VALUES (24, 11, NULL, 'DLINE', 'deadline');
---OBJECT_TYPE CommunalUtility(OBJECT_TYPE_ID=2)  reference simple association with CalculationMethod(OBJECT_TYPE_ID=9)
 INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE, NAME)
-VALUES (39, 11, NULL, 'CALCREF', 'CalcNameRef');
+VALUES (20, 11, NULL, 'CALCNAME', 'calculation_name');
+INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE, NAME)
+VALUES (40, 11, NULL, 'COEFF', 'coefficient');
+
 
 --SubBill(OBJECT_TYPE_ID=12) attributes
 INSERT INTO ATTRTYPE_STAGING (ATTR_ID, OBJECT_TYPE_ID, OBJECT_TYPE_ID_REF, CODE, NAME)
@@ -200,57 +197,76 @@ MERGE INTO ATTRTYPE x
 USING (SELECT ATTR_ID,OBJECT_TYPE_ID,OBJECT_TYPE_ID_REF,CODE,NAME FROM ATTRTYPE_STAGING) y
 ON (x.ATTR_ID  = y.ATTR_ID)
 WHEN MATCHED THEN
-    UPDATE SET x.OBJECT_TYPE_ID = y.OBJECT_TYPE_ID, 
-                        x.OBJECT_TYPE_ID_REF = y.OBJECT_TYPE_ID_REF, 
-                        x.CODE = y.CODE,
-                        x.NAME = y.NAME
-    WHERE x.OBJECT_TYPE_ID <> y.OBJECT_TYPE_ID OR 
-           x.OBJECT_TYPE_ID_REF <> y.OBJECT_TYPE_ID_REF OR 
-           x.CODE <> y.CODE OR
-           x.NAME <> y.NAME 
-    WHEN NOT MATCHED THEN
-    INSERT(x.ATTR_ID,x.OBJECT_TYPE_ID,x.OBJECT_TYPE_ID_REF,x.CODE,x.NAME)  
-    VALUES(y.ATTR_ID,y.OBJECT_TYPE_ID,y.OBJECT_TYPE_ID_REF,y.CODE,y.NAME);
+    UPDATE
+    SET x.OBJECT_TYPE_ID     = y.OBJECT_TYPE_ID,
+        x.OBJECT_TYPE_ID_REF = y.OBJECT_TYPE_ID_REF,
+        x.CODE               = y.CODE,
+        x.NAME               = y.NAME
+    WHERE x.OBJECT_TYPE_ID <> y.OBJECT_TYPE_ID
+       OR x.OBJECT_TYPE_ID_REF <> y.OBJECT_TYPE_ID_REF
+       OR x.CODE <> y.CODE
+       OR x.NAME <> y.NAME
+WHEN NOT MATCHED THEN
+    INSERT (x.ATTR_ID, x.OBJECT_TYPE_ID, x.OBJECT_TYPE_ID_REF, x.CODE, x.NAME)
+    VALUES (y.ATTR_ID, y.OBJECT_TYPE_ID, y.OBJECT_TYPE_ID_REF, y.CODE, y.NAME);
 
 
 /*  Adding different list's values */
 
-CREATE TABLE LISTS_STAGING  AS 
-SELECT * FROM Lists;
+CREATE TABLE LISTS_STAGING AS
+SELECT *
+FROM Lists;
 
 -- List type for 'duration_type'(attr_id=22) OBJ_TYPE CommunalUtility
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(22, 1, 'Temporary');
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(22, 2, 'Constant');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (22, 1, 'Temporary');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (22, 2, 'Constant');
 
 -- List type for 'status'(attr_id=23) OBJ_TYPE CommunalUtility
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(23, 3, 'Enabled');
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(23, 4, 'Disabled');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (23, 3, 'Enabled');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (23, 4, 'Disabled');
+
+-- List type for 'calculation_name'(attr_id=20) OBJ_TYPE CommunalUtility
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (20, 7, 'SquareMeters');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (20, 8, 'PeopleCount');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (20, 9, 'Floor');
+
 
 -- List type for 'status'(attr_id=1) OBJ_TYPE Role
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 5, 'OWNER');
-insert into LISTS_STAGING (attr_id, list_value_id, value) values(1, 6, 'MANAGER');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (1, 5, 'OWNER');
+insert into LISTS_STAGING (attr_id, list_value_id, value)
+values (1, 6, 'MANAGER');
 
 -- Merge with ATTRTYPE table
 MERGE INTO Lists x
-USING (SELECT attr_id, list_value_id, value FROM LISTS_STAGING) y
-ON (x.ATTR_ID  = y.ATTR_ID
-AND x.list_value_id  = y.list_value_id)
+USING (SELECT attr_id, list_value_id, value
+       FROM LISTS_STAGING) y
+ON (x.ATTR_ID = y.ATTR_ID
+    AND x.list_value_id = y.list_value_id)
 WHEN MATCHED THEN
-    UPDATE SET x.value = y.value
-    WHERE x.attr_id <> y.attr_id OR 
-           x.list_value_id <> y.list_value_id OR 
-           x.value <> y.value
+    UPDATE
+    SET x.value = y.value
+    WHERE x.attr_id <> y.attr_id
+       OR x.list_value_id <> y.list_value_id
+       OR x.value <> y.value
 WHEN NOT MATCHED THEN
-    INSERT(x.attr_id, x.list_value_id, x.value)  
-    VALUES(y.attr_id, y.list_value_id, y.value);
+    INSERT (x.attr_id, x.list_value_id, x.value)
+    VALUES (y.attr_id, y.list_value_id, y.value);
 
 /* Sequence for future inserts */
 begin
     execute immediate 'DROP SEQUENCE OBJ_ID_SEQ';
     execute immediate 'DROP function seq_obj_next';
     execute immediate 'DROP function seq_obj_curr';
-  exception
-  when others then null;
+exception
+    when others then null;
 end;
 /
 CREATE SEQUENCE OBJ_ID_SEQ START WITH 1 MAXVALUE 999999 INCREMENT BY 1 NOCACHE CYCLE;

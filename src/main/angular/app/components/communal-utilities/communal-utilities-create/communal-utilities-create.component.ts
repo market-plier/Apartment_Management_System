@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {CommunalUtilityService} from "../../../services/communal-utility.service";
 import {CommunalUtility} from "../../../models/communal-utility";
 import {Location} from '@angular/common';
-import {CalculationMethod} from "../../../models/calculation-method";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -11,14 +10,15 @@ import {ActivatedRoute} from "@angular/router";
     styleUrls: ['./communal-utilities-create.component.css']
 })
 export class CommunalUtilitiesCreateComponent implements OnInit {
-    calculationMethods: CalculationMethod[];
+    calculationMethods: string[] = [
+        'SquareMeters', 'PeopleCount', 'Floor'
+    ];
     utility: CommunalUtility = {
-        name: '',
-        status: '',
-        durationType: '',
-        calculationMethod: {
-            calculationMethodId: null
-        },
+        name: null,
+        status: null,
+        durationType: null,
+        calculationMethod: null,
+        coefficient: 0,
         deadline: null
     };
     submitted = false;
@@ -36,13 +36,8 @@ export class CommunalUtilitiesCreateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getCalculationMethods();
     }
 
-    getCalculationMethods(): void {
-        this.service.getCalculationMethods()
-        .subscribe(calculation => this.calculationMethods = calculation);
-  }
 
   add(): void {
     this.service.addCommunalUtility(this.utility)

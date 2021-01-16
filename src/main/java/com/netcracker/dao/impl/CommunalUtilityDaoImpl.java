@@ -2,7 +2,6 @@ package com.netcracker.dao.impl;
 
 import com.netcracker.dao.CommunalUtilityDao;
 import com.netcracker.dao.mapper.CommunalUtilityMapper;
-import com.netcracker.dao.mapper.CommunalUtilityWithCalculationMethodMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
@@ -58,24 +57,6 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     }
 
     @Override
-    public List<CommunalUtility> getAllCommunalUtilitiesByCalculationMethodId(BigInteger id) throws DaoAccessException {
-        try {
-            return jdbcTemplate.query(getAllCommunalUtilitiesByCalculationMethodId,
-                    new CommunalUtilityMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        } catch (DataAccessException e) {
-            DaoAccessException exception = new DaoAccessExceptionBuilder()
-                    .withCause(e.getCause())
-                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_COMMUNAL_UTILITY)
-                    .withMessage(EXCEPTION_GET_ALL_COMMUNAL_UTILITIES)
-                    .build();
-            log.error(e.getMessage(), exception);
-            throw exception;
-        }
-    }
-
-    @Override
     public CommunalUtility getCommunalUtilityById(BigInteger id) throws DaoAccessException {
         try {
             return jdbcTemplate.queryForObject(getCommunalUtilityById, new CommunalUtilityMapper(), id);
@@ -91,38 +72,18 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
         }
     }
 
-    @Override
-    public CommunalUtility getCommunalUtilityByIdWithCalculationMethod(BigInteger id) throws DaoAccessException {
-        try {
-            return jdbcTemplate.queryForObject(getCommunalUtilityWithCalculationMethodById, new CommunalUtilityWithCalculationMethodMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        } catch (DataAccessException e) {
-            DaoAccessException exception = new DaoAccessExceptionBuilder()
-                    .withCause(e.getCause())
-                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_COMMUNAL_UTILITY)
-                    .withMessage(EXCEPTION_GET_COMMUNAL_UTILITY_BY_ID)
-                    .withId(id)
-                    .build();
-            log.error(e.getMessage(), exception);
-            throw exception;
-        }
-    }
 
     @Override
     public void updateCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException {
         try {
             jdbcTemplate.update(updateCommunalUtility,
                     communalUtility.getName(),
+                    communalUtility.getCalculationMethod().getCalculationMethodCode(),
                     communalUtility.getDurationType().getDurationCode(),
                     communalUtility.getStatus().getStatusCode(),
+                    communalUtility.getCoefficient().toString(),
                     communalUtility.getDeadline(),
                     communalUtility.getCommunalUtilityId());
-            if (communalUtility.getCalculationMethod() != null) {
-                jdbcTemplate.update(updateCommunalUtilityReference,
-                        communalUtility.getCalculationMethod().getCalculationMethodId(),
-                        communalUtility.getCommunalUtilityId());
-            }
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
                     .withCause(e.getCause())
@@ -139,12 +100,12 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     public void createCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException {
         try {
             jdbcTemplate.update(createCommunalUtility,
-                    communalUtility.getCalculationMethod().
-                            getCalculationMethodId(),
+                    communalUtility.getCalculationMethod().getCalculationMethodCode(),
                     communalUtility.getName(),
                     communalUtility.getDurationType().getDurationCode(),
                     communalUtility.getStatus().getStatusCode(),
-                    communalUtility.getDeadline()
+                    communalUtility.getDeadline(),
+                    communalUtility.getCoefficient().toString()
             );
         } catch (DataAccessException e) {
             DaoAccessException exception = new DaoAccessExceptionBuilder()
@@ -161,7 +122,8 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
     @Override
     public CommunalUtility getUniqueCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException {
         try {
-            return jdbcTemplate.queryForObject(getCommunalUtilityUnique, new CommunalUtilityMapper(),
+            return jdbcTemplate.queryForObject(getCommunalUtilityUnique,
+                    new CommunalUtilityMapper(),
                     communalUtility.getName());
         } catch (EmptyResultDataAccessException e) {
             return null;
@@ -170,30 +132,6 @@ public class CommunalUtilityDaoImpl implements CommunalUtilityDao {
                     .withCause(e.getCause())
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_COMMUNAL_UTILITY)
                     .withMessage(EXCEPTION_GET_UNIQUE_COMMUNAL_UTILITY)
-                    .build();
-            log.error(e.getMessage(), exception);
-            throw exception;
-        }
-    }
-
-    @Override
-    public void createCommunalUtilityWithRef(CommunalUtility communalUtility) throws DaoAccessException {
-        try {
-            jdbcTemplate.update(createCommunalUtilityWithRef,
-                    communalUtility.getCalculationMethod().
-                            getCalculationMethodId(),
-                    communalUtility.getName(),
-                    communalUtility.getDurationType().getDurationCode(),
-                    communalUtility.getStatus().getStatusCode(),
-                    communalUtility.getDeadline(),
-                    communalUtility.getCalculationMethod().getCalculationMethodId()
-            );
-        } catch (DataAccessException e) {
-            DaoAccessException exception = new DaoAccessExceptionBuilder()
-                    .withCause(e.getCause())
-                    .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_COMMUNAL_UTILITY)
-                    .withMessage(EXCEPTION_CREATE_COMMUNAL_UTILITIES)
-                    .withId(communalUtility.getCommunalUtilityId())
                     .build();
             log.error(e.getMessage(), exception);
             throw exception;

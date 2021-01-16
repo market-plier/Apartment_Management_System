@@ -1,12 +1,15 @@
 <div class="p-3" fxFlex="60" fxFlexFill fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch">
     <mat-card>
-        <form (ngSubmit)="save()" fxLayout="column" xLayoutAlign="center">
+        <form (ngSubmit)="save()" [formGroup]="form" fxLayout="column" xLayoutAlign="center">
             <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input [(ngModel)]="utility.name" matInput name="name"
+                <input [(ngModel)]="utility.name" formControlName="name" matInput name="name"
                 />
             </mat-form-field>
-
+            <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">
+                <small *ngIf="form.get('name').errors.required">Description is required</small>
+                <small *ngIf="form.get('name').errors.minlength">Description length must be more than 1</small>
+            </mat-error>
             <mat-form-field appearance="fill">
                 <mat-label>Status</mat-label>
                 <mat-select [(value)]="utility.status">
@@ -15,7 +18,11 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
+            <mat-form-field>
+                <mat-label>Coefficient</mat-label>
+                <input [(ngModel)]="utility.coefficient" formControlName="coefficient" matInput name="coefficient"
+                />
+            </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Duration type</mat-label>
                 <mat-select [(value)]="utility.durationType">
@@ -27,17 +34,17 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Calculation Methods</mat-label>
-                <mat-select [(value)]="utility.calculationMethod.calculationMethodId">
-                    <mat-option *ngFor="let stat of calculationMethods" [value]="stat.calculationMethodId">
-                        {{stat.name}}
+                <mat-select [(value)]="utility.calculationMethod">
+                    <mat-option *ngFor="let stat of calculationMethods" [value]="stat">
+                        {{stat}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
             <mat-form-field appearance="fill">
                 <mat-label>Deadline</mat-label>
-                <input [(ngModel)]="utility.deadline" [matDatepicker]="picker" matInput name="deadline">
-                <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                <input [(ngModel)]="utility.deadline" [matDatepicker]="picker" [ngModelOptions]="{standalone: true}"
+                       matInput>
+                <mat-datepicker-toggle [for]="picker" matSuffix>{{utility.deadline}}</mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <button color="primary" mat-flat-button type="submit">Submit</button>

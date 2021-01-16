@@ -3,7 +3,8 @@ import {CommunalUtilityService} from "../../../services/communal-utility.service
 import {ActivatedRoute} from "@angular/router";
 import {CommunalUtility} from "../../../models/communal-utility";
 import {Location} from '@angular/common';
-import {CalculationMethod} from "../../../models/calculation-method";
+
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-communal-utilities-show',
@@ -11,7 +12,9 @@ import {CalculationMethod} from "../../../models/calculation-method";
   styleUrls: ['./communal-utilities-show.component.css']
 })
 export class CommunalUtilitiesShowComponent implements OnInit {
-  calculationMethods: CalculationMethod[];
+  calculationMethods: string[] = [
+    'SquareMeters', 'PeopleCount', 'Floor'
+  ];
   utility: CommunalUtility;
   submitted = false;
   status: string[] = [
@@ -20,16 +23,24 @@ export class CommunalUtilitiesShowComponent implements OnInit {
   dyr_type: string[] = [
     'Temporary', 'Constant'
   ];
+  form: FormGroup;
 
   constructor(private route: ActivatedRoute,
               private service: CommunalUtilityService,
               private location: Location
   ) {
+    this.form = new FormGroup({
+      name: new FormControl('', [Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(255)]),
+      coefficient: new FormControl('', [Validators.required,
+        Validators.min(0.00001),
+        Validators.max(1000)])
+    })
   }
 
   ngOnInit(): void {
     this.getUtility();
-    this.getCalculationMethods();
   }
 
   getUtility(): void {
@@ -38,10 +49,6 @@ export class CommunalUtilitiesShowComponent implements OnInit {
         .subscribe(utility => this.utility = utility);
   }
 
-  getCalculationMethods(): void {
-    this.service.getCalculationMethods()
-        .subscribe(calculation => this.calculationMethods = calculation);
-  }
 
   save(): void {
     this.service.updateCommunalUtility(this.utility)

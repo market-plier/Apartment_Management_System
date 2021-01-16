@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CommunalUtility} from "../models/communal-utility";
 import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {CalculationMethod} from "../models/calculation-method";
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +19,6 @@ export class CommunalUtilityService {
   constructor(private http: HttpClient) {
   }
 
-  getCalculationMethods(): Observable<CalculationMethod[]> {
-    return this.http.get<CalculationMethod[]>(this.calcMethodUrl)
-        .pipe(
-            catchError(this.handleError<CalculationMethod[]>('getCalculationMethods', [])));
-  }
 
   getCommunalUtilities(): Observable<CommunalUtility[]> {
     return this.http.get<CommunalUtility[]>(this.utilitiesUrl)

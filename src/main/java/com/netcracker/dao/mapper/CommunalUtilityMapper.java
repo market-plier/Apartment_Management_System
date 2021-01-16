@@ -17,6 +17,8 @@ public class CommunalUtilityMapper implements RowMapper<CommunalUtility> {
                 .withStatus(CommunalUtility.Status.valueOf(resultSet.getString("com_util_status")))
                 .withDeadline(resultSet.getDate("com_util_dline"))
                 .withDurationType(CommunalUtility.Duration.valueOf(resultSet.getString("com_util_durtype")))
+                .withCalculationMethod(CommunalUtility.CalculationMethod.valueOf(resultSet.getString("com_util_calc")))
+                .withCoefficient(Double.valueOf(resultSet.getString("com_util_coeff")))
                 .build();
 
     }
