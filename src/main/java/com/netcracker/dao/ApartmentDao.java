@@ -17,7 +17,7 @@ public interface ApartmentDao {
 
     void updateApartment(Apartment apartment);
 
-    List<Apartment> getUniqueApartment(Apartment apartment);
+    Apartment getUniqueApartment(Apartment apartment);
 
     List<Apartment> getAllApartmentByFloor(List<Integer> floor);
 
@@ -280,7 +280,7 @@ public interface ApartmentDao {
             "    SET x.VALUE = y.VALUE\n" +
             "    WHERE x.VALUE <> y.VALUE";
 
-    String GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM = "SELECT APRT.OBJECT_ID account_id,\n" +
+    String GET_UNIQUE_APARTMENT_BY_APT_NUM = "SELECT APRT.OBJECT_ID account_id,\n" +
             "       EMAIL.VALUE    email,\n" +
             "       0    floor,\n" +
             "       APTNUM.VALUE   apartment_number,\n" +

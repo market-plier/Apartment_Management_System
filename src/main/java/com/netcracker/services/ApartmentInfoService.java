@@ -109,20 +109,20 @@ public class ApartmentInfoService {
     }
 
     private boolean isUnique(Apartment apartment) throws IllegalArgumentException {
-        List<Apartment> apartments = apartmentDao.getUniqueApartment(apartment);
-        for (Apartment a : apartments) {
-            if (apartment.getAccountId() == null
-                    || !apartment.getApartmentNumber().equals(a.getApartmentNumber())) {
 
-                if (a.getEmail().equals(apartment.getEmail())) {
-                    throw new ObjectNotUniqueException("This email is already in use", BigInteger.valueOf(74));
-                }
-                if (a.getApartmentNumber().equals(apartment.getApartmentNumber())) {
-                    throw new ObjectNotUniqueException("This apartment already has an account", BigInteger.valueOf(74));
-                }
-            }
+        Apartment apart = apartmentDao.getUniqueApartment(apartment);
+        Account account = accountService.getAccountByEmail(apartment.getEmail());
+
+        if (account != null && !account.getAccountId().equals(apartment.getAccountId())) {
+            throw new ObjectNotUniqueException("This email is already in use", BigInteger.valueOf(74));
         }
+
+        if (apart != null && !apart.getApartmentNumber().equals(apartment.getApartmentNumber())) {
+            throw new ObjectNotUniqueException("This apartment already has an account", BigInteger.valueOf(74));
+        }
+
         return true;
     }
+
 
 }

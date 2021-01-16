@@ -89,6 +89,9 @@ h6 {
   position: relative;
   height: 50%;
   width: 50%;
+  white-space: nowrap; /* Отменяем перенос текста */
+  overflow: hidden; /* Обрезаем содержимое */
+  text-overflow: ellipsis; /* Многоточие */
 }
 
 
@@ -104,7 +107,7 @@ h6 {
   width: 100%;
   text-align: center;
   font-family: Cambria, sans-serif;
-  font-size: 5vw;
+  font-size: 2vw;
   color: mat-color($my-app-background);
 }
 
@@ -115,4 +118,32 @@ h6 {
   margin: 0;
   height: 50px;
   width: 50px;
+}
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 767px) {
+  .circle-txt {
+    font-size: 10px;
+  }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .circle-txt {
+    font-size: 20px;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .circle-txt {
+    font-size: 50px;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .circle-txt {
+    font-size: 50px;
+  }
 }

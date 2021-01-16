@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -123,10 +124,12 @@ public class ApartmentDaoImpl implements ApartmentDao {
         }
     }
 
-    public List<Apartment> getUniqueApartment(Apartment apartment) throws DaoAccessException {
+    public Apartment getUniqueApartment(Apartment apartment) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(GET_APARTMENT_BY_EMAIL_FLOOR_APT_NUM, new ApartmentMapper(),
+            return jdbcTemplate.queryForObject(GET_UNIQUE_APARTMENT_BY_APT_NUM, new ApartmentMapper(),
                     apartment.getApartmentNumber(), apartment.getEmail());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage("Unique Apartments failed")

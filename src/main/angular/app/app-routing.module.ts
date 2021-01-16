@@ -47,7 +47,7 @@ const routes: Routes = [
     {path: 'apartment', component: ApartmentInfoPageComponent},
     {path: 'request-to-manager', component: RequestComponent},
     {path: 'reports', component: ReportCreateComponent, canActivate: [AuthGuard]},
-    {path: 'triggers', component: JobTriggerComponent},
+    {path: 'triggers', component: JobTriggerComponent,canActivate: [AuthGuard, ManagerGuard]},
     {path: '**', component: NotFoundComponent},
 ];
 

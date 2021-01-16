@@ -57,6 +57,9 @@
   position: relative;
   height: 15%;
   width: 15%;
+  white-space: nowrap; /* Отменяем перенос текста */
+  overflow: hidden; /* Обрезаем содержимое */
+  text-overflow: ellipsis; /* Многоточие */
 }
 
 
@@ -75,4 +78,30 @@
   font-size: 2vw;
 }
 
+// Extra small devices (phones, less than 768px) *!
+@media (max-width: 767px) {
+  .circle-txt {
+    font-size: 10px;
+  }
+}
 
+// Small devices (tablets, 768px and up) *!
+@media (min-width: 768px) {
+  .circle-txt {
+    font-size: 14px;
+  }
+}
+
+// Medium devices (desktops, 992px and up) *!
+@media (min-width: 992px) {
+  .circle-txt {
+    font-size: 14px;
+  }
+}
+
+// Large devices (large desktops, 1200px and up) *!
+@media (min-width: 1200px) {
+  .circle-txt {
+    font-size: 18px;
+  }
+}
