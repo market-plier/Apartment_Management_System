@@ -15,13 +15,13 @@ import java.util.Date;
 
 @Log4j
 @Component
-public class NotificationJob implements Job {
+public class DebtNotificationJob implements Job {
     private final Trigger trigger;
 
     private final NotificationService notificationService;
 
     @Autowired
-    public NotificationJob(NotificationService notificationService) {
+    public DebtNotificationJob(NotificationService notificationService) {
         trigger = new CronTrigger("0 0 9 1 1/1 *");   //Every first day of month
         this.notificationService = notificationService;
     }
@@ -31,7 +31,7 @@ public class NotificationJob implements Job {
         return () -> {
             try {
                 notificationService.sendDebtNotificationToAllApartments();
-            } catch (IOException | MessagingException | DaoAccessException | NullPointerException e) {
+            } catch (IOException | MessagingException | DaoAccessException e) {
                 log.error("NotificationJob method getJob: " + e.getMessage(), e);
             }
 

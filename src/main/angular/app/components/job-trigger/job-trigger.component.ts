@@ -20,12 +20,13 @@ export class JobTriggerComponent implements OnInit {
     constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
     }
 
-    announcementJobTrigger(){
-        this.httpClient.get(`${this.baseURL}/deptPaymentJobTrigger`).subscribe(
+    debtPaymentTrigger() {
+        this.httpClient.get(`${this.baseURL}/debtPaymentJobTrigger`).subscribe(
             data=> this.openSnackBar("Triggered","OK"));
     }
-    deptPaymentTrigger(){
-        this.httpClient.get(`${this.baseURL}/announcementJobTrigger`).subscribe(
+
+    debtNotificationTrigger() {
+        this.httpClient.get(`${this.baseURL}/debtNotificationJobTrigger`).subscribe(
             data=> this.openSnackBar("Triggered","OK"));
     }
 

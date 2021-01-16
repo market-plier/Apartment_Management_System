@@ -1,7 +1,7 @@
 package com.netcracker.controllers;
 
 import com.netcracker.jobs.DebtPaymentsJob;
-import com.netcracker.jobs.NotificationJob;
+import com.netcracker.jobs.DebtNotificationJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,26 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/trigger")
 public class JobTriggerController {
-
-    private final NotificationJob notificationJob;
-    private final DebtPaymentsJob debtPaymentsJob;
-
     @Autowired
-    public JobTriggerController(NotificationJob notificationJob, DebtPaymentsJob debtPaymentsJob) {
-        this.notificationJob = notificationJob;
-        this.debtPaymentsJob = debtPaymentsJob;
-    }
+    private DebtNotificationJob debtNotificationJob;
+    @Autowired
+    private DebtPaymentsJob debtPaymentsJob;
 
-    @GetMapping("/deptPaymentJobTrigger")
-    public boolean deptPaymentTrigger() {
-        debtPaymentsJob.getJob();
+    @GetMapping("/debtNotificationJobTrigger")
+    public boolean debtNotificationTrigger() {
+        debtNotificationJob.getJob().run();
         return true;
     }
 
-    @GetMapping("/announcementJobTrigger")
-    public boolean announcementJobTrigger() {
-        notificationJob.getJob();
+    @GetMapping("/debtPaymentJobTrigger")
+    public boolean debtPaymentTrigger() {
+        debtPaymentsJob.getJob().run();
         return true;
     }
-
 }
