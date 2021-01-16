@@ -4,6 +4,7 @@ import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.Announcement;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 public interface AnnouncementDao {
@@ -16,21 +17,24 @@ public interface AnnouncementDao {
             "HVOTING.OBJECT_ID          house_voting_id,\n" +
             "HVOTING_TITLE.VALUE        house_voting_title\n" +
             "FROM ATTRIBUTES ANNC_TITLE,\n" +
-            "     ATTRIBUTES ANNC_BODY,\n" +
-            "     ATTRIBUTES ANNC_IS_OPENED,\n" +
-            "     ATTRIBUTES ANNC_CREATED_AT,\n" +
-            "     OBJECTS ANNC\n" +
+            "ATTRIBUTES ANNC_BODY,\n" +
+            "ATTRIBUTES ANNC_IS_OPENED,\n" +
+            "ATTRIBUTES ANNC_CREATED_AT,\n" +
+            "OBJECTS ANNC\n" +
             "LEFT JOIN OBJECTS HVOTING ON (HVOTING.OBJECT_TYPE_ID = 5 AND HVOTING.PARENT_ID = ANNC.OBJECT_ID)\n" +
             "LEFT JOIN ATTRIBUTES HVOTING_TITLE ON (HVOTING_TITLE.ATTR_ID = 13 AND HVOTING_TITLE.OBJECT_ID = HVOTING.OBJECT_ID)\n" +
             "WHERE ANNC.OBJECT_TYPE_ID = 3\n" +
-            "  AND ANNC_TITLE.ATTR_ID = 7\n" +
-            "  AND ANNC_TITLE.OBJECT_ID = ANNC.OBJECT_ID\n" +
-            "  AND ANNC_BODY.ATTR_ID = 8\n" +
-            "  AND ANNC_BODY.OBJECT_ID = ANNC.OBJECT_ID\n" +
-            "  AND ANNC_IS_OPENED.ATTR_ID = 9\n" +
-            "  AND ANNC_IS_OPENED.OBJECT_ID  = ANNC.OBJECT_ID\n" +
-            "  AND ANNC_CREATED_AT.ATTR_ID = 10\n" +
-            "  AND ANNC_CREATED_AT.OBJECT_ID = ANNC.OBJECT_ID\n" +
+            "AND ANNC_TITLE.ATTR_ID = 7\n" +
+            "AND ANNC_TITLE.OBJECT_ID = ANNC.OBJECT_ID\n" +
+            "AND ANNC_BODY.ATTR_ID = 8\n" +
+            "AND ANNC_BODY.OBJECT_ID = ANNC.OBJECT_ID\n" +
+            "AND ANNC_IS_OPENED.ATTR_ID = 9\n" +
+            "AND ANNC_IS_OPENED.OBJECT_ID  = ANNC.OBJECT_ID\n" +
+            "AND ANNC_CREATED_AT.ATTR_ID = 10\n" +
+            "AND ANNC_CREATED_AT.OBJECT_ID = ANNC.OBJECT_ID\n" +
+            "AND (? IS NULL OR (ANNC_TITLE.VALUE || ' ' || ANNC_BODY.VALUE) LIKE '%' || ? || '%' )\n" +
+            "AND ((? IS NULL OR ? IS NULL) OR ANNC_CREATED_AT.DATE_VALUE BETWEEN ? AND ?)\n" +
+            "AND (? IS NULL OR HVOTING.OBJECT_ID IS NOT NULL)\n" +
             "ORDER BY ANNC_CREATED_AT.DATE_VALUE DESC";
 
     String GET_ANNOUNCEMENT_BY_ID =
@@ -143,7 +147,7 @@ public interface AnnouncementDao {
     String EXCEPTION_UPDATE_ANNOUNCEMENT = "Can't update announcement with id: ";
     String EXCEPTION_DELETE_ANNOUNCEMENT = "Can't delete announcement with id: ";
 
-    List<Announcement> getAllAnnouncements() throws DaoAccessException;
+    List<Announcement> getAllAnnouncements(String searchText, Date startDate, Date endDate, Boolean hasVoting) throws DaoAccessException;
 
     Announcement getAnnouncementById(BigInteger id) throws DaoAccessException;
 

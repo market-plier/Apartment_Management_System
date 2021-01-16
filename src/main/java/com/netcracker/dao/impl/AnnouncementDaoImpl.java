@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 @Log4j
@@ -25,9 +26,15 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Announcement> getAllAnnouncements() throws DaoAccessException {
+    public List<Announcement> getAllAnnouncements(String searchText, Date startDate, Date endDate, Boolean hasVoting)
+            throws DaoAccessException {
         try {
-            return jdbcTemplate.query(GET_ALL_ANNOUNCEMENTS, new AnnouncementMapper());
+            return jdbcTemplate.query(GET_ALL_ANNOUNCEMENTS,
+                                        new AnnouncementMapper(),
+                                        searchText, searchText,
+                                        startDate, endDate,
+                                        startDate, endDate,
+                                        hasVoting);
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_ANNOUNCEMENT)

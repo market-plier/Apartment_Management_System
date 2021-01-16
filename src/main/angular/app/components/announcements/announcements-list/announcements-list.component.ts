@@ -4,26 +4,40 @@ import {AnnouncementService} from "../../../services/announcement.service";
 // @ts-ignore
 import {PageEvent} from "@angular/material";
 import {TokenStorageService} from "../../../services/token-storage.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {DatePipe} from "@angular/common";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
     selector: 'app-announcements-list',
     templateUrl: './announcements-list.component.html',
-    styleUrls: ['./announcements-list.component.css']
+    styleUrls: ['./announcements-list.component.scss']
 })
 export class AnnouncementsListComponent implements OnInit {
     announcements?: Announcement[];
     currentAnnouncement?: Announcement;
     currentIndex: number = -1;
-    title = '';
+
+    searchText: string;
+    startDate: Date;
+    endDate: Date;
+    hasVoting: string;
 
     lowValue = 0;
     highValue = 10;
 
+    range = new FormGroup({
+        start: new FormControl(),
+        end: new FormControl()
+    });
+
     constructor(private announcementService: AnnouncementService,
-                private tokenStorageService: TokenStorageService) {}
+                private tokenStorageService: TokenStorageService,
+                private _snackBar: MatSnackBar,
+                private datePipe: DatePipe) {}
 
     ngOnInit(): void {
-        this.retrieveAnnouncements();
+        this.getAnnouncements();
     }
 
     public getPaginatorData(event: PageEvent): PageEvent {
@@ -36,11 +50,17 @@ export class AnnouncementsListComponent implements OnInit {
         return this.tokenStorageService.getRole();
     }
 
-    retrieveAnnouncements(): void {
-        this.announcementService.getAnnouncementList()
+    getAnnouncements(): void {
+        this.announcementService.getAnnouncementList(
+            this.searchText,
+            this.datePipe.transform(this.startDate,'MM/dd/yyyy'),
+            this.datePipe.transform(this.endDate,'MM/dd/yyyy'),
+            this.hasVoting
+        )
             .subscribe(
                 data => {
                     this.announcements = data;
+                    this.refreshCurrentAnnouncement();
                     console.log(data);
                 },
                 error => {
@@ -48,8 +68,13 @@ export class AnnouncementsListComponent implements OnInit {
                 });
     }
 
+
     refreshList(): void {
-        this.retrieveAnnouncements();
+        this.getAnnouncements();
+        this.refreshCurrentAnnouncement();
+    }
+
+    refreshCurrentAnnouncement(): void {
         this.currentAnnouncement = undefined;
         this.currentIndex = -1;
     }

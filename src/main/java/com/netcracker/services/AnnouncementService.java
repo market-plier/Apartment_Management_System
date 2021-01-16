@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 @Log4j
@@ -31,8 +32,9 @@ public class AnnouncementService {
         this.announcementDao = announcementDao;
     }
 
-    public List<Announcement> getAllAnnouncements() throws DaoAccessException {
-        return announcementDao.getAllAnnouncements();
+    public List<Announcement> getAllAnnouncements(String searchText, Date startDate, Date endDate, Boolean hasVoting)
+            throws DaoAccessException {
+        return announcementDao.getAllAnnouncements(searchText, startDate, endDate, hasVoting);
     }
 
     public Announcement getAnnouncementById(BigInteger id) throws DaoAccessException {
