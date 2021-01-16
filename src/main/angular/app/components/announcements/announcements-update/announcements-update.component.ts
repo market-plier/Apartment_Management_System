@@ -3,7 +3,7 @@ import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HouseVotingService} from "../../../services/house-voting.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-announcements-update',
@@ -17,7 +17,8 @@ export class AnnouncementsUpdateComponent implements OnInit {
 
     constructor(private announcementService: AnnouncementService,
                 private router: Router,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private _snackBar: MatSnackBar) {
     }
 
     ngOnInit(): void {
@@ -55,10 +56,17 @@ export class AnnouncementsUpdateComponent implements OnInit {
             .subscribe(
                 response => {
                     console.log(response);
+                    this.openSnackBar('Announcement is updated', 'OK');
                     this.router.navigateByUrl('announcements/' + this.id);
                 },
                 error => {
                     console.log(error);
                 });
     };
+
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
+    }
 }

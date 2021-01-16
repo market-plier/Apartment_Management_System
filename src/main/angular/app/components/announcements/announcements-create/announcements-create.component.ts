@@ -7,6 +7,7 @@ import {HouseVotingService} from "../../../services/house-voting.service";
 import {VotingOptionService} from "../../../services/voting-option.service";
 import {HouseVoting} from "../../../models/house-voting";
 import {VotingOption} from "../../../models/voting-option";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-announcements-create',
@@ -33,7 +34,8 @@ export class AnnouncementsCreateComponent implements OnInit {
     constructor(private announcementService: AnnouncementService,
                 private houseVotingService: HouseVotingService,
                 private votingOptionService: VotingOptionService,
-                private router: Router) {}
+                private router: Router,
+                private _snackBar: MatSnackBar) {}
 
     counter(i: number) {
         return new Array(i);
@@ -93,6 +95,7 @@ export class AnnouncementsCreateComponent implements OnInit {
                     else {
                         this.router.navigateByUrl('announcements');
                     }
+                    this.openSnackBar('Announcement is created', 'OK');
                 },
                 error => {
                     console.log(error);
@@ -151,5 +154,11 @@ export class AnnouncementsCreateComponent implements OnInit {
                 error => {
                     console.log(error);
                 });
+    }
+
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
     }
 }

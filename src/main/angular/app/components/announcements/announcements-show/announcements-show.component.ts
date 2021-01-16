@@ -10,6 +10,7 @@ import {CommentService} from "../../../services/comment.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HouseVotingService} from "../../../services/house-voting.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-announcements-show',
@@ -41,7 +42,8 @@ export class AnnouncementsShowComponent implements OnInit {
                 private commentService: CommentService,
                 private tokenStorageService: TokenStorageService,
                 private route: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private _snackBar: MatSnackBar) {
     }
 
     ngOnInit(): void {
@@ -173,6 +175,7 @@ export class AnnouncementsShowComponent implements OnInit {
             .subscribe(
                 response => {
                     console.log(response);
+                    this.openSnackBar('Comment is created', 'OK');
                     this.getAnnouncement(this.announcement.announcementId);
                     this.commentsCreationOpen = false;
                     this.comment.body = '';
@@ -205,6 +208,12 @@ export class AnnouncementsShowComponent implements OnInit {
             this.getAnnouncement(this.announcement.announcementId);
         });
     }
+
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
+    }
 }
 
 @Component({
@@ -217,7 +226,8 @@ export class CommentEditDialog {
 
     constructor(private commentService: CommentService,
                 public dialogRef: MatDialogRef<CommentEditDialog>,
-                @Inject(MAT_DIALOG_DATA) public data: Comment) {
+                @Inject(MAT_DIALOG_DATA) public data: Comment,
+                private _snackBar: MatSnackBar) {
         this.form = new FormGroup({
             body: new FormControl('',[
                 Validators.required,
@@ -243,10 +253,17 @@ export class CommentEditDialog {
             .subscribe(
                 response => {
                     console.log(response);
+                    this.openSnackBar('Comment is updated', 'OK');
                     this.dialogRef.close();
                 },
                 error => {
                     console.log(error);
                 });
+    }
+
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
     }
 }
