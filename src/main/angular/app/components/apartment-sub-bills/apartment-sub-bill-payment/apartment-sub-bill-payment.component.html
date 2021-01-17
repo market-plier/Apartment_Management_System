@@ -1,0 +1,38 @@
+<body>
+<div id="back">
+    <mat-card id="card">
+
+        <div id="lists">
+            <mat-list>
+                <mat-list-item
+                        *ngFor="let apartmentSubBill of
+                                apartmentSubBills
+                        let i = index"
+                >
+                    {{apartmentSubBill.communalUtility.name}}
+                </mat-list-item>
+            </mat-list>
+            <mat-list id = "inputlist">
+                <mat-list-item
+                        *ngFor="let apartmentSubBill of
+                                    apartmentSubBills
+                            let i = index;">
+                    <input matInput type="number"
+                           [(ngModel)]="sums[i]"
+                            id = {{apartmentSubBill.communalUtility.name}}
+                    />
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <mat-button-toggle id="pay"
+        (click)="pay()">
+            Pay
+        </mat-button-toggle>
+        <mat-button-toggle
+                id="backbtn"
+                (click)="redirectToApartmentSubBillList()">
+            Back
+        </mat-button-toggle>
+    </mat-card>
+</div>
+</body>

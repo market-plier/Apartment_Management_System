@@ -56,10 +56,14 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {LayoutModule} from "@angular/cdk/layout";
 import {TextMaskModule} from "angular2-text-mask";
+import {ApartmentSubBillListComponent} from "./components/apartment-sub-bills/apartment-sub-bill-list/apartment-sub-bill-list.component";
+import {ApartmentSubBillShowComponent} from "./components/apartment-sub-bills/apartment-sub-bill-show/apartment-sub-bill-show.component";
 import {ApartmentInfoPageComponent} from './components/apartments/apartment-info-page/apartment-info-page.component';
 import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
 import {CommunalUtilitiesCreateComponent} from "./components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
 import {CommunalUtilitiesListComponent} from "./components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
+import {ApartmentSubBillTransferCreateComponent} from "./components/apartment-sub-bills/apartment-sub-bill-transfer-create/apartment-sub-bill-transfer-create.component";
+import {ApartmentSubBillPaymentComponent} from "./components/apartment-sub-bills/apartment-sub-bill-payment/apartment-sub-bill-payment.component";
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {ReportCreateComponent} from './components/report-create/report-create.component';
 import {DatePipe} from "@angular/common";
@@ -92,6 +96,12 @@ import { JobTriggerComponent } from './components/job-trigger/job-trigger.compon
         HomeComponent,
         NotFoundComponent,
         ReportCreateComponent,
+        ApartmentInfoPageComponent,
+        NotFoundComponent,
+        ApartmentSubBillListComponent,
+        ApartmentSubBillShowComponent,
+        ApartmentSubBillTransferCreateComponent,
+        ApartmentSubBillPaymentComponent,
         ApartmentInfoPageComponent,
         ApartmentInfoPageComponent,
         RequestComponent,
@@ -135,6 +145,7 @@ import { JobTriggerComponent } from './components/job-trigger/job-trigger.compon
         MatGridListModule,
         MatMenuModule,
         MatRippleModule,
+        MatBadgeModule,
         MatMenuModule,
         MatBadgeModule,
         MatProgressSpinnerModule,

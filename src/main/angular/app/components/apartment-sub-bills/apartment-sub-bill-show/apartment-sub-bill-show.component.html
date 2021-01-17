@@ -1,0 +1,36 @@
+<div id="back">
+    <mat-card id="card">
+        <div *ngIf="currentApartmentSubBill">
+            <h2>
+                {{ currentApartmentSubBill.communalUtility.name}}
+            </h2>
+            <h3>
+                Calculation method: {{ currentApartmentSubBill.communalUtility.calculationMethod.toString()}}
+            </h3>
+            <div id="row">
+                <div id="money_names">
+                    <p>
+                        Debt:
+                    </p>
+                    <p>
+                        Balance:
+                    </p>
+                </div>
+                <div id="money">
+                    <p>
+                        {{currentApartmentSubBill.debt}}
+                    </p>
+                    <p>
+                        {{currentApartmentSubBill.balance}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <mat-button-toggle
+                id="button"
+                (click)="redirectToApartmentSubBillList()"
+        >
+            Back
+        </mat-button-toggle>
+    </mat-card>
+</div>

@@ -1,0 +1,40 @@
+<mat-toolbar class="mat-toolbar col-12">
+    <div id="title">
+    <mat-card-title class="title-center col-2" id="titlename">YOUR SUBBILLS</mat-card-title>
+    </div>
+    <div id="toolbar">
+        <button mat-raised-button class="float-right" id="transfer"
+                           (click)="redirectToApartmentTransferCreate()"
+        >
+            Transfer money
+        </button>
+        <button mat-raised-button class="float-right" id="pay"
+                           (click)="redirectToApartmentPayment()"
+        >
+            Pay for communal utility
+        </button>
+    </div>
+</mat-toolbar>
+<div id="back">
+    <div class="container">
+        <div class="row row-cols-md-2 row-cols-sm-1 row-cols-lg-2 row-cols-xs-1  g-4">
+            <div *ngFor="let apartmentSubBill of apartmentSubBills" class="card col-4">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>{{apartmentSubBill.communalUtility.name}}</mat-card-title>
+                        <mat-card-title class="money"> Balance: {{apartmentSubBill.balance}}</mat-card-title>
+                        <mat-card-title class="money"> Debt: {{apartmentSubBill.debt}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <hr>
+                        <ul class="ul">
+                            <li>Calculation method: {{apartmentSubBill.communalUtility.calculationMethod.toString()}}</li>
+                            <li>Deadline: {{apartmentSubBill.communalUtility.deadline}}</li>
+                            <li>Status: {{apartmentSubBill.communalUtility.status}}</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+</div>
+</div>

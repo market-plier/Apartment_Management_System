@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="back">
+        <mat-card id="card">
+            <form id="apartment_sub_bills">
+                    <div>
+                        <div class="row">
+                        <div class="text">From:</div>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Choose From</mat-label>
+                                <mat-select
+                                        id="from"
+                                        [(ngModel)]="fromApartmentSubBill"
+                                        name="from">
+                                    <mat-option
+                                            *ngFor="let apartmentSubBill of
+                                            apartmentSubBills
+                                            let i = index"
+                                            value="{{apartmentSubBill.communalUtility.name}}"
+                                    >
+                                        {{apartmentSubBill.communalUtility.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <div class="text">To:</div>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Choose To</mat-label>
+                                <mat-select
+                                        id="to"
+                                        [(ngModel)]="toApartmentSubBill"
+                                        name="to">
+                                    <mat-option
+                                            *ngFor="let apartmentSubBill of
+                                            apartmentSubBills
+                                            let i = index"
+                                            value="{{apartmentSubBill.communalUtility.name}}"
+                                    >
+                                        {{apartmentSubBill.communalUtility.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                <div class="input">
+                    <mat-form-field>
+                        <mat-label>Sum</mat-label>
+                        <input matInput
+                               id="sum"
+                               type="number"
+                               [(ngModel)]="sum"
+                               name="sum"/>
+                    </mat-form-field>
+                <mat-button-toggle
+                        (click)="transferButtonClick()"
+                >
+                    Transfer
+                </mat-button-toggle>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</body>
+</html>
