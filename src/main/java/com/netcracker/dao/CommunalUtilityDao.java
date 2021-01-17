@@ -47,6 +47,8 @@ public interface CommunalUtilityDao {
             "com_util_name.VALUE com_util_name,\n" +
             "com_util_status_list.VALUE com_util_status,\n" +
             "com_util_dline.date_value com_util_dline,\n" +
+            "com_util_calc_list.VALUE com_util_calc,\n" +
+            "com_util_coeff.VALUE com_util_coeff,\n" +
             "com_util_durtype_list.Value com_util_durtype\n" +
             "    from\n" +
             "    OBJECTS com_util_obj,\n" +
@@ -54,6 +56,9 @@ public interface CommunalUtilityDao {
             "    LISTS com_util_status_list,\n" +
             "    ATTRIBUTES com_util_status,\n" +
             "    ATTRIBUTES com_util_dline,\n" +
+            "    LISTS com_util_calc_list,\n" +
+            "    ATTRIBUTES com_util_coeff,\n" +
+            "    ATTRIBUTES com_util_calc,\n" +
             "    LISTS com_util_durtype_list,\n" +
             "    ATTRIBUTES com_util_durtype\n" +
             "    where\n" +
