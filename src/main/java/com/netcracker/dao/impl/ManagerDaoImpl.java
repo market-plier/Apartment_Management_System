@@ -25,8 +25,8 @@ public class ManagerDaoImpl implements ManagerDao {
     @Override
     public Manager getManager() {
         try {
-        Manager manager = jdbcTemplate.queryForObject(GET_MANAGER, new ManagerMapper());
-        return manager;
+            Manager manager = jdbcTemplate.queryForObject(GET_MANAGER, new ManagerMapper());
+            return manager;
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_MANAGER)
@@ -40,18 +40,19 @@ public class ManagerDaoImpl implements ManagerDao {
 
     @Override
     public void updateManager(Manager manager) {
-            try {
-        jdbcTemplate.update(UPDATE_MANAGER,
-                manager.getManagerBill().getManagerBillId(),
-                manager.getAccountId());
-            } catch (DataAccessException e) {
-                e = new DaoAccessExceptionBuilder()
-                        .withMessage(EXCEPTION_UPDATE_MANAGER)
-                        .withCause(e.getCause())
-                        .withErrorMessage(BigInteger.valueOf(82))
-                        .build();
-                log.log(Level.ERROR, e.getMessage(), e);
-                throw e;
-            }
+        try {
+            jdbcTemplate.update(UPDATE_MANAGER,
+                    manager.getManagerBill(),
+                    manager.getAccountId());
+        } catch (DataAccessException e) {
+            e = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_UPDATE_MANAGER)
+                    .withCause(e.getCause())
+                    .withErrorMessage(BigInteger.valueOf(82))
+                    .build();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw e;
+        }
     }
+
 }

@@ -6,7 +6,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenStorageService} from "../../../services/token-storage.service";
 
-
 @Component({
     selector: 'app-manager-apartment-info-edit',
     templateUrl: './apartment-info-edit.component.html',
@@ -41,6 +40,7 @@ export class ApartmentInfoEditComponent implements OnInit {
         'passwordCtrl': ['', [Validators.minLength(8), Validators.maxLength(256)]],
         'peopleCountCtrl': ['', [Validators.required, Validators.min(0)]]
     });
+
     public mask = ['+', /[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
 
     updateApartment() {

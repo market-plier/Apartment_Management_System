@@ -6,8 +6,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 public class ManagerSubBillBuilder {
-
-
     private BigInteger subBillId;
     private Double balance;
     private List<ManagerSpendingOperation> managerSpendingOperations;

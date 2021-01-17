@@ -19,7 +19,7 @@ public class ManagerMapper implements RowMapper<Manager> {
                         .withManagerBillId(new BigInteger(rs.getString("manager_bill_id")))
                         .withCardNumber(rs.getString("card_number"))
                         .build()
-                    )
+                )
                 .withAccountId(new BigInteger(rs.getString("account_id")))
                 .withFirstName(rs.getString("first_name"))
                 .withLastName(rs.getString("last_name"))

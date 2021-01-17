@@ -6,7 +6,7 @@ import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.exception.ErrorCodes;
 import com.netcracker.models.Account;
-import com.netcracker.models.Apartment;
+import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.math.BigInteger;
+import java.util.List;
 
 
 @Repository
@@ -59,6 +60,25 @@ public class AccountDaoImpl implements AccountDao {
                     .withCause(e.getCause())
                     .build();
             log.error("getAccountByEmail " + accessException.getMessage(), e);
+            throw accessException;
+        }
+    }
+
+    @Override
+    public List<Account> getAllAccount() throws DaoAccessException {
+        try {
+            List<Account> list = jdbcTemplate.query(GET_ALL_ACCOUNT, new AccountMapper());
+            if (list.isEmpty()) {
+                throw new NotFoundException(EXCEPTION_NO_ACCOUNT_WERE_FOUND);
+            }
+            return list;
+        } catch (DataAccessException | NotFoundException e) {
+            DaoAccessException accessException = new DaoAccessExceptionBuilder()
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_ACCOUNT)
+                    .withMessage(EXCEPTION_GET_ALL_ACCOUNTS)
+                    .withCause(e.getCause())
+                    .build();
+            log.error("IN getAllAccount " + accessException.getMessage(), e);
             throw accessException;
         }
     }

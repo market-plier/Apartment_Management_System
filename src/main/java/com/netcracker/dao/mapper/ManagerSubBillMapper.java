@@ -26,6 +26,8 @@ public class ManagerSubBillMapper implements RowMapper<ManagerSubBill> {
                         .withDurationType(CommunalUtility.Duration.valueOf(rs.getString("duration_type")))
                         .withStatus(CommunalUtility.Status.valueOf(rs.getString("status")))
                         .withDeadline(rs.getDate("dead_line"))
+                        .withCalculationMethod(CommunalUtility.CalculationMethod.valueOf(rs.getString("calculation_name")))
+                        .withCoefficient(Double.valueOf(rs.getString("calc_coeff")))
                         .build())
                 .build();
         return managerSubBill;

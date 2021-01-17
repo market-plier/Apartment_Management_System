@@ -96,7 +96,7 @@ export class ManagerOperationListComponent implements OnInit {
    this.dialog.open(ManagerOperationCreateComponent);
   }
 
-  geDataByDateRange(start, end)
+    geDataByDateRange(start, end)
   {
     console.log(start)
     this.oSub = this.managerService.getAllByDate(start, end).subscribe(operations => {

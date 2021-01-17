@@ -6,7 +6,6 @@ import java.math.BigInteger;
 
 public interface ManagerBillDao {
 
-
     String GET_MANAGER_BILL_BY_ID = "SELECT ATTRSUBBILL.VALUE sub_bill_number,\n" +
             "ATTRSUBBILL.OBJECT_ID sub_bill_id, REF.OBJECT_ID manager_id\n" +
             "FROM ATTRIBUTES ATTRSUBBILL,OBJREFERENCE REF\n" +
@@ -31,7 +30,6 @@ public interface ManagerBillDao {
             "WHEN MATCHED THEN\n" +
             "UPDATE SET ATTR_BILL.VALUE = UPD.VALUE\n" +
             "WHERE ATTR_BILL.VALUE <> UPD.VALUE";
-
 
     String EXCEPTION_GET_MANAGER_BILL_BY_ID = "Cant find Manager Bill with id ";
     String EXCEPTION_UPDATE_MANAGER_BILL = "Cant update Manager Bill";

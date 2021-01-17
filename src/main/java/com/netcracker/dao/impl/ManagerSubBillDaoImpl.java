@@ -37,7 +37,6 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-
     @Override
     public Collection<ManagerSubBill> getAllManagerSubBills() throws DaoAccessException {
         try {
@@ -136,22 +135,6 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
         }
     }
 
-    @Override
-    public ManagerSubBill getManagerSubBillByCommunalUtilityName(String communalUtilityName) throws DaoAccessException {
-        try {
-            ManagerSubBill managerSubBill = jdbcTemplate.queryForObject(GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_NAME, new ManagerSubBillMapper(), communalUtilityName);
-            return managerSubBill;
-        } catch (DataAccessException e) {
-            log.error("IN getManagerSubBillByCommunalUtilityId: " + EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_NAME);
-            e = new DaoAccessExceptionBuilder()
-                    .withMessage(EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_NAME)
-                    .withCause(e.getCause())
-                    .withErrorMessage(BigInteger.valueOf(143))
-                    .build();
-            log.log(Level.ERROR, e.getMessage(), e);
-            throw e;
-        }
-    }
 
     @Override
     public Map<ManagerSubBill, Double> getManagerSubBillDeptByCommunalUtility(Set<BigInteger> communalUtilityId) {

@@ -18,11 +18,11 @@ public class DebtPaymentOperationMapper implements RowMapper<DebtPaymentOperatio
                 .withSum(Double.parseDouble(resultSet.getString("sum")))
                 .withCreatedAt(resultSet.getDate("created_at"))
                 .withApartmentSubBill(new ApartmentSubBillBuilder()
-                                .withSubBillId(new BigInteger(resultSet.getString("apartment_sub_bill_id")))
-                                .build())
+                        .withSubBillId(new BigInteger(resultSet.getString("apartment_sub_bill_id")))
+                        .build())
                 .withManagerSubBill(new ManagerSubBillBuilder()
-                                .withSubBillId(new BigInteger(resultSet.getString("manager_sub_bill_id")))
-                                .build())
+                        .withSubBillId(new BigInteger(resultSet.getString("manager_sub_bill_id")))
+                        .build())
                 .build();
     }
 }
