@@ -6,9 +6,7 @@
                 <mat-card-subtitle>Created at {{ announcement.createdAt | date:'yyyy-MM-dd, HH:mm ' }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <p>
-                    {{ announcement.body }}
-                </p>
+                <pre><p>{{ announcement.body }}</p></pre>
                 <div *ngIf="announcement.houseVoting" class="p-2">
                     <mat-card *ngIf="announcement.houseVoting" class="p-2">
                         <mat-card-header class="mat-primary">
