@@ -1,9 +1,7 @@
 package com.netcracker.services;
 
-import com.netcracker.dao.CalculationMethodDao;
 import com.netcracker.dao.CommunalUtilityDao;
 import com.netcracker.exception.DaoAccessException;
-import com.netcracker.models.CalculationMethod;
 import com.netcracker.models.CommunalUtility;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,6 @@ import java.util.List;
 public class CommunalUtilityService {
     @Autowired
     private CommunalUtilityDao communalUtilityDao;
-    @Autowired
-    private  CalculationMethodDao calculationMethodDao;
     @Autowired
     private  NotificationService notificationService;
 
@@ -61,9 +57,9 @@ public class CommunalUtilityService {
         }
     }
 
-    public void updateCalculationMethod(CalculationMethod calculationMethod){
+  /*  public void updateCalculationMethod(CalculationMethod calculationMethod){
         calculationMethodDao.updateCalculationMethod(calculationMethod);
-    }
+    }*/
 
     public void createCommunalUtility(CommunalUtility communalUtility)
             throws DaoAccessException, IOException, MessagingException {

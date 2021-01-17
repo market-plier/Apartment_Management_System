@@ -7,7 +7,6 @@ import com.netcracker.models.PojoBuilder.ManagerSubBillBuilder;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.math.BigInteger;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,7 +16,7 @@ public class DebtPaymentOperationMapper implements RowMapper<DebtPaymentOperatio
         return new DebtPaymentOperationBuilder()
                 .withOperationId(new BigInteger(resultSet.getString("operation_id")))
                 .withSum(Double.parseDouble(resultSet.getString("sum")))
-                .withCreatedAt(Date.valueOf(resultSet.getString("created_at")))
+                .withCreatedAt(resultSet.getDate("created_at"))
                 .withApartmentSubBill(new ApartmentSubBillBuilder()
                                 .withSubBillId(new BigInteger(resultSet.getString("apartment_sub_bill_id")))
                                 .build())

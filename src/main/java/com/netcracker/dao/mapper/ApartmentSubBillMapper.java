@@ -1,7 +1,6 @@
 package com.netcracker.dao.mapper;
 
 import com.netcracker.models.ApartmentSubBill;
-import com.netcracker.models.CalculationMethod;
 import com.netcracker.models.CommunalUtility;
 import com.netcracker.models.PojoBuilder.ApartmentBuilder;
 import com.netcracker.models.PojoBuilder.ApartmentSubBillBuilder;
@@ -29,10 +28,7 @@ public class ApartmentSubBillMapper implements RowMapper<ApartmentSubBill> {
                         .withDurationType(CommunalUtility.Duration.valueOf(resultSet.getString("duration_type")))
                         .withStatus(CommunalUtility.Status.valueOf(resultSet.getString("status")))
                         .withDeadline((resultSet.getDate("dead_line")))
-                        .withCalculationMethod(new CalculationMethod(
-                                new BigInteger(resultSet.getString("calc_method_id")),
-                                resultSet.getString("calc_name")
-                        ))
+                        .withCalculationMethod(CommunalUtility.CalculationMethod.valueOf(resultSet.getString("calc_method_id")))
                         .build())
                 .build();
         return apartmentSubBill;

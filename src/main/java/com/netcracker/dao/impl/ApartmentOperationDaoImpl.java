@@ -3,7 +3,9 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.ApartmentOperationDao;
 import com.netcracker.dao.mapper.ApartmentOperationMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.models.ApartmentOperation;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Repository
 @Transactional
+@Log4j
 public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     private final JdbcTemplate jdbcTemplate;
 
@@ -27,49 +30,78 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     }
 
     @Override
-    public List<ApartmentOperation> getAllApartmentOperationsBySubBillId(BigInteger subBillId) {
+    public List<ApartmentOperation> getAllApartmentOperationsBySubBillId(BigInteger subBillId) throws DaoAccessException {
         try {
             return jdbcTemplate.query(selectApartmentOperationsBySubBillId, new ApartmentOperationMapper(), subBillId);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_SUB_BILL_ID, subBillId, e.getCause());
+            log.error("getAllApartmentOperationsBySubBillId select error with id: " + subBillId, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_SUB_BILL_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("173"))
+                    .withId(subBillId)
+                    .build();
         }
     }
 
     @Override
-    public List<ApartmentOperation> getAllApartmentOperationsByApartmentId(BigInteger apartmentId) {
+    public List<ApartmentOperation> getAllApartmentOperationsByApartmentId(BigInteger apartmentId) throws DaoAccessException {
         try {
             return jdbcTemplate.query(selectApartmentOperationsByApartmentId, new ApartmentOperationMapper(), apartmentId);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_ID, apartmentId, e.getCause());
+            log.error("getAllApartmentOperationsByApartmentId select error with id: " + apartmentId, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("173"))
+                    .withId(apartmentId)
+                    .build();
         }
     }
 
     @Override
-    public void createApartmentOperation(ApartmentOperation apartmentOperation) {
+    public void createApartmentOperation(ApartmentOperation apartmentOperation) throws DaoAccessException {
         try {
             jdbcTemplate.update(insertApartmentOperation,
                     apartmentOperation.getSum(),
                     apartmentOperation.getApartmentSubBill().getSubBillId());
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_INSERT_APARTMENT_OPERATION, e.getCause());
+            log.error("createApartmentOperation insert error", e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_INSERT_APARTMENT_OPERATION)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("171"))
+                    .build();
         }
     }
 
     @Override
-    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentId(BigInteger apartmentId, Date from, Date to) {
+    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentId(BigInteger apartmentId, Date from, Date to) throws DaoAccessException {
         try {
             return jdbcTemplate.query(selectApartmentOperationsByDateRangeAndApartmentId, new ApartmentOperationMapper(), apartmentId, from, to);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_ID, apartmentId, e.getCause());
+            log.error("getApartmentOperationsByDateRangeAndApartmentId select error with id: " + apartmentId + "and dates " + from + ", " + to, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("173"))
+                    .withId(apartmentId)
+                    .build();
         }
     }
 
     @Override
-    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger apartmentSubBillId, Date from, Date to) {
+    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger apartmentSubBillId, Date from, Date to) throws DaoAccessException {
         try {
             return jdbcTemplate.query(selectApartmentOperationsByDateRangeAndApartmentSubBillId, new ApartmentOperationMapper(), apartmentSubBillId, from, to);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_SUB_BILL_ID, apartmentSubBillId, e.getCause());
+            log.error("getApartmentOperationsByDateRangeAndApartmentSubBillId select error with id: " + apartmentSubBillId + "and dates " + from + ", " + to, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_SUB_BILL_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("173"))
+                    .withId(apartmentSubBillId)
+                    .build();
         }
     }
 }
