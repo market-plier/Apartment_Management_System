@@ -375,11 +375,14 @@ INSERT ALL
     INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 3, 'Announcement_1Test', NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES (7, obj_id_seq.currval, '������� ���� �������.')
+VALUES (7, obj_id_seq.currval, 'Service improvement')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES (8, obj_id_seq.currval, '��� ����� ���� ������.')
+VALUES (8, obj_id_seq.currval, 'Dear residents,
+We always try to listen to your opinion and improve our service depending on your wishes. Now we are interested to know if the existing functionality of the service suits you?
+Yours faithfully,
+Administration')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES (9, obj_id_seq.currval, 'false')
+VALUES (9, obj_id_seq.currval, 'true')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
 VALUES (10, obj_id_seq.currval, null, systimestamp)
 SELECT *
@@ -390,7 +393,7 @@ INSERT ALL
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Announcement_1Test'), 5, 'House_Voting_1Test',
         NULL)
 INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (13, OBJ_ID_SEQ.currval, '�� �������� ��������?')
+VALUES (13, OBJ_ID_SEQ.currval, 'Are you satisfied with our service?')
 SELECT *
 FROM DUAL;
 
@@ -399,7 +402,7 @@ INSERT ALL
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'House_Voting_1Test'), 6, 'Voting_Option_1Test',
         NULL)
 INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (14, OBJ_ID_SEQ.currval, '��')
+VALUES (14, OBJ_ID_SEQ.currval, 'Yes')
 SELECT *
 FROM DUAL;
 
@@ -408,7 +411,7 @@ INSERT ALL
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'House_Voting_1Test'), 6, 'Voting_Option_2Test',
         NULL)
 INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (14, OBJ_ID_SEQ.currval, '���')
+VALUES (14, OBJ_ID_SEQ.currval, 'No')
 SELECT *
 FROM DUAL;
 
@@ -417,7 +420,7 @@ INSERT ALL
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'House_Voting_1Test'), 6, 'Voting_Option_3Test',
         NULL)
 INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (14, OBJ_ID_SEQ.currval, '�� �����������')
+VALUES (14, OBJ_ID_SEQ.currval, 'I haven`t decided yet')
 SELECT *
 FROM DUAL;
 
@@ -437,9 +440,12 @@ INSERT ALL
     INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 3, 'Announcement_2Test', NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES (7, obj_id_seq.currval, '�������� ���������')
+VALUES (7, obj_id_seq.currval, 'Level of heating evaluation in the house')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES (8, obj_id_seq.currval, '��� ����� ���� ������.')
+VALUES (8, obj_id_seq.currval, 'Dear residents,
+We have received complaints regarding the heating level in the apartments. For a more detailed analysis of this problem, we would like to know the average estimate of the current heating level in the house. After receiving the results, we can make decisions on how to deal with this problem.
+Yours faithfully,
+Administration')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES (9, obj_id_seq.currval, 'false')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
@@ -452,7 +458,7 @@ INSERT ALL
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Announcement_2Test'), 5, 'House_Voting_2Test',
         NULL)
 INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (13, OBJ_ID_SEQ.currval, '���������� �� ����� � ��������?')
+VALUES (13, OBJ_ID_SEQ.currval, 'Is there warm in your apartment?')
 SELECT *
 FROM DUAL;
 
@@ -461,7 +467,7 @@ INSERT ALL
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'House_Voting_2Test'), 6, 'Voting_Option_4Test',
         NULL)
 INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (14, OBJ_ID_SEQ.currval, '��')
+VALUES (14, OBJ_ID_SEQ.currval, 'Yes')
 SELECT *
 FROM DUAL;
 
@@ -470,7 +476,7 @@ INSERT ALL
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'House_Voting_2Test'), 6, 'Voting_Option_5Test',
         NULL)
 INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (14, OBJ_ID_SEQ.currval, '���')
+VALUES (14, OBJ_ID_SEQ.currval, 'No')
 SELECT *
 FROM DUAL;
 
@@ -492,9 +498,9 @@ INSERT ALL
     INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval, NULL, 3, 'Announcement_1', NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+VALUES(7,obj_id_seq.currval, 'Requests section')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+VALUES(8,obj_id_seq.currval,  )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
@@ -540,9 +546,13 @@ INSERT ALL
     INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval,NULL,3,'Announcement_3' ,NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+VALUES(7,obj_id_seq.currval, 'Saturday cleanup')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+VALUES(8,obj_id_seq.currval, 'Dear residents,
+We invite everyone to attend a Saturday cleanup this week. We plan to clean up the area around the house, paint the benches, plant new trees and flowers, and just relax and chat with each other.
+You just need to come and be in a good mood.
+Yours faithfully,
+Administration' )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
@@ -588,9 +598,13 @@ INSERT ALL
     INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval,NULL,3,'Announcement_4',NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+VALUES(7,obj_id_seq.currval, 'Noisy neighbors')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+VALUES(8,obj_id_seq.currval, 'Dear residents,
+From time to time we receive complaints about the noise coming from different apartments at night. William Castle wrote:
+"It''s hard to be a good neighbor in a bad neighborhood". Remember this and respect each other and only there we will be able to live in peace.
+Yours faithfully,
+Administration')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
@@ -636,9 +650,12 @@ INSERT ALL
     INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (obj_id_seq.nextval,NULL,3,'Announcement_5',NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(7,obj_id_seq.currval, 'HELLO'||obj_id_seq.currval)
+VALUES(7,obj_id_seq.currval, 'Happy New Year!')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(8,obj_id_seq.currval, 'BODY OF ANNC'||obj_id_seq.currval )
+VALUES(8,obj_id_seq.currval, 'Dear residents,
+Wishing you 12 months of success, 52 weeks of laughter, 365 days of fun, 8,760 hours of joy, 525,600 minutes of good luck, and 31,536,000 seconds of happiness.
+Yours faithfully,
+Administration' )
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
@@ -690,7 +707,7 @@ INSERT ALL
             VALUES (19,obj_id_seq.currval,'1234599999',SYSDATE,null)
             INTO OBJREFERENCE(attr_id, object_id, reference)
             VALUES (31,(SELECT OBJECT_ID FROM OBJECTS WHERE NAME='Manager_Account'),obj_id_seq.currval)
-SELECT * FROM dual
+SELECT * FROM dual;
 
 ------------------------------------------------END---------------------------------------------------------------------
 
