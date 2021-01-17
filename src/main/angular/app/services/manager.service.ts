@@ -15,7 +15,6 @@ export class ManagerService {
 
     constructor(private http: HttpClient) { }
 
-
     getManagerInfo(): Observable<Manager>
     {
         return this.http.get<Manager>(this.urlGetManager)

@@ -16,7 +16,7 @@ import {ManagerOperationCreateComponent} from "../manager-operation-create/manag
 @Component({
   selector: 'app-manager-operation-list',
   templateUrl: './manager-operation-list.component.html',
-  styleUrls: ['./manager-operation-list.component.css'],
+  styleUrls: ['./manager-operation-list.component.scss'],
 })
 export class ManagerOperationListComponent implements OnInit {
 

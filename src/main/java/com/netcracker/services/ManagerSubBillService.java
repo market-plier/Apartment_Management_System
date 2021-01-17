@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Map;
+
 
 
 @Log4j
@@ -43,6 +45,11 @@ public class ManagerSubBillService {
             managerSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByManagerSubBillId(managerSubBillId));
         }
         return managerSubBills;
+    }
+
+    public Map<ManagerSubBill,Double> getAllSubBillDebt()
+    {
+        return managerSubBillDao.getManagerSubBillsDebt();
     }
 
     public Collection<ManagerSubBill> getAllManagerSubBillsWithoutOperations() {

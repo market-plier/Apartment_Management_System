@@ -2,10 +2,9 @@ package com.netcracker.dao.impl;
 
 import com.netcracker.dao.ManagerSubBillDao;
 import com.netcracker.dao.mapper.ManagerSubBillMapper;
+import com.netcracker.dao.mapper.ManagerSubBillNoManagerMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
-import com.netcracker.exception.ErrorCodes;
-import com.netcracker.models.CalculationMethod;
 import com.netcracker.models.CommunalUtility;
 import com.netcracker.models.ManagerSubBill;
 import com.netcracker.models.PojoBuilder.CommunalUtilityBuilder;
@@ -57,7 +56,7 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
     @Override
     public Collection<ManagerSubBill> getAllManagerSubBillsWithOutManager() throws DaoAccessException {
         try {
-            return jdbcTemplate.query(GET_ALL_MANAGER_SUB_BILL_NO_MANAGER, new ManagerSubBillMapper());
+            return jdbcTemplate.query(GET_ALL_MANAGER_SUB_BILL_NO_MANAGER, new ManagerSubBillNoManagerMapper());
         } catch (DataAccessException e) {
             e = new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_ALL_MANAGER_SUB_BILL)
@@ -85,6 +84,36 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
                     .build();
             log.log(Level.ERROR, e.getMessage(), e);
             throw e;
+        }
+    }
+
+    @Override
+    public Map<ManagerSubBill, Double> getManagerSubBillsDebt() {
+        try {
+            Map<ManagerSubBill, Double> managerSubBillDoubleMap = namedParameterJdbcTemplate.query(GET_GROUPED_MANAGER_SUB_BILL_WITH_DEBT, rs -> {
+                Map<ManagerSubBill, Double> managerSubBillMap = new HashMap<>();
+                while (rs.next()) {
+                    ManagerSubBill managerSubBill = new ManagerSubBillBuilder()
+                            .withCommunalUtility(new CommunalUtilityBuilder()
+                                    .withName(rs.getString("communal_name"))
+                                    .withStatus(CommunalUtility.Status.valueOf(rs.getString("status")))
+                                    .withDurationType(CommunalUtility.Duration.valueOf(rs.getString("duration_type")))
+                                    .withDeadline(rs.getDate("dead_line"))
+                                    .build()
+                            )
+                            .build();
+                    managerSubBillMap.put(managerSubBill, rs.getDouble("debt"));
+                }
+                return managerSubBillMap;
+            });
+            return managerSubBillDoubleMap;
+        } catch (DataAccessException e) {
+            DaoAccessException daoAccessException = new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_MANAGER_SUB_BILLS_BY_COMMUNAL_UTILS_LIST)
+                    .withErrorMessage(BigInteger.valueOf(143))
+                    .buildWithOutId();
+            log.log(Level.ERROR, e.getMessage(), e);
+            throw daoAccessException;
         }
     }
 
@@ -139,9 +168,7 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
                                     .withStatus(CommunalUtility.Status.valueOf(rs.getString("status")))
                                     .withDurationType(CommunalUtility.Duration.valueOf(rs.getString("duration_type")))
                                     .withDeadline(rs.getDate("dead_line"))
-                                    .withCalculationMethod(new CalculationMethod(
-                                            null,
-                                            rs.getString("calc_name"))).build())
+                                    .build())
                             .build();
                     managerSubBillMap.put(managerSubBill, rs.getDouble("debt"));
                 }
@@ -157,6 +184,9 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
             throw daoAccessException;
         }
     }
+
+
+
 
     @Override
     public void updateManagerSubBill(ManagerSubBill managerSubBill) throws DaoAccessException {

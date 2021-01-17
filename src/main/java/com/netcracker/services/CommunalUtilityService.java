@@ -19,6 +19,7 @@ import java.util.List;
 public class CommunalUtilityService {
     @Autowired
     private CommunalUtilityDao communalUtilityDao;
+
     @Autowired
     private  NotificationService notificationService;
 
@@ -57,9 +58,9 @@ public class CommunalUtilityService {
         }
     }
 
-  /*  public void updateCalculationMethod(CalculationMethod calculationMethod){
-        calculationMethodDao.updateCalculationMethod(calculationMethod);
-    }*/
+//    public void updateCalculationMethod(CalculationMethod calculationMethod){
+//        calculationMethodDao.updateCalculationMethod(calculationMethod);
+//    }
 
     public void createCommunalUtility(CommunalUtility communalUtility)
             throws DaoAccessException, IOException, MessagingException {

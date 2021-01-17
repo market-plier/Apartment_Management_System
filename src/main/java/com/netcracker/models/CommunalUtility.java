@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Objects;
+
 @EqualsAndHashCode
 @Data
 public class CommunalUtility {
@@ -84,4 +86,18 @@ public class CommunalUtility {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CommunalUtility that = (CommunalUtility) o;
+
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
 }

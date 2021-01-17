@@ -39,7 +39,6 @@ public class ManagerSubBillDebtsPdfBuilder extends ReportPdfBuilder{
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getDurationType()), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getStatus()), font)));
             table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getDeadline()), font)));
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(k.getCommunalUtility().getCalculationMethod().getName()), font)));
             sumDebts+=v;
         });
 

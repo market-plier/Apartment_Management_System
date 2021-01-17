@@ -72,6 +72,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 import { JobTriggerComponent } from './components/job-trigger/job-trigger.component';
+import { DashboardManagerBillDebtComponent } from './components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component';
 
 
 @NgModule({
@@ -106,9 +107,11 @@ import { JobTriggerComponent } from './components/job-trigger/job-trigger.compon
         ApartmentInfoPageComponent,
         RequestComponent,
         JobTriggerComponent,
-
+        DashboardManagerBillDebtComponent
     ],
     imports: [
+        MatProgressSpinnerModule,
+        MatAutocompleteModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -147,9 +150,7 @@ import { JobTriggerComponent } from './components/job-trigger/job-trigger.compon
         MatRippleModule,
         MatBadgeModule,
         MatMenuModule,
-        MatBadgeModule,
-        MatProgressSpinnerModule,
-        MatAutocompleteModule
+        MatBadgeModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard,DatePipe],

@@ -1,8 +1,10 @@
 package com.netcracker.controllers.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.netcracker.controllers.web.ApiError;
 import com.netcracker.controllers.web.ResponseEntityBuilder;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.InsufficientBalanceException;
 import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.secutity.jwt.JwtAuthenticationException;
 import org.springframework.http.HttpHeaders;
@@ -12,12 +14,12 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -48,6 +50,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntityBuilder.build(err);
     }
+
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
@@ -148,4 +151,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return new ResponseEntity<>(body, headers, status);
     }
+
+    @ExceptionHandler({InsufficientBalanceException.class})
+    public final ResponseEntity<Object> handleInsufficientBalanceException(InsufficientBalanceException ex, WebRequest request) {
+
+
+        ApiError err = new ApiError(LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST,
+                "Insufficient Balance",
+                Collections.singletonList("Not enough money"),
+                BigInteger.valueOf(8092));
+        return ResponseEntityBuilder.build(err);
+    }
+
+    @ExceptionHandler({JsonProcessingException.class})
+    public final ResponseEntity<Object> handleJsonProcessingException(JsonProcessingException ex, WebRequest request) {
+
+
+        ApiError err = new ApiError(LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST,
+                "Parse exception",
+                Collections.singletonList("Cant parse map to json"),
+                BigInteger.valueOf(80999));
+        return ResponseEntityBuilder.build(err);
+    }
 }
+

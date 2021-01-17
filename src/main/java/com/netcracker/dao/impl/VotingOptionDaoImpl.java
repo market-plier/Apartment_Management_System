@@ -105,7 +105,7 @@ public class VotingOptionDaoImpl implements VotingOptionDao {
             return list;
         } catch (DataAccessException e) {
             DaoAccessException accessException = new DaoAccessExceptionBuilder()
-                    .withErrorMessage(ErrorCodes.APARTMENT_OPERATION_FAIL_TO_SELECT)
+                    .withErrorMessage(ErrorCodes._FAIL_TO_SELECT_APARTMENT)
                     .withMessage(EXCEPTION_GET_ALL_APARTMENTS_BY_VOTING_OPTION_ID)
                     .withId(id)
                     .withCause(e.getCause())
