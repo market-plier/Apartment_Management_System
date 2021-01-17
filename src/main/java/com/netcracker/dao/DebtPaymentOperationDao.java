@@ -1,7 +1,6 @@
 package com.netcracker.dao;
 
 import com.netcracker.models.DebtPaymentOperation;
-import com.netcracker.models.ManagerSpendingOperation;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -19,7 +18,7 @@ public interface DebtPaymentOperationDao {
 
     String selectDebtPaymentOperationByApartmentSubBillID =
             "SELECT DPOP.OBJECT_ID operation_id, DPOP_SUM.VALUE sum,\n" +
-                    "DPOP_CREATED_AT.VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
+                    "DPOP_CREATED_AT.DATE_VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
                     "DPOP_RECEIVES.REFERENCE manager_sub_bill_id\n" +
                     "FROM OBJECTS DPOP, ATTRIBUTES DPOP_SUM, ATTRIBUTES DPOP_CREATED_AT, OBJREFERENCE DPOP_PAYS, OBJREFERENCE DPOP_RECEIVES\n" +
                     "WHERE DPOP.OBJECT_TYPE_ID = 16\n" +
@@ -32,11 +31,11 @@ public interface DebtPaymentOperationDao {
                     "AND DPOP_PAYS.REFERENCE = ?\n" +
                     "AND DPOP_RECEIVES.ATTR_ID = 37\n" +
                     "AND DPOP_RECEIVES.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "ORDER BY DPOP_CREATED_AT.VALUE";
+                    "ORDER BY DPOP_CREATED_AT.DATE_VALUE";
 
     String selectDebtPaymentOperationByApartmentId =
             "SELECT  DPOP.OBJECT_ID operation_id, DPOP_SUM.VALUE sum,\n" +
-                    "       DPOP_CREATED_AT.VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
+                    "       DPOP_CREATED_AT.DATE_VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
                     "       DPOP_RECEIVES.REFERENCE manager_sub_bill_id\n" +
                     "FROM OBJECTS APSB, OBJREFERENCE APSB_APARTMENT_NUMBER,\n" +
                     "     OBJECTS DPOP, ATTRIBUTES DPOP_SUM, ATTRIBUTES DPOP_CREATED_AT, OBJREFERENCE DPOP_PAYS, OBJREFERENCE DPOP_RECEIVES\n" +
@@ -54,11 +53,11 @@ public interface DebtPaymentOperationDao {
                     "AND DPOP_PAYS.REFERENCE = APSB.OBJECT_ID\n" +
                     "AND DPOP_RECEIVES.ATTR_ID = 37\n" +
                     "AND DPOP_RECEIVES.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "ORDER BY DPOP_CREATED_AT.VALUE";
+                    "ORDER BY DPOP_CREATED_AT.DATE_VALUE";
 
     String selectDebtPaymentOperationByManagerSubBillId =
             "SELECT DPOP.OBJECT_ID operation_id, DPOP_SUM.VALUE sum,\n" +
-                    "    DPOP_CREATED_AT.VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
+                    "    DPOP_CREATED_AT.DATE_VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
                     "    DPOP_RECEIVES.REFERENCE manager_sub_bill_id\n" +
                     "    FROM OBJECTS DPOP, ATTRIBUTES DPOP_SUM, ATTRIBUTES DPOP_CREATED_AT, OBJREFERENCE DPOP_PAYS, OBJREFERENCE DPOP_RECEIVES\n" +
                     "    WHERE DPOP.OBJECT_TYPE_ID = 16\n" +
@@ -71,11 +70,11 @@ public interface DebtPaymentOperationDao {
                     "    AND DPOP_RECEIVES.ATTR_ID = 37\n" +
                     "    AND DPOP_RECEIVES.OBJECT_ID = DPOP.OBJECT_ID\n" +
                     "    AND DPOP_RECEIVES.REFERENCE = ?\n" +
-                    "    ORDER BY DPOP_CREATED_AT.VALUE";
+                    "    ORDER BY DPOP_CREATED_AT.DATE_VALUE";
 
     String selectDebtPaymentOperationByDateRangeAndApartmentId =
             "SELECT DPOP.OBJECT_ID operation_id, DPOP_SUM.VALUE sum,\n" +
-                    "       DPOP_CREATED_AT.VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
+                    "       DPOP_CREATED_AT.DATE_VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
                     "       DPOP_RECEIVES.REFERENCE manager_sub_bill_id\n" +
                     "FROM OBJECTS APSB, OBJREFERENCE APSB_APARTMENT_NUMBER,\n" +
                     "     OBJECTS DPOP, ATTRIBUTES DPOP_SUM, ATTRIBUTES DPOP_CREATED_AT, OBJREFERENCE DPOP_PAYS, OBJREFERENCE DPOP_RECEIVES\n" +
@@ -88,16 +87,16 @@ public interface DebtPaymentOperationDao {
                     "AND DPOP_SUM.OBJECT_ID = DPOP.OBJECT_ID\n" +
                     "AND DPOP_CREATED_AT.ATTR_ID = 27\n" +
                     "AND DPOP_CREATED_AT.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "AND DPOP_CREATED_AT.VALUE BETWEEN ? AND ?\n" +
+                    "AND DPOP_CREATED_AT.DATE_VALUE BETWEEN ? AND ?\n" +
                     "AND DPOP_PAYS.ATTR_ID = 35\n" +
                     "AND DPOP_PAYS.OBJECT_ID = DPOP.OBJECT_ID\n" +
                     "AND DPOP_PAYS.REFERENCE = APSB.OBJECT_ID\n" +
                     "AND DPOP_RECEIVES.ATTR_ID = 37\n" +
                     "AND DPOP_RECEIVES.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "ORDER BY DPOP_CREATED_AT.VALUE";
+                    "ORDER BY DPOP_CREATED_AT.DATE_VALUE";
 
     String selectDebtPaymentOperationByDateRangeAndApartmentSubBillId =
-            "SELECT DPOP.OBJECT_ID operation_id, DPOP_SUM.VALUE sum,\n" +
+            "SELECT DPOP.OBJECT_ID operation_id, DPOP_SUM.DATE_VALUE sum,\n" +
                     "    DPOP_CREATED_AT.VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
                     "    DPOP_RECEIVES.REFERENCE manager_sub_bill_id\n" +
                     "    FROM OBJECTS DPOP, ATTRIBUTES DPOP_SUM, ATTRIBUTES DPOP_CREATED_AT, OBJREFERENCE DPOP_PAYS, OBJREFERENCE DPOP_RECEIVES\n" +
@@ -109,13 +108,13 @@ public interface DebtPaymentOperationDao {
                     "    AND DPOP_PAYS.REFERENCE = ?\n" +
                     "    AND DPOP_CREATED_AT.ATTR_ID = 27\n" +
                     "    AND DPOP_CREATED_AT.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "    AND DPOP_CREATED_AT.VALUE BETWEEN ? AND ?\n" +
+                    "    AND DPOP_CREATED_AT.DATE_VALUE BETWEEN ? AND ?\n" +
                     "    AND DPOP_RECEIVES.ATTR_ID = 37\n" +
                     "    AND DPOP_RECEIVES.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "    ORDER BY DPOP_CREATED_AT.VALUE";
+                    "    ORDER BY DPOP_CREATED_AT.DATE_VALUE";
 
     String selectDebtPaymentOperationByDateRangeAndManagerSubBillId =
-            "SELECT DPOP.OBJECT_ID operation_id, DPOP_SUM.VALUE sum,\n" +
+            "SELECT DPOP.OBJECT_ID operation_id, DPOP_SUM.DATE_VALUE sum,\n" +
                     "    DPOP_CREATED_AT.VALUE created_at, DPOP_PAYS.REFERENCE apartment_sub_bill_id,\n" +
                     "    DPOP_RECEIVES.REFERENCE manager_sub_bill_id\n" +
                     "    FROM OBJECTS DPOP, ATTRIBUTES DPOP_SUM, ATTRIBUTES DPOP_CREATED_AT, OBJREFERENCE DPOP_PAYS, OBJREFERENCE DPOP_RECEIVES\n" +
@@ -127,10 +126,10 @@ public interface DebtPaymentOperationDao {
                     "    AND DPOP_RECEIVES.REFERENCE = ?\n" +
                     "    AND DPOP_CREATED_AT.ATTR_ID = 27\n" +
                     "    AND DPOP_CREATED_AT.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "    AND DPOP_CREATED_AT.VALUE BETWEEN ? AND ?\n" +
+                    "    AND DPOP_CREATED_AT.DATE_VALUE BETWEEN ? AND ?\n" +
                     "    AND DPOP_PAYS.ATTR_ID = 35\n" +
                     "    AND DPOP_PAYS.OBJECT_ID = DPOP.OBJECT_ID\n" +
-                    "    ORDER BY DPOP_CREATED_AT.VALUE";
+                    "    ORDER BY DPOP_CREATED_AT.DATE_VALUE";
 
     String EXCEPTION_INSERT_DEBT_PAYMENT_OPERATION = "Can't insert debt payment operation";
     String EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_APARTMENT_ID = "Couldn't find debt payment operation with apartment_id";

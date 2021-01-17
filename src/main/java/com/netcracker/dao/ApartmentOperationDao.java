@@ -9,20 +9,20 @@ import java.util.List;
 
 public interface ApartmentOperationDao {
     String selectApartmentOperationsBySubBillId =
-            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
+            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
                     "FROM OBJECTS APOP, ATTRIBUTES APOP_SUM, ATTRIBUTES APOP_CREATED_AT, OBJREFERENCE APOP_TRANSFERS\n" +
                     "WHERE APOP.OBJECT_TYPE_ID = 17\n" +
-                    "AND APOP_SUM.ATTR_ID = 26\n" +
-                    "AND APOP_SUM.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_CREATED_AT.ATTR_ID = 27\n" +
-                    "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_TRANSFERS.ATTR_ID = 34\n" +
-                    "AND APOP_TRANSFERS.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_TRANSFERS.REFERENCE = ?" +
-                    "ORDER BY APOP_CREATED_AT.VALUE";
+                    "  AND APOP_SUM.ATTR_ID = 26\n" +
+                    "  AND APOP_SUM.OBJECT_ID = APOP.OBJECT_ID\n" +
+                    "  AND APOP_CREATED_AT.ATTR_ID = 27\n" +
+                    "  AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
+                    "  AND APOP_TRANSFERS.ATTR_ID = 34\n" +
+                    "  AND APOP_TRANSFERS.OBJECT_ID = APOP.OBJECT_ID\n" +
+                    "  AND APOP_TRANSFERS.REFERENCE = ?\n" +
+                    "ORDER BY APOP_CREATED_AT.DATE_VALUE";
 
     String selectApartmentOperationsByApartmentId =
-            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
+            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
                     "FROM OBJECTS APSB, OBJREFERENCE APSB_APARTMENT_NUMBER,\n" +
                     "     OBJECTS APOP, ATTRIBUTES APOP_SUM, ATTRIBUTES APOP_CREATED_AT, OBJREFERENCE APOP_TRANSFERS\n" +
                     "WHERE APSB.OBJECT_TYPE_ID = 13\n" +
@@ -37,7 +37,7 @@ public interface ApartmentOperationDao {
                     "AND APOP_TRANSFERS.ATTR_ID = 34\n" +
                     "AND APOP_TRANSFERS.OBJECT_ID = APOP.OBJECT_ID\n" +
                     "AND APOP_TRANSFERS.REFERENCE = APSB.OBJECT_ID\n" +
-                    "ORDER BY APOP_CREATED_AT.VALUE";
+                    "ORDER BY APOP_CREATED_AT.DATE_VALUE";
 
     String insertApartmentOperation =
             "INSERT ALL\n" +
@@ -45,10 +45,10 @@ public interface ApartmentOperationDao {
                     "INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID) VALUES (26, OBJ_ID_SEQ.currval, ?, NULL, NULL)\n" +
                     "INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE, LIST_VALUE_ID) VALUES (27, OBJ_ID_SEQ.currval, NULL, SYSDATE, NULL)\n" +
                     "INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE) VALUES (34, OBJ_ID_SEQ.currval, ?)\n" +
-                    "SELECT * FROM DUAL;\n";
+                    "SELECT * FROM DUAL\n";
 
     String selectApartmentOperationsByDateRangeAndApartmentId =
-            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
+            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
                     "FROM OBJECTS APSB, OBJREFERENCE APSB_APARTMENT_NUMBER,\n" +
                     "     OBJECTS APOP, ATTRIBUTES APOP_SUM, ATTRIBUTES APOP_CREATED_AT, OBJREFERENCE APOP_TRANSFERS\n" +
                     "WHERE APSB.OBJECT_TYPE_ID = 13\n" +
@@ -63,11 +63,11 @@ public interface ApartmentOperationDao {
                     "AND APOP_TRANSFERS.REFERENCE = APSB.OBJECT_ID\n" +
                     "AND APOP_CREATED_AT.ATTR_ID = 27\n" +
                     "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_CREATED_AT.VALUE BETWEEN ? AND ?\n" +
-                    "ORDER BY APOP_CREATED_AT.VALUE";
+                    "AND APOP_CREATED_AT.DATE_VALUE BETWEEN ? AND ?\n" +
+                    "ORDER BY APOP_CREATED_AT.DATE_VALUE";
 
     String selectApartmentOperationsByDateRangeAndApartmentSubBillId =
-            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
+            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
                     "FROM OBJECTS APOP, ATTRIBUTES APOP_SUM, ATTRIBUTES APOP_CREATED_AT, OBJREFERENCE APOP_TRANSFERS\n" +
                     "WHERE APOP.OBJECT_TYPE_ID = 17\n" +
                     "AND APOP_SUM.ATTR_ID = 26\n" +
@@ -77,8 +77,8 @@ public interface ApartmentOperationDao {
                     "AND APOP_TRANSFERS.REFERENCE = ?\n" +
                     "AND APOP_CREATED_AT.ATTR_ID = 27\n" +
                     "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_CREATED_AT.VALUE BETWEEN ? AND ?\n" +
-                    "ORDER BY APOP_CREATED_AT.VALUE";
+                    "AND APOP_CREATED_AT.DATE_VALUE BETWEEN ? AND ?\n" +
+                    "ORDER BY APOP_CREATED_AT.DATE_VALUE";
 
     String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_SUB_BILL_ID = "Couldn't find Apartment operation with sub_bill_id";
     String EXCEPTION_GET_APARTMENT_OPERATIONS_BY_APARTMENT_ID = "Couldn't find Apartment operation with sub_bill_id";

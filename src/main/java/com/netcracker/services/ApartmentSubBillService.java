@@ -3,19 +3,18 @@ package com.netcracker.services;
 
 import com.netcracker.dao.ApartmentSubBillDao;
 import com.netcracker.exception.NotBelongToAccountException;
+import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.*;
 import com.netcracker.models.PojoBuilder.ApartmentOperationBuilder;
 import com.netcracker.models.PojoBuilder.ApartmentSubBillBuilder;
 import lombok.extern.log4j.Log4j;
-import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -41,7 +40,7 @@ public class ApartmentSubBillService {
         this.communalUtilityService = communalUtilityService;
     }
 
-    public List<ApartmentSubBill> getAllApartmentSubBills() {
+    public List<ApartmentSubBill> getAllApartmentSubBills() throws DaoAccessException {
         List<ApartmentSubBill> apartmentSubBills = apartmentSubBillDao.getAllApartmentSubBills();
         for (ApartmentSubBill apartmentSubBill : apartmentSubBills) {
             BigInteger apartmentSubBillId = apartmentSubBill.getSubBillId();
@@ -51,7 +50,8 @@ public class ApartmentSubBillService {
         return apartmentSubBills;
     }
 
-    public ApartmentSubBill getApartmentSubBill(BigInteger apartmentSubBillId) {
+    public ApartmentSubBill getApartmentSubBill(BigInteger apartmentSubBillId) throws DaoAccessException {
+
         ApartmentSubBill apartmentSubBill = apartmentSubBillDao.getApartmentSubBillById(apartmentSubBillId);
         apartmentSubBill.setApartmentOperations(apartmentOperationService.getAllApartmentOperationsBySubBillId(apartmentSubBillId));
         apartmentSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByApartmentSubBillId(apartmentSubBillId));
@@ -59,7 +59,7 @@ public class ApartmentSubBillService {
     }
 
 
-    public void createApartmentSubBill(CommunalUtility communalUtility) {
+    public void createApartmentSubBill(CommunalUtility communalUtility) throws DaoAccessException {
         for (Apartment apartment : apartmentInfoService.getAllApartments()) {
             apartmentSubBillDao.createApartmentSubBill(new ApartmentSubBillBuilder()
                     .withApartment(apartment)
@@ -84,12 +84,12 @@ public class ApartmentSubBillService {
         }
     }
 
-    public void createApartmentSubBillTransfer(ApartmentSubBill transferFrom, ApartmentSubBill transferTo, Double value)
-            throws IllegalArgumentException, NotBelongToAccountException {
+    public void createApartmentSubBillTransfer(BigInteger apartmentId, String transferFromCommunalUtilityName, String transferToCommunalUtilityName, Double value)
+            throws IllegalArgumentException {
         try {
 
-            ApartmentSubBill subBillFrom = apartmentSubBillDao.getApartmentSubBillById(transferFrom.getSubBillId());
-            ApartmentSubBill subBillTo = apartmentSubBillDao.getApartmentSubBillById(transferTo.getSubBillId());
+            ApartmentSubBill subBillFrom = apartmentSubBillDao.getApartmentSubBillByApartmentIdAndCommunalUtilityName(apartmentId, transferFromCommunalUtilityName);
+            ApartmentSubBill subBillTo = apartmentSubBillDao.getApartmentSubBillByApartmentIdAndCommunalUtilityName(apartmentId, transferToCommunalUtilityName);
 
             if (!subBillFrom.getApartment().getAccountId().equals(subBillTo.getApartment().getAccountId())) {
                 throw new NotBelongToAccountException("Wrong transfer SubBills");
@@ -105,13 +105,11 @@ public class ApartmentSubBillService {
             apartmentSubBillDao.updateApartmentSubBill(subBillTo);
 
             apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
-                    .withApartmentSubBill(transferTo)
-                    .withCreatedAt(new Date())
+                    .withApartmentSubBill(new ApartmentSubBillBuilder().withSubBillId(subBillFrom.getSubBillId()).build())
                     .withSum(value)
                     .build());
             apartmentOperationService.createApartmentOperation(new ApartmentOperationBuilder()
-                    .withApartmentSubBill(transferFrom)
-                    .withCreatedAt(new Date())
+                    .withApartmentSubBill(new ApartmentSubBillBuilder().withSubBillId(subBillTo.getSubBillId()).build())
                     .withSum(-value)
                     .build());
 
@@ -122,7 +120,7 @@ public class ApartmentSubBillService {
         }
     }
 
-    public void updateApartmentSubBillByApartmentOperation(ApartmentOperation apartmentOperation) {
+    public void updateApartmentSubBillByApartmentOperation(ApartmentOperation apartmentOperation) throws DaoAccessException {
         ApartmentSubBill apartmentSubBill = apartmentSubBillDao.getApartmentSubBillById(apartmentOperation.getApartmentSubBill().getSubBillId());
 
         apartmentSubBill.setBalance(apartmentSubBill.getBalance() + apartmentOperation.getSum());
@@ -141,12 +139,42 @@ public class ApartmentSubBillService {
         }
     }
 
-    public void updateApartmentSubBillsByDebt() {
+    public void updateApartmentSubBillsByDebt() throws DaoAccessException {
+        List<ApartmentSubBill> apartmentSubBills = apartmentSubBillDao.getAllApartmentSubBills();
 
+        for (ApartmentSubBill apartmentSubBill : apartmentSubBills) {
+            CommunalUtility communalUtility = apartmentSubBill.getCommunalUtility();
+            CommunalUtility.CalculationMethod calculationMethod = communalUtility.getCalculationMethod();
+            switch (calculationMethod) {
+                case SquareMeters:
+                    apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
+                            .evaluate((double) apartmentSubBill.getApartment().getSquareMetres()));
+                    break;
+                case PeopleCount:
+                    apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
+                            .evaluate((double) apartmentSubBill.getApartment().getPeopleCount()));
+                    break;
+                case Floor:
+                    apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
+                            .evaluate((double) apartmentSubBill.getApartment().getFloor()));
+                    break;
+                default:
+                    break;
+            }
+
+            apartmentSubBillDao.updateApartmentSubBill(apartmentSubBill);
+        }
     }
 
-    public List<ApartmentSubBill> getAllApartmentSubBillsByAccountId(BigInteger accountId) {
+    public List<ApartmentSubBill> getAllApartmentSubBillsByAccountId(BigInteger accountId) throws DaoAccessException {
         return apartmentSubBillDao.getAllApartmentSubBillsByAccountId(accountId);
     }
 
+    public List<ApartmentSubBill> getApartmentSubBillsByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communaUtill) throws DaoAccessException {
+        return apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountId, communaUtill);
+    }
+
+    Double getApartmentDebtByCommunalUtilityList(BigInteger accountId, Set<BigInteger> communalList) throws DaoAccessException {
+        return apartmentSubBillDao.getApartmentDebtByCommunalUtilityList(accountId, communalList);
+    }
 }

@@ -3,9 +3,15 @@ package com.netcracker.exception;
 import java.math.BigInteger;
 
 public interface ErrorCodes {
-    BigInteger APARTMENT_OPERATION_FAIL_TO_INSERT_ = BigInteger.valueOf(171);
-    BigInteger APARTMENT_OPERATION_FAIL_TO_UPDATE = BigInteger.valueOf(172);
-    BigInteger APARTMENT_OPERATION_FAIL_TO_SELECT = BigInteger.valueOf(173);
+    BigInteger _FAIL_TO_INSERT_APARTMENT_OPERATION = BigInteger.valueOf(171);
+    BigInteger _FAIL_TO_UPDATE_APARTMENT_OPERATION = BigInteger.valueOf(172);
+    BigInteger _FAIL_TO_SELECT_APARTMENT_OPERATION = BigInteger.valueOf(173);
+    BigInteger _FAIL_TO_DELETE_APARTMENT_OPERATION = BigInteger.valueOf(174);
+
+    BigInteger _FAIL_TO_INSERT_DEBT_PAYMENT_OPERATION = BigInteger.valueOf(161);
+    BigInteger _FAIL_TO_UPDATE_DEBT_PAYMENT_OPERATION = BigInteger.valueOf(162);
+    BigInteger _FAIL_TO_SELECT_DEBT_PAYMENT_OPERATION = BigInteger.valueOf(163);
+    BigInteger _FAIL_TO_DELETE_DEBT_PAYMENT_OPERATION = BigInteger.valueOf(164);
 
     BigInteger _FAIL_TO_INSERT_ANNOUNCEMENT = BigInteger.valueOf(31);
     BigInteger _FAIL_TO_UPDATE_ANNOUNCEMENT = BigInteger.valueOf(32);

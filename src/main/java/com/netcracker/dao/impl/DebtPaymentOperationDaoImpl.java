@@ -3,7 +3,9 @@ package com.netcracker.dao.impl;
 import com.netcracker.dao.DebtPaymentOperationDao;
 import com.netcracker.dao.mapper.DebtPaymentOperationMapper;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.models.DebtPaymentOperation;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Repository
 @Transactional
+@Log4j
 public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
     private final JdbcTemplate jdbcTemplate;
 
@@ -31,7 +34,13 @@ public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
         try {
             return jdbcTemplate.query(selectDebtPaymentOperationByApartmentId, new DebtPaymentOperationMapper(), apartmentId);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_APARTMENT_ID, apartmentId, e);
+            log.error("getDebtPaymentOperationsByApartmentId select error with id: " + apartmentId, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_APARTMENT_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("163"))
+                    .withId(apartmentId)
+                    .build();
         }
     }
 
@@ -40,7 +49,13 @@ public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
         try {
             return jdbcTemplate.query(selectDebtPaymentOperationByApartmentSubBillID, new DebtPaymentOperationMapper(), apartmentSubBillId);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_APARTMENT_SUB_BILL_ID, apartmentSubBillId, e);
+            log.error("getDebtPaymentOperationsByApartmentSubBillId select error with id: " + apartmentSubBillId, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_APARTMENT_SUB_BILL_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("163"))
+                    .withId(apartmentSubBillId)
+                    .build();
         }
     }
 
@@ -49,7 +64,13 @@ public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
         try {
             return jdbcTemplate.query(selectDebtPaymentOperationByManagerSubBillId, new DebtPaymentOperationMapper(), managerSubBilId);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_MANAGER_SUB_BILL_ID, managerSubBilId, e);
+            log.error("getDebtPaymentOperationsByManagerSubBillId select error with id: " + managerSubBilId, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_MANAGER_SUB_BILL_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("163"))
+                    .withId(managerSubBilId)
+                    .build();
         }
     }
 
@@ -58,7 +79,13 @@ public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
         try {
             return jdbcTemplate.query(selectDebtPaymentOperationByDateRangeAndApartmentId, new DebtPaymentOperationMapper(), apartmentId, from, to);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_DATE_RANGE_AND_APARTMENT_ID, apartmentId, e);
+            log.error("getDebtPaymentOperationsByDateRangeAndApartmentId select error with id: " + apartmentId + "and dates " + from + ", " + to, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_DATE_RANGE_AND_APARTMENT_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("163"))
+                    .withId(apartmentId)
+                    .build();
         }
     }
 
@@ -67,7 +94,13 @@ public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
         try {
             return jdbcTemplate.query(selectDebtPaymentOperationByDateRangeAndApartmentSubBillId, new DebtPaymentOperationMapper(), apartmentSubBillId, from, to);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_DATE_RANGE_AND_APARTMENT_SUB_BILL_ID, apartmentSubBillId, e);
+            log.error("getDebtPaymentOperationsByDateRangeAndApartmentSubBillId select error with id: " + apartmentSubBillId + "and dates " + from + ", " + to, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_DATE_RANGE_AND_APARTMENT_SUB_BILL_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("163"))
+                    .withId(apartmentSubBillId)
+                    .build();
         }
     }
 
@@ -76,7 +109,13 @@ public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
         try {
             return jdbcTemplate.query(selectDebtPaymentOperationByDateRangeAndManagerSubBillId, new DebtPaymentOperationMapper(), managerSubBillId, from, to);
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_DATE_RANGE_AND_MANAGER_SUB_BILL_ID, managerSubBillId, e);
+            log.error("getDebtPaymentOperationsByDateRangeAndManagerSubBillId select error with id: " + managerSubBillId + "and dates " + from + ", " + to, e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_GET_DEBT_PAYMENT_OPERATION_BY_DATE_RANGE_AND_MANAGER_SUB_BILL_ID)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("163"))
+                    .withId(managerSubBillId)
+                    .build();
         }
     }
 
@@ -89,7 +128,12 @@ public class DebtPaymentOperationDaoImpl implements DebtPaymentOperationDao {
                     debtPaymentOperation.getApartmentSubBill().getSubBillId(),
                     debtPaymentOperation.getManagerSubBill().getSubBillId());
         } catch (DataAccessException e) {
-            throw new DaoAccessException(EXCEPTION_INSERT_DEBT_PAYMENT_OPERATION, e);
+            log.error("createDebtPaymentOperation insert error", e);
+            throw new DaoAccessExceptionBuilder()
+                    .withMessage(EXCEPTION_INSERT_DEBT_PAYMENT_OPERATION)
+                    .withCause(e)
+                    .withErrorMessage(new BigInteger("161"))
+                    .build();
         }
     }
 }
