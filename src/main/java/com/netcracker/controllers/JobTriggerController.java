@@ -12,16 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/trigger")
 public class JobTriggerController {
-
+    @Autowired
     ScheduleJobService scheduleJobService;
-
     @Autowired
     private ApplicationContext context;
-
-    @Autowired
-    public JobTriggerController(ScheduleJobService scheduleJobService) {
-        this.scheduleJobService = scheduleJobService;
-    }
 
     @GetMapping("/debtNotificationJobTrigger")
     public boolean debtNotificationTrigger() {
@@ -29,7 +23,7 @@ public class JobTriggerController {
         return true;
     }
 
-    @GetMapping("/deptPaymentJobTrigger")
+    @GetMapping("/debtPaymentJobTrigger")
     public boolean deptPaymentTrigger() {
         scheduleJobService.getScheduler().execute(context.getBean(DebtPaymentsJob.class).getJob());
         return true;

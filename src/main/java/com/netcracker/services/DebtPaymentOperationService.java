@@ -17,14 +17,10 @@ import java.util.List;
 @Service
 @Transactional
 public class DebtPaymentOperationService {
-    private final DebtPaymentOperationDao debtPaymentOperationDao;
+    @Autowired
+    private DebtPaymentOperationDao debtPaymentOperationDao;
     @Autowired
     private ManagerSubBillService managerSubBillService;
-
-    @Autowired
-    public DebtPaymentOperationService(DebtPaymentOperationDao debtPaymentOperationDao) {
-        this.debtPaymentOperationDao = debtPaymentOperationDao;
-    }
 
     public List<DebtPaymentOperation> getDebtPaymentOperationsByApartmentId(BigInteger apartmentId) throws DaoAccessException {
         return debtPaymentOperationDao.getDebtPaymentOperationsByApartmentId(apartmentId);

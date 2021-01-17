@@ -21,7 +21,7 @@ export class JobTriggerComponent implements OnInit {
     }
 
     debtPaymentTrigger() {
-        this.httpClient.get(`${this.baseURL}/deptPaymentJobTrigger`).subscribe(
+        this.httpClient.get(`${this.baseURL}/debtPaymentJobTrigger`).subscribe(
             data=> this.openSnackBar("Triggered","OK"));
     }
 

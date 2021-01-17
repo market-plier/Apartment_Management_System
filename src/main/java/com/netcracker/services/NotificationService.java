@@ -52,7 +52,7 @@ public class NotificationService {
         );
     }
 
-    public void sendAnnouncementNotificationToAllApartments(Announcement announcement)
+    public synchronized void sendAnnouncementNotificationToAllApartments(Announcement announcement)
             throws MailException, DaoAccessException {
 
             for (Account account : apartmentInfoService.getAllApartments()) {
@@ -64,7 +64,7 @@ public class NotificationService {
             }
     }
 
-    public void sendDebtNotificationToAllApartments()
+    public synchronized void sendDebtNotificationToAllApartments()
             throws IOException, MessagingException, DaoAccessException {
 
             for (Account account : apartmentInfoService.getAllApartments()) {
@@ -87,7 +87,7 @@ public class NotificationService {
 
     }
 
-    public void sendTempCommunalUtilityNotificationToAllApartments(CommunalUtility communalUtility)
+    public synchronized void sendTempCommunalUtilityNotificationToAllApartments(CommunalUtility communalUtility)
             throws IOException, MessagingException, DaoAccessException{
 
             for (Account account : apartmentInfoService.getAllApartments()) {

@@ -21,17 +21,12 @@ import java.util.List;
 public class ApartmentInfoService {
     @Autowired
     private ApartmentSubBillService apartmentSubBillService;
-    private final AccountService accountService;
-    private final ApartmentDao apartmentDao;
-    private final AccountDao accountDao;
-
-
     @Autowired
-    public ApartmentInfoService(AccountService accountService, ApartmentDao apartmentDao, AccountDao accountDao) {
-        this.accountService = accountService;
-        this.apartmentDao = apartmentDao;
-        this.accountDao = accountDao;
-    }
+    private AccountService accountService;
+    @Autowired
+    private ApartmentDao apartmentDao;
+    @Autowired
+    private AccountDao accountDao;
 
     public List<Apartment> getAllApartments() throws DaoAccessException {
         return apartmentDao.getAllApartments();

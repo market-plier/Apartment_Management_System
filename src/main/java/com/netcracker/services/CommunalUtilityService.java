@@ -2,14 +2,15 @@ package com.netcracker.services;
 
 import com.netcracker.dao.CommunalUtilityDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.jobs.AnnouncementNotificationJob;
+import com.netcracker.jobs.TemporaryDebtNotificationJob;
 import com.netcracker.models.CommunalUtility;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -19,16 +20,10 @@ import java.util.List;
 public class CommunalUtilityService {
     @Autowired
     private CommunalUtilityDao communalUtilityDao;
-
     @Autowired
-    private  NotificationService notificationService;
-
-//    @Autowired
-//    public CommunalUtilityService(CommunalUtilityDao communalUtilityDao, CalculationMethodDao calculationMethodDao, NotificationService notificationService) {
-//        this.communalUtilityDao = communalUtilityDao;
-//        this.calculationMethodDao = calculationMethodDao;
-//        this.notificationService = notificationService;
-//    }
+    ScheduleJobService scheduleJobService;
+    @Autowired
+    private ApplicationContext context;
 
     public List<CommunalUtility> getAllCommunalUtilities(CommunalUtility.Status status) throws DaoAccessException {
         try {
@@ -63,7 +58,7 @@ public class CommunalUtilityService {
 //    }
 
     public void createCommunalUtility(CommunalUtility communalUtility)
-            throws DaoAccessException, IOException, MessagingException {
+            throws DaoAccessException{
         try {
             if (communalUtilityDao.getUniqueCommunalUtility(communalUtility) != null) {
                 IllegalArgumentException exception = new IllegalArgumentException("Communal utility with such name already exists");
@@ -73,9 +68,9 @@ public class CommunalUtilityService {
             communalUtilityDao.createCommunalUtility(communalUtility);
             CommunalUtility comUtil = communalUtilityDao.getUniqueCommunalUtility(communalUtility);
             if (comUtil.getDurationType().equals(CommunalUtility.Duration.Temporary)) {
-                notificationService.sendTempCommunalUtilityNotificationToAllApartments(communalUtility);
+                scheduleJobService.getScheduler().execute(context.getBean(TemporaryDebtNotificationJob.class).getJob(communalUtility));
             }
-        } catch (IOException | MessagingException e) {
+        } catch (DaoAccessException e) {
             log.error("CommunalUtilityService method createCommunalUtility(): " + e.getMessage(), e);
             throw e;
         }

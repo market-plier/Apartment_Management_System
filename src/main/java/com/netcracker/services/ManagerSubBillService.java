@@ -21,21 +21,14 @@ import java.util.Map;
 @Transactional
 public class ManagerSubBillService {
 
-    private final ManagerSubBillDao managerSubBillDao;
-    private final ManagerInfoService managerInfoService;
-    private final DebtPaymentOperationService debtPaymentOperationService;
+    @Autowired
+    private ManagerSubBillDao managerSubBillDao;
+    @Autowired
+    private ManagerInfoService managerInfoService;
+    @Autowired
+    private DebtPaymentOperationService debtPaymentOperationService;
     @Autowired
     private ManagerOperationSpendingService managerOperationSpendingService;
-
-
-    @Autowired
-    public ManagerSubBillService(ManagerSubBillDao managerSubBillDao, ManagerInfoService managerInfoService,
-                                 DebtPaymentOperationService debtPaymentOperationService) {
-        this.managerSubBillDao = managerSubBillDao;
-        this.managerInfoService = managerInfoService;
-        this.debtPaymentOperationService = debtPaymentOperationService;
-    }
-
 
     public Collection<ManagerSubBill> getAllManagerSubBills() {
         Collection<ManagerSubBill> managerSubBills = managerSubBillDao.getAllManagerSubBills();

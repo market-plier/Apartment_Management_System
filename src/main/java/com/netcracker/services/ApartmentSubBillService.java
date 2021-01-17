@@ -21,24 +21,18 @@ import java.util.Set;
 @Log4j
 @Transactional
 public class ApartmentSubBillService {
-    private final ApartmentSubBillDao apartmentSubBillDao;
-    private final ApartmentOperationService apartmentOperationService;
-    private final ApartmentInfoService apartmentInfoService;
-    private final ApartmentPaymentService apartmentPaymentService;
-    private final DebtPaymentOperationService debtPaymentOperationService;
-    private final CommunalUtilityService communalUtilityService;
-
     @Autowired
-    public ApartmentSubBillService(ApartmentSubBillDao apartmentSubBillDao, ApartmentOperationService apartmentOperationService,
-                                   ApartmentInfoService apartmentInfoService, ApartmentPaymentService apartmentPaymentService,
-                                   DebtPaymentOperationService debtPaymentOperationService, CommunalUtilityService communalUtilityService) {
-        this.apartmentSubBillDao = apartmentSubBillDao;
-        this.apartmentOperationService = apartmentOperationService;
-        this.apartmentInfoService = apartmentInfoService;
-        this.apartmentPaymentService = apartmentPaymentService;
-        this.debtPaymentOperationService = debtPaymentOperationService;
-        this.communalUtilityService = communalUtilityService;
-    }
+    private ApartmentSubBillDao apartmentSubBillDao;
+    @Autowired
+    private ApartmentOperationService apartmentOperationService;
+    @Autowired
+    private ApartmentInfoService apartmentInfoService;
+    @Autowired
+    private ApartmentPaymentService apartmentPaymentService;
+    @Autowired
+    private DebtPaymentOperationService debtPaymentOperationService;
+    @Autowired
+    private CommunalUtilityService communalUtilityService;
 
     public List<ApartmentSubBill> getAllApartmentSubBills() throws DaoAccessException {
         List<ApartmentSubBill> apartmentSubBills = apartmentSubBillDao.getAllApartmentSubBills();
