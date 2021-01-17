@@ -2,8 +2,8 @@ package com.netcracker.services;
 
 import com.netcracker.dao.CommunalUtilityDao;
 import com.netcracker.exception.DaoAccessException;
-import com.netcracker.jobs.AnnouncementNotificationJob;
 import com.netcracker.jobs.TemporaryDebtNotificationJob;
+import com.netcracker.models.Apartment;
 import com.netcracker.models.CommunalUtility;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,15 @@ public class CommunalUtilityService {
     @Autowired
     private CommunalUtilityDao communalUtilityDao;
     @Autowired
-    ScheduleJobService scheduleJobService;
+    private NotificationService notificationService;
+    @Autowired
+    private ScheduleJobService scheduleJobService;
+    @Autowired
+    private ApartmentSubBillService apartmentSubBillService;
+    @Autowired
+    private ManagerSubBillService managerSubBillService;
+    @Autowired
+    private ApartmentInfoService apartmentInfoService;
     @Autowired
     private ApplicationContext context;
 
@@ -70,6 +78,15 @@ public class CommunalUtilityService {
             if (comUtil.getDurationType().equals(CommunalUtility.Duration.Temporary)) {
                 scheduleJobService.getScheduler().execute(context.getBean(TemporaryDebtNotificationJob.class).getJob(communalUtility));
             }
+
+            managerSubBillService.createManagerSubBill(communalUtility);
+            apartmentSubBillService.createApartmentSubBill(communalUtility);
+            for (Apartment apartment : apartmentInfoService.getAllApartments()
+
+            ) {
+                apartmentSubBillService.addApartmentSubBillsToApartment(apartment);
+            }
+
         } catch (DaoAccessException e) {
             log.error("CommunalUtilityService method createCommunalUtility(): " + e.getMessage(), e);
             throw e;
