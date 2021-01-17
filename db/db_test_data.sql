@@ -388,6 +388,47 @@ VALUES (10, obj_id_seq.currval, null, systimestamp)
 SELECT *
 FROM DUAL;
 
+
+INSERT
+    ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_1',NULL)
+INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+VALUES (11,OBJ_ID_SEQ.currval, 'This is a good service, I like it' ,null,null)
+INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
+VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
+SELECT * FROM DUAL;
+
+INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
+VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_4', NULL);
+INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
+VALUES(1, obj_id_seq.currval, 5);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+INSERT INTO ATTRIBUTES(attr_id, object_id, value)
+VALUES (18, obj_id_seq.currval, '5');
+
+
+INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
+VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
+
+
+
+
+
 INSERT ALL
     INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (OBJ_ID_SEQ.nextval, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Announcement_1Test'), 5, 'House_Voting_1Test',
@@ -405,6 +446,9 @@ INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (14, OBJ_ID_SEQ.currval, 'Yes')
 SELECT *
 FROM DUAL;
+
+
+
 
 INSERT ALL
     INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
@@ -424,6 +468,8 @@ VALUES (14, OBJ_ID_SEQ.currval, 'I haven`t decided yet')
 SELECT *
 FROM DUAL;
 
+
+
 INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
 VALUES (30, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Voting_Option_3Test'),
         (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Apartment_2'));
@@ -435,6 +481,8 @@ VALUES (30, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Voting_Option_1Test'),
 INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
 VALUES (30, (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Voting_Option_1Test'),
         (SELECT OBJECT_ID FROM OBJECTS WHERE NAME = 'Apartment_1'));
+
+
 
 INSERT ALL
     INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
@@ -461,6 +509,7 @@ INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (13, OBJ_ID_SEQ.currval, 'Is there warm in your apartment?')
 SELECT *
 FROM DUAL;
+
 
 INSERT ALL
     INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
@@ -511,7 +560,7 @@ INSERT
     ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_1',NULL)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+VALUES (11,OBJ_ID_SEQ.currval, 'This is first comment',null,null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
 VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
 SELECT * FROM DUAL;
@@ -563,13 +612,13 @@ INSERT
     ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_2',NULL)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+VALUES (11,OBJ_ID_SEQ.currval, 'Okay, our apartment join to this event' ,null,null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
 VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
 SELECT * FROM DUAL;
 
 INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
-VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_5', NULL);
+VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_4', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -591,8 +640,10 @@ VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '5');
 
+
 INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
 VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
+
 
 INSERT ALL
     INTO OBJECTS (OBJECT_ID,PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
@@ -615,7 +666,7 @@ INSERT
     ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_4',NULL)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+VALUES (11,OBJ_ID_SEQ.currval,'Yes, the neighbors above don''t respect anyone at all',null,null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
 VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
 SELECT * FROM DUAL;
@@ -666,7 +717,7 @@ INSERT
     ALL INTO OBJECTS(OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION)
 VALUES (OBJ_ID_SEQ.nextval, OBJ_ID_SEQ.currval-1,4,'Comment_5',NULL)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
-VALUES (11,OBJ_ID_SEQ.currval,'NEWCOMMENT'||OBJ_ID_SEQ.currval,null,null)
+VALUES (11,OBJ_ID_SEQ.currval,'thank you, wish you same',null,null)
 INTO ATTRIBUTES(attr_id, object_id, value, date_value, list_value_id)
 VALUES (12,OBJ_ID_SEQ.currval,null,systimestamp,null)
 SELECT * FROM DUAL;
