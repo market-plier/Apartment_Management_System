@@ -41,7 +41,9 @@ public class ApartmentSubBillController {
     @PostMapping("/apartment-sub-bill-payment")
     public void updateApartmentSubBillsByApartmentOperation(@RequestBody List<ApartmentOperation> apartmentOperations) throws DaoAccessException, NullPointerException {
         for (ApartmentOperation apartmentOperation : apartmentOperations) {
-            apartmentSubBillService.updateApartmentSubBillByApartmentOperation(apartmentOperation);
+            if(apartmentOperation.getSum() > 0) {
+                apartmentSubBillService.updateApartmentSubBillByApartmentOperation(apartmentOperation);
+            }
         }
     }
 
