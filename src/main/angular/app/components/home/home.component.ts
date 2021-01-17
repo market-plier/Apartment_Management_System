@@ -16,10 +16,10 @@ export interface Tile {
 export class HomeComponent implements OnInit {
 
     tiles: Tile[] = [
-        {title: 'Subbills', cols: 3, rows: 1},
-        {title: 'Announcements', cols: 1, rows: 2},
-        {title: 'Debt of Manager Sub Bill', cols: 1, rows: 1},
-        {title: 'Reports or request or something', cols: 1, rows: 1},
+        {title: 'Subbills', cols: 5, rows: 2},
+        {title: 'Announcements', cols: 3, rows: 2},
+        {title: 'Debt of Manager Sub Bill', cols: 4, rows: 2},
+        {title: 'Reports or request or something', cols: 4, rows: 2},
     ];
 
 
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.tokenService.getRole() == 'MANAGER') {
-            this.tiles[2].cols = 3;
+            this.tiles[2].cols = 8;
         }
     }
 

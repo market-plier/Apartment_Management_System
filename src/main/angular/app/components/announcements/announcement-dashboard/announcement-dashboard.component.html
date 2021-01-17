@@ -1,0 +1,26 @@
+<div>
+    <div>
+        <mat-selection-list [multiple]="false">
+            <mat-list-option
+                    *ngFor="let announcement of
+                    (announcements | slice: lowValue : highValue); let i = index"
+                    routerLink="../announcements/{{ announcement.announcementId }}"
+            >
+                <div  fxLayout="row" fxLayoutAlign="space-between center" >
+                    <div class="truncate">
+                        {{ announcement.title }}
+                    </div>
+
+                    <div class="mat-card-subtitle">
+                        {{ announcement.createdAt | date:'yyyy-MM-dd' }}
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+            </mat-list-option>
+            <mat-paginator  [length]="announcements?.length" pageSize=5
+                            (page)="getPaginatorData($event)" [pageSizeOptions]="[5]"></mat-paginator>
+        </mat-selection-list>
+    </div>
+
+</div>

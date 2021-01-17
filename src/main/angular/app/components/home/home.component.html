@@ -1,6 +1,6 @@
 <div class="grid-container">
     <h1 class="mat-h1">Dashboard</h1>
-    <mat-grid-list cols="4" rowHeight="400px">
+    <mat-grid-list cols="8" rowHeight="200px">
 
         <mat-grid-tile [colspan]="tiles[0].cols" [rowspan]="tiles[0].rows">
             <mat-card class="dashboard-card">
@@ -23,7 +23,7 @@
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="dashboard-card-content">
-                    <div>Самые свежие объявления и новости</div>
+                    <app-announcement-dashboard></app-announcement-dashboard>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>
@@ -49,7 +49,7 @@
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="dashboard-card-content">
-                    <app-dashboard-manager-bill-debt></app-dashboard-manager-bill-debt>
+<!--                    <app-dashboard-manager-bill-debt></app-dashboard-manager-bill-debt>-->
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>

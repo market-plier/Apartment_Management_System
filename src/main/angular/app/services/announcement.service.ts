@@ -16,7 +16,10 @@ export class AnnouncementService {
 
     constructor(private http: HttpClient, private _snackBar: MatSnackBar) {}
 
-    getAnnouncementList(searchText: string, startDate: string, endDate: string, hasVoting: string): Observable<Announcement[]> {
+    getAnnouncementList(searchText: string = null,
+                        startDate: string = null,
+                        endDate: string = null,
+                        hasVoting: string = null): Observable<Announcement[]> {
         let params = new HttpParams();
         if (searchText != null) {
             params = params.set("searchText",searchText);

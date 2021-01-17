@@ -72,7 +72,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 import { JobTriggerComponent } from './components/job-trigger/job-trigger.component';
-import { DashboardManagerBillDebtComponent } from './components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component';
+import { AnnouncementDashboardComponent } from './components/announcements/announcement-dashboard/announcement-dashboard.component';
+//import { DashboardManagerBillDebtComponent } from './components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { DashboardManagerBillDebtComponent } from './components/dashboard-manage
         ApartmentInfoPageComponent,
         RequestComponent,
         JobTriggerComponent,
-        DashboardManagerBillDebtComponent
+        AnnouncementDashboardComponent,
+        //DashboardManagerBillDebtComponent
     ],
     imports: [
         MatProgressSpinnerModule,
