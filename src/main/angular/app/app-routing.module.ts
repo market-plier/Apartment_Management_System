@@ -1,34 +1,32 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AnnouncementsListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-list/announcements-list.component";
-import {AnnouncementsCreateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-create/announcements-create.component";
-import {LoginComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/login/login.component";
-import {AnnouncementsShowComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-show/announcements-show.component";
-import {ManagerOperationListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-operation/manager-operation-list/manager-operation-list.component";
-import {AuthGuard} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/services/guard/auth.guard";
-import {AnnouncementsUpdateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-update/announcements-update.component";
-import {ManagerGuard} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/services/guard/manager.guard";
-import {ApartmentInfoEditComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/manager-apartment-info-edit/apartment-info-edit.component";
-import {ApartmentRegistrationComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/apartment-registration/apartment-registration.component";
-import {ApartmentsComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/apartments-list/apartments.component";
-import {HomeComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/home/home.component";
-import {NotFoundComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/not-found/not-found.component";
-import {ApartmentInfoPageComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/apartment-info-page/apartment-info-page.component";
-import {CommunalUtilitiesCreateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
-import {CommunalUtilitiesListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
-import {CommunalUtilitiesShowComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
-import {ReportCreateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/report-create/report-create.component";
-import {IsAuthGuard} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/services/guard/isauth.guard";
-import {ApartmentSubBillListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-list/apartment-sub-bill-list.component";
-import {ApartmentSubBillShowComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-show/apartment-sub-bill-show.component";
-import {ApartmentSubBillTransferCreateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-transfer-create/apartment-sub-bill-transfer-create.component";
-import {ApartmentSubBillPaymentComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-payment/apartment-sub-bill-payment.component";
-import {RequestComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/request/request.component";
-import {JobTriggerComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/job-trigger/job-trigger.component";
-import {ManagerInfoPageComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-info-page/manager-info-page.component";
-import {ManagerInfoUpdateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager/manager-info-update.component";
-import {ManagerSubBillListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-sub-bill/manager-sub-bill-list/manager-sub-bill-list.component";
-import {ManagerOperationCreateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-operation/manager-operation-create/manager-operation-create.component";
+import {AnnouncementsListComponent} from "./components/announcements/announcements-list/announcements-list.component";
+import {AnnouncementsCreateComponent} from "./components/announcements/announcements-create/announcements-create.component";
+import {LoginComponent} from "./components/login/login.component";
+import {AnnouncementsShowComponent} from "./components/announcements/announcements-show/announcements-show.component";
+import {ManagerOperationListComponent} from "./components/manager-operation/manager-operation-list/manager-operation-list.component";
+import {AuthGuard} from "./services/guard/auth.guard";
+import {AnnouncementsUpdateComponent} from "./components/announcements/announcements-update/announcements-update.component";
+import {ManagerGuard} from "./services/guard/manager.guard";
+import {ApartmentInfoEditComponent} from "./components/apartments/manager-apartment-info-edit/apartment-info-edit.component";
+import {ApartmentRegistrationComponent} from "./components/apartments/apartment-registration/apartment-registration.component";
+import {ApartmentsComponent} from "./components/apartments/apartments-list/apartments.component";
+import {HomeComponent} from "./components/home/home.component";
+import {NotFoundComponent} from "./components/not-found/not-found.component";
+import {ApartmentInfoPageComponent} from "./components/apartments/apartment-info-page/apartment-info-page.component";
+import {CommunalUtilitiesCreateComponent} from "./components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
+import {CommunalUtilitiesListComponent} from "./components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
+import {CommunalUtilitiesShowComponent} from "./components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
+import {ReportCreateComponent} from "./components/report-create/report-create.component";
+import {IsAuthGuard} from "./services/guard/isauth.guard";
+import {ApartmentSubBillListComponent} from "./components/apartment-sub-bills/apartment-sub-bill-list/apartment-sub-bill-list.component";
+import {ApartmentSubBillShowComponent} from "./components/apartment-sub-bills/apartment-sub-bill-show/apartment-sub-bill-show.component";
+import {ApartmentSubBillTransferCreateComponent} from "./components/apartment-sub-bills/apartment-sub-bill-transfer-create/apartment-sub-bill-transfer-create.component";
+import {ApartmentSubBillPaymentComponent} from "./components/apartment-sub-bills/apartment-sub-bill-payment/apartment-sub-bill-payment.component";
+import {RequestComponent} from "./components/request/request.component";
+import {JobTriggerComponent} from "./components/job-trigger/job-trigger.component";
+import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
+import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
 
 
 const routes: Routes = [
@@ -68,13 +66,10 @@ const routes: Routes = [
     },
     {path: 'communal-utilities', component: CommunalUtilitiesListComponent, canActivate: [AuthGuard]},
     {path: 'communal-utilities/:id', component: CommunalUtilitiesShowComponent, canActivate: [AuthGuard, ManagerGuard]},
-    {path: 'manager-info', component: ManagerInfoPageComponent, canActivate: [AuthGuard,ManagerGuard]},
-    {path: 'manager-info/update', component: ManagerInfoUpdateComponent, canActivate: [ManagerGuard]},
     {path: 'apartment', component: ApartmentInfoPageComponent},
     {path: 'request-to-manager', component: RequestComponent},
     {path: 'reports', component: ReportCreateComponent, canActivate: [AuthGuard]},
     {path: 'triggers', component: JobTriggerComponent,canActivate: [AuthGuard, ManagerGuard]},
-
     {path: '**', component: NotFoundComponent},
 ];
 
