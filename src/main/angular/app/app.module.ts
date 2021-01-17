@@ -1,0 +1,166 @@
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from "@angular/material/table";
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatSelectModule} from "@angular/material/select";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/app.component';
+
+import {AnnouncementsListComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-list/announcements-list.component';
+import {AnnouncementsCreateComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-create/announcements-create.component';
+import {
+    AnnouncementsShowComponent,
+    CommentEditDialog
+} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-show/announcements-show.component";
+import {AnnouncementsUpdateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcements-update/announcements-update.component";
+import {MatBadgeModule} from '@angular/material/badge';
+import {LoginComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/login/login.component';
+import {authInterceptorProviders} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/helpers/auth.interceptor';
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ManagerOperationListComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-operation/manager-operation-list/manager-operation-list.component';
+import {ManagerOperationCreateComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-operation/manager-operation-create/manager-operation-create.component';
+import {AuthGuard} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/services/guard/auth.guard";
+import {OwnerGuard} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/services/guard/owner.guard";
+import {ManagerGuard} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/services/guard/manager.guard";
+import {MatDialogModule} from "@angular/material/dialog";
+import {ApartmentsComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/apartments-list/apartments.component";
+import {ApartmentRegistrationComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/apartment-registration/apartment-registration.component";
+import {ApartmentInfoEditComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/manager-apartment-info-edit/apartment-info-edit.component";
+import {NavComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/nav/nav.component";
+import {HomeComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/home/home.component";
+import {NotFoundComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/not-found/not-found.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {LayoutModule} from "@angular/cdk/layout";
+import {TextMaskModule} from "angular2-text-mask";
+import {ApartmentSubBillListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-list/apartment-sub-bill-list.component";
+import {ApartmentSubBillShowComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-show/apartment-sub-bill-show.component";
+import {ApartmentInfoPageComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartments/apartment-info-page/apartment-info-page.component';
+import {CommunalUtilitiesShowComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/communal-utilities/communal-utilities-show/communal-utilities-show.component";
+import {CommunalUtilitiesCreateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/communal-utilities/communal-utilities-create/communal-utilities-create.component";
+import {CommunalUtilitiesListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/communal-utilities/communal-utilities-list/communal-utilities-list.component";
+import {ApartmentSubBillTransferCreateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-transfer-create/apartment-sub-bill-transfer-create.component";
+import {ApartmentSubBillPaymentComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/apartment-sub-bills/apartment-sub-bill-payment/apartment-sub-bill-payment.component";
+import {IsAuthGuard} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/services/guard/isauth.guard";
+import {ReportCreateComponent} from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/report-create/report-create.component';
+import {DatePipe} from "@angular/common";
+import { RequestComponent } from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/request/request.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {ManagerInfoPageComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-info-page/manager-info-page.component";
+import { JobTriggerComponent } from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/job-trigger/job-trigger.component';
+import { AnnouncementDashboardComponent } from '../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/announcements/announcement-dashboard/announcement-dashboard.component';
+import {ManagerSubBillPageComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-sub-bill/manager-sub-bill-page/manager-sub-bill-page.component";
+import {ManagerSubBillListComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager-sub-bill/manager-sub-bill-list/manager-sub-bill-list.component";
+import {ManagerInfoUpdateComponent} from "../../../../../../../IdeaProjects/Netcracker/trunk/src/main/angular/app/components/manager/manager-info-update.component";
+//import { DashboardManagerBillDebtComponent } from './components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component';
+
+
+@NgModule({
+    declarations: [
+        AppComponent,
+        CommunalUtilitiesShowComponent,
+        CommunalUtilitiesCreateComponent,
+        CommunalUtilitiesListComponent,
+        AnnouncementsListComponent,
+        AnnouncementsShowComponent,
+        AnnouncementsCreateComponent,
+        AnnouncementsUpdateComponent,
+        CommentEditDialog,
+        LoginComponent,
+        ManagerOperationListComponent,
+        ManagerOperationCreateComponent,
+        ManagerInfoPageComponent,
+        ApartmentsComponent,
+        ApartmentRegistrationComponent,
+        ApartmentInfoEditComponent,
+        NavComponent,
+        HomeComponent,
+        NotFoundComponent,
+        ReportCreateComponent,
+        ApartmentInfoPageComponent,
+        NotFoundComponent,
+        ApartmentSubBillListComponent,
+        ApartmentSubBillShowComponent,
+        ApartmentSubBillTransferCreateComponent,
+        ApartmentSubBillPaymentComponent,
+        ApartmentInfoPageComponent,
+        ApartmentInfoPageComponent,
+        RequestComponent,
+        JobTriggerComponent,
+        AnnouncementDashboardComponent,
+        ManagerInfoUpdateComponent,
+        ManagerSubBillPageComponent,
+        //DashboardManagerBillDebtComponent
+    ],
+    imports: [
+        MatProgressSpinnerModule,
+        MatAutocompleteModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatCardModule,
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatListModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatExpansionModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatProgressBarModule,
+        MatPaginatorModule,
+        MatTableModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIconModule,
+        MatSelectModule,
+        MatButtonToggleModule,
+        MatDialogModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatStepperModule,
+        TextMaskModule,
+        LayoutModule,
+        MatGridListModule,
+        MatMenuModule,
+        MatRippleModule,
+        MatBadgeModule,
+        MatMenuModule,
+        MatBadgeModule
+    ],
+    providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+        JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard,DatePipe],
+    bootstrap: [AppComponent]
+})
+export class AppModule {}
