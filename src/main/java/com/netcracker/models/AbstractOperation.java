@@ -3,14 +3,16 @@ package com.netcracker.models;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Objects;
 
 @Data
 public abstract class AbstractOperation {
+    @Positive
     protected BigInteger operationId;
-    @NotNull
+    @Positive
     protected Double sum;
     protected Date createdAt;
 

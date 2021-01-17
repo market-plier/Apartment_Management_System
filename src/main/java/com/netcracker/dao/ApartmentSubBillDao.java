@@ -50,14 +50,14 @@ public interface ApartmentSubBillDao {
             "                   DURATION_LIST.VALUE      duration_type,\n" +
             "                   STATUS_LIST.VALUE        status,\n" +
             "                   DEAD_LINE.DATE_VALUE     dead_line,\n" +
-            "                   CALC_NAME.VALUE          calc_name\n" +
+            "                   CALC_LIST.VALUE          calc_name\n" +
             "            FROM OBJECTS APT_SUB_BILL,\n" +
             "                 OBJECTS COMMUNAL_UTILL,\n" +
-            "                 OBJREFERENCE CAL_METHOD_REF,\n" +
             "                 OBJECTS APT,\n" +
             "                 OBJREFERENCE APT_REF,\n" +
             "                 LISTS DURATION_LIST,\n" +
             "                 LISTS STATUS_LIST,\n" +
+            "                 LISTS CALC_LIST,\n" +
             "                 ATTRIBUTES BALANCE,\n" +
             "                 ATTRIBUTES DEBT,\n" +
             "                 ATTRIBUTES COMMUNAL_NAME,\n" +
@@ -84,9 +84,9 @@ public interface ApartmentSubBillDao {
             "              AND STATUS.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
             "              AND DEAD_LINE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
             "              AND DEAD_LINE.ATTR_ID = 24\n" +
-            "              AND CALC_NAME.OBJECT_ID = CAL_METHOD_REF.REFERENCE\n" +
+            "              AND CALC_LIST.LIST_VALUE_ID = CALC_NAME.LIST_VALUE_ID\n" +
             "              AND CALC_NAME.ATTR_ID = 20\n" +
-            "              AND COMMUNAL_UTILL.OBJECT_ID=CAL_METHOD_REF.OBJECT_ID\n" +
+            "              AND CALC_NAME.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
             "              AND COMMUNAL_NAME.OBJECT_ID IN (:communal_list)";
 
     String GET_APARTMENT_SUB_BILL_BY_APARTMENT_ID_AND_COMMUNAL_UTILITY_NAME = "SELECT APT_SUB_BILL.OBJECT_ID   sub_bill_id,\n" +
