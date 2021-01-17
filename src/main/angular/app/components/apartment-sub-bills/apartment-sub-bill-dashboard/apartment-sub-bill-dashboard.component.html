@@ -1,0 +1,26 @@
+<div class="col-12 row">
+    <div  class="col-7" style="margin-top: -100px;">
+        <ngx-charts-pie-chart style="margin: 0"
+                              [view]="view"
+                              [scheme]="colorScheme"
+                              [results]="single"
+                              [gradient]=""
+                              [legend]="showLegend"
+                              [legendPosition]="legendPosition"
+                              [labels]="showLabels"
+                              [doughnut]="isDoughnut"
+                              [legendTitle]="title"
+                              (select)="onSelect($event)"
+                              (activate)="onActivate($event)"
+                              (deactivate)="onDeactivate($event)"
+        >
+        </ngx-charts-pie-chart>
+    </div>
+
+          <!--  <div mat-card-avatar class="res-circle">
+                <div class="circle-txt">
+                    {{dept}}
+                </div>
+            </div>-->
+
+</div>

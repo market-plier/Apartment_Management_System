@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../services/token-storage.service";
-import {transferArrayItem} from "@angular/cdk/drag-drop";
 
 export interface Tile {
     cols: number;
@@ -34,4 +33,3 @@ export class HomeComponent implements OnInit {
     }
 
 }
-

@@ -10,7 +10,9 @@
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="dashboard-card-content">
-                    <div>Ну тут будут графики успеваемости по сбору средств до дедлайна</div>
+                    <div *ngIf="tokenService.getRole()=='OWNER'">
+                        <app-apartment-sub-bill-dashboard></app-apartment-sub-bill-dashboard>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>
@@ -49,7 +51,7 @@
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="dashboard-card-content">
-<!--                    <app-dashboard-manager-bill-debt></app-dashboard-manager-bill-debt>-->
+                    <!--                    <app-dashboard-manager-bill-debt></app-dashboard-manager-bill-debt>-->
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>

@@ -5,9 +5,9 @@ VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_1', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'masha@gmail.com');
+VALUES (2, obj_id_seq.currval, 'mariakozusan@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '$2y$12$ETRJjS1EBNb77YJWVTD55OOQpEm3ohoitZfPclaRQstjR.GeBBTyy');
+VALUES (3, obj_id_seq.currval, '91f1771840b4b0b71d70338e9259e14fbe2de8a58260cde750a46321333ed7c2');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (4, obj_id_seq.currval, 'Mariia');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -15,7 +15,7 @@ VALUES (5, obj_id_seq.currval, 'Kozhushan');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (6, obj_id_seq.currval, '+380987688777');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '10');
+VALUES (15, obj_id_seq.currval, '1');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (16, obj_id_seq.currval, '80');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -39,7 +39,7 @@ VALUES (5, obj_id_seq.currval, 'Yabluchkin');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (6, obj_id_seq.currval, '+380967655444');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '12');
+VALUES (15, obj_id_seq.currval, '3');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (16, obj_id_seq.currval, '120');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -55,7 +55,7 @@ VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (2, obj_id_seq.currval, 'nonarush1@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '$2y$12$4aXoSg7C.BZwxnyOF7fAkuwWUuyzPFswhPXzzmiEhkRDg07OVtksi ');
+VALUES (3, obj_id_seq.currval, '1c268eb823897fe3d7b75e9c1614afb1dadea2d65e4606db1fd68546e86a284b');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (4, obj_id_seq.currval, 'Dasha');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -63,7 +63,7 @@ VALUES (5, obj_id_seq.currval, 'Markovkina');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (6, obj_id_seq.currval, '+380985433678');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '11');
+VALUES (15, obj_id_seq.currval, '4');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (16, obj_id_seq.currval, '44');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
@@ -403,30 +403,27 @@ VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_4', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+VALUES (2, obj_id_seq.currval, 'vika@gmail.com'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+VALUES (3, obj_id_seq.currval, '66df28329fe8c63299454fde6c5364126ad1e91c3bfdc54446d10e07892acb09');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+VALUES (4, obj_id_seq.currval, 'Viktoria');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+VALUES (5, obj_id_seq.currval, 'Lady');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+VALUES (15, obj_id_seq.currval, '11');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+VALUES (17, obj_id_seq.currval, '3');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '5');
 
 
 INSERT INTO OBJREFERENCE(ATTR_ID, OBJECT_ID, REFERENCE)
 VALUES (29,OBJ_ID_SEQ.currval-1,OBJ_ID_SEQ.currval);
-
-
-
 
 
 INSERT ALL
@@ -573,21 +570,21 @@ VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_4', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+VALUES (2, obj_id_seq.currval, 'may@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+VALUES (3, obj_id_seq.currval, '9b367940ef727050936b6d9821dbf203f3c2e32b89a94663c23d9e7eafd2a84d');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+VALUES (4, obj_id_seq.currval, 'Kostya');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+VALUES (5, obj_id_seq.currval, 'Murchik');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+VALUES (6, obj_id_seq.currval, '345675677887');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+VALUES (15, obj_id_seq.currval, '10');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+VALUES (16, obj_id_seq.currval, '80');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+VALUES (17, obj_id_seq.currval, '1');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '5');
 
@@ -625,21 +622,21 @@ VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_4', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+VALUES (2, obj_id_seq.currval, 'misha@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+VALUES (3, obj_id_seq.currval, 'b6185f5fd9890739863418e45c8f43008bb92e487926dbdea5f905d0c3d035c9');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+VALUES (4, obj_id_seq.currval, 'Michail');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+VALUES (5, obj_id_seq.currval, 'Patochkin');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+VALUES (6, obj_id_seq.currval, '345675677887');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+VALUES (15, obj_id_seq.currval, '20');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+VALUES (16, obj_id_seq.currval, '80');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+VALUES (17, obj_id_seq.currval, '5');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '5');
 
@@ -681,21 +678,21 @@ VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_6', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+VALUES (2, obj_id_seq.currval, 'nice@gmail.com'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+VALUES (3, obj_id_seq.currval, '59d5eb7b3bbf93c0a9957faa93340cb4f4e98fc9ec69ab356a370ca50688c6fb');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+VALUES (4, obj_id_seq.currval, 'Ramses');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+VALUES (5, obj_id_seq.currval, 'Kiwi');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+VALUES (15, obj_id_seq.currval, '21');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
+VALUES (16, obj_id_seq.currval, '80');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+VALUES (17, obj_id_seq.currval, '5');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '5');
 
@@ -732,21 +729,21 @@ VALUES (obj_id_seq.nextval, NULL, 7, 'Apartment_7' , NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES(1, obj_id_seq.currval, 5);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'vvv@gmail.com'||obj_id_seq.currval);
+VALUES (2, obj_id_seq.currval, 'kira@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (3, obj_id_seq.currval, '1234567'||obj_id_seq.currval);
+VALUES (3, obj_id_seq.currval, 'd10e3dbd70c9f6e0a082d7bdfaca882a1ef55edaeb30122f1818bc484e81a067');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (4, obj_id_seq.currval, 'vasya'||obj_id_seq.currval);
+VALUES (4, obj_id_seq.currval, 'Kira');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (5, obj_id_seq.currval, 'pupkin'||obj_id_seq.currval);
+VALUES (5, obj_id_seq.currval, 'Klubnichkina');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (6, obj_id_seq.currval, '345675677887'||obj_id_seq.currval);
+VALUES (6, obj_id_seq.currval, '345675677887');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (15, obj_id_seq.currval, '10'||obj_id_seq.currval);
+VALUES (15, obj_id_seq.currval, '25');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (16, obj_id_seq.currval, '80'||obj_id_seq.currval);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (17, obj_id_seq.currval, '1'||obj_id_seq.currval);
+VALUES (17, obj_id_seq.currval, '8');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (18, obj_id_seq.currval, '5');
 

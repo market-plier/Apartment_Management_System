@@ -1,0 +1,107 @@
+@import '~src/main/angular/theme.scss';
+
+.more-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.mat-toolbar {
+    background-color: mat-color($my-app-secondary);
+}
+
+.ul {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 0;
+
+}
+
+.form-field {
+    width: 100px;
+    font-size: 14px;
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.title-center {
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 30px;
+    color: mat-color($my-app-foreground);
+    line-height: 50px;
+}
+
+
+.create-btn {
+    background-color: mat-color($my-app-primary);
+    color: mat-color($my-app-background);
+    float: right;
+    margin: 0;
+    height: 50px;
+    width: 50px;
+}
+
+.example-card {
+
+    margin: 20px;
+
+}
+
+
+.res-circle {
+    border-radius: 50%;
+    background: mat-color($my-app-accent);
+    line-height: 0;
+    position: relative;
+    height: 15%;
+    width: 15%;
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden; /* Обрезаем содержимое */
+    text-overflow: ellipsis; /* Многоточие */
+}
+
+
+.res-circle::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.circle-txt {
+    position: absolute;
+    bottom: 50%;
+    width: 100%;
+    text-align: center;
+    font-family: Cambria, sans-serif;
+    font-size: 2vw;
+}
+
+// Extra small devices (phones, less than 768px) *!
+@media (max-width: 767px) {
+    .circle-txt {
+        font-size: 10px;
+    }
+}
+
+// Small devices (tablets, 768px and up) *!
+@media (min-width: 768px) {
+    .circle-txt {
+        font-size: 14px;
+    }
+}
+
+// Medium devices (desktops, 992px and up) *!
+@media (min-width: 992px) {
+    .circle-txt {
+        font-size: 14px;
+    }
+}
+
+// Large devices (large desktops, 1200px and up) *!
+@media (min-width: 1200px) {
+    .circle-txt {
+        font-size: 18px;
+    }
+}

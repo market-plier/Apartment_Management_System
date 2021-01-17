@@ -134,6 +134,7 @@ public class ApartmentSubBillService {
     }
 
     public void updateApartmentSubBillsByDebt() throws DaoAccessException {
+
         List<ApartmentSubBill> apartmentSubBills = apartmentSubBillDao.getAllApartmentSubBills();
 
         for (ApartmentSubBill apartmentSubBill : apartmentSubBills) {
@@ -156,7 +157,6 @@ public class ApartmentSubBillService {
                 default:
                     break;
             }
-
             apartmentSubBillDao.updateApartmentSubBill(apartmentSubBill);
         }
     }

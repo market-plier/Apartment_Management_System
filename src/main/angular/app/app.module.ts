@@ -73,8 +73,9 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 import { JobTriggerComponent } from './components/job-trigger/job-trigger.component';
 import { AnnouncementDashboardComponent } from './components/announcements/announcement-dashboard/announcement-dashboard.component';
-//import { DashboardManagerBillDebtComponent } from './components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component';
-
+import {ManagerOperationUpdateComponent} from "./components/manager-operation/manager-operation-update/manager-operation-update.component";
+import {ApartmentSubBillDashboardComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-sub-bill-dashboard.component";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
     declarations: [
@@ -109,6 +110,9 @@ import { AnnouncementDashboardComponent } from './components/announcements/annou
         RequestComponent,
         JobTriggerComponent,
         AnnouncementDashboardComponent,
+        ManagerOperationUpdateComponent,
+        ApartmentSubBillDashboardComponent,
+        //ManagerSubBillPageComponent,
         //DashboardManagerBillDebtComponent
     ],
     imports: [
@@ -152,7 +156,8 @@ import { AnnouncementDashboardComponent } from './components/announcements/annou
         MatRippleModule,
         MatBadgeModule,
         MatMenuModule,
-        MatBadgeModule
+        MatBadgeModule,
+        NgxChartsModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard,DatePipe],
