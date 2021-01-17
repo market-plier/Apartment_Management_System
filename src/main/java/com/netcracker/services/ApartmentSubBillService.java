@@ -139,18 +139,19 @@ public class ApartmentSubBillService {
         for (ApartmentSubBill apartmentSubBill : apartmentSubBills) {
             CommunalUtility communalUtility = apartmentSubBill.getCommunalUtility();
             CommunalUtility.CalculationMethod calculationMethod = communalUtility.getCalculationMethod();
+            Apartment apartment = apartmentInfoService.getApartmentById(apartmentSubBill.getApartment().getAccountId());
             switch (calculationMethod) {
                 case SquareMeters:
                     apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
-                            .evaluate((double) apartmentSubBill.getApartment().getSquareMetres()));
+                            .evaluate((double) apartment.getSquareMetres()));
                     break;
                 case PeopleCount:
                     apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
-                            .evaluate((double) apartmentSubBill.getApartment().getPeopleCount()));
+                            .evaluate((double) apartment.getPeopleCount()));
                     break;
                 case Floor:
                     apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
-                            .evaluate((double) apartmentSubBill.getApartment().getFloor()));
+                            .evaluate((double) apartment.getFloor()));
                     break;
                 default:
                     break;
