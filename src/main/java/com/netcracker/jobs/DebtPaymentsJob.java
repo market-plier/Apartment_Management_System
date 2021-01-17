@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
 @Log4j
@@ -36,4 +37,6 @@ public class DebtPaymentsJob implements Job {
     public Trigger getTrigger() {
         return trigger;
     }
+
+
 }

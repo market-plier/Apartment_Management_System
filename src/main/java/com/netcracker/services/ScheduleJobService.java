@@ -46,4 +46,12 @@ public class ScheduleJobService {
         addJobToScheduler(1, this.debtPaymentsJob.getJob(), this.debtPaymentsJob.getTrigger());
         addJobToScheduler(2, this.debtNotificationJob.getJob(), this.debtNotificationJob.getTrigger());
     }
+
+    public ThreadPoolTaskScheduler getScheduler() {
+        return scheduler;
+    }
+
+    public Map<Integer, ScheduledFuture<?>> getJobsMap() {
+        return jobsMap;
+    }
 }
