@@ -230,7 +230,7 @@ public interface ApartmentSubBillDao {
             "      AND CALC_NAME.ATTR_ID = 20\n" +
             "      AND CALC_LIST.LIST_VALUE_ID = CALC_NAME.LIST_VALUE_ID\n" +
             "      AND CALC_NAME.ATTR_ID = 20\n" +
-            "      AND CALC_NAME.OBJECT_ID =  COMMUNAL_UTILL.OBJECT_ID\n";
+            "      AND CALC_NAME.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n";
 
     String GET_ALL_APARTMENT_SUB_BILLS_BY_ACCOUNT_ID = "SELECT APT_SUB_BILL.OBJECT_ID   sub_bill_id,\n" +
             "                       COMMUNAL_UTILL.OBJECT_ID communal_util_id,\n" +
