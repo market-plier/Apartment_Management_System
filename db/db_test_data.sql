@@ -549,7 +549,10 @@ VALUES (obj_id_seq.nextval, NULL, 3, 'Announcement_1', NULL)
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(7,obj_id_seq.currval, 'Requests section')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
-VALUES(8,obj_id_seq.currval,  )
+VALUES(8,obj_id_seq.currval,  'Dear residents,
+Send your requests, complaints and suggestions to our Requests section. Your messages will definitely be read and will be kept in mind when making further decisions and any actions. The administration is doing everything to make your living in our house comfortable.
+Yours faithfully,
+Administration')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(9,obj_id_seq.currval, 'TRUE')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE, DATE_VALUE)
@@ -652,8 +655,10 @@ INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(7,obj_id_seq.currval, 'Noisy neighbors')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
 VALUES(8,obj_id_seq.currval, 'Dear residents,
-From time to time we receive complaints about the noise coming from different apartments at night. William Castle wrote:
-"It''s hard to be a good neighbor in a bad neighborhood". Remember this and respect each other and only there we will be able to live in peace.
+From time to time we receive complaints about the noise coming from different apartments at night.
+William Castle wrote:
+"It''s hard to be a good neighbor in a bad neighborhood".
+Remember this and respect each other and only there we will be able to live in peace.
 Yours faithfully,
 Administration')
 INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE)
