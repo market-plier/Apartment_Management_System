@@ -79,8 +79,8 @@ public class CommunalUtilityService {
                 scheduleJobService.getScheduler().execute(context.getBean(TemporaryDebtNotificationJob.class).getJob(communalUtility));
             }
 
-            managerSubBillService.createManagerSubBill(communalUtility);
-            apartmentSubBillService.createApartmentSubBill(communalUtility);
+            managerSubBillService.createManagerSubBill(comUtil);
+            apartmentSubBillService.createApartmentSubBill(comUtil);
             for (Apartment apartment : apartmentInfoService.getAllApartments()
 
             ) {

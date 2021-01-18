@@ -302,7 +302,7 @@ public interface ManagerSubBillDao {
                     "    WHERE old.VALUE <> new.VALUE\n" +
                     "WHEN NOT MATCHED THEN\n" +
                     "    INSERT (old.ATTR_ID, old.OBJECT_ID, old.VALUE)\n" +
-                    "    VALUES (new.ATTR_ID, new.OBJECT_ID, new.VALUE);";
+                    "    VALUES (new.ATTR_ID, new.OBJECT_ID, new.VALUE)";
 
     String CREATE_MANAGER_SUB_BILL_REFERENCE =
             "MERGE INTO OBJREFERENCE old\n" +

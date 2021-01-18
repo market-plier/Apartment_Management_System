@@ -195,7 +195,7 @@ public class ManagerSubBillDaoImpl implements ManagerSubBillDao {
             jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_OBJECTS,
                     managerSubBill.getCommunalUtility().getCommunalUtilityId());
             jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_ATTRIBUTES,
-                    managerSubBill.getBalance());
+                    0);
             jdbcTemplate.update(CREATE_MANAGER_SUB_BILL_REFERENCE,
                     managerSubBill.getManager().getAccountId());
         } catch (DataAccessException e) {
