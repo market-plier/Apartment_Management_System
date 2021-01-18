@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ApartmentSubBill} from "../../../models/apartment-sub-bill";
 import {ApartmentSubBillService} from "../../../services/apartment-sub-bill.service";
 import {TokenStorageService} from "../../../services/token-storage.service";
@@ -16,7 +16,8 @@ class single {
 export class ApartmentSubBillDashboardComponent implements OnInit {
 
     subbills: ApartmentSubBill[] = [];
-    dept: number = 0;
+    debt: number = 0;
+    balance: number = 0;
 
     constructor(public subbillsSevice: ApartmentSubBillService, public token: TokenStorageService) {
     }
@@ -30,38 +31,47 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
                 var single: single[] = [];
                 for (j in this.subbills) {
                     single[j] = {name: this.subbills[j].communalUtility.name, value: this.subbills[j].balance};
-                    this.dept = this.dept + this.subbills[j].debt;
+                    this.debt = this.debt + this.subbills[j].debt;
+                    this.balance = this.balance + this.subbills[j].balance;
                 }
                 Object.assign(this, {single});
 
             });
     }
 
-    single: any[];
-    view: any[] = [500, 350];
+    innerWidth = 350;
+    innerHeight = 400;
 
+    single: any[];
+    view: any[] = [this.innerHeight, this.innerWidth];
+
+    colorDebt = 'red';
+    colorBalance = 'green'
 // options
     gradient: boolean = true;
     showLegend: boolean = true;
     showLabels: boolean = true;
     isDoughnut: boolean = false;
     legendPosition: string = 'below';
-    title="Balance";
+
+    title = "Balance";
 
     colorScheme = {
         domain: ['#5B5F97', '#C2E812', '#F1DB48', '#FC7753']
     };
+
+    displayedColumns = ['Communal', 'Debt', 'Balance'];
 
 
     onSelect(data): void {
         console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     }
 
-    onActivate(data):void {
+    onActivate(data): void {
         console.log('Activate', JSON.parse(JSON.stringify(data)));
     }
 
-    onDeactivate(data):void {
+    onDeactivate(data): void {
         console.log('Deactivate', JSON.parse(JSON.stringify(data)));
     }
 }
