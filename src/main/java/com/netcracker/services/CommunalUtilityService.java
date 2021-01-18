@@ -81,11 +81,7 @@ public class CommunalUtilityService {
 
             managerSubBillService.createManagerSubBill(comUtil);
             apartmentSubBillService.createApartmentSubBill(comUtil);
-            for (Apartment apartment : apartmentInfoService.getAllApartments()
 
-            ) {
-                apartmentSubBillService.addApartmentSubBillsToApartment(apartment);
-            }
 
         } catch (DaoAccessException e) {
             log.error("CommunalUtilityService method createCommunalUtility(): " + e.getMessage(), e);
