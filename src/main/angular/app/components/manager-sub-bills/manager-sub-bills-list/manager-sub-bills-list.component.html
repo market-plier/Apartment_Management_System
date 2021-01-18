@@ -16,9 +16,9 @@
 
 
     <mat-card class="d-flex justify-content-center">
-    <table [dataSource]="datasource" class="mat-elevation-z8" mat-table text-align="center">
+    <table matSort (matSortChange)="sortData($event)" [dataSource]="datasource" class="mat-elevation-z8" mat-table text-align="center">
         <ng-container matColumnDef="name">
-            <th *matHeaderCellDef mat-header-cell> Name</th>
+            <th *matHeaderCellDef mat-sort-header="nameSort" > Name</th>
             <td *matCellDef="let managerSubBill" mat-cell>
                 <div (click)="redirectToManagerSubBillShow(managerSubBill.subBillId)" class="center" fxFlexFill
                      matRipple>
@@ -27,26 +27,32 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="id">
+            <th *matHeaderCellDef mat-sort-header="idSort"> № </th>
+            <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.subBillId}} </td>
+        </ng-container>
+
         <!-- Name Column -->
+
         <ng-container matColumnDef="status">
-            <th *matHeaderCellDef mat-header-cell> Status</th>
+            <th *matHeaderCellDef mat-sort-header="statusSort"> Status</th>
             <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.communalUtility.status}} </td>
         </ng-container>
 
         <!-- Weight Column -->
 
         <ng-container matColumnDef="calculation">
-            <th *matHeaderCellDef mat-header-cell> Calculation method</th>
+            <th *matHeaderCellDef mat-sort-header="calculationSort"> Calculation method</th>
             <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.communalUtility.calculationMethod.toString()}} </td>
         </ng-container>
 
         <ng-container matColumnDef="deadline">
-            <th *matHeaderCellDef mat-header-cell> Deadline</th>
+            <th *matHeaderCellDef mat-sort-header="deadlineSort"> Deadline</th>
             <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.communalUtility.deadline}} </td>
         </ng-container>
 
         <ng-container matColumnDef="balance">
-            <th *matHeaderCellDef mat-header-cell> Balance</th>
+            <th *matHeaderCellDef mat-sort-header="balanceSort"> Balance</th>
             <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.balance}} </td>
         </ng-container>
 
