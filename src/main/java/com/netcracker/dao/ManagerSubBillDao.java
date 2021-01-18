@@ -237,47 +237,42 @@ public interface ManagerSubBillDao {
 
 
     String GET_GROUPED_MANAGER_SUB_BILL_WITH_DEBT = "SELECT  sum(DEBT.VALUE)  debt,\n" +
-            "COMMUNAL_NAME.VALUE      communal_name,\n" +
-            "DURATION_LIST.VALUE      duration_type,\n" +
-            "STATUS_LIST.VALUE        status,\n" +
-            "DEAD_LINE.DATE_VALUE     dead_line,\n" +
-            "CALC_NAME.VALUE          calc_name\n" +
-            "FROM OBJECTS APT_SUB_BILL,\n" +
-            "     OBJECTS COMMUNAL_UTILL,\n" +
-            "     OBJREFERENCE CAL_METHOD_REF,\n" +
-            "     OBJECTS APT,\n" +
-            "     OBJREFERENCE APT_REF,\n" +
-            "     LISTS DURATION_LIST,\n" +
-            "     LISTS STATUS_LIST,\n" +
-            "     ATTRIBUTES BALANCE,\n" +
-            "     ATTRIBUTES DEBT,\n" +
-            "     ATTRIBUTES COMMUNAL_NAME,\n" +
-            "     ATTRIBUTES DURATION_TYPE,\n" +
-            "     ATTRIBUTES STATUS,\n" +
-            "     ATTRIBUTES DEAD_LINE,\n" +
-            "     ATTRIBUTES CALC_NAME\n" +
-            "WHERE COMMUNAL_UTILL.OBJECT_TYPE_ID = 11\n" +
-            "AND APT_SUB_BILL.OBJECT_ID = APT_REF.OBJECT_ID\n" +
-            "AND APT.OBJECT_ID = APT_REF.REFERENCE\n" +
-            "AND COMMUNAL_UTILL.OBJECT_ID = APT_SUB_BILL.PARENT_ID\n" +
-            "AND BALANCE.OBJECT_ID = APT_SUB_BILL.OBJECT_ID\n" +
-            "AND BALANCE.ATTR_ID = 25\n" +
-            "AND DEBT.OBJECT_ID = APT_SUB_BILL.OBJECT_ID\n" +
-            "AND DEBT.ATTR_ID = 38\n" +
-            "AND COMMUNAL_NAME.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
-            "AND COMMUNAL_NAME.ATTR_ID = 21\n" +
-            "AND DURATION_LIST.LIST_VALUE_ID = DURATION_TYPE.LIST_VALUE_ID\n" +
-            "AND DURATION_TYPE.ATTR_ID = 22\n" +
-            "AND DURATION_TYPE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
-            "AND STATUS_LIST.LIST_VALUE_ID = STATUS.LIST_VALUE_ID\n" +
-            "AND STATUS.ATTR_ID = 23\n" +
-            "AND STATUS.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
-            "AND DEAD_LINE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
-            "AND DEAD_LINE.ATTR_ID = 24\n" +
-            "AND CALC_NAME.OBJECT_ID = CAL_METHOD_REF.REFERENCE\n" +
-            "AND COMMUNAL_UTILL.OBJECT_ID = CAL_METHOD_REF.OBJECT_ID\n" +
-            "group by COMMUNAL_NAME.VALUE,DURATION_LIST.VALUE,\n" +
-            "STATUS_LIST.VALUE,DEAD_LINE.DATE_VALUE, CALC_NAME.VALUE";
+            "            COMMUNAL_NAME.VALUE      communal_name,\n" +
+            "            DURATION_LIST.VALUE      duration_type,\n" +
+            "            STATUS_LIST.VALUE        status,\n" +
+            "            DEAD_LINE.DATE_VALUE     dead_line\n" +
+            "            FROM OBJECTS APT_SUB_BILL,\n" +
+            "                 OBJECTS COMMUNAL_UTILL,\n" +
+            "                 OBJECTS APT,\n" +
+            "                 OBJREFERENCE APT_REF,\n" +
+            "                 LISTS DURATION_LIST,\n" +
+            "                 LISTS STATUS_LIST,\n" +
+            "                 ATTRIBUTES BALANCE,\n" +
+            "                 ATTRIBUTES DEBT,\n" +
+            "                 ATTRIBUTES COMMUNAL_NAME,\n" +
+            "                 ATTRIBUTES DURATION_TYPE,\n" +
+            "                 ATTRIBUTES STATUS,\n" +
+            "                 ATTRIBUTES DEAD_LINE\n" +
+            "            WHERE COMMUNAL_UTILL.OBJECT_TYPE_ID = 11\n" +
+            "            AND APT_SUB_BILL.OBJECT_ID = APT_REF.OBJECT_ID\n" +
+            "            AND APT.OBJECT_ID = APT_REF.REFERENCE\n" +
+            "            AND COMMUNAL_UTILL.OBJECT_ID = APT_SUB_BILL.PARENT_ID\n" +
+            "            AND BALANCE.OBJECT_ID = APT_SUB_BILL.OBJECT_ID\n" +
+            "            AND BALANCE.ATTR_ID = 25\n" +
+            "            AND DEBT.OBJECT_ID = APT_SUB_BILL.OBJECT_ID\n" +
+            "            AND DEBT.ATTR_ID = 38\n" +
+            "            AND COMMUNAL_NAME.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "            AND COMMUNAL_NAME.ATTR_ID = 21\n" +
+            "            AND DURATION_LIST.LIST_VALUE_ID = DURATION_TYPE.LIST_VALUE_ID\n" +
+            "            AND DURATION_TYPE.ATTR_ID = 22\n" +
+            "            AND DURATION_TYPE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "            AND STATUS_LIST.LIST_VALUE_ID = STATUS.LIST_VALUE_ID\n" +
+            "            AND STATUS.ATTR_ID = 23\n" +
+            "            AND STATUS.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "            AND DEAD_LINE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "            AND DEAD_LINE.ATTR_ID = 24\n" +
+            "            group by COMMUNAL_NAME.VALUE,DURATION_LIST.VALUE,\n" +
+            "            STATUS_LIST.VALUE,DEAD_LINE.DATE_VALUE";
 
     String CREATE_MANAGER_SUB_BILL_OBJECTS =
             "MERGE INTO OBJECTS old\n" +

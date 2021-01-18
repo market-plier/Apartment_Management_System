@@ -11,6 +11,7 @@ import {ApartmentSubBill} from "../models/apartment-sub-bill";
 })
 export class ManagerSubBillService {
   private baseURL = 'http://localhost:8888/manager-sub-bill';
+  private urlGetManagerSubBillsDebt = 'http://localhost:8888/manager-sub-bill/get-manager-sub-bill-debt';
   err: BackEndError | undefined;
 
   constructor(private httpClient: HttpClient) {
@@ -25,6 +26,12 @@ export class ManagerSubBillService {
         catchError(this.handleError.bind(this))
     );
   }
+
+  getManagerSubBillsDebt()
+  {
+    return this.httpClient.get(this.urlGetManagerSubBillsDebt);
+  }
+
 
   getAllManagerSubBills(): Observable<ManagerSubBill[]> {
     return this.httpClient.get<ManagerSubBill[]>(`${this.baseURL}/get`).pipe(

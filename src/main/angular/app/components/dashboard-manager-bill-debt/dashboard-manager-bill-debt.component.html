@@ -1,0 +1,35 @@
+
+
+<!--<div *ngFor="let managerBill of billMap | keyvalue">-->
+<!--    <p>   </p>-->
+
+<!--    <div>{{managerBill.key.communalUtility.name}}</div>-->
+<!--    <div>{{managerBill.key.communalUtility.durationType}}</div>-->
+<!--    <div>{{managerBill.value}}</div>-->
+<!--    <div>{{(managerBill.value * 100 / sumDebt).toFixed(1)}} %</div>-->
+<!--</div>-->
+
+<table class="table table-borderless">
+    <thead>
+    <tr>
+        <th>Communal Name</th>
+        <th>Duration Type</th>
+        <th>Sum</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let managerBill of billMap | keyvalue">
+        <td>{{managerBill.key.communalUtility.name}}</td>
+        <td>{{managerBill.key.communalUtility.durationType}}</td>
+        <td>{{managerBill.value}}</td>
+        <td>
+            <div class="progress">
+                <div class="progress-bar bg-info color-text" role="progressbar" style="width:{{(managerBill.value * 100 / sumDebt).toFixed(1)}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{(managerBill.value * 100 / sumDebt).toFixed(1)}}%</div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Total Debt: {{sumDebt}}</h3>

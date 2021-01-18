@@ -76,6 +76,7 @@ import { AnnouncementDashboardComponent } from './components/announcements/annou
 import {ManagerOperationUpdateComponent} from "./components/manager-operation/manager-operation-update/manager-operation-update.component";
 import {ApartmentSubBillDashboardComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-sub-bill-dashboard.component";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {DashboardManagerBillDebtComponent} from "./components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component";
 
 @NgModule({
     declarations: [
@@ -113,7 +114,7 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
         ManagerOperationUpdateComponent,
         ApartmentSubBillDashboardComponent,
         //ManagerSubBillPageComponent,
-        //DashboardManagerBillDebtComponent
+        DashboardManagerBillDebtComponent
     ],
     imports: [
         MatProgressSpinnerModule,
