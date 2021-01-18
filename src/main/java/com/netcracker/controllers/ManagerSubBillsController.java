@@ -29,23 +29,24 @@ public class ManagerSubBillsController {
     @Autowired
     ManagerSubBillService managerSubBillService;
 
-    @GetMapping("/get/{managerSubBillId}")
+    @RequestMapping(value = "/get/{managerSubBillId}", method = RequestMethod.GET)
     public ResponseEntity<ManagerSubBill> getManagerSubBill(@PathVariable @NotNull BigInteger managerSubBillId) throws DaoAccessException {
         ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBill(managerSubBillId);
         return new ResponseEntity<>(managerSubBill, HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public ResponseEntity<Collection<ManagerSubBill>> getAllManagerSubBills() {
+    public Collection<ManagerSubBill> getAllManagerSubBills() {
         Collection<ManagerSubBill> managerSubBills = managerSubBillService.getAllManagerSubBills();
-        return new ResponseEntity<>(managerSubBills, HttpStatus.FOUND);
+        return managerSubBills;
     }
 
     @RequestMapping(value = "/get-by-communal/{communalUtilityId}", method = RequestMethod.GET)
-    public ResponseEntity<ManagerSubBill> getManagerSubBillByCommunalUtilityId(@PathVariable @NotNull BigInteger communalUtilityId) {
-        ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBillByCommunalUtilityId(communalUtilityId);
-        return new ResponseEntity<>(managerSubBill, HttpStatus.FOUND);
+    public ManagerSubBill getManagerSubBillByCommunalUtilityId(@PathVariable @NotNull BigInteger communalUtilityId) {
+        return managerSubBillService.getManagerSubBillByCommunalUtilityId(communalUtilityId);
     }
+
+
 
     @RequestMapping(value = "/get-manager-sub-bill-info", method = RequestMethod.GET)
     public Collection<ManagerSubBill> getAllManagerSubBillsInfo() {

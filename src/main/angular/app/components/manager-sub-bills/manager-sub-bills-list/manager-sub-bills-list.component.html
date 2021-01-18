@@ -1,0 +1,81 @@
+<div class="container">
+    <mat-toolbar>
+        <span>Manager SubBills</span>
+        <span class="example-spacer"></span>
+        <span class="example-spacer"></span>
+
+        <div class="ml-auto p-2">
+
+                <button (click)="applyFilterAll()" color="primary" mat-raised-button>Show all</button>
+            <span class="example-spacer"></span>
+                <button (click)="applyFilterDisabled()" mat-raised-button>Show enabled</button>
+
+        </div>
+    </mat-toolbar>
+
+
+
+    <mat-card class="d-flex justify-content-center">
+    <table [dataSource]="datasource" class="mat-elevation-z8" mat-table text-align="center">
+        <ng-container matColumnDef="name">
+            <th *matHeaderCellDef mat-header-cell> Name</th>
+            <td *matCellDef="let managerSubBill" mat-cell>
+                <div (click)="redirectToManagerSubBillShow(managerSubBill.subBillId)" class="center" fxFlexFill
+                     matRipple>
+                    {{managerSubBill.communalUtility.name}}
+                </div>
+            </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="status">
+            <th *matHeaderCellDef mat-header-cell> Status</th>
+            <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.communalUtility.status}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+
+        <ng-container matColumnDef="calculation">
+            <th *matHeaderCellDef mat-header-cell> Calculation method</th>
+            <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.communalUtility.calculationMethod.toString()}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deadline">
+            <th *matHeaderCellDef mat-header-cell> Deadline</th>
+            <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.communalUtility.deadline}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="balance">
+            <th *matHeaderCellDef mat-header-cell> Balance</th>
+            <td *matCellDef="let managerSubBill" mat-cell> {{managerSubBill.balance}} </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+</mat-card>
+
+</div>
+<!--
+<div id="back">
+    <div class="container">
+        <div class="row row-cols-md-2 row-cols-sm-1 row-cols-lg-2 row-cols-xs-1  g-4">
+            <div *ngFor="let managerSubBill of managerSubBills" class="card col-4">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>{{managerSubBill.communalUtility.name}}</mat-card-title>
+                        <mat-card-title class="money"> Balance: {{managerSubBill.balance}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <hr>
+                        <ul class="ul">
+                            <li>Calculation method: {{managerSubBill.communalUtility.calculationMethod.toString()}}</li>
+                            <li>Deadline: {{managerSubBill.communalUtility.deadline}}</li>
+                            <li>Status: {{managerSubBill.communalUtility.status}}</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>-->

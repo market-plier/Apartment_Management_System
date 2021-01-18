@@ -1,0 +1,143 @@
+<div class="container">
+
+    <mat-toolbar class="mat-toolbar ">
+        <mat-card-title class="title-center">Update Apartment</mat-card-title>
+    </mat-toolbar>
+
+    <mat-card>
+        <div method="PUT">
+            <form (ngSubmit)="updateManager()" class="col-12">
+                <div class="card-body center-block" [formGroup]="firstFormGroup">
+                    <div *ngIf="tokenStorage.getRole()=='MANAGER'" class="row row-cols-2 ">
+                        <div class="form-row">
+                            <div class="name">First name</div>
+                            <div class="value">
+                                <mat-form-field appearance="standard">
+                                    <input matInput
+                                           formControlName="firstNameCtrl" type="text"
+                                           name="first_name"
+                                           [(ngModel)]="manager.firstName">
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['firstNameCtrl'].hasError('pattern')">
+                                        Please enter a valid first name
+                                    </mat-error>
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['firstNameCtrl'].hasError('required')">
+                                        First Name is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Last name</div>
+                            <div class="value">
+                                <mat-form-field appearance="standard">
+                                    <input matInput formControlName="lastNameCtrl" type="text"
+                                           [(ngModel)]="manager.lastName">
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('pattern')">
+                                        Last name is required
+                                    </mat-error>
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('required')">
+                                        Please enter a valid last name
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-2">
+                        <div class="form-row">
+                            <div class="name">Email address</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <mat-form-field appearance="standard">
+                                        <input matInput formControlName="emailCtrl"
+                                               type="email"
+                                               name="email"
+                                               placeholder="example@email.com"
+                                               [(ngModel)]="manager.email">
+                                        <mat-error
+                                                *ngIf="firstFormGroup.controls['emailCtrl'].hasError('pattern')">
+                                            Please enter a valid email address
+                                        </mat-error>
+                                        <mat-error
+                                                *ngIf="firstFormGroup.controls['emailCtrl'].hasError('required')">
+                                            Email is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="tokenStorage.getRole()=='MANAGER'" class="form-row">
+                            <div class="name">Phone number</div>
+                            <div class="value">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Input your phone number</mat-label>
+                                    <input matInput formControlName="phoneNumberCtrl" type="tel"
+                                           [(ngModel)]="manager.phoneNumber"
+                                           [textMask]="{mask: phoneMask, guide: true}">
+                                    <mat-hint>Format: +XX (YYY) XX-XX-XXX</mat-hint>
+                                    <mat-icon matSuffix>phone</mat-icon>
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['phoneNumberCtrl'].hasError('length')">
+                                        Please enter a valid phone number
+                                    </mat-error>
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['lastNameCtrl'].hasError('required')">
+                                        Phone number is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row row-cols-2">
+                        <div *ngIf="tokenStorage.getRole()=='MANAGER'" class="form-row">
+                            <div class="name">Card number</div>
+                            <div class="value">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Input your card number</mat-label>
+                                    <input matInput formControlName="cardNumberCtrl" type="text"
+                                           [(ngModel)]="manager.managerBill.cardNumber"
+                                           [textMask]="{mask: cardMask}">
+                                    <mat-hint>Format: XXXX-XXXX-XXXX-XXXX</mat-hint>
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['cardNumberCtrl'].hasError('min')">
+                                        Card number is too low
+                                    </mat-error>
+                                    <mat-error
+                                            *ngIf="firstFormGroup.controls['cardNumberCtrl'].hasError('required')">
+                                        Curd number is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Password</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <mat-form-field appearance="standard">
+                                        <input matInput [type]="hide ? 'password' : 'text'"
+                                               placeholder="" formControlName="passwordCtrl"
+                                               [(ngModel)]="manager.password">
+                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                                [attr.aria-label]="'Hide password'"
+                                                [attr.aria-pressed]="hide">
+                                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </button>
+                                        <mat-error
+                                                *ngIf="firstFormGroup.controls['passwordCtrl'].hasError('minlength')">
+                                            Password length should be more than 8 chars
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button mat-raised-button color="primary" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+</div>
