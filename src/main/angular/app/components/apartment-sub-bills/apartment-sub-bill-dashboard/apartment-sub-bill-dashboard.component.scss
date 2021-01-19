@@ -1,25 +1,26 @@
 @import '~src/main/angular/theme.scss';
 
-
-.example-container {
-  height: 270px;
-  overflow: auto;
-  padding: 0;
-  margin: 0 0 0 5px;
-}
-
-table {
+.container {
+  margin-top: -20px;
+  margin-left: 10px;
   width: 100%;
-  padding: 0;
-  margin: 0;
+  height: 100%;
 
 }
 
-tr.mat-footer-row {
-  font-weight: bold;
+::ng-deep {
+  .legend-labels {
+    background: none !important;
+    overflow: scroll;
+    max-width: 100%;
+
+  }
 }
 
-.mat-table-sticky {
-  border-top: 1px solid #e0e0e0;
+::ng-deep .ngx-charts {
+  text {
+    color: mat-color($my-app-foreground) !important;
+    font-size: 15px;
+  }
 }
 

@@ -58,6 +58,8 @@ public class ApartmentSubBillService {
             apartmentSubBillDao.createApartmentSubBill(new ApartmentSubBillBuilder()
                     .withApartment(apartment)
                     .withCommunalUtility(communalUtility)
+                    .withDept((double) 0)
+                    .withBalance((double) 0)
                     .build());
         }
     }

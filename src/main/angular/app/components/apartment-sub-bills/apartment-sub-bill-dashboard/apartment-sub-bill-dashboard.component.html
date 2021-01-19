@@ -1,47 +1,20 @@
-<div class=" row " style="width: 100%">
-    <div style="margin-top: -100px;">
-        <ngx-charts-pie-chart style="margin: 0"
-                              [view]="view"
-                              [scheme]="colorScheme"
-                              [results]="single"
-                              [gradient]="gradient"
-                              [legend]="showLegend"
-                              [legendPosition]="legendPosition"
-                              [labels]="showLabels"
-                              [doughnut]="isDoughnut"
-                              [legendTitle]="title"
-                              (select)="onSelect($event)"
-                              (activate)="onActivate($event)"
-                              (deactivate)="onDeactivate($event)"
+<div class="container">
+        <ngx-charts-pie-chart
+                (window:resize)="onResize($event)"
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="single"
+                [gradient]="gradient"
+                [legendPosition]="legendPosition"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                [legend]="showLegend"
+                [scrollLeft]="true"
+                [legendTitle]="title+' '+balance"
+                [maxLabelLength]="30"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
         >
         </ngx-charts-pie-chart>
-    </div>
-
-    <div class="example-container mat-elevation-z8 ">
-        <table mat-table [dataSource]="this.subbills">
-            <!-- Item Column -->
-            <ng-container matColumnDef="Communal">
-                <th mat-header-cell *matHeaderCellDef> Util</th>
-                <td mat-cell *matCellDef="let transaction"> {{transaction.communalUtility.name}} </td>
-                <td mat-footer-cell *matFooterCellDef> Total</td>
-            </ng-container>
-
-            <ng-container matColumnDef="Balance">
-                <th mat-header-cell *matHeaderCellDef> Balance</th>
-                <td mat-cell *matCellDef="let transaction"> {{transaction.balance | currency}} </td>
-                <td mat-footer-cell [style.color]='colorBalance' *matFooterCellDef> {{this.balance | currency}} </td>
-            </ng-container>
-            <!-- Cost Column -->
-            <ng-container matColumnDef="Debt">
-                <th mat-header-cell *matHeaderCellDef> Debt</th>
-                <td mat-cell *matCellDef="let transaction"> {{transaction.debt | currency}} </td>
-                <td mat-footer-cell [style.color]='colorDebt' *matFooterCellDef> {{this.debt | currency}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
-        </table>
-    </div>
-
 </div>

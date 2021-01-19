@@ -76,6 +76,8 @@ import { AnnouncementDashboardComponent } from './components/announcements/annou
 import {ManagerOperationUpdateComponent} from "./components/manager-operation/manager-operation-update/manager-operation-update.component";
 import {ApartmentSubBillDashboardComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-sub-bill-dashboard.component";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-update.component";
+import { ApartmentDebtComponent } from './components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-debt/apartment-debt.component';
 import {DashboardManagerBillDebtComponent} from "./components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component";
 
 @NgModule({
@@ -113,6 +115,8 @@ import {DashboardManagerBillDebtComponent} from "./components/dashboard-manager-
         AnnouncementDashboardComponent,
         ManagerOperationUpdateComponent,
         ApartmentSubBillDashboardComponent,
+        ManagerInfoUpdateComponent,
+        ApartmentDebtComponent,
         //ManagerSubBillPageComponent,
         DashboardManagerBillDebtComponent
     ],
@@ -126,7 +130,6 @@ import {DashboardManagerBillDebtComponent} from "./components/dashboard-manager-
         MatCardModule,
         HttpClientModule,
         FormsModule,
-        BrowserAnimationsModule,
         MatButtonModule,
         MatListModule,
         MatDividerModule,

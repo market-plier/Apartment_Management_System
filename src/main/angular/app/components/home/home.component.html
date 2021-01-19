@@ -13,6 +13,9 @@
                     <div *ngIf="tokenService.getRole()=='OWNER'">
                         <app-apartment-sub-bill-dashboard></app-apartment-sub-bill-dashboard>
                     </div>
+                    <div *ngIf="tokenService.getRole()=='MANAGER'">
+
+                    </div>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>
@@ -38,7 +41,7 @@
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="dashboard-card-content">
-                    <div>Иетерессная важная инфорация для квартиры</div>
+                    <app-apartment-debt></app-apartment-debt>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>

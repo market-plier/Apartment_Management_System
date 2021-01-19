@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
         {title: 'Subbills', cols: 5, rows: 2},
         {title: 'Announcements', cols: 3, rows: 2},
         {title: 'Debt of Manager Sub Bill', cols: 4, rows: 2},
-        {title: 'Reports or request or something', cols: 4, rows: 2},
+        {title: 'Pay Your debts', cols: 4, rows: 2},
     ];
 
 
