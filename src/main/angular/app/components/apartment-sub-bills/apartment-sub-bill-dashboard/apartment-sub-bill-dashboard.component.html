@@ -1,20 +1,19 @@
 <div class="container">
-        <ngx-charts-pie-chart
-                (window:resize)="onResize($event)"
-                [view]="view"
-                [scheme]="colorScheme"
-                [results]="single"
-                [gradient]="gradient"
-                [legendPosition]="legendPosition"
-                [labels]="showLabels"
-                [doughnut]="isDoughnut"
-                [legend]="showLegend"
-                [scrollLeft]="true"
-                [legendTitle]="title+' '+balance"
-                [maxLabelLength]="30"
-                (select)="onSelect($event)"
-                (activate)="onActivate($event)"
-                (deactivate)="onDeactivate($event)"
-        >
-        </ngx-charts-pie-chart>
+    <ngx-charts-pie-chart
+            (window:resize)="onResize($event)"
+            [view]="view"
+            [results]="single"
+            [gradient]="gradient"
+            [legendPosition]="legendPosition"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            [legend]="showLegend"
+            [scrollLeft]="true"
+            [legendTitle]="title+' '+balance"
+            [maxLabelLength]="maxChars"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+    >
+    </ngx-charts-pie-chart>
 </div>

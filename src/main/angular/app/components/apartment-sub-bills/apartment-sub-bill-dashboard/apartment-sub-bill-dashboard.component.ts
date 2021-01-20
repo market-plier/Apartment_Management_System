@@ -24,13 +24,8 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
     showLabels: boolean = true;
     isDoughnut: boolean = false;
     legendPosition: string = 'below';
-
+    maxChars = 30;
     title = "Balance";
-
-    colorScheme = {
-        domain: ['#5B5F97', '#C2E812', '#F1DB48', '#FC7753', '#A0C1D1', '#F93943', '#9C0D38']
-    };
-
     single: any[];
     view: any[] = [700, 280];
 
@@ -38,7 +33,16 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
     }
 
     onResize(event) {
-        this.view = [event.target.innerWidth - 500, 280];
+        if (event.target.innerWidth > 1000) {
+            this.view = [700, 280];
+        } else if (event.target.innerWidth < 1000 && event.target.innerWidth > 700) {
+            this.view = [500, 250];
+            this.maxChars = 15;
+        } else {
+            this.view = [300, 150];
+            this.maxChars = 10;
+        }
+        console.log(event.target.innerWidth);
     }
 
     ngOnInit(): void {
@@ -49,14 +53,12 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
                 var single: single[] = [];
                 for (j in this.subbills) {
                     single[j] = {name: this.subbills[j].communalUtility.name, value: this.subbills[j].balance};
+                    if (single[j].value == 0) single[j].value = 0.0000001
                     this.balance = this.balance + this.subbills[j].balance;
                 }
-                single[3] = {name: "this.subbills[j].communalUtility.name", value: 67};
-                single[4] = {name: "this.subbills[5j].communalUtility.name", value: 67};
-                single[5] = {name: "this.subbil5ls[5j].communalUtility.name", value: 67};
                 Object.assign(this, {single});
-
             });
+
     }
 
     onSelect(data): void {

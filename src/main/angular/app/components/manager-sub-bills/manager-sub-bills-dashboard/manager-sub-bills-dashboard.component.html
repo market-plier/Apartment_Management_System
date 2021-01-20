@@ -1,0 +1,15 @@
+<carousel [pauseOnFocus]="true" id="carousel">
+    <div *ngFor="let item of single; let myIndex = index">
+        <slide>
+            <ngx-charts-pie-grid
+                    (window:resize)="onResize($event)"
+                    [view]="view"
+                    [results]="single[myIndex]"
+                    [label]="label"
+                    [designatedTotal]="total"
+                    (select)="onSelect($event)">
+            </ngx-charts-pie-grid>
+        </slide>
+
+    </div>
+</carousel>

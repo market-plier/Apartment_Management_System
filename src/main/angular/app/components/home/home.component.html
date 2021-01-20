@@ -10,12 +10,8 @@
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="dashboard-card-content">
-                    <div *ngIf="tokenService.getRole()=='OWNER'">
-                        <app-apartment-sub-bill-dashboard></app-apartment-sub-bill-dashboard>
-                    </div>
-                    <div *ngIf="tokenService.getRole()=='MANAGER'">
-
-                    </div>
+                        <app-apartment-sub-bill-dashboard *ngIf="tokenService.getRole()=='OWNER'"></app-apartment-sub-bill-dashboard>
+                        <app-manager-sub-bills-dashboard *ngIf="tokenService.getRole()=='MANAGER'"></app-manager-sub-bills-dashboard>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>

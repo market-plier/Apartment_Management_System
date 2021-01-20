@@ -1,0 +1,39 @@
+@import '~src/main/angular/theme.scss';
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep {
+  .legend-labels {
+    background: none !important;
+    overflow: scroll;
+    max-width: 100%;
+  }
+}
+
+::ng-deep .ngx-charts {
+  text {
+    color: mat-color($my-app-foreground) !important;
+    font-size: 15px;
+  }
+}
+
+#carousel {
+  background: #5c6bbf;
+  width: 100%;
+  height: 100%;
+}
+
+slide {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+::ng-deep .carousel-control-prev-icon{
+ background-color: rgb(76,46, 199);
+}
+::ng-deep .carousel-control-next-icon{
+  background-color: rgb(76,46, 199);
+}
