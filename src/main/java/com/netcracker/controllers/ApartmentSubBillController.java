@@ -1,6 +1,7 @@
 package com.netcracker.controllers;
 
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.IllegalSumToPayException;
 import com.netcracker.models.ApartmentOperation;
 import com.netcracker.models.ApartmentSubBill;
 import com.netcracker.secutity.jwt.JwtAccount;
@@ -28,27 +29,34 @@ public class ApartmentSubBillController {
     }
 
     @GetMapping("/apartment-sub-bills/{apartmentSubBillId}")
-    public ApartmentSubBill getApartmentSubBill(@PathVariable BigInteger apartmentSubBillId) throws DaoAccessException, NullPointerException {
+    public ApartmentSubBill getApartmentSubBill(@PathVariable BigInteger apartmentSubBillId) throws DaoAccessException {
         return apartmentSubBillService.getApartmentSubBill(apartmentSubBillId);
     }
 
     @PostMapping("/apartment-sub-bill-transfer")
-    public void createApartmentSubBillTransfer(@RequestBody List<String> params) throws DaoAccessException, NullPointerException {
+    public void createApartmentSubBillTransfer(@RequestBody List<String> params) throws DaoAccessException, IllegalSumToPayException {
+        Double sum = Double.valueOf(params.get(2));
+        if(sum < 0){
+            throw new IllegalSumToPayException("Sum to pay should be positive");
+        }
         JwtAccount account = (JwtAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        apartmentSubBillService.createApartmentSubBillTransfer(account.getId(), params.get(0), params.get(1), Double.valueOf(params.get(2)));
+        apartmentSubBillService.createApartmentSubBillTransfer(account.getId(), params.get(0), params.get(1), sum);
     }
 
     @PostMapping("/apartment-sub-bill-payment")
-    public void updateApartmentSubBillsByApartmentOperation(@RequestBody List<ApartmentOperation> apartmentOperations) throws DaoAccessException, NullPointerException {
+    public void updateApartmentSubBillsByApartmentOperation(@RequestBody List<ApartmentOperation> apartmentOperations) throws DaoAccessException, IllegalSumToPayException {
         for (ApartmentOperation apartmentOperation : apartmentOperations) {
-            if(apartmentOperation.getSum() > 0) {
+            if(apartmentOperation.getSum() < 0){
+                throw new IllegalSumToPayException("Sum to pay should be positive");
+            }
+            else if(apartmentOperation.getSum() > 0) {
                 apartmentSubBillService.updateApartmentSubBillByApartmentOperation(apartmentOperation);
             }
         }
     }
 
     @GetMapping("/apartment-sub-bills")
-    public List<ApartmentSubBill> getAllApartmentSubBillsOfCurrentAuthorizedUser() throws DaoAccessException, NullPointerException {
+    public List<ApartmentSubBill> getAllApartmentSubBillsOfCurrentAuthorizedUser() throws DaoAccessException {
         JwtAccount account = (JwtAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return apartmentSubBillService.getAllApartmentSubBillsByAccountId(account.getId());
     }

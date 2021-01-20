@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {ApartmentSubBill} from "../../../models/apartment-sub-bill";
 import {ApartmentSubBillService} from "../../../services/apartment-sub-bill.service";
 import {Router} from "@angular/router";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-apartment-sub-bill-list',
@@ -16,6 +17,7 @@ export class ApartmentSubBillListComponent implements OnInit {
     constructor(private apartmentSubBillService: ApartmentSubBillService,
                 private router: Router) {
     }
+
 
     ngOnInit() {
         this.retrieveApartmentSubBills();
@@ -42,10 +44,6 @@ export class ApartmentSubBillListComponent implements OnInit {
     setActiveApartmentSubBill(apartmentSubBill: ApartmentSubBill, index: number): void {
         this.currentApartmentSubBill = apartmentSubBill;
         this.currentIndex = index;
-    }
-
-    redirectToApartmentSubBillShow(id: number): void{
-        this.router.navigate([`/apartment-sub-bills/${id}`])
     }
 
     redirectToApartmentTransferCreate(): void{

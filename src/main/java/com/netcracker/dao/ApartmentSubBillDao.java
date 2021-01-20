@@ -207,7 +207,7 @@ public interface ApartmentSubBillDao {
             "           DURATION_LIST.VALUE      duration_type,\n" +
             "           STATUS_LIST.VALUE        status,\n" +
             "           DEAD_LINE.DATE_VALUE     dead_line,\n" +
-            "           CALC_LIST.VALUE          calc_name\n" +
+            "           CALC_LIST.VALUE          calc_name,\n" +
             "           COEFFICIENT.VALUE coeff\n" +
             "    FROM OBJECTS APT_SUB_BILL,\n" +
             "         OBJECTS COMMUNAL_UTILL,\n" +

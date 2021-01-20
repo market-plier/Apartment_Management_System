@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.netcracker.controllers.web.ApiError;
 import com.netcracker.controllers.web.ResponseEntityBuilder;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.IllegalSumToPayException;
 import com.netcracker.exception.InsufficientBalanceException;
 import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.secutity.jwt.JwtAuthenticationException;
@@ -73,7 +74,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             return ResponseEntityBuilder.build(err);
 
     }
-        @ExceptionHandler({DaoAccessException.class, NotBelongToAccountException.class, NullPointerException.class, JwtAuthenticationException.class})
+        @ExceptionHandler({DaoAccessException.class, NotBelongToAccountException.class, JwtAuthenticationException.class})
     public final ResponseEntity<ApiError> handleCustomException(Exception ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
 
@@ -87,10 +88,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             NotBelongToAccountException accountException = (NotBelongToAccountException) ex;
 
             return handleNotBelongToAccountException(accountException, headers, status, request);
-        } else if (ex instanceof NullPointerException) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
-            NullPointerException nullPointerException = (NullPointerException) ex;
-            return handleNullPointerException(nullPointerException, headers, status, request);
         } else if (ex instanceof AuthenticationServiceException) {
             HttpStatus status = HttpStatus.FORBIDDEN;
             AuthenticationServiceException authenticationException = (AuthenticationServiceException) ex;
@@ -173,6 +170,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 "Parse exception",
                 Collections.singletonList("Cant parse map to json"),
                 BigInteger.valueOf(80999));
+        return ResponseEntityBuilder.build(err);
+    }
+
+    @ExceptionHandler({IllegalSumToPayException.class})
+    public final ResponseEntity<Object> handleIllegalArgumentException(IllegalSumToPayException ex, WebRequest request) {
+
+
+        ApiError err = new ApiError(LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                Collections.singletonList(ex.getMessage()),
+                BigInteger.valueOf(777));
         return ResponseEntityBuilder.build(err);
     }
 }

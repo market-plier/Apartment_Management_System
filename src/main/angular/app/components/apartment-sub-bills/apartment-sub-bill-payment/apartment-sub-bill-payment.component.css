@@ -1,3 +1,14 @@
+#card_number{
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#datecvv{
+    margin-bottom: 10px;
+}
+#cvv{
+    float: right;
+}
 #inputlist {
     display: flex;
     flex-direction: column;
@@ -20,6 +31,6 @@
     margin-top: 20px;
 }
 
-#backbtn {
+#pay {
     float: right;
 }

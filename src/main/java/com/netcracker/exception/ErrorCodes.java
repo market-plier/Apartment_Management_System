@@ -82,4 +82,5 @@ public interface ErrorCodes {
     BigInteger _FAIL_TO_SET_REQUEST_DATA = BigInteger.valueOf(301);
 
     BigInteger _FAIL_NOT_BELONG_TO_ACCOUNT = BigInteger.valueOf(999);
+    BigInteger _FAIL_ILLEGAL_SUM_TO_PAY = BigInteger.valueOf(777);
 }

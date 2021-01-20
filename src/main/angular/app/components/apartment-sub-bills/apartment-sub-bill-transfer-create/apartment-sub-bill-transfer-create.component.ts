@@ -3,6 +3,7 @@ import {ApartmentSubBillService} from "../../../services/apartment-sub-bill.serv
 import {ApartmentOperation} from "../../../models/apartment-operation";
 import {ApartmentSubBill} from "../../../models/apartment-sub-bill";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-apartment-sub-bill-transfer-create',
@@ -20,7 +21,7 @@ export class ApartmentSubBillTransferCreateComponent implements OnInit {
     }
 
     constructor(private apartmentSubBillService: ApartmentSubBillService,
-                private router: Router) {
+                private router: Router, private _snackBar: MatSnackBar) {
     }
 
     retrieveApartmentSubBills(): void {
@@ -36,22 +37,30 @@ export class ApartmentSubBillTransferCreateComponent implements OnInit {
     }
 
     transferCreate(): void {
+        if(this.sum == undefined){
+            this.sum = 0;
+        }
         this.apartmentSubBillService.createApartmentSubBillTransfer([this.fromApartmentSubBill, this.toApartmentSubBill, this.sum.toString()])
             .subscribe(
                 response=>{
-                console.log(response);
+                    this.openSnackBar('Transfer successful', '');
+                    this.redirectToApartmentSubBillList();
+                    console.log(response);
             },
                 error => {
                     console.log(error);
+                    this.openSnackBar(error.error.message, '');
                 });
+    }
+
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
     }
 
     redirectToApartmentSubBillList(): void{
         this.router.navigate([`/apartment-sub-bills`])
     }
 
-    transferButtonClick(): void {
-        this.transferCreate();
-        this.redirectToApartmentSubBillList();
-    }
 }

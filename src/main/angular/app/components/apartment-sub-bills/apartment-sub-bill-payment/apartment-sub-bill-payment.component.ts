@@ -3,6 +3,8 @@ import {ApartmentSubBillService} from "../../../services/apartment-sub-bill.serv
 import {ApartmentSubBill} from "../../../models/apartment-sub-bill";
 import {ApartmentOperation} from "../../../models/apartment-operation";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-apartment-sub-bill-payment',
@@ -15,8 +17,13 @@ export class ApartmentSubBillPaymentComponent implements OnInit {
     displayedColumns: string[] = ['name', 'balance', 'sum'];
 
     constructor(private apartmentSubBillService: ApartmentSubBillService,
-                private router: Router) {
+                private router: Router, private _snackBar: MatSnackBar,
+                private dialog: MatDialog) {
     }
+
+    public cardMask = [/\d/, /\d/, /\d/, /\d/,'-',/\d/, /\d/, /\d/, /\d/,'-',/\d/, /\d/, /\d/, /\d/,'-',/\d/, /\d/, /\d/, /\d/];
+    public dateMask = [/[0-3]/,/(?<!3)[0-9]/, '/', /[0-1]/, /[0-9]/];
+    public cvvMask = [/\d/,/\d/,/\d/];
 
     ngOnInit() {
         this.retrieveApartmentSubBills();
@@ -34,17 +41,29 @@ export class ApartmentSubBillPaymentComponent implements OnInit {
                 });
     }
 
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
+    }
+
     pay(): void {
         let apartmentOperations: ApartmentOperation[] = [];
         for (let i = 0; i < this.apartmentSubBills.length; i++) {
-            apartmentOperations.push({sum: this.sums[i], apartmentSubBill: this.apartmentSubBills[i]})
+            if(this.sums[i] != undefined) {
+                apartmentOperations.push({sum: this.sums[i], apartmentSubBill: this.apartmentSubBills[i]})
+            } else {
+                apartmentOperations.push({sum: 0, apartmentSubBill: this.apartmentSubBills[i]})
+            }
         }
         this.apartmentSubBillService.updateApartmentSubBillsByApartmentOperation(apartmentOperations)
             .subscribe(
                 response => {
-                    console.log(response);
+                    this.openSnackBar('Payment successful', '');
+                    this.redirectToApartmentSubBillList();
                 },
                 error => {
+                    this.openSnackBar(error.error.message, '');
                     console.log(error);
                 });
     }

@@ -1,7 +1,27 @@
 <body>
 <div id="back">
     <mat-card id="card">
-
+        <h2>
+            Enter Card:
+        </h2>
+        <div id="card_number">
+            <input matInput type="text"
+                   placeholder="____-____-____-____"
+            [textMask]="{mask:cardMask}">
+        </div>
+        <div id="datecvv">
+            <input id="date" matInput type="text"
+                   placeholder="__/__"
+                   [textMask]="{mask:dateMask}">
+            <input id="cvv" matInput type="text"
+                   placeholder="___"
+                   required
+                [textMask]="{mask:cvvMask}">
+        </div>
+        <mat-divider></mat-divider>
+        <h2>
+            Enter sums to pay:
+        </h2>
         <div id="lists">
             <mat-list>
                 <mat-list-item
@@ -17,7 +37,9 @@
                         *ngFor="let apartmentSubBill of
                                     apartmentSubBills
                             let i = index;">
-                    <input matInput type="number"
+                    <input type="number"
+                           value="0"
+                           placeholder="0"
                            [(ngModel)]="sums[i]"
                             id = {{apartmentSubBill.communalUtility.name}}
                     />
