@@ -14,7 +14,7 @@ export class ManagerOperationService {
 
   constructor(private http: HttpClient) { }
     private baseUrl = 'http://localhost:8888/manager-operation-spending/get-by-date/';
-    private urlManagerOperation = 'http://localhost:8888/get-manager-sub-bill-info';
+    private urlManagerOperation = 'http://localhost:8888/manager-sub-bill/get-manager-sub-bill-info';
     private urlCreateManagerOperation = 'http://localhost:8888/manager-operation-spending/';
     private urlUpdateManagerOperation='http://localhost:8888/manager-operation-spending/';
     private urlFilterByDateAndCommunalUtility='http://localhost:8888/manager-operation-spending/get-by-date-comm-util/';

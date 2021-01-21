@@ -16,9 +16,9 @@ export class HomeComponent implements OnInit {
 
     tiles: Tile[] = [
         {title: 'Subbills', cols: 5, rows: 2},
-        {title: 'Announcements', cols: 3, rows: 2},
-        {title: 'Debt of Manager Sub Bill', cols: 4, rows: 2},
-        {title: 'Pay Your debts', cols: 4, rows: 2},
+        {title: 'Announcements', cols: 3, rows: 4},
+        {title: 'Debt of Manager Sub Bill', cols: 2, rows: 2},
+        {title: 'Pay Your debts', cols: 5, rows: 2},
     ];
 
 
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.tokenService.getRole() == 'MANAGER') {
-            this.tiles[2].cols = 8;
+            this.tiles[2].cols = 5;
         }
     }
 
