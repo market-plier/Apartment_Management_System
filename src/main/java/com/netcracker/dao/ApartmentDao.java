@@ -281,29 +281,22 @@ public interface ApartmentDao {
             "    WHERE x.VALUE <> y.VALUE";
 
     String GET_UNIQUE_APARTMENT_BY_APT_NUM = "SELECT APRT.OBJECT_ID account_id,\n" +
-            "       EMAIL.VALUE    email,\n" +
-            "       0    floor,\n" +
-            "       APTNUM.VALUE   apartment_number,\n" +
-            "       0              square_metres,\n" +
-            "       0              people_count,\n" +
-            "       ''             password,\n" +
-            "       ''             first_name,\n" +
-            "       ''             last_name,\n" +
-            "       ''             phone_number,\n" +
-            "       'OWNER'             role_name\n" +
-            "FROM OBJECTS APRT,\n" +
-            "     ATTRIBUTES APTNUM,\n" +
-            "     ATTRIBUTES EMAIL\n" +
-            "WHERE APRT.OBJECT_TYPE_ID = 7\n" +
-            "  AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "  AND APTNUM.ATTR_ID = 15\n" +
-            "  AND EMAIL.OBJECT_ID = APRT.OBJECT_ID\n" +
-            "  AND EMAIL.ATTR_ID = 2\n" +
-            "  AND (" +
-            "       ( APTNUM.VALUE = ?)\n" +
-            "        OR\n" +
-            "        (EMAIL.VALUE = ?)\n" +
-            "    )";
+            "                   ''    email,\n" +
+            "                   0    floor,\n" +
+            "                   APTNUM.VALUE   apartment_number,\n" +
+            "                   0              square_metres,\n" +
+            "                   0              people_count,\n" +
+            "                   ''             password,\n" +
+            "                   ''             first_name,\n" +
+            "                   ''             last_name,\n" +
+            "                   ''             phone_number,\n" +
+            "                   'OWNER'             role_name\n" +
+            "            FROM OBJECTS APRT,\n" +
+            "                 ATTRIBUTES APTNUM\n" +
+            "            WHERE APRT.OBJECT_TYPE_ID = 7\n" +
+            "              AND APTNUM.OBJECT_ID = APRT.OBJECT_ID\n" +
+            "              AND APTNUM.ATTR_ID = 15\n" +
+            "              AND  APTNUM.VALUE = ?";
 
     String EXCEPTION_GET_ALL_APARTMENTS = "Can't get apartments";
     String EXCEPTION_GET_APARTMENT_BY_ACCOUNT_ID = "Can't get apartment with this id";

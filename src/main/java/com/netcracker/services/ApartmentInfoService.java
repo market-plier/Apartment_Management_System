@@ -34,11 +34,13 @@ public class ApartmentInfoService {
 
     public Apartment createApartment(Apartment apartment) throws DaoAccessException {
         apartment.setAccountId(null);
+
         if (!isUnique(apartment)) {
             return null;
         }
 
         apartmentDao.createApartment(apartment);
+
         apartment.setAccountId(accountService.getAccountByEmail(apartment.getEmail()).getAccountId());
         apartmentSubBillService.addApartmentSubBillsToApartment(apartment);
         return apartment;
@@ -59,10 +61,12 @@ public class ApartmentInfoService {
 
     public Apartment updateApartmentPassword(JwtAccount updater, Apartment apartment) throws DaoAccessException {
         Account acc = accountService.getAccountById(apartment.getAccountId());
+
         if (!updater.getId().equals(acc.getAccountId())
                 && !updater.getAuthorities().toString().equals("[ROLE_MANAGER]")) {
             throw new NotBelongToAccountException("Can not change this account password");
         }
+
         acc.setPassword(apartment.getPassword());
         accountDao.updateAccountPassword(acc);
         return apartment;
@@ -92,7 +96,6 @@ public class ApartmentInfoService {
             apartmentToUpdate.setFirstName(account.getFirstName());
             apartmentToUpdate.setLastName(account.getLastName());
             apartmentToUpdate.setPhoneNumber(account.getPhoneNumber());
-
         }
 
         if (isUnique(apartmentToUpdate)) {
@@ -108,11 +111,13 @@ public class ApartmentInfoService {
         Apartment apart = apartmentDao.getUniqueApartment(apartment);
         Account account = accountService.getAccountByEmail(apartment.getEmail());
 
-        if (account != null && !account.getAccountId().equals(apartment.getAccountId())) {
+        if (account != null && (apartment.getAccountId() == null
+                || !account.getAccountId().equals(apartment.getAccountId()))) {
             throw new ObjectNotUniqueException("This email is already in use", BigInteger.valueOf(74));
         }
 
-        if (apart != null && !apart.getApartmentNumber().equals(apartment.getApartmentNumber())) {
+        if (apart != null && (apartment.getAccountId() == null
+                || !apart.getApartmentNumber().equals(apartment.getApartmentNumber()))) {
             throw new ObjectNotUniqueException("This apartment already has an account", BigInteger.valueOf(74));
         }
 

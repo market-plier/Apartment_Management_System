@@ -1,4 +1,6 @@
+
 <carousel [pauseOnFocus]="true" id="carousel">
+    <div class="container">
     <div *ngFor="let item of single; let myIndex = index">
         <slide>
             <ngx-charts-pie-grid
@@ -6,10 +8,11 @@
                     [view]="view"
                     [results]="single[myIndex]"
                     [label]="label"
+                    [animations]="true"
                     [designatedTotal]="total"
                     (select)="onSelect($event)">
             </ngx-charts-pie-grid>
         </slide>
-
+    </div>
     </div>
 </carousel>

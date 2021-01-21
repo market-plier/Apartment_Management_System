@@ -127,7 +127,7 @@ public class ApartmentDaoImpl implements ApartmentDao {
     public Apartment getUniqueApartment(Apartment apartment) throws DaoAccessException {
         try {
             return jdbcTemplate.queryForObject(GET_UNIQUE_APARTMENT_BY_APT_NUM, new ApartmentMapper(),
-                    apartment.getApartmentNumber(), apartment.getEmail());
+                    apartment.getApartmentNumber());
         } catch (EmptyResultDataAccessException e) {
             return null;
         } catch (DataAccessException e) {

@@ -37,7 +37,7 @@ public class ApartmentRequestToManagerController {
         ApartmentRequestToManager request = new ApartmentRequestToManager(account.getId(), r.getText());
 
         if (account.getId().equals(request.getApartmentId())) {
-         //   apartmentRequestToManagerService.generateApartmentRequestToManager(request);
+           apartmentRequestToManagerService.generateApartmentRequestToManager(request);
         } else {
             NotBelongToAccountException e = new NotBelongToAccountException("Can not send request from this account");
             log.log(Level.WARN, e.getMessage(), e);
