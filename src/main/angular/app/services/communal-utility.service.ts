@@ -1,60 +1,81 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CommunalUtility} from "../models/communal-utility";
-import {Observable, of} from "rxjs";
+import {Observable, of, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CommunalUtilityService {
 
-  httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
-  };
+    httpOptions = {
+        headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
 
-  private utilitiesUrl = 'http://localhost:8888/communal-utilities';
-  private calcMethodUrl = 'http://localhost:8888/calculation-method'
+    private utilitiesUrl = 'http://localhost:8888/communal-utilities';
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private _snackBar: MatSnackBar,
+                private http: HttpClient) {
+    }
 
 
-  getCommunalUtilities(): Observable<CommunalUtility[]> {
-    return this.http.get<CommunalUtility[]>(this.utilitiesUrl)
-        .pipe(
-            catchError(this.handleError<CommunalUtility[]>('getUtilities', [])));
+    getCommunalUtilities(): Observable<CommunalUtility[]> {
+        return this.http.get<CommunalUtility[]>(this.utilitiesUrl)
+            .pipe(
+                catchError((err) => {
+                    console.log('error caught in service')
+                    console.error(err);
+                    this.openSnackBar(err.error.errors, 'OK')
+                    return throwError(err);    //Rethrow it back to component
+                }));
   }
 
   getCommunalUtility(id: number): Observable<CommunalUtility> {
     const url = `${this.utilitiesUrl}/${id}`;
-    return this.http.get<CommunalUtility>(url).pipe(
-        catchError(this.handleError<CommunalUtility>(`getCommunalUtility id=${id}`))
-    );
+      return this.http.get<CommunalUtility>(url).pipe(
+          catchError((err) => {
+              console.log('error caught in service')
+              console.error(err);
+              this.openSnackBar(err.error.errors, 'OK')
+              return throwError(err);    //Rethrow it back to component
+          }));
   }
 
   updateCommunalUtility(communalUtility: CommunalUtility): Observable<any> {
-    return this.http.put(this.utilitiesUrl, communalUtility, this.httpOptions).pipe(
-        catchError(this.handleError<any>('updateUtility'))
-    );
+      return this.http.put(this.utilitiesUrl, communalUtility, this.httpOptions).pipe(
+          catchError((err) => {
+              console.log(err)
+              console.error(err.message);
+              this.openSnackBar(err.error.errors, 'OK')
+              return throwError(err);    //Rethrow it back to component
+          }));
   }
 
   addCommunalUtility(communalUtility: CommunalUtility): Observable<CommunalUtility> {
-    return this.http.post<CommunalUtility>(this.utilitiesUrl, communalUtility, this.httpOptions).pipe(
-        catchError(this.handleError<CommunalUtility>('addUtility'))
-    );
+      return this.http.post<CommunalUtility>(this.utilitiesUrl, communalUtility, this.httpOptions).pipe(
+          catchError((err) => {
+              console.log('error caught in service')
+              console.error(err);
+              this.openSnackBar(err.error.errors, 'OK')
+              return throwError(err);    //Rethrow it back to component
+          })
+      );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
+    }
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+    private handleError<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
 
-      // TODO: better job of transforming error for user consumption
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
+            this.openSnackBar('Can\'t ' + operation, 'OK')
+            // Let the app keep running by returning an empty result.
+            return of(result as T);
+        };
+    }
 }

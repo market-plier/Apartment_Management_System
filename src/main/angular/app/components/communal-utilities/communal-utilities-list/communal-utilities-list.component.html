@@ -1,26 +1,41 @@
-<div class="container">
-    <mat-toolbar>
-        <span>Communal utilities</span>
-        <span class="example-spacer"></span>
-        <span class="example-spacer"></span>
-        <div class="p-2">
-            <button (click)="applyFilterAll()" color="primary" mat-raised-button>Show all</button>
+<div *ngIf="loading" style="  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -70px 0 0 -70px;">
+    <mat-spinner></mat-spinner>
+</div>
+<div [hidden]="utilities == null">
+    <mat-toolbar class="mat-toolbar col-12" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <mat-card-title class="title-center col-2">Communal Utilities</mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="row">
+                <div>
+                    <mat-form-field class="form-field ml-4">
+                        <mat-label>Search</mat-label>
+                        <input (ngModelChange)="filterUtilities()" [(ngModel)]="searchText" matInput>
+                    </mat-form-field>
+                    <button (click)="filterUtilities()" mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <mat-checkbox (change)="filterUtilities()" [(ngModel)]="enabled" class="form-field ml-4">Only enabled
+            </mat-checkbox>
         </div>
-        <div class="p-2">
-            <button (click)="applyFilterDisabled()" mat-raised-button>Show enabled</button>
-        </div>
-        <div class="ml-auto p-2">
-            <button *ngIf="getRole() == 'MANAGER'" color="primary" mat-icon-button
+        <div class="col-1">
+            <button *ngIf="getRole() == 'MANAGER'" class="create-btn float-right"
+                    mat-icon-button
                     routerLink="create">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
     </mat-toolbar>
 
-    <mat-card class="d-flex justify-content-center">
-        <table [dataSource]="datasource" class="mat-elevation-z8" mat-table text-align="center">
-            <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell> Name</th>
+    <div class="mat-elevation-z8">
+        <table [dataSource]="datasource" class="mat-elevation-z8" mat-table matSort text-align="center">
+            <ng-container *ngIf="getRole() === 'MANAGER'" matColumnDef="name">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
                 <td *matCellDef="let utility" mat-cell>
                     <div (click)="route(utility.communalUtilityId)" [matRippleColor]="myColor" class="center" fxFlexFill
                          matRipple>
@@ -28,7 +43,12 @@
                     </div>
                 </td>
             </ng-container>
-
+            <ng-container *ngIf="getRole() === 'OWNER'" matColumnDef="name">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
+                <td *matCellDef="let utility" mat-cell>
+                    {{utility.name}}
+                </td>
+            </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="status">
                 <th *matHeaderCellDef mat-header-cell> Status</th>
@@ -58,5 +78,6 @@
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
-    </mat-card>
+        <mat-paginator [pageSizeOptions]="[10,5,20]" showFirstLastButtons></mat-paginator>
+    </div>
 </div>

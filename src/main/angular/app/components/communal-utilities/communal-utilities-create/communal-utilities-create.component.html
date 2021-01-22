@@ -1,51 +1,64 @@
 <div class="p-3" fxFlex="60" fxFlexFill fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch">
     <mat-card>
-        <form (ngSubmit)="add()" fxLayout="column" xLayoutAlign="center">
+        <form (ngSubmit)="add()" [formGroup]="form" fxLayout="column" xLayoutAlign="center">
             <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input [(ngModel)]="utility.name" matInput name="name"
+                <input formControlName="name" matInput name="name"
                 />
             </mat-form-field>
-            <mat-form-field>
-                <mat-label>Coefficient</mat-label>
-                <input [(ngModel)]="utility.coefficient" matInput name="coefficient"
-                />
-            </mat-form-field>
-
+            <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">
+                <small *ngIf="form.get('name').errors.required">Name is required</small>
+                <small *ngIf="form.get('name').errors.minlength">Name length must be more than 1</small>
+            </mat-error>
             <mat-form-field appearance="fill">
                 <mat-label>Status</mat-label>
-                <mat-select [(value)]="utility.status">
-                    <mat-option *ngFor="let stat of status" [value]="stat">
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let stat of status" value="{{stat}}">
                         {{stat}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
+            <mat-error *ngIf="form.get('status').invalid && form.get('status').touched">
+                <small *ngIf="form.get('status').errors.required">Status is required</small>
+            </mat-error>
+            <mat-form-field>
+                <mat-label>Coefficient</mat-label>
+                <input formControlName="coefficient" matInput name="coefficient"
+                />
+            </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Duration type</mat-label>
-                <mat-select [(value)]="utility.durationType">
-                    <mat-option *ngFor="let stat of dyr_type" [value]="stat">
+                <mat-select formControlName="durationType">
+                    <mat-option *ngFor="let stat of dyr_type" value="{{stat}}">
                         {{stat}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
+            <mat-error *ngIf="form.get('durationType').invalid && form.get('durationType').touched">
+                <small *ngIf="form.get('durationType').errors.required">Status is required</small>
+            </mat-error>
             <mat-form-field appearance="fill">
                 <mat-label>Calculation Methods</mat-label>
-                <mat-select [(value)]="utility.calculationMethod">
-                    <mat-option *ngFor="let stat of calculationMethods" [value]="stat">
+                <mat-select formControlName="calculationMethod">
+                    <mat-option *ngFor="let stat of calculationMethods" value="{{stat}}">
                         {{stat}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
+            <mat-error *ngIf="form.get('calculationMethod').invalid && form.get('calculationMethod').touched">
+                <small *ngIf="form.get('calculationMethod').errors.required">Status is required</small>
+            </mat-error>
             <mat-form-field appearance="fill">
                 <mat-label>Deadline</mat-label>
-                <input [(ngModel)]="utility.deadline" [matDatepicker]="picker" matInput name="deadline">
+                <input [matDatepicker]="picker" [min]="minDate" formControlName="deadline"
+                       matInput>
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="form.get('deadline').hasError('required')">
+                    Valid date required.
+                </mat-error>
             </mat-form-field>
-            <button color="primary" mat-flat-button type="submit">Submit</button>
+            <button [disabled]="!form.valid" color="primary" mat-flat-button type="submit">Submit</button>
         </form>
     </mat-card>
 </div>

@@ -67,22 +67,23 @@ import {ApartmentSubBillPaymentComponent} from "./components/apartment-sub-bills
 import {IsAuthGuard} from "./services/guard/isauth.guard";
 import {ReportCreateComponent} from './components/report-create/report-create.component';
 import {DatePipe} from "@angular/common";
-import { RequestComponent } from './components/request/request.component';
+import {RequestComponent} from './components/request/request.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
-import { JobTriggerComponent } from './components/job-trigger/job-trigger.component';
-import { AnnouncementDashboardComponent } from './components/announcements/announcement-dashboard/announcement-dashboard.component';
+import {JobTriggerComponent} from './components/job-trigger/job-trigger.component';
+import {AnnouncementDashboardComponent} from './components/announcements/announcement-dashboard/announcement-dashboard.component';
 import {ManagerOperationUpdateComponent} from "./components/manager-operation/manager-operation-update/manager-operation-update.component";
 import {ApartmentSubBillDashboardComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-sub-bill-dashboard.component";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-update.component";
 
 import {DashboardManagerBillDebtComponent} from "./components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component";
-import { ManagerSubBillsDashboardComponent } from './components/manager-sub-bills/manager-sub-bills-dashboard/manager-sub-bills-dashboard.component';
+import {ManagerSubBillsDashboardComponent} from './components/manager-sub-bills/manager-sub-bills-dashboard/manager-sub-bills-dashboard.component';
 import {CarouselModule} from "ngx-bootstrap/carousel";
-import { ApartmentOperationListComponent } from './components/apartment-operation-list/apartment-operation-list.component';
+import {ApartmentOperationListComponent} from './components/apartment-operation-list/apartment-operation-list.component';
 import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-debt/apartment-debt.component";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
     declarations: [
@@ -168,7 +169,8 @@ import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment
         MatMenuModule,
         MatBadgeModule,
         NgxChartsModule,
-        CarouselModule
+        CarouselModule,
+        MatSortModule
     ],
     providers: [authInterceptorProviders,{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService, AuthGuard,OwnerGuard,ManagerGuard,IsAuthGuard,DatePipe],

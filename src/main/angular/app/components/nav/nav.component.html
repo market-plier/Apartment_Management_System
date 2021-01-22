@@ -13,12 +13,14 @@
                 <a mat-list-item class="hover-link" routerLink="/announcements">Announcements</a>
                 <a *ngIf="role != 'MANAGER'" class="hover-link" mat-list-item
                    routerLink="/request-to-manager">Request</a>
-                <a mat-list-item class="hover-link" routerLink="/reports">Reports</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/reports">Reports</a>
+                <a *ngIf="role == 'OWNER'" class="hover-link" mat-list-item routerLink="/reports">Report</a>
                 <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartments">Apartments</a>
                 <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item
                    routerLink="/manager-operation">Spending</a>
-                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/communal-utilities">Communal utilities</a>
-                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartment-operation">Apartment Operation</a>
+                <a class="hover-link" mat-list-item routerLink="/communal-utilities">Communal utilities</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartment-operation">Apartment
+                    Operation</a>
             </mat-nav-list>
         </div>
     </mat-sidenav>

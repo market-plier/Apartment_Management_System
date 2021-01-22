@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CommunalUtilityService} from "../../../services/communal-utility.service";
-import {CommunalUtility} from "../../../models/communal-utility";
 import {Location} from '@angular/common';
 import {ActivatedRoute} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-communal-utilities-create',
@@ -13,15 +13,8 @@ export class CommunalUtilitiesCreateComponent implements OnInit {
     calculationMethods: string[] = [
         'SquareMeters', 'PeopleCount', 'Floor'
     ];
-    utility: CommunalUtility = {
-        name: null,
-        status: null,
-        durationType: null,
-        calculationMethod: null,
-        coefficient: 0,
-        deadline: null
-    };
-    submitted = false;
+    form: FormGroup;
+    minDate: Date;
     status: string[] = [
         'Enabled', 'Disabled'
     ];
@@ -33,18 +26,36 @@ export class CommunalUtilitiesCreateComponent implements OnInit {
                 private service: CommunalUtilityService,
                 private location: Location
     ) {
+        this.initForm();
     }
 
     ngOnInit(): void {
     }
 
+    initForm(): void {
+        this.form = new FormGroup({
+            name: new FormControl('', [Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(255)]),
+            coefficient: new FormControl('', [Validators.required,
+                Validators.min(0.00001),
+                Validators.max(1000)]),
+            status: new FormControl('', Validators.required),
+            calculationMethod: new FormControl('', Validators.required),
+            durationType: new FormControl('', Validators.required),
+            deadline: new FormControl('', Validators.required)
+        })
+    }
 
-  add(): void {
-    this.service.addCommunalUtility(this.utility)
-        .subscribe(() => this.goBack());
-  }
+    add(): void {
+        const communalUtility = {
+            ...this.form.value,
+        };
+        this.service.addCommunalUtility(communalUtility)
+            .subscribe(() => this.goBack());
+    }
 
-  goBack(): void {
+    goBack(): void {
     this.location.back();
   }
 }

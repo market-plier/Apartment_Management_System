@@ -2,8 +2,9 @@ package com.netcracker.services;
 
 import com.netcracker.dao.CommunalUtilityDao;
 import com.netcracker.exception.DaoAccessException;
+import com.netcracker.exception.ErrorCodes;
+import com.netcracker.exception.ObjectNotUniqueException;
 import com.netcracker.jobs.TemporaryDebtNotificationJob;
-import com.netcracker.models.Apartment;
 import com.netcracker.models.CommunalUtility;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class CommunalUtilityService {
             throws DaoAccessException{
         try {
             if (communalUtilityDao.getUniqueCommunalUtility(communalUtility) != null) {
-                IllegalArgumentException exception = new IllegalArgumentException("Communal utility with such name already exists");
+                ObjectNotUniqueException exception = new ObjectNotUniqueException("Communal utility with such name already exists", ErrorCodes._FAIL_TO_INSERT_COMMUNAL_UTILITY);
                 log.error(exception.getMessage(), exception);
                 throw exception;
             }
@@ -94,8 +95,9 @@ public class CommunalUtilityService {
         try {
             CommunalUtility communalUtility1 = communalUtilityDao.getCommunalUtilityById(communalUtility.getCommunalUtilityId());
             if (communalUtility1.equals(communalUtility)) {
-                IllegalArgumentException exception = new IllegalArgumentException("update is the same as existed communal utility");
+                ObjectNotUniqueException exception = new ObjectNotUniqueException("update object is the same as existed", ErrorCodes._FAIL_TO_INSERT_COMMUNAL_UTILITY);
                 log.error(exception.getMessage(), exception);
+
                 throw exception;
             }
             communalUtilityDao.updateCommunalUtility(communalUtility);

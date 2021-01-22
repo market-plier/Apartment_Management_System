@@ -1,0 +1,112 @@
+@import '~src/main/angular/theme.scss';
+
+.list {
+    text-align: left;
+    margin: auto;
+}
+
+pre {
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+}
+
+.truncate {
+    width: 75%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.more-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.mat-toolbar {
+    background-color: mat-color($my-app-secondary);
+}
+
+.ul {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 0;
+
+}
+
+.form-field {
+    font-size: 14px;
+    text-align: center;
+}
+
+.title-center {
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 30px;
+    color: mat-color($my-app-foreground);
+    line-height: 50px;
+}
+
+.create-btn {
+    background-color: mat-color($my-app-primary);
+    color: mat-color($my-app-background);
+    float: right;
+    margin: 0;
+    height: 50px;
+    width: 50px;
+}
+
+.res-circle {
+    border-radius: 50%;
+    background: mat-color($my-app-accent);
+    line-height: 0;
+    position: relative;
+    height: 15%;
+    width: 15%;
+}
+
+.res-circle::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.circle-txt {
+    position: absolute;
+    bottom: 50%;
+    width: 100%;
+    text-align: center;
+    font-family: Cambria, sans-serif;
+    font-size: 2vw;
+}
+
+table {
+    width: 100%;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.center:hover {
+    background-color: #f08080;
+    cursor: pointer;
+}
+
+.container {
+    box-shadow: 0px 11px 12px 5px rgba(0, 0, 0, 0.34);
+    margin-top: 20px;
+}
