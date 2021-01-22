@@ -1,40 +1,177 @@
-@import '~src/main/angular/theme.scss';
+@import 'src/main/angular/theme';
 
-.container {
-  width: 100%;
-  height: 100%;
-  overflow-x: scroll;
-}
-
-::ng-deep {
-  .legend-labels {
-    background: none !important;
-    overflow: scroll;
-    max-width: 100%;
-  }
-}
-
-::ng-deep .ngx-charts {
-  text {
-    color: mat-color($my-app-foreground) !important;
-    font-size: 15px;
-  }
-}
-
-#carousel {
-  background: #5c6bbf;
+.container-main {
   width: 100%;
   height: 100%;
 }
 
 slide {
   width: 100%;
-  height: 100%;
-  padding: 20px;
+  height: 350px
 }
-::ng-deep .carousel-control-prev-icon{
- background-color: rgb(76,46, 199);
+
+::ng-deep .carousel-control-prev-icon {
+  background-color: rgb(76, 46, 199);
+  margin-right: 20px;
 }
-::ng-deep .carousel-control-next-icon{
-  background-color: rgb(76,46, 199);
+
+::ng-deep .carousel-control-next-icon {
+  background-color: rgb(76, 46, 199);
+  margin-left: 20px;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+.courses-container {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.course {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  overflow: hidden;
+  width: 80%;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.course h6 {
+  opacity: 0.6;
+  margin: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.course h2 {
+  letter-spacing: 1px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.course-preview {
+  background-color: #2A265F;
+  color: #fff;
+  padding: 30px;
+  max-width: 40%;
+}
+
+.course-preview a {
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 30px;
+  text-decoration: none;
+}
+
+.course-info {
+  padding: 30px;
+  position: relative;
+  width: 100%;
+}
+
+.progress-container {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  text-align: right;
+  width: 150px;
+}
+
+.progress {
+  background-color: #ddd;
+  border-radius: 3px;
+  height: 5px;
+  width: 100%;
+}
+
+.progress::after {
+  border-radius: 3px;
+  background-color: #2A265F;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 40%;
+}
+
+.progress-text {
+  font-size: 10px;
+  opacity: 0.6;
+  letter-spacing: 1px;
+}
+
+.btn {
+  background-color: #2A265F;
+  border: 0;
+  border-radius: 50px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 25px;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  letter-spacing: 1px;
+
+}
+
+
+.floating-btn {
+  border-radius: 26.5px;
+  background-color: #001F61;
+  border: 1px solid #001F61;
+  box-shadow: 0 16px 22px -17px #03153B;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 12px 20px;
+  position: fixed;
+  bottom: 20px;
+  right: 50px;
+  z-index: 999;
+}
+
+.floating-btn:hover {
+  background-color: #ffffff;
+  color: #001F61;
+}
+
+.floating-btn:focus {
+  outline: none;
+}
+
+.floating-text {
+  background-color: #001F61;
+  border-radius: 10px 10px 0 0;
+  color: #fff;
+  font-family: 'Muli';
+  padding: 7px 15px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 998;
+}
+
+
+@media screen and (max-width: 480px) {
+
+  .social-panel-container.visible {
+    transform: translateX(0px);
+  }
+
+  .floating-btn {
+    right: 10px;
+  }
 }

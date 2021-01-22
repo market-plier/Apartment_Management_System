@@ -77,10 +77,11 @@ import {ManagerOperationUpdateComponent} from "./components/manager-operation/ma
 import {ApartmentSubBillDashboardComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-sub-bill-dashboard.component";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-update.component";
-import { ApartmentDebtComponent } from './components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-debt/apartment-debt.component';
+
 import {DashboardManagerBillDebtComponent} from "./components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component";
 import { ManagerSubBillsDashboardComponent } from './components/manager-sub-bills/manager-sub-bills-dashboard/manager-sub-bills-dashboard.component';
 import {CarouselModule} from "ngx-bootstrap/carousel";
+import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-debt/apartment-debt.component";
 
 @NgModule({
     declarations: [

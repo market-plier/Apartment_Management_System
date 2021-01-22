@@ -2,6 +2,7 @@
 package com.netcracker.services;
 
 import com.netcracker.dao.ApartmentSubBillDao;
+import com.netcracker.exception.IllegalSumToPayException;
 import com.netcracker.exception.NotBelongToAccountException;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.models.*;
@@ -80,10 +81,8 @@ public class ApartmentSubBillService {
         }
     }
 
-    public void createApartmentSubBillTransfer(BigInteger apartmentId, String transferFromCommunalUtilityName, String transferToCommunalUtilityName, Double value)
+    public boolean createApartmentSubBillTransfer(BigInteger apartmentId, String transferFromCommunalUtilityName, String transferToCommunalUtilityName, Double value)
             throws IllegalArgumentException {
-        try {
-
             ApartmentSubBill subBillFrom = apartmentSubBillDao.getApartmentSubBillByApartmentIdAndCommunalUtilityName(apartmentId, transferFromCommunalUtilityName);
             ApartmentSubBill subBillTo = apartmentSubBillDao.getApartmentSubBillByApartmentIdAndCommunalUtilityName(apartmentId, transferToCommunalUtilityName);
 
@@ -92,7 +91,7 @@ public class ApartmentSubBillService {
             }
 
             if (subBillFrom.getBalance() < value) {
-                throw new IllegalArgumentException("Wrong transfer Data");
+                throw new IllegalSumToPayException("Not enough money on this sub-bill");
             }
             subBillFrom.setBalance(subBillFrom.getBalance() - value);
             subBillTo.setBalance(subBillTo.getBalance() + value);
@@ -108,12 +107,7 @@ public class ApartmentSubBillService {
                     .withApartmentSubBill(new ApartmentSubBillBuilder().withSubBillId(subBillTo.getSubBillId()).build())
                     .withSum(-value)
                     .build());
-
-        } catch (NullPointerException |
-                IllegalArgumentException e) {
-            log.error("ApartmentSubBillService method createApartmentSubBillTransfer: " + e.getMessage(), e);
-            throw e;
-        }
+            return true;
     }
 
     public void updateApartmentSubBillByApartmentOperation(ApartmentOperation apartmentOperation) throws DaoAccessException {

@@ -1,18 +1,33 @@
+<carousel [pauseOnFocus]="true" class="carousel">
+    <button class="floating-btn" routerLink="/manager-operation">Pay</button>
+    <div class="container-main">
+        <div *ngFor="let item of single; let i = index">
+            <slide>
+                <div class="row row-cols-md-2 row-cols-sm-1 row-cols-lg-3 row-cols-xs-1 cols-1 g-4">
+                    <div *ngFor="let item of single[i]; let j = index">
+                        <div class="courses-container" (window:resize)="onResize($event)">
+                            <div class="course">
+                                <div class="course-preview">
+                                    <h6>Days left</h6>
+                                    <h2>{{single[i][j].deadLine}}</h2>
+                                </div>
+                                <div class="course-info">
+                                    <div class="progress-container">
+                                        <mat-progress-bar mode="determinate"
+                                                          value="{{single[i][j].progress}}"></mat-progress-bar>
+                                        <span class="progress-text">
+				Balance: {{single[i][j].value}}
+				</span>
+                                    </div>
 
-<carousel [pauseOnFocus]="true" id="carousel">
-    <div class="container">
-    <div *ngFor="let item of single; let myIndex = index">
-        <slide>
-            <ngx-charts-pie-grid
-                    (window:resize)="onResize($event)"
-                    [view]="view"
-                    [results]="single[myIndex]"
-                    [label]="label"
-                    [animations]="true"
-                    [designatedTotal]="total"
-                    (select)="onSelect($event)">
-            </ngx-charts-pie-grid>
-        </slide>
-    </div>
+                                    <h2>{{single[i][j].name}}</h2>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </slide>
+        </div>
     </div>
 </carousel>

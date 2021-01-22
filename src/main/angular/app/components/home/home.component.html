@@ -5,7 +5,7 @@
         <mat-grid-tile [colspan]="tiles[0].cols" [rowspan]="tiles[0].rows">
             <mat-card class="dashboard-card">
                 <mat-card-header>
-                    <mat-card-title>
+                    <mat-card-title *ngIf="tokenService.getRole()=='OWNER'">
                         {{tiles[0].title}}
                     </mat-card-title>
                 </mat-card-header>

@@ -62,7 +62,7 @@ export class NavComponent {
 
     editAccountPage(){
         if (this.role == 'MANAGER') {
-
+            this.router.navigate(['manager-info/update', {id: this.tokenStorageService.getAccountId()}]);
         }
         if (this.role == 'OWNER') {
             this.router.navigate(['apartments/update/:id', {id: this.tokenStorageService.getAccountId()}]);

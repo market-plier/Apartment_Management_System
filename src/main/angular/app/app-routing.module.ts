@@ -27,6 +27,7 @@ import {RequestComponent} from "./components/request/request.component";
 import {JobTriggerComponent} from "./components/job-trigger/job-trigger.component";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
+import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-update.component";
 
 
 const routes: Routes = [
@@ -51,6 +52,7 @@ const routes: Routes = [
     {path: 'apartments/update/:number', component: ApartmentInfoEditComponent, canActivate:[AuthGuard]},
     {path: 'manager-operation', component: ManagerOperationListComponent, canActivate:[AuthGuard, ManagerGuard]},
     {path: 'manager-operation/create', component: ManagerOperationCreateComponent, canActivate:[AuthGuard]},
+    {path: 'manager-info/update', component: ManagerInfoUpdateComponent, canActivate:[AuthGuard, ManagerGuard]},
     {path: 'announcements', component: AnnouncementsListComponent, canActivate:[AuthGuard]},
     {path: 'announcements/create', component: AnnouncementsCreateComponent, canActivate:[AuthGuard, ManagerGuard]},
     {path: 'announcements/:id', component:AnnouncementsShowComponent, canActivate:[AuthGuard]},

@@ -15,8 +15,8 @@ export interface Tile {
 export class HomeComponent implements OnInit {
 
     tiles: Tile[] = [
-        {title: 'Subbills', cols: 5, rows: 2},
-        {title: 'Announcements', cols: 3, rows: 4},
+        {title: 'Subbills', cols: 8, rows: 2},
+        {title: 'Announcements', cols: 3, rows: 2},
         {title: 'Debt of Manager Sub Bill', cols: 2, rows: 2},
         {title: 'Pay Your debts', cols: 5, rows: 2},
     ];

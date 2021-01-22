@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<mat-toolbar class="mat-toolbar ">
+    <mat-card-title class="title-center">Transfer</mat-card-title>
+</mat-toolbar>
     <div id="back">
         <mat-card id="card">
             <form id="apartment_sub_bills">
@@ -53,16 +49,15 @@
                                id="sum"
                                type="number"
                                [(ngModel)]="sum"
-                               name="sum"/>
+                               name="sum"
+                        min="0"/>
                     </mat-form-field>
-                <mat-button-toggle
+                <button mat-raised-button color="primary"
                         (click)="transferCreate()"
                 >
                     Transfer
-                </mat-button-toggle>
+                </button>
                 </div>
             </form>
         </mat-card>
     </div>
-</body>
-</html>

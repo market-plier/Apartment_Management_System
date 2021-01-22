@@ -133,7 +133,7 @@
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="apartmentNumberCtrl" type="number"
-                                                       name="apartment_number"
+                                                       name="apartment_number" min="0"
                                                        [(ngModel)]="apartment.apartmentNumber" required>
                                                 <mat-error
                                                         *ngIf="secondFormGroup.controls['apartmentNumberCtrl'].hasError('min')">
@@ -151,7 +151,7 @@
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="floorCtrl" type="number"
-                                                       name="floor" placeholder=""
+                                                       name="floor" placeholder="" min="0"
                                                        [(ngModel)]="apartment.floor" required>
                                                 <mat-error
                                                         *ngIf="secondFormGroup.controls['floorCtrl'].hasError('min')">
@@ -171,7 +171,7 @@
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="squareMetresCtrl" type="number"
-                                                       name="square_meters" placeholder=""
+                                                       name="square_meters" placeholder="" min="15"
                                                        [(ngModel)]="apartment.squareMetres">
                                                 <mat-error
                                                         *ngIf="secondFormGroup.controls['squareMetresCtrl'].hasError('min')">
@@ -189,7 +189,7 @@
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="peopleCountCtrl" type="number"
-                                                       name="people_count" placeholder=""
+                                                       name="people_count" placeholder="" min="0"
                                                        [(ngModel)]="apartment.peopleCount">
                                                 <mat-error
                                                         *ngIf="secondFormGroup.controls['peopleCountCtrl'].hasError('min')">
