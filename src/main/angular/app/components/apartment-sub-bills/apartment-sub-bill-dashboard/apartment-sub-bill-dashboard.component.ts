@@ -23,23 +23,23 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
     showLegend: boolean = true;
     showLabels: boolean = true;
     isDoughnut: boolean = false;
-    legendPosition: string = 'below';
+    legendPosition: string = 'right';
     maxChars = 30;
     title = "Balance";
     single: any[];
-    view: any[] = [700, 280];
+    view: any[] = [1000, 320];
 
     constructor(public subbillsSevice: ApartmentSubBillService, public token: TokenStorageService) {
     }
 
     onResize(event) {
         if (event.target.innerWidth > 1000) {
-            this.view = [700, 280];
+            this.view = [1000, 320];
         } else if (event.target.innerWidth < 1000 && event.target.innerWidth > 700) {
-            this.view = [500, 250];
+            this.view = [700, 310];
             this.maxChars = 15;
         } else {
-            this.view = [300, 150];
+            this.view = [500, 220];
             this.maxChars = 10;
         }
         console.log(event.target.innerWidth);

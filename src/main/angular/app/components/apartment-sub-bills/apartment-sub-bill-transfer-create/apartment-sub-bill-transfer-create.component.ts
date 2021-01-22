@@ -37,20 +37,24 @@ export class ApartmentSubBillTransferCreateComponent implements OnInit {
     }
 
     transferCreate(): void {
-        if(this.sum == undefined){
+        if (this.sum == undefined) {
             this.sum = 0;
         }
-        this.apartmentSubBillService.createApartmentSubBillTransfer([this.fromApartmentSubBill, this.toApartmentSubBill, this.sum.toString()])
-            .subscribe(
-                response=>{
-                    this.openSnackBar('Transfer successful', '');
-                    this.redirectToApartmentSubBillList();
-                    console.log(response);
-            },
-                error => {
-                    console.log(error);
-                    this.openSnackBar(error.error.message, '');
-                });
+        if (this.fromApartmentSubBill == this.toApartmentSubBill) {
+            this.openSnackBar('SubBills are identical, select another', '');
+        } else {
+            this.apartmentSubBillService.createApartmentSubBillTransfer([this.fromApartmentSubBill, this.toApartmentSubBill, this.sum.toString()])
+                .subscribe(
+                    response => {
+                        this.openSnackBar('Transfer successful', '');
+                        this.redirectToApartmentSubBillList();
+                        console.log(response);
+                    },
+                    error => {
+                        console.log(error);
+                        this.openSnackBar(error.error.message, '');
+                    });
+        }
     }
 
     openSnackBar(message: string, action: string) {
@@ -59,7 +63,7 @@ export class ApartmentSubBillTransferCreateComponent implements OnInit {
         });
     }
 
-    redirectToApartmentSubBillList(): void{
+    redirectToApartmentSubBillList(): void {
         this.router.navigate([`/apartment-sub-bills`])
     }
 
