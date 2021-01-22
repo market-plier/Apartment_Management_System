@@ -4,7 +4,7 @@ import {ManagerSubBillService} from "../../../services/manager-sub-bill.service"
 
 class single {
     name?: String;
-    value?: number;
+    value?: bigint;
     deadLine?: number;
     progress?: number;
 }

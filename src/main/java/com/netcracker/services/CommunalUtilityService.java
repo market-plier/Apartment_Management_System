@@ -75,8 +75,9 @@ public class CommunalUtilityService {
             }
             communalUtilityDao.createCommunalUtility(communalUtility);
             CommunalUtility comUtil = communalUtilityDao.getUniqueCommunalUtility(communalUtility);
+
             if (comUtil.getDurationType().equals(CommunalUtility.Duration.Temporary)) {
-                scheduleJobService.getScheduler().execute(context.getBean(TemporaryDebtNotificationJob.class).getJob(communalUtility));
+                scheduleJobService.getScheduler().execute(context.getBean(TemporaryDebtNotificationJob.class).getJob(comUtil));
             }
 
             managerSubBillService.createManagerSubBill(comUtil);
