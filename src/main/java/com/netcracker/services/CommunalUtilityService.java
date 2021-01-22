@@ -94,10 +94,13 @@ public class CommunalUtilityService {
     public void updateCommunalUtility(CommunalUtility communalUtility) throws DaoAccessException {
         try {
             CommunalUtility communalUtility1 = communalUtilityDao.getCommunalUtilityById(communalUtility.getCommunalUtilityId());
-            if (communalUtility1.equals(communalUtility)) {
+            if (communalUtility1.equals(communalUtility) && communalUtility1.getStatus().equals(communalUtility.getStatus())
+                    && communalUtility1.getCalculationMethod().equals(communalUtility.getCalculationMethod())
+                    && communalUtility1.getDurationType().equals(communalUtility.getDurationType())
+                    && communalUtility1.getDeadline().equals(communalUtility.getDeadline())
+                    && communalUtility1.getCoefficient().equals(communalUtility.getCoefficient())) {
                 ObjectNotUniqueException exception = new ObjectNotUniqueException("update object is the same as existed", ErrorCodes._FAIL_TO_INSERT_COMMUNAL_UTILITY);
                 log.error(exception.getMessage(), exception);
-
                 throw exception;
             }
             communalUtilityDao.updateCommunalUtility(communalUtility);
