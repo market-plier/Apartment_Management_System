@@ -1,0 +1,96 @@
+<div>
+
+
+    <mat-toolbar class="mat-toolbar col-12" fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-card-title class="title-center col-2">Apartment Operation</mat-card-title>
+
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="row">
+
+                <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="getAllOperations(searchValue)">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <mat-form-field class="form-field">
+                    <mat-label>Apartment number</mat-label>
+                    <input type="number" min=1 [(ngModel)]="searchValue"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="myControl"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+
+
+
+                </mat-form-field>
+            </div>
+
+
+        </div>
+
+
+    </mat-toolbar>
+</div>
+
+<div class="container-fluid p-5">
+    <div class="row">
+
+
+
+
+        <h1 [hidden]="dataSource.data.length">No data, please enter apartment number</h1>
+        <div class="col-md-12" [hidden]="!dataSource.data.length">
+
+            <div class="mat-elevation-z8" >
+
+                    <table mat-table [dataSource]="dataSource" >
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="operation id">
+                            <th mat-header-cell *matHeaderCellDef>Operation Id</th>
+                            <td mat-cell *matCellDef="let element"> {{element.operationId}} </td>
+                        </ng-container>
+
+
+                        <!-- Weight Column -->
+                        <ng-container  matColumnDef="sum">
+                            <th mat-header-cell *matHeaderCellDef> Sum</th>
+                            <ng-container *matCellDef="let element; let i = index">
+                                <td mat-cell> {{element.sum>0? "+"+element.sum:element.sum}} </td>
+
+                            </ng-container>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="communalUtility">
+                            <th mat-header-cell *matHeaderCellDef> Communal Utility </th>
+                            <td mat-cell *matCellDef="let element"> {{element.apartmentSubBill.communalUtility.name}} </td>
+                        </ng-container>
+
+
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef> Created at </th>
+                            <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'yyyy-MM-dd' }} </td>
+                        </ng-container>
+
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    </table>
+                <div [hidden] = " !paginateHide() " >
+                    <mat-paginator  [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -27,6 +27,7 @@ import {RequestComponent} from "./components/request/request.component";
 import {JobTriggerComponent} from "./components/job-trigger/job-trigger.component";
 import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-info-page.component";
 import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
+import {ApartmentOperationListComponent} from "./components/apartment-operation-list/apartment-operation-list.component";
 import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-update.component";
 
 
@@ -46,6 +47,7 @@ const routes: Routes = [
     {path: 'communal-utilities/create', component: CommunalUtilitiesCreateComponent, canActivate: [ManagerGuard]},
     {path: 'communal-utilities', component: CommunalUtilitiesListComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'communal-utilities/:id', component: CommunalUtilitiesShowComponent, canActivate: [ManagerGuard]},
+    {path: 'apartment-operation', component: ApartmentOperationListComponent, canActivate: [AuthGuard,ManagerGuard]},
 
     {path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
     {path: 'apartments/create', component: ApartmentRegistrationComponent, canActivate:[AuthGuard, ManagerGuard]},

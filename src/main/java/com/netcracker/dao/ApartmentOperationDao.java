@@ -22,22 +22,26 @@ public interface ApartmentOperationDao {
                     "ORDER BY APOP_CREATED_AT.DATE_VALUE";
 
     String selectApartmentOperationsByApartmentId =
-            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
-                    "FROM OBJECTS APSB, OBJREFERENCE APSB_APARTMENT_NUMBER,\n" +
-                    "     OBJECTS APOP, ATTRIBUTES APOP_SUM, ATTRIBUTES APOP_CREATED_AT, OBJREFERENCE APOP_TRANSFERS\n" +
-                    "WHERE APSB.OBJECT_TYPE_ID = 13\n" +
-                    "AND APSB_APARTMENT_NUMBER.ATTR_ID = 33\n" +
-                    "AND APSB_APARTMENT_NUMBER.REFERENCE = ?\n" +
-                    "AND APSB_APARTMENT_NUMBER.OBJECT_ID = APSB.OBJECT_ID\n" +
-                    "AND APOP.OBJECT_TYPE_ID = 17\n" +
-                    "AND APOP_SUM.ATTR_ID = 26\n" +
-                    "AND APOP_SUM.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_CREATED_AT.ATTR_ID = 27\n" +
-                    "AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_TRANSFERS.ATTR_ID = 34\n" +
-                    "AND APOP_TRANSFERS.OBJECT_ID = APOP.OBJECT_ID\n" +
-                    "AND APOP_TRANSFERS.REFERENCE = APSB.OBJECT_ID\n" +
-                    "ORDER BY APOP_CREATED_AT.DATE_VALUE";
+            " SELECT COMMUNAL_UTILITY_NAME.VALUE communal_name,APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
+                    "                    FROM OBJECTS APSB, OBJREFERENCE APSB_APARTMENT_NUMBER,\n" +
+                    "                         OBJECTS APOP, ATTRIBUTES APOP_SUM, ATTRIBUTES APOP_CREATED_AT, OBJREFERENCE APOP_TRANSFERS,ATTRIBUTES COMMUNAL_UTILITY_NAME, OBJECTS COMMUNAL_UTILITY\n" +
+                    "                    WHERE APSB.OBJECT_TYPE_ID = 13\n" +
+                    "                    AND APSB_APARTMENT_NUMBER.ATTR_ID = 33\n" +
+                    "                    AND APSB_APARTMENT_NUMBER.REFERENCE = ?\n" +
+                    "                    AND APSB_APARTMENT_NUMBER.OBJECT_ID = APSB.OBJECT_ID\n" +
+                    "                    AND APOP.OBJECT_TYPE_ID = 17\n" +
+                    "                    AND APOP_SUM.ATTR_ID = 26\n" +
+                    "                    AND APOP_SUM.OBJECT_ID = APOP.OBJECT_ID\n" +
+                    "                    AND APOP_CREATED_AT.ATTR_ID = 27\n" +
+                    "                    AND APOP_CREATED_AT.OBJECT_ID = APOP.OBJECT_ID\n" +
+                    "                    AND APOP_TRANSFERS.ATTR_ID = 34\n" +
+                    "                    AND APOP_TRANSFERS.OBJECT_ID = APOP.OBJECT_ID\n" +
+                    "                    AND APOP_TRANSFERS.REFERENCE = APSB.OBJECT_ID\n" +
+                    "                    AND APSB.PARENT_ID = COMMUNAL_UTILITY.OBJECT_ID\n" +
+                    "                    AND COMMUNAL_UTILITY.OBJECT_TYPE_ID = 11\n" +
+                    "                    AND COMMUNAL_UTILITY_NAME.OBJECT_ID = COMMUNAL_UTILITY.OBJECT_ID\n" +
+                    "                    AND COMMUNAL_UTILITY_NAME.ATTR_ID = 21\n" +
+                    "                    ORDER BY APOP_CREATED_AT.DATE_VALUE";
 
     String insertApartmentOperation =
             "INSERT ALL\n" +

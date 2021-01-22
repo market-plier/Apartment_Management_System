@@ -81,6 +81,7 @@ import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-upda
 import {DashboardManagerBillDebtComponent} from "./components/dashboard-manager-bill-debt/dashboard-manager-bill-debt.component";
 import { ManagerSubBillsDashboardComponent } from './components/manager-sub-bills/manager-sub-bills-dashboard/manager-sub-bills-dashboard.component';
 import {CarouselModule} from "ngx-bootstrap/carousel";
+import { ApartmentOperationListComponent } from './components/apartment-operation-list/apartment-operation-list.component';
 import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-debt/apartment-debt.component";
 
 @NgModule({
@@ -93,6 +94,7 @@ import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment
         AnnouncementsShowComponent,
         AnnouncementsCreateComponent,
         AnnouncementsUpdateComponent,
+        ApartmentOperationListComponent,
         CommentEditDialog,
         LoginComponent,
         ManagerOperationListComponent,

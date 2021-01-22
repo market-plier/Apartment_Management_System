@@ -2,6 +2,7 @@ package com.netcracker.dao.impl;
 
 import com.netcracker.dao.ApartmentOperationDao;
 import com.netcracker.dao.mapper.ApartmentOperationMapper;
+import com.netcracker.dao.mapper.ApartmentOperationWithCommUtilMapper;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.DaoAccessExceptionBuilder;
 import com.netcracker.models.ApartmentOperation;
@@ -47,7 +48,7 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     @Override
     public List<ApartmentOperation> getAllApartmentOperationsByApartmentId(BigInteger apartmentId) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(selectApartmentOperationsByApartmentId, new ApartmentOperationMapper(), apartmentId);
+            return jdbcTemplate.query(selectApartmentOperationsByApartmentId, new ApartmentOperationWithCommUtilMapper(), apartmentId);
         } catch (DataAccessException e) {
             log.error("getAllApartmentOperationsByApartmentId select error with id: " + apartmentId, e);
             throw new DaoAccessExceptionBuilder()

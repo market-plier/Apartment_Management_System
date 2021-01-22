@@ -31,7 +31,7 @@ export class ApartmentSubBillListComponent implements OnInit {
                     console.log(data);
                 },
                 error => {
-                    alert(error);
+                    console.log(error);
                 });
     }
 
