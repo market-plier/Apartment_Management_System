@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl:'https://housemanagement.herokuapp.com/'
+  baseUrl:'https://house-management-angular.herokuapp.com/'
 };
