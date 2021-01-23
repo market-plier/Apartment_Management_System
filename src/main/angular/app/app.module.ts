@@ -84,6 +84,7 @@ import {CarouselModule} from "ngx-bootstrap/carousel";
 import {ApartmentOperationListComponent} from './components/apartment-operation-list/apartment-operation-list.component';
 import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-debt/apartment-debt.component";
 import {MatSortModule} from "@angular/material/sort";
+import {ManagerSubBillListComponent} from "./components/manager-sub-bills/manager-sub-bills-list/manager-sub-bills-list.component";
 
 @NgModule({
     declarations: [
@@ -123,7 +124,7 @@ import {MatSortModule} from "@angular/material/sort";
         ApartmentSubBillDashboardComponent,
         ManagerInfoUpdateComponent,
         ApartmentDebtComponent,
-        //ManagerSubBillPageComponent,
+        ManagerSubBillListComponent,
         DashboardManagerBillDebtComponent,
         ManagerSubBillsDashboardComponent
     ],
