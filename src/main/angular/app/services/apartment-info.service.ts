@@ -13,7 +13,7 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 })
 export class ApartmentInfoService {
 
-    private baseURL = 'http://localhost:8888/apartments';
+    private baseURL = 'https://housemanagement.herokuapp.com/apartments';
     err: BackEndError | undefined;
 
     constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
