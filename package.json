@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "heroku-postbuild": "ng build --prod && npm install -g http-server-spa",
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
@@ -12,12 +13,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cli": "^11.0.7",
-    "@angular/compiler-cli": "^11.0.9",
     "@angular/animations": "~11.0.5",
     "@angular/cdk": "^11.0.3",
+    "@angular/cli": "^11.0.7",
     "@angular/common": "~11.0.5",
     "@angular/compiler": "~11.0.5",
+    "@angular/compiler-cli": "^11.0.9",
     "@angular/core": "~11.0.5",
     "@angular/flex-layout": "^11.0.0-beta.33",
     "@angular/forms": "~11.0.5",
