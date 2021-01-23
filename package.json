@@ -8,10 +8,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --output-path angularapp --aot --prod"
+    "postinstall": "ng build --output-path /src/main/angular --aot --prod"
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "^11.0.7",
+    "@angular/compiler-cli": "^11.0.9",
     "@angular/animations": "~11.0.5",
     "@angular/cdk": "^11.0.3",
     "@angular/common": "~11.0.5",
