@@ -28,6 +28,7 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
     title = "Balance";
     single: any[];
     view: any[] = [1000, 320];
+    loading: boolean = false;
 
     constructor(public subbillsSevice: ApartmentSubBillService, public token: TokenStorageService) {
     }
@@ -46,6 +47,7 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loading = true;
         this.subbillsSevice.getApartmentSubBillList().subscribe(
             data => {
                 this.subbills = data
@@ -56,7 +58,9 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
                     if (single[j].value == 0) single[j].value = 0.0000001
                     this.balance = this.balance + this.subbills[j].balance;
                 }
+                this.loading = false;
                 Object.assign(this, {single});
+
             });
 
     }

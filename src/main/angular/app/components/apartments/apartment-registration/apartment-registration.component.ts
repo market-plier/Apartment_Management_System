@@ -28,6 +28,7 @@ export class ApartmentRegistrationComponent implements OnInit {
     hide = true;
     isCreated = false;
     apartmentSave?: Apartment;
+    loading: boolean = false;
 
     firstFormGroup: FormGroup = new FormBuilder().group({
         'emailCtrl': ['', [Validators.required, Validators.pattern("^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$")]],
@@ -50,12 +51,15 @@ export class ApartmentRegistrationComponent implements OnInit {
     }
 
     saveApartment() {
+        this.loading=true;
         this.apartmentSave = Object.assign({}, this.apartment)
         this.apartmentInfoService.createApartment(this.apartmentSave).subscribe(
             data => {
                 this.openSnackBar('Apartment is created', 'OK');
                 this.isCreated = true;
+                this.loading=false;
                 this.goToApartmentsList();
+
             },
             error => {
                 console.log(error)

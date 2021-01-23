@@ -27,6 +27,7 @@ export class ApartmentInfoEditComponent implements OnInit {
     };
     apartmentToSave?: Apartment;
     hide = true;
+    loading: boolean = false;
 
     constructor(private service: ApartmentInfoService, private route: ActivatedRoute, private router: Router,
                 private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService) {
@@ -44,10 +45,12 @@ export class ApartmentInfoEditComponent implements OnInit {
     public mask = ['+', /[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
 
     updateApartment() {
+        this.loading = true;
         this.apartmentToSave = Object.assign({}, this.apartment)
         this.service.updateApartment(this.apartmentToSave).subscribe(
             data => {
                 this.openSnackBar('Apartment is updated', '');
+                this.loading = false;
                 this.goToApartmentsList();
             });
         if (this.apartment.password != null) {
@@ -69,8 +72,10 @@ export class ApartmentInfoEditComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.loading=true;
         this.service.getApartmentByAccountId(this.route.snapshot.params['id']).subscribe(data => {
             this.apartment = data;
+            this.loading=false;
         }, error => console.log(error));
     };
 

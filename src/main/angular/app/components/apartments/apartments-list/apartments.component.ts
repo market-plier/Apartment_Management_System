@@ -21,17 +21,20 @@ export class ApartmentsComponent implements OnInit {
     myControl = new FormControl();
     options: Number[] = [];
     filteredOptions: Observable<Number[]>;
+    loading: boolean = false;
 
     constructor(private apartmentInfoService: ApartmentInfoService, private router: Router
         , private _snackBar: MatSnackBar) {
     }
 
     getAllApartments() {
+        this.loading = true;
         this.apartmentInfoService.getAllApartments().subscribe(
             data => {
                 this.apartments = data;
                 this.floors = this.uniqueArray(this.apartments.map(item => item.floor));
                 this.options = this.apartments.map(item => item.apartmentNumber);
+                this.loading=false;
             }
         );
     }
@@ -65,11 +68,13 @@ export class ApartmentsComponent implements OnInit {
 
 
     getApartment() {
+        this.loading=true;
         if (this.searchValue != null) {
             this.apartmentInfoService.getApartmentByApartmentNumber(this.searchValue).subscribe(
                 data => {
                     this.apartments = [];
                     this.apartments[0] = data;
+                    this.loading=false;
                 },
                 error => {
                     this.openSnackBar("No apartment was found", "Input another value");
@@ -85,10 +90,12 @@ export class ApartmentsComponent implements OnInit {
     }
 
     getAllApartmentsByFloor() {
+        this.loading=true;
         if (this.selectedFloor != null && this.selectedFloor > 0) {
             this.apartmentInfoService.getAllApartmentsByFloor(this.selectedFloor).subscribe(
                 data => {
                     this.apartments = data;
+                    this.loading=false;
                 },
                 error => {
                     this.openSnackBar("No apartments on this floor", "Choose another one");

@@ -24,8 +24,10 @@ export class ManagerSubBillsDashboardComponent implements OnInit {
     circleOnPage = 6;
     single: single[][] = [][this.circleOnPage];
     billMap: Map<ManagerSubBill, number> = new Map<ManagerSubBill, number>();
+    loading: boolean = false;
 
     ngOnInit(): void {
+        this.loading = true;
         this.service.getAllManagerSubBills().subscribe(
             data => {
                 this.subbills = data;
@@ -37,6 +39,7 @@ export class ManagerSubBillsDashboardComponent implements OnInit {
                             }
                         )
                         this.setCirlesData();
+                        this.loading=false;
                     },
 
                     error => {
