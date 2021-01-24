@@ -10,6 +10,7 @@ import {BackEndError} from "../models/back-end-error";
 import {catchError} from "rxjs/operators";
 import {sha256} from "js-sha256";
 import {ManagerBill} from "../models/manager-bill";
+import {environment} from "../../environments/environment.prod";
 
 
 // @ts-ignore
@@ -19,7 +20,8 @@ import {ManagerBill} from "../models/manager-bill";
 
 export class ManagerService {
 
-    private baseURL = 'http://localhost:8888/manager-info';
+    private url = environment.url;
+    private baseURL = this.url+ 'manager-info';
     err: BackEndError | undefined;
 
     constructor(private httpClient: HttpClient) { }

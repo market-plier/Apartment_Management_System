@@ -3,14 +3,16 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ApartmentSubBill} from "../models/apartment-sub-bill";
 import {ApartmentOperation} from "../models/apartment-operation";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApartmentSubBillService{
-    private baseUrl = "http://localhost:8888/apartment-sub-bills";
-    private transferUrl = "http://localhost:8888/apartment-sub-bill-transfer";
-    private paymentUrl = "http://localhost:8888/apartment-sub-bill-payment";
+    private url = environment.url;
+    private baseUrl = this.url + "apartment-sub-bills";
+    private transferUrl = this.url + "apartment-sub-bill-transfer";
+    private paymentUrl = this.url +"apartment-sub-bill-payment";
 
     constructor(private http: HttpClient) {
     }

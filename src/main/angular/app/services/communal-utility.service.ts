@@ -4,6 +4,7 @@ import {CommunalUtility} from "../models/communal-utility";
 import {Observable, of, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +14,8 @@ export class CommunalUtilityService {
     httpOptions = {
         headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
-
-    private utilitiesUrl = 'http://localhost:8888/communal-utilities';
+    private url = environment.url;
+    private utilitiesUrl = this.url + 'communal-utilities';
 
     constructor(private _snackBar: MatSnackBar,
                 private http: HttpClient) {

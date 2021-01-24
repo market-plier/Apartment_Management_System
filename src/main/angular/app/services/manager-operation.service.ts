@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
 import {ManagerSubBill} from "../models/manager-sub-bill";
 import {CommunalUtility} from "../models/communal-utility";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,14 @@ export class ManagerOperationService {
 
 
   constructor(private http: HttpClient) { }
-    private baseUrl = 'http://localhost:8888/manager-operation-spending/get-by-date/';
-    private urlManagerOperation = 'http://localhost:8888/manager-sub-bill/get-manager-sub-bill-info';
-    private urlCreateManagerOperation = 'http://localhost:8888/manager-operation-spending/';
-    private urlUpdateManagerOperation='http://localhost:8888/manager-operation-spending/';
-    private urlFilterByDateAndCommunalUtility='http://localhost:8888/manager-operation-spending/get-by-date-comm-util/';
-    private urlFilterByCommunalUtility='http://localhost:8888/manager-operation-spending/get-by-comm-util/';
-    private urlGetAllCommUtility='http://localhost:8888/communal-utilities/comm-util';
+    private url = environment.url;
+    private baseUrl = this.url + 'manager-operation-spending/get-by-date/';
+    private urlManagerOperation = this.url +'manager-sub-bill/get-manager-sub-bill-info';
+    private urlCreateManagerOperation = this.url +'manager-operation-spending/';
+    private urlUpdateManagerOperation= this.url +'manager-operation-spending/';
+    private urlFilterByDateAndCommunalUtility= this.url +'manager-operation-spending/get-by-date-comm-util/';
+    private urlFilterByCommunalUtility= this.url +'manager-operation-spending/get-by-comm-util/';
+    private urlGetAllCommUtility= this.url +'communal-utilities/comm-util';
 
 
     public error$: Subject<string> = new Subject<string>()

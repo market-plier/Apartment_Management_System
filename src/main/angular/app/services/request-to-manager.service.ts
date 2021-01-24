@@ -5,13 +5,16 @@ import {Observable} from "rxjs";
 import {ApartmentRequestToManager} from "../models/apartment-request-to-manager";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {environment} from "../../environments/environment.prod";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class RequestToManagerService {
-    private baseURL = 'https://housemanagement.herokuapp.com/createApartmentRequestToManager';
+
+    private url = environment.url;
+    private baseURL = this.url + 'createApartmentRequestToManager';
     err: BackEndError | undefined;
 
     constructor(private httpClient: HttpClient,private _snackBar: MatSnackBar) {

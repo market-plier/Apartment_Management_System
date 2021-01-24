@@ -4,12 +4,14 @@ import {Observable} from "rxjs";
 import {Comment} from "../models/comment";
 import {BackEndError} from "../models/back-end-error";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommentService {
-    private baseUrl = 'http://localhost:8888/comment/';
+    private url = environment.url;
+    private baseUrl = this.url + 'comment/';
     err: BackEndError | undefined;
 
     constructor(private http: HttpClient, private _snackBar: MatSnackBar) {}

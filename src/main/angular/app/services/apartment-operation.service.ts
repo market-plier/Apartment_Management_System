@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {ApartmentOperation} from "../models/apartment-operation";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CommunalUtility} from "../models/communal-utility";
+import {environment} from "../../environments/environment.prod";
 
 
 @Injectable({
@@ -13,7 +14,9 @@ import {CommunalUtility} from "../models/communal-utility";
 })
 export class ApartmentOperationService {
 
-    private getApartOperationURL = 'http://localhost:8888/apartment-operation/';
+
+    private url = environment.url;
+    private getApartOperationURL = this.url + 'apartment-operation/';
 
 
     constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {

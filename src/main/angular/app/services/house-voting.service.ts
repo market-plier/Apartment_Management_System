@@ -4,12 +4,14 @@ import {Observable} from "rxjs";
 import {HouseVoting} from "../models/house-voting";
 import {BackEndError} from "../models/back-end-error";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HouseVotingService {
-  private baseUrl = 'http://localhost:8888/announcements';
+  private url = environment.url;
+  private baseUrl = this.url + 'announcements';
   err: BackEndError | undefined;
 
   constructor(private http: HttpClient, private _snackBar: MatSnackBar) {}

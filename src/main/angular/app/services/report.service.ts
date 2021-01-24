@@ -3,6 +3,7 @@ import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,11 @@ export class ReportService {
     })
   };
 
-    private managerSpendingByDateCommName = 'http://localhost:8888/make-report/manager-spending/by-date-comm-name';
-    private managerSpendingByDate = 'http://localhost:8888/make-report/manager-spending/by-date';
-    private apartmentDeptReport = 'http://localhost:8888/make-report/apartment/dept-report';
-    private managerDeptManagerBill = 'http://localhost:8888/make-report/manager/dept-manager-bill';
+    private url = environment.url;
+    private managerSpendingByDateCommName = this.url+ 'manager-spending/by-date-comm-name';
+    private managerSpendingByDate = this.url+'make-report/manager-spending/by-date';
+    private apartmentDeptReport = this.url+'make-report/apartment/dept-report';
+    private managerDeptManagerBill = this.url+'make-report/manager/dept-manager-bill';
 
 
     constructor(private http: HttpClient,

@@ -5,13 +5,15 @@ import {Announcement} from "../models/announcement";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {BackEndError} from "../models/back-end-error";
 import {catchError} from "rxjs/operators";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class AnnouncementService {
-    private baseUrl = 'http://localhost:8888/announcements';
+    private url = environment.url;
+    private baseUrl = this.url + 'announcements';
     err: BackEndError | undefined;
 
     constructor(private http: HttpClient, private _snackBar: MatSnackBar) {}

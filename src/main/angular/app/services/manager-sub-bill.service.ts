@@ -5,13 +5,15 @@ import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ManagerSubBill} from "../models/manager-sub-bill";
 import {ApartmentSubBill} from "../models/apartment-sub-bill";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagerSubBillService {
-  private baseURL = 'http://localhost:8888/manager-sub-bill';
-  private urlGetManagerSubBillsDebt = 'http://localhost:8888/manager-sub-bill/get-manager-sub-bill-debt';
+  private url = environment.url;
+  private baseURL = this.url+ 'manager-sub-bill';
+  private urlGetManagerSubBillsDebt = this.url+'manager-sub-bill/get-manager-sub-bill-debt';
   err: BackEndError | undefined;
 
   constructor(private httpClient: HttpClient) {

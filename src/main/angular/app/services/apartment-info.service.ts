@@ -6,6 +6,7 @@ import {BackEndError} from "../models/back-end-error";
 import {sha256} from "js-sha256";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {environment} from "../../environments/environment.prod";
 
 
 @Injectable({
@@ -13,7 +14,8 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 })
 export class ApartmentInfoService {
 
-    private baseURL = 'https://housemanagement.herokuapp.com/apartments';
+    private url = environment.url;
+    private baseURL = this.url + 'apartments';
     err: BackEndError | undefined;
 
     constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
