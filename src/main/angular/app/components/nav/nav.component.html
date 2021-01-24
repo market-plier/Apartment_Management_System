@@ -9,7 +9,8 @@
             </mat-toolbar>
             <mat-nav-list style=" margin-top:20px;">
                 <a mat-list-item class="hover-link" routerLink="/home">Home</a>
-                <a mat-list-item class="hover-link" routerLink="/apartment-sub-bills">Subbills</a>
+                <a mat-list-item *ngIf="role == 'OWNER'" class="hover-link" routerLink="/apartment-sub-bills">Subbills</a>
+                <a mat-list-item *ngIf="role == 'MANAGER'" class="hover-link" routerLink="/manager-sub-bills">Subbills</a>
                 <a mat-list-item class="hover-link" routerLink="/announcements">Announcements</a>
                 <a *ngIf="role != 'MANAGER'" class="hover-link" mat-list-item
                    routerLink="/request-to-manager">Request</a>

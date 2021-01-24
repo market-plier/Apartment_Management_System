@@ -29,6 +29,7 @@ import {ManagerInfoPageComponent} from "./components/manager-info-page/manager-i
 import {ManagerOperationCreateComponent} from "./components/manager-operation/manager-operation-create/manager-operation-create.component";
 import {ApartmentOperationListComponent} from "./components/apartment-operation-list/apartment-operation-list.component";
 import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-update.component";
+import {ManagerSubBillListComponent} from "./components/manager-sub-bills/manager-sub-bills-list/manager-sub-bills-list.component";
 
 
 const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
     {path: 'manager-operation/create', component: ManagerOperationCreateComponent, canActivate: [AuthGuard]},
     {path: 'manager-info/update', component: ManagerInfoUpdateComponent, canActivate: [AuthGuard, ManagerGuard]},
     {path: 'apartment-sub-bills', component: ApartmentSubBillListComponent, canActivate: [AuthGuard]},
+    {path: 'manager-sub-bills', component:ManagerSubBillListComponent, canActivate:[AuthGuard,ManagerGuard]},
     {path: 'apartment-sub-bills/:id', component: ApartmentSubBillShowComponent, canActivate: [AuthGuard]},
     {
         path: 'apartment-sub-bill-transfer-create',
