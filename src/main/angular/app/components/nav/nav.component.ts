@@ -33,7 +33,7 @@ export class NavComponent {
 
         if (this.isLoggedIn) {
             const user = this.tokenStorageService.getUser();
-            this.role = user.role;
+            this.role = this.tokenStorageService.getRole();
             this.username = user.username;
         }
 
