@@ -22,7 +22,7 @@ import javax.validation.Valid;
 @RestController
 @Validated
 @RequestMapping(value = "/auth/")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://housemanagement.herokuapp.com")
 @Log4j
 public class AuthenticationController {
 
