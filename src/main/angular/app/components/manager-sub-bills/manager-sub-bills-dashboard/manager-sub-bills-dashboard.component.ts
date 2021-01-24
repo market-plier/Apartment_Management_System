@@ -4,7 +4,7 @@ import {ManagerSubBillService} from "../../../services/manager-sub-bill.service"
 
 class single {
     name?: String;
-    value?: bigint;
+    value?: String;
     deadLine?: number;
     progress?: number;
 }
@@ -39,7 +39,7 @@ export class ManagerSubBillsDashboardComponent implements OnInit {
                             }
                         )
                         this.setCirlesData();
-                        this.loading=false;
+                        this.loading = false;
                     },
 
                     error => {
@@ -60,10 +60,9 @@ export class ManagerSubBillsDashboardComponent implements OnInit {
             s[i] = {
                 name: this.subbills[j].communalUtility.name,
                 deadLine: this.countTotal(this.subbills[j].communalUtility.deadline),
-                value: this.subbills[j].balance,
+                value: this.subbills[j].balance.toLocaleString()+'$',
                 progress: this.subbills[j].balance * 100 / this.fillProgress(this.subbills[j])
             };
-            if (s[i].value == 0) s[i].value = 0.0000001
             i++;
             if (i == this.circleOnPage) {
                 single[n] = s;
@@ -74,7 +73,7 @@ export class ManagerSubBillsDashboardComponent implements OnInit {
         }
         if (s.length > 0) single[n] = s;
         Object.assign(this, {single});
-
+        console.log(single);
     }
 
     fillProgress(sub: ManagerSubBill): number {
