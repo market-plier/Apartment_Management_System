@@ -12,6 +12,8 @@ import {TokenStorageService} from "../../../services/token-storage.service";
     styleUrls: ['./apartment-info-edit.component.scss']
 })
 export class ApartmentInfoEditComponent implements OnInit {
+
+    apartmentToSave?: Apartment;
     apartment: Apartment = {
         apartmentNumber: 1,
         squareMetres: 15,
@@ -25,13 +27,9 @@ export class ApartmentInfoEditComponent implements OnInit {
         phoneNumber: '',
         role: 'OWNER'
     };
-    apartmentToSave?: Apartment;
+
     hide = true;
     loading: boolean = false;
-
-    constructor(private service: ApartmentInfoService, private route: ActivatedRoute, private router: Router,
-                private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService) {
-    }
 
     firstFormGroup: FormGroup = new FormBuilder().group({
         'emailCtrl': ['', [Validators.required, Validators.email]],
@@ -44,20 +42,44 @@ export class ApartmentInfoEditComponent implements OnInit {
 
     public mask = ['+', /[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
 
-    updateApartment() {
-        this.loading = true;
-        this.apartmentToSave = Object.assign({}, this.apartment)
-        this.service.updateApartment(this.apartmentToSave).subscribe(
-            data => {
-                this.openSnackBar('Apartment is updated', '');
-                this.loading = false;
-                this.goToApartmentsList();
-            });
-        if (this.apartment.password != null) {
-            this.service.updatePassword(this.apartmentToSave);
+    constructor(private service: ApartmentInfoService, private route: ActivatedRoute, private router: Router,
+                private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService) {
+    }
 
+    ngOnInit(): void {
+        this.loading = true;
+
+        this.service.getApartmentByAccountId(this.route.snapshot.params['id']).subscribe(
+            data => {
+                this.apartment = data;
+            },
+            error => console.log(error));
+
+        this.loading = false;
+    };
+
+    updateApartment() {
+        if (this.firstFormGroup.valid) {
+
+            this.loading = true;
+            this.apartmentToSave = Object.assign({}, this.apartment)
+
+            this.service.updateApartment(this.apartmentToSave).subscribe(
+                data => {
+                    this.openSnackBar('Apartment is updated', '');
+                    this.goToApartmentsList();
+                });
+
+            if (this.apartment.password != null) {
+                this.service.updatePassword(this.apartmentToSave);
+            }
         }
 
+        this.loading = false;
+    }
+
+    goToApartmentsList() {
+        this.router.navigate(['/apartments']);
     }
 
     openSnackBar(message: string, action: string) {
@@ -65,18 +87,4 @@ export class ApartmentInfoEditComponent implements OnInit {
             duration: 10000,
         });
     }
-
-    goToApartmentsList() {
-        this.router.navigate(['/apartments']);
-    }
-
-
-    ngOnInit(): void {
-        this.loading=true;
-        this.service.getApartmentByAccountId(this.route.snapshot.params['id']).subscribe(data => {
-            this.apartment = data;
-            this.loading=false;
-        }, error => console.log(error));
-    };
-
 }

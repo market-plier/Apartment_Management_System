@@ -17,9 +17,7 @@ export class RequestToManagerService {
     private baseURL = this.url + 'createApartmentRequestToManager';
     err: BackEndError | undefined;
 
-    constructor(private httpClient: HttpClient,private _snackBar: MatSnackBar) {
-    }
-
+    constructor(private httpClient: HttpClient,private _snackBar: MatSnackBar) {}
 
     sendRequest(request: ApartmentRequestToManager): Observable<Object> {
         return this.httpClient.post(this.baseURL, request).pipe(
@@ -41,9 +39,10 @@ export class RequestToManagerService {
 
     openSnackBar(message: string, action: string) {
         const config = new MatSnackBarConfig();
+
         config.panelClass = ['snack-bar-error'];
         config.duration = 10000;
-        this._snackBar.open(message, action, config
-        );
+
+        this._snackBar.open(message, action, config);
     }
 }

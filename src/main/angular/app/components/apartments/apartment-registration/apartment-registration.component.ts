@@ -50,21 +50,30 @@ export class ApartmentRegistrationComponent implements OnInit {
                 private router: Router, private _snackBar: MatSnackBar) {
     }
 
+    ngOnInit(): void {}
+
+    onSubmit() {
+        this.saveApartment();
+    }
+
     saveApartment() {
-        this.loading=true;
-        this.apartmentSave = Object.assign({}, this.apartment)
+        this.loading = true;
+        this.apartmentSave = Object.assign({}, this.apartment);
+
         this.apartmentInfoService.createApartment(this.apartmentSave).subscribe(
             data => {
                 this.openSnackBar('Apartment is created', 'OK');
                 this.isCreated = true;
-                this.loading=false;
                 this.goToApartmentsList();
 
             },
+
             error => {
                 console.log(error)
             }
         );
+
+        this.loading = false;
     }
 
     openSnackBar(message: string, action: string) {
@@ -75,13 +84,6 @@ export class ApartmentRegistrationComponent implements OnInit {
 
     goToApartmentsList() {
         this.router.navigate(['/apartments']);
-    }
-
-    onSubmit() {
-        this.saveApartment();
-    }
-
-    ngOnInit(): void {
     }
 
 }

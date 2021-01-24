@@ -4,7 +4,7 @@
 </mat-toolbar>
 <div class="container">
     <mat-card>
-        <form (ngSubmit)="onSubmit()">
+        <form>
             <div class="card-body" *ngIf="!isCreated">
                 <div method="POST">
 
@@ -213,7 +213,7 @@
                         <mat-step>
                             <ng-template matStepLabel>Done</ng-template>
                             <button mat-stroked-button color="primary" matStepperPrevious>Back</button>
-                            <button mat-raised-button color="primary" type="submit">Create</button>
+                            <button mat-raised-button color="primary" (click)="onSubmit()">Create</button>
                         </mat-step>
                     </mat-horizontal-stepper>
 

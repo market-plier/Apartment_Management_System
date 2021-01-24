@@ -43,6 +43,7 @@ export class ApartmentInfoService {
 
     createApartment(apartment: Apartment): Observable<Object> {
         apartment.password = sha256(apartment.password + "");
+
         return this.httpClient.post(this.baseURL, apartment).pipe(
             catchError(this.handleError.bind(this))
         );
@@ -56,6 +57,7 @@ export class ApartmentInfoService {
 
     updatePassword(apartment: Apartment) {
         apartment.password = sha256(apartment.password + "");
+
         return this.httpClient.put(`${this.baseURL}/updatePassword`, apartment).pipe(
             catchError(this.handleError.bind(this))
         ).subscribe(data => console.log(data))
@@ -75,9 +77,10 @@ export class ApartmentInfoService {
 
     openSnackBar(message: string, action: string) {
         const config = new MatSnackBarConfig();
+
         config.panelClass = ['snack-bar-error'];
         config.duration = 10000;
-        this._snackBar.open(message, action, config
-        );
+
+        this._snackBar.open(message, action, config);
     }
 }

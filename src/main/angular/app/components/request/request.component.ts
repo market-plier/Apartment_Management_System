@@ -21,11 +21,13 @@ export class RequestComponent implements OnInit {
 
     request: ApartmentRequestToManager = new ApartmentRequestToManager();
     apartment?: Apartment = new Apartment();
+    manager: Account=new Account();
+
     isSent = false;
     color: ThemePalette = 'primary';
     mode: ProgressSpinnerMode = 'determinate';
     value = 0;
-    manager: Account=new Account();
+
     formGroup: FormGroup = new FormBuilder().group({
         'requestText': ['', [Validators.required, Validators.minLength(1)]]
     });
@@ -48,8 +50,11 @@ export class RequestComponent implements OnInit {
 
     sendRequest() {
         if (this.formGroup.valid && this.request.text.trim().length > 0) {
+
             this.mode = "indeterminate";
+
             this.request.apartmentId = this.tokenStorage.getAccountId();
+
             this.service.sendRequest(this.request).subscribe(
                 data => {
                     this.openSnackBar('Request has been sent', '');
@@ -58,7 +63,9 @@ export class RequestComponent implements OnInit {
                     this.value = 100;
                     this.request.text = ' ';
                 });
-        } else this.openSnackBar("Text can not be empty", "OK");
+        } else {
+            this.openSnackBar("Text can not be empty", "OK");
+        }
     }
 
     openSnackBar(message: string, action: string) {

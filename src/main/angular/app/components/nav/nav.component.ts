@@ -17,16 +17,14 @@ export class NavComponent {
             map(result => result.matches),
             shareReplay()
         );
-
-    constructor(private breakpointObserver: BreakpointObserver,
-                private tokenStorageService: TokenStorageService, private router: Router
-    ) {
-    }
-
-    role?: string;
     isLoggedIn = false;
     isOpen = false;
+
+    role?: string;
     username?: string;
+
+    constructor(private breakpointObserver: BreakpointObserver,
+                private tokenStorageService: TokenStorageService, private router: Router) {}
 
     ngOnInit(): void {
         this.isLoggedIn = this.tokenStorageService.isAuthenticated();
@@ -41,10 +39,12 @@ export class NavComponent {
 
     getIsLoggedIn() {
         this.ngOnInit();
+
         if (!this.isLoggedIn && this.router.url !== '/login') {
             this.tokenStorageService.signOut()
             this.router.navigate(['/login'])
         }
+
         return this.isLoggedIn;
     }
 
@@ -52,6 +52,7 @@ export class NavComponent {
         this.tokenStorageService.signOut();
         this.isLoggedIn = false;
         this.isOpen = false;
+
         window.location.reload();
         this.redirectPage();
     }

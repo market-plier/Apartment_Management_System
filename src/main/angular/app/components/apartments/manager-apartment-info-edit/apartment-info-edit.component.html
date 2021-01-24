@@ -6,7 +6,7 @@
 
     <mat-card>
         <div method="PUT">
-            <form (ngSubmit)="updateApartment()" class="col-12">
+            <form  class="col-12">
                 <div class="card-body center-block" [formGroup]="firstFormGroup">
                     <div *ngIf="tokenStorage.getRole()=='MANAGER'" class="row row-cols-2 ">
                         <div class="form-row">
@@ -133,7 +133,7 @@
                             </div>
                         </div>
                     </div>
-                    <button mat-raised-button color="primary" type="submit">Update</button>
+                    <button mat-raised-button color="primary" (click)="updateApartment()">Update</button>
                 </div>
             </form>
         </div>

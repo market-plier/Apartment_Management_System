@@ -33,6 +33,39 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
     constructor(public subbillsSevice: ApartmentSubBillService, public token: TokenStorageService) {
     }
 
+    ngOnInit(): void {
+        this.fillCircleData();
+    }
+
+    fillCircleData(){
+        this.loading = true;
+
+        this.subbillsSevice.getApartmentSubBillList().subscribe(
+            data => {
+                this.subbills = data;
+                var j;
+                var single: single[] = [];
+
+                for (j in this.subbills) {
+                    single[j] = {
+                        name: this.subbills[j].communalUtility.name,
+                        value: this.subbills[j].balance
+                    };
+
+                    if (single[j].value == 0) {
+                        single[j].value = 0.0000001
+                    }
+
+                    this.balance = this.balance + this.subbills[j].balance;
+                }
+
+                this.loading = false;
+                Object.assign(this, {single});
+
+            });
+
+    }
+
     onResize(event) {
         if (event.target.innerWidth > 1000) {
             this.view = [1000, 320];
@@ -43,26 +76,8 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
             this.view = [500, 220];
             this.maxChars = 10;
         }
+
         console.log(event.target.innerWidth);
-    }
-
-    ngOnInit(): void {
-        this.loading = true;
-        this.subbillsSevice.getApartmentSubBillList().subscribe(
-            data => {
-                this.subbills = data
-                var j;
-                var single: single[] = [];
-                for (j in this.subbills) {
-                    single[j] = {name: this.subbills[j].communalUtility.name, value: this.subbills[j].balance};
-                    if (single[j].value == 0) single[j].value = 0.0000001
-                    this.balance = this.balance + this.subbills[j].balance;
-                }
-                this.loading = false;
-                Object.assign(this, {single});
-
-            });
-
     }
 
     onSelect(data): void {

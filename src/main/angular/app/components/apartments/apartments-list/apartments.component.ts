@@ -14,29 +14,44 @@ import {map, startWith,} from "rxjs/operators";
     styleUrls: ['./apartments.component.scss']
 })
 export class ApartmentsComponent implements OnInit {
+
     apartments?: Apartment[] = [];
-    searchValue?: Number;
+
     floors?;
     selectedFloor?: Number;
-    myControl = new FormControl();
+    searchValue?: Number;
     options: Number[] = [];
     filteredOptions: Observable<Number[]>;
+
+
+    myControl = new FormControl();
     loading: boolean = false;
 
-    constructor(private apartmentInfoService: ApartmentInfoService, private router: Router
-        , private _snackBar: MatSnackBar) {
+    constructor(private apartmentInfoService: ApartmentInfoService, private router: Router,
+                private _snackBar: MatSnackBar) {
+    }
+
+    ngOnInit(): void {
+        this.getAllApartments();
+
+        this.filteredOptions = this.myControl.valueChanges
+            .pipe(startWith(''),
+                map(value => this._filter(value))
+            );
     }
 
     getAllApartments() {
         this.loading = true;
+
         this.apartmentInfoService.getAllApartments().subscribe(
             data => {
                 this.apartments = data;
                 this.floors = this.uniqueArray(this.apartments.map(item => item.floor));
                 this.options = this.apartments.map(item => item.apartmentNumber);
-                this.loading=false;
             }
         );
+
+        this.loading = false;
     }
 
     uniqueArray(ar) {
@@ -51,36 +66,55 @@ export class ApartmentsComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
-        this.getAllApartments();
-        this.filteredOptions = this.myControl.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => this._filter(value))
-            );
-    }
-
     private _filter(value: Number): Number[] {
         if (this.options != null && value != null) {
-            return this.options.filter(option => option.toString().includes(value.toString()));
+            return this.options
+                .filter(option => option.toString().includes(value.toString()));
         }
     }
 
-
     getApartment() {
-        this.loading=true;
         if (this.searchValue != null) {
+            this.loading = true;
+
             this.apartmentInfoService.getApartmentByApartmentNumber(this.searchValue).subscribe(
                 data => {
                     this.apartments = [];
                     this.apartments[0] = data;
-                    this.loading=false;
                 },
+
                 error => {
                     this.openSnackBar("No apartment was found", "Input another value");
-                }
-            );
+                });
+
+            this.loading = false;
         }
+    }
+
+    getAllApartmentsByFloor() {
+        if (this.selectedFloor != null && this.selectedFloor > 0) {
+            this.loading = true;
+
+            this.apartmentInfoService.getAllApartmentsByFloor(this.selectedFloor).subscribe(
+                data => {
+                    this.apartments = data;
+                },
+
+                error => {
+                    this.openSnackBar("No apartments on this floor", "Choose another one");
+                });
+
+            this.loading = false;
+        }
+
+        if (this.selectedFloor == -1) {
+            this.getAllApartments();
+        }
+
+    }
+
+    apartmentInfo(id: Number) {
+        this.router.navigate(['/apartment', {id: id}]);
     }
 
     openSnackBar(message: string, action: string) {
@@ -88,28 +122,5 @@ export class ApartmentsComponent implements OnInit {
             duration: 10000,
         });
     }
-
-    getAllApartmentsByFloor() {
-        this.loading=true;
-        if (this.selectedFloor != null && this.selectedFloor > 0) {
-            this.apartmentInfoService.getAllApartmentsByFloor(this.selectedFloor).subscribe(
-                data => {
-                    this.apartments = data;
-                    this.loading=false;
-                },
-                error => {
-                    this.openSnackBar("No apartments on this floor", "Choose another one");
-                }
-            );
-        }
-        if (this.selectedFloor == -1) {
-            this.getAllApartments();
-        }
-    }
-
-    apartmentInfo(id: Number) {
-        this.router.navigate(['/apartment', {id: id}]);
-    }
-
 
 }
