@@ -33,11 +33,13 @@ public class ApartmentOperationService {
         return apartmentOperationDao.getAllApartmentOperationsByApartmentId(apartmentId);
     }
 
-    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentId(BigInteger apartmentId, Date from, Date to) throws DaoAccessException {
-        return apartmentOperationDao.getApartmentOperationsByDateRangeAndApartmentId(apartmentId, from, to);
+    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentNumber(Integer apartmentNumber, Date from, Date to) throws DaoAccessException {
+        return apartmentOperationDao.getApartmentOperationsByDateRangeAndApartmentNumber(apartmentNumber, from, to);
     }
+
 
     public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentSubBillId(BigInteger apartmentSubBillId, Date from, Date to) throws DaoAccessException {
         return apartmentOperationDao.getApartmentOperationsByDateRangeAndApartmentSubBillId(apartmentSubBillId, from, to);
     }
+
 }

@@ -77,16 +77,15 @@ public class ApartmentOperationDaoImpl implements ApartmentOperationDao {
     }
 
     @Override
-    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentId(BigInteger apartmentId, Date from, Date to) throws DaoAccessException {
+    public List<ApartmentOperation> getApartmentOperationsByDateRangeAndApartmentNumber(Integer apartmentNumber, Date from, Date to) throws DaoAccessException {
         try {
-            return jdbcTemplate.query(selectApartmentOperationsByDateRangeAndApartmentId, new ApartmentOperationMapper(), apartmentId, from, to);
+            return jdbcTemplate.query(selectApartmentOperationsByDateRangeAndApartmentNumber, new ApartmentOperationWithCommUtilMapper(), apartmentNumber, from, to);
         } catch (DataAccessException e) {
-            log.error("getApartmentOperationsByDateRangeAndApartmentId select error with id: " + apartmentId + "and dates " + from + ", " + to, e);
+            log.error("getApartmentOperationsByDateRangeAndApartmentId select error with number: " + apartmentNumber + "and dates " + from + ", " + to, e);
             throw new DaoAccessExceptionBuilder()
                     .withMessage(EXCEPTION_GET_APARTMENT_OPERATIONS_BY_DATE_RANGE_AND_APARTMENT_ID)
                     .withCause(e)
                     .withErrorMessage(new BigInteger("173"))
-                    .withId(apartmentId)
                     .build();
         }
     }

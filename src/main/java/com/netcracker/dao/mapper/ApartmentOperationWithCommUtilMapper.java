@@ -19,7 +19,7 @@ public class ApartmentOperationWithCommUtilMapper implements RowMapper<Apartment
         return new ApartmentOperationBuilder()
                 .withOperationId(new BigInteger(resultSet.getString("operation_id")))
                 .withSum(Double.parseDouble(resultSet.getString("sum")))
-                .withCreatedAt(resultSet.getDate("created_at"))
+                .withCreatedAt(resultSet.getTimestamp("created_at"))
                 .withApartmentSubBill(new ApartmentSubBillBuilder()
                         .withCommunalUtility(new CommunalUtilityBuilder().withName(resultSet.getString("communal_name")).build())
                         .withSubBillId(new BigInteger(resultSet.getString("apartment_sub_bill_id")))

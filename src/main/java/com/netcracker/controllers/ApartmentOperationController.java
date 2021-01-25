@@ -5,17 +5,18 @@ import com.netcracker.models.Apartment;
 import com.netcracker.models.ApartmentOperation;
 import com.netcracker.services.ApartmentInfoService;
 import com.netcracker.services.ApartmentOperationService;
+import com.netcracker.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -40,5 +41,19 @@ public class ApartmentOperationController {
         Apartment apartment = apartmentInfoService.getApartmentByApartmentNumber(number);
 
         return apartmentOperationService.getAllApartmentOperationsByApartmentId(apartment.getAccountId());
+    }
+
+    @GetMapping("/by-date-and-apart-number/")
+    public List<ApartmentOperation> getAllApartmentOperationByApartmentNumberAndDate(@Valid
+                                                                                     @RequestParam
+                                                                                     @NotNull(message = "start date cant be null")
+                                                                                     @NotEmpty(message = "start date cant be empty") String start,
+                                                                                     @RequestParam
+                                                                                     @NotNull(message = "end date cant be null")
+                                                                                     @NotEmpty(message = "end date cant be empty") String end,
+                                                                                     @Positive(message = "Apartment number must be more than 0")
+                                                                                     Integer number) throws ParseException {
+
+        return apartmentOperationService.getApartmentOperationsByDateRangeAndApartmentNumber(number, DateUtil.provideDateFormat(start), DateUtil.provideDateFormat(end));
     }
 }

@@ -35,6 +35,7 @@ export class ManagerOperationListComponent implements OnInit {
   pSub: Subscription
   description: String;
   sum: number;
+  loading: boolean = false;
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl()
@@ -98,11 +99,13 @@ export class ManagerOperationListComponent implements OnInit {
 
     geDataByDateRange(start, end)
   {
+    this.loading = true;
     console.log(start)
     this.oSub = this.managerService.getAllByDate(start, end).subscribe(operations => {
       this.dataSource.data = operations;
-      console.log(operations)
       this.dataSource.paginator = this.paginator;
+      this.loading = false;
+
     },
     error => {
       console.log(error);
@@ -187,14 +190,17 @@ export class ManagerOperationListComponent implements OnInit {
 
   filterManagerOperation()
   {
-
+    this.loading = true;
     if (this.range.invalid && this.utility.valid)
     {
       this.oSub = this.managerService.filterByCommunalUtility(this.utility.value).subscribe(operations => {
         console.log(operations)
         this.operations = operations
+
         this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
+
         this.dataSource.paginator = this.paginator;
+        this.loading = false;
       })
     }
     if (this.range.valid && this.utility.valid) {
@@ -204,8 +210,10 @@ export class ManagerOperationListComponent implements OnInit {
       this.oSub = this.managerService.filterByDateAndCommunalUtility(this.utility.value, this.dateStart, this.dateEnd).subscribe(operations => {
         console.log(operations)
         this.operations = operations
+
         this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
         this.dataSource.paginator = this.paginator;
+        this.loading = false;
       })
     }
   }

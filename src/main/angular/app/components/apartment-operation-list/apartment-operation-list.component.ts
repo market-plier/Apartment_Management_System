@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ApartmentOperationService} from "../../services/apartment-operation.service";
 import {ApartmentInfoService} from "../../services/apartment-info.service";
 import {Apartment} from "../../models/apartment";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
 import {MatTableDataSource} from "@angular/material/table";
@@ -26,18 +26,19 @@ export class ApartmentOperationListComponent implements OnInit {
     options: Number[] = [];
     filteredOptions: Observable<Number[]>;
     dataSource = new MatTableDataSource<ApartmentOperation>();
+    dateStart: String;
+    dateEnd: String;
+    loading: boolean = false;
+    range = new FormGroup({
+        start: new FormControl(),
+        end: new FormControl()
+    });
 
     displayedColumns: string[] = ['operation id', 'sum', 'communalUtility','createdAt',];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.apartmentService.getAllApartments().subscribe(
-        data => {
-          console.log(data);
-
-        }
-    )
 
     this.getAllApartments();
       this.filteredOptions = this.myControl.valueChanges
@@ -64,11 +65,13 @@ export class ApartmentOperationListComponent implements OnInit {
         );
     }
 
-
-    paginateHide()
-    {
-        return this.apartments.length>0
+    dateRangeChange(dateRangeStart, dateRangeEnd) {
+        this.dateStart = dateRangeStart;
+        this.dateEnd = dateRangeEnd;
     }
+
+
+
 
     uniqueArray(ar) {
         var j = {};
@@ -86,17 +89,43 @@ export class ApartmentOperationListComponent implements OnInit {
 
     getAllOperations(id:Number)
   {
-    this.apartmentOperation.getAllByAccountId(id).subscribe(
-        data => {
-          console.log(data);
-            this.dataSource.data = data;
-            this.dataSource.paginator = this.paginator;
-        },
-        error => {
-          console.log(error.error.errors[0]);
-          this.openErrorSnackBar(error.error.errors[0],"OK")
-        }
-    )
+
+
+      if (this.range.invalid)
+      {
+          this.loading = true;
+          this.apartmentOperation.getAllByAccountId(id).subscribe(
+              data => {
+                  this.loading = false;
+                  console.log(data);
+                  this.dataSource.data = data;
+                  this.dataSource.paginator = this.paginator;
+
+              },
+              error => {
+                  console.log(error.error.errors[0]);
+                  this.openErrorSnackBar(error.error.errors[0],"OK")
+                  this.loading = false;
+              }
+          )
+      }else
+      {
+          this.loading = true;
+          this.apartmentOperation.getAllByAccountNumberAndDateRange(id,this.dateStart,this.dateEnd).subscribe(
+              data => {
+                  this.loading = false;
+                  this.dataSource.data = data;
+                  this.dataSource.paginator = this.paginator;
+              },
+              error => {
+                  console.log(error.error);
+                  this.openErrorSnackBar(error.error.errors[0],"OK")
+                  this.loading = false;
+              }
+          )
+      }
+
+
   }
 
     openErrorSnackBar(message: string, action: string) {

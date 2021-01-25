@@ -37,7 +37,7 @@ public class DaoAccessException extends DataAccessException {
     }
 
     private static String createMessage(String msg, BigInteger id) {
-        return msg + " { " + id + " } ";
+        return msg;
     }
 
     public BigInteger getErrorMessage() {
