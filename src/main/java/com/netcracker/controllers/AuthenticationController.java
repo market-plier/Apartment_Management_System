@@ -22,7 +22,6 @@ import javax.validation.Valid;
 @RestController
 @Validated
 @RequestMapping(value = "/auth/")
-@CrossOrigin(origins = "https://house-management-angular.herokuapp.com")
 @Log4j
 public class AuthenticationController {
 
