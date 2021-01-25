@@ -16,7 +16,8 @@ export class ApartmentInfoPageComponent implements OnInit {
     loading: boolean = false;
 
     constructor(private service: ApartmentInfoService, private token: TokenStorageService,
-                private route: ActivatedRoute, private  router: Router) {}
+                private route: ActivatedRoute, private  router: Router) {
+    }
 
     ngOnInit(): void {
         this.loading = true;
@@ -24,10 +25,14 @@ export class ApartmentInfoPageComponent implements OnInit {
 
         this.service.getApartmentByAccountId(Number(accountId))
             .subscribe(data => {
-                this.apartment = data;
-            });
+                    this.apartment = data;
+                    this.loading = false;
+                },
+                error => {
+                    this.loading = false;
+                    console.log(error);
+                });
 
-        this.loading = false;
     }
 
     updateApartment() {

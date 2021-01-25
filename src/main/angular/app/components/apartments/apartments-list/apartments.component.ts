@@ -48,10 +48,14 @@ export class ApartmentsComponent implements OnInit {
                 this.apartments = data;
                 this.floors = this.uniqueArray(this.apartments.map(item => item.floor));
                 this.options = this.apartments.map(item => item.apartmentNumber);
+
+                this.loading = false;
+            },
+            error => {
+                this.loading = false;
+                console.log(error);
             }
         );
-
-        this.loading = false;
     }
 
     uniqueArray(ar) {
@@ -81,13 +85,13 @@ export class ApartmentsComponent implements OnInit {
                 data => {
                     this.apartments = [];
                     this.apartments[0] = data;
+                    this.loading = false;
                 },
 
                 error => {
+                    this.loading = false;
                     this.openSnackBar("No apartment was found", "Input another value");
                 });
-
-            this.loading = false;
         }
     }
 
@@ -98,13 +102,13 @@ export class ApartmentsComponent implements OnInit {
             this.apartmentInfoService.getAllApartmentsByFloor(this.selectedFloor).subscribe(
                 data => {
                     this.apartments = data;
+                    this.loading = false;
                 },
 
                 error => {
+                    this.loading = false;
                     this.openSnackBar("No apartments on this floor", "Choose another one");
                 });
-
-            this.loading = false;
         }
 
         if (this.selectedFloor == -1) {

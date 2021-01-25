@@ -46,7 +46,8 @@ export class ManagerSubBillsDashboardComponent implements OnInit {
                     },
 
                     error => {
-                        console.log(error)
+                        console.log(error);
+                        this.loading = false;
                     });
             });
     }

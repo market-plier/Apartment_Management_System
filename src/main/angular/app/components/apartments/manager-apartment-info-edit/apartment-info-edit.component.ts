@@ -52,30 +52,36 @@ export class ApartmentInfoEditComponent implements OnInit {
         this.service.getApartmentByAccountId(this.route.snapshot.params['id']).subscribe(
             data => {
                 this.apartment = data;
+                this.loading = false;
             },
-            error => console.log(error));
+            error => {
+                this.loading = false;
+                console.log(error);
+            });
 
-        this.loading = false;
     };
 
     updateApartment() {
         if (this.firstFormGroup.valid) {
-
             this.loading = true;
+
             this.apartmentToSave = Object.assign({}, this.apartment)
 
             this.service.updateApartment(this.apartmentToSave).subscribe(
                 data => {
                     this.openSnackBar('Apartment is updated', '');
+                    this.loading = false;
                     this.goToApartmentsList();
+                },
+                error => {
+                    this.loading = false;
+                    console.log(error);
                 });
 
             if (this.apartment.password != null) {
                 this.service.updatePassword(this.apartmentToSave);
             }
         }
-
-        this.loading = false;
     }
 
     goToApartmentsList() {

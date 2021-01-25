@@ -31,10 +31,13 @@ export class AnnouncementsListComponent implements OnInit {
         end: new FormControl()
     });
 
+    loading: boolean = false;
+
     constructor(private announcementService: AnnouncementService,
                 private tokenStorageService: TokenStorageService,
                 private _snackBar: MatSnackBar,
-                private datePipe: DatePipe) {}
+                private datePipe: DatePipe) {
+    }
 
     ngOnInit(): void {
         this.getAnnouncements();
@@ -51,10 +54,11 @@ export class AnnouncementsListComponent implements OnInit {
     }
 
     getAnnouncements(): void {
+        this.loading = false;
         this.announcementService.getAnnouncementList(
             this.searchText,
-            this.datePipe.transform(this.startDate,'MM/dd/yyyy'),
-            this.datePipe.transform(this.endDate,'MM/dd/yyyy'),
+            this.datePipe.transform(this.startDate, 'MM/dd/yyyy'),
+            this.datePipe.transform(this.endDate, 'MM/dd/yyyy'),
             this.hasVoting
         )
             .subscribe(
@@ -62,9 +66,11 @@ export class AnnouncementsListComponent implements OnInit {
                     this.announcements = data;
                     this.refreshCurrentAnnouncement();
                     console.log(data);
+                    this.loading=false;
                 },
                 error => {
                     console.log(error);
+                    this.loading=false;
                 });
     }
 

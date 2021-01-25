@@ -50,7 +50,8 @@ export class ApartmentRegistrationComponent implements OnInit {
                 private router: Router, private _snackBar: MatSnackBar) {
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+    }
 
     onSubmit() {
         this.saveApartment();
@@ -64,16 +65,15 @@ export class ApartmentRegistrationComponent implements OnInit {
             data => {
                 this.openSnackBar('Apartment is created', 'OK');
                 this.isCreated = true;
+                this.loading = false;
                 this.goToApartmentsList();
-
             },
 
             error => {
-                console.log(error)
+                this.loading = false;
+                console.log(error);
             }
         );
-
-        this.loading = false;
     }
 
     openSnackBar(message: string, action: string) {
