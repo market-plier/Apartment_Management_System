@@ -3,6 +3,7 @@ package com.netcracker.services;
 import com.netcracker.dao.ManagerSpendingOperationDao;
 import com.netcracker.exception.DaoAccessException;
 import com.netcracker.exception.InsufficientBalanceException;
+import com.netcracker.models.CommunalUtility;
 import com.netcracker.models.ManagerSpendingOperation;
 import com.netcracker.models.ManagerSubBill;
 import lombok.extern.log4j.Log4j;
@@ -23,6 +24,8 @@ public class ManagerOperationSpendingService {
     private final ManagerSpendingOperationDao managerSpendingOperationDao;
     @Autowired
     private ManagerSubBillService managerSubBillService;
+    @Autowired
+    private CommunalUtilityService communalUtilityService;
 
 
     @Autowired
@@ -33,14 +36,30 @@ public class ManagerOperationSpendingService {
 
     public void createManagerOperationSpending(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException {
         ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBill(managerSpendingOperation.getManagerSubBill().getSubBillId());
+        CommunalUtility communalUtility = managerSubBill.getCommunalUtility();
+
         if (managerSubBill.getBalance() >= managerSpendingOperation.getSum()) {
             managerSpendingOperationDao.createManagerOperationSpending(managerSpendingOperation);
             managerSubBillService.updateManagerSubBillByManagerOperation(managerSpendingOperation);
+            if (isFullyPayed(managerSubBill, managerSpendingOperation.getSum())) {
+                changeDeadLine(communalUtility);
+            }
         } else {
             InsufficientBalanceException balanceException = new InsufficientBalanceException("Not enough money");
             log.error("IN Service method createManagerOperationSpending: " + balanceException.getMessage());
             throw balanceException;
         }
+    }
+
+    private boolean isFullyPayed(ManagerSubBill subBill, double sum) {
+        double debt = managerSubBillService.getAllSubBillDebt().get(subBill);
+        return debt - sum <= 0;
+    }
+
+    private void changeDeadLine(CommunalUtility communalUtility) {
+        communalUtility.setDeadline
+                (Date.valueOf(communalUtility.getDeadline().toLocalDate().plusMonths(1)));
+        communalUtilityService.updateCommunalUtility(communalUtility);
     }
 
     public List<ManagerSpendingOperation> getAllManagerOperationByDateAndCommunalUtility(Date start, Date end,
@@ -57,7 +76,7 @@ public class ManagerOperationSpendingService {
 
 
     public List<ManagerSpendingOperation> getAllManagerOperationByDate(Date start, Date end) throws DaoAccessException {
-       return managerSpendingOperationDao.getAllManagerOperationByDate(start, end);
+        return managerSpendingOperationDao.getAllManagerOperationByDate(start, end);
 
     }
 
@@ -66,7 +85,7 @@ public class ManagerOperationSpendingService {
         return managerSpendingOperationDao.getManagerOperationSpendingById(id);
     }
 
-    public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException{
+    public void updateManagerOperation(ManagerSpendingOperation managerSpendingOperation) throws DaoAccessException {
 
         managerSubBillService.updateManagerSubBillSpendingOperation(managerSpendingOperation);
         managerSpendingOperationDao.updateManagerOperationSpending(managerSpendingOperation);

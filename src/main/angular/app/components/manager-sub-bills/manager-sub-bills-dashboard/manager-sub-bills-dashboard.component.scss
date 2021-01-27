@@ -150,20 +150,15 @@ slide {
   outline: none;
 }
 
-.floating-text {
-  background-color: #001F61;
-  border-radius: 10px 10px 0 0;
-  color: #fff;
-  font-family: 'Muli';
-  padding: 7px 15px;
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+#dead-line{
+  margin: 5px -30px -10px;
   text-align: center;
-  z-index: 998;
+  color: #fff;
+  font: 400 calc(14px * 0.67)/20px Roboto, "Helvetica Neue", sans-serif;
+  opacity: 0.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
-
 
 @media screen and (max-width: 480px) {
 
