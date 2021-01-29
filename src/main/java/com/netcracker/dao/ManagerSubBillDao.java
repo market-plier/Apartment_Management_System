@@ -235,6 +235,53 @@ public interface ManagerSubBillDao {
             "group by COMMUNAL_NAME.VALUE,DURATION_LIST.VALUE,\n" +
             "STATUS_LIST.VALUE,DEAD_LINE.DATE_VALUE, CALC_NAME.VALUE";
 
+    String GET_MANAGER_SUB_BILL_BY_STATUS = "SELECT MNG_SUB_BILL.OBJECT_ID   sub_bill_id,\n" +
+            "       COMMUNAL_UTILL.OBJECT_ID   communal_util_id,\n" +
+            "       BALANCE.VALUE            balance,\n" +
+            "       MANAGER.OBJECT_ID        account_id,\n" +
+            "       COMMUNAL_NAME.VALUE      communal_name,\n" +
+            "       DURATION_LIST.VALUE      duration_type,\n" +
+            "       STATUS_LIST.VALUE        status,\n" +
+            "       DEAD_LINE.DATE_VALUE     dead_line,\n" +
+            "       CALC_LIST.VALUE          calculation_name,\n" +
+            "       CALC_COEFF.VALUE         calc_coeff\n" +
+            "FROM OBJECTS MNG_SUB_BILL,\n" +
+            "     OBJECTS COMMUNAL_UTILL,\n" +
+            "     OBJECTS MANAGER,\n" +
+            "     OBJREFERENCE REFMANAGER,\n" +
+            "     LISTS DURATION_LIST,\n" +
+            "     LISTS STATUS_LIST,\n" +
+            "     LISTS CALC_LIST,\n" +
+            "     ATTRIBUTES BALANCE,\n" +
+            "     ATTRIBUTES COMMUNAL_NAME,\n" +
+            "     ATTRIBUTES DURATION_TYPE,\n" +
+            "     ATTRIBUTES STATUS,\n" +
+            "     ATTRIBUTES CALC_NAME,\n" +
+            "     ATTRIBUTES CALC_COEFF,\n" +
+            "     ATTRIBUTES DEAD_LINE\n" +
+            "WHERE STATUS_LIST.LIST_VALUE_ID = ?\n" +
+            "  AND MNG_SUB_BILL.OBJECT_TYPE_ID = 14\n" +
+            "  AND MNG_SUB_BILL.OBJECT_ID = REFMANAGER.OBJECT_ID\n" +
+            "  AND MANAGER.OBJECT_ID = REFMANAGER.REFERENCE\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_ID = MNG_SUB_BILL.PARENT_ID\n" +
+            "  AND COMMUNAL_UTILL.OBJECT_TYPE_ID = 11\n" +
+            "  AND BALANCE.OBJECT_ID = MNG_SUB_BILL.OBJECT_ID\n" +
+            "  AND BALANCE.ATTR_ID = 25\n" +
+            "  AND COMMUNAL_NAME.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND COMMUNAL_NAME.ATTR_ID = 21\n" +
+            "  AND DURATION_LIST.LIST_VALUE_ID = DURATION_TYPE.LIST_VALUE_ID\n" +
+            "  AND DURATION_TYPE.ATTR_ID = 22\n" +
+            "  AND DURATION_TYPE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND STATUS_LIST.LIST_VALUE_ID = STATUS.LIST_VALUE_ID\n" +
+            "  AND STATUS.ATTR_ID = 23\n" +
+            "  AND STATUS.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND CALC_LIST.LIST_VALUE_ID = CALC_NAME.LIST_VALUE_ID\n" +
+            "  AND CALC_NAME.ATTR_ID = 20\n" +
+            "  AND CALC_NAME.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND DEAD_LINE.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND DEAD_LINE.ATTR_ID = 24\n" +
+            "  AND CALC_COEFF.OBJECT_ID = COMMUNAL_UTILL.OBJECT_ID\n" +
+            "  AND CALC_COEFF.ATTR_ID = 40";
 
     String GET_GROUPED_MANAGER_SUB_BILL_WITH_DEBT = "SELECT  sum(DEBT.VALUE)  debt,\n" +
             "            COMMUNAL_NAME.VALUE      communal_name,\n" +
@@ -322,6 +369,7 @@ public interface ManagerSubBillDao {
     String EXCEPTION_GET_MANAGER_SUB_BILL_BY_COMMUNAL_UTILL_ID = "Couldn't find Manager Sub Bill with this Communal Utility id";
     String EXCEPTION_GET_ALL_MANAGER_SUB_BILL = "Failed to get any Manager Sub Bill";
     String EXCEPTION_GET_MANAGER_SUB_BILLS_BY_COMMUNAL_UTILS_LIST = "Couldn't get Manager Sub Bill debt by these ids";
+    String EXCEPTION_GET_MANAGER_SUB_BILL_BY_STATUS = "Couldn't find Manager Sub Bill with this status";
 
     Collection<ManagerSubBill> getAllManagerSubBills();
 
@@ -335,7 +383,9 @@ public interface ManagerSubBillDao {
 
     ManagerSubBill getManagerSubBillByCommunalUtilityId(BigInteger id);
 
-    public Collection<ManagerSubBill> getAllManagerSubBillsWithOutManager();
+    Collection<ManagerSubBill> getManagerSubBillByStatus(BigInteger status);
+
+    Collection<ManagerSubBill> getAllManagerSubBillsWithOutManager();
 
     Map<ManagerSubBill, Double> getManagerSubBillDeptByCommunalUtility(Set<BigInteger> CommunalUtilityId);
 

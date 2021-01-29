@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +32,12 @@ public class ManagerSubBillsController {
     public ResponseEntity<ManagerSubBill> getManagerSubBill(@PathVariable @NotNull BigInteger managerSubBillId) throws DaoAccessException {
         ManagerSubBill managerSubBill = managerSubBillService.getManagerSubBill(managerSubBillId);
         return new ResponseEntity<>(managerSubBill, HttpStatus.FOUND);
+    }
+
+    @RequestMapping(value = "/get-by-status/{statusId}", method = RequestMethod.GET)
+    public Collection<ManagerSubBill> getAllManagerSubBillsByStatus(@PathVariable @NotNull BigInteger statusId) {
+        Collection<ManagerSubBill> managerSubBills = managerSubBillService.getManagerSubBillByStatus(statusId);
+        return managerSubBills;
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)

@@ -40,13 +40,35 @@ public class ManagerSubBillService {
         return managerSubBills;
     }
 
-    public Map<ManagerSubBill,Double> getAllSubBillDebt()
-    {
+    public Collection<ManagerSubBill> getManagerSubBillByStatus(BigInteger statusId) {
+
+        Collection<ManagerSubBill> managerSubBills;
+
+        if (statusId != null && statusId.equals(BigInteger.valueOf(1))) {
+            managerSubBills = managerSubBillDao.getManagerSubBillByStatus(BigInteger.valueOf(3));//Enabled
+        } else if (statusId != null && statusId.equals(BigInteger.valueOf(2))) {
+            managerSubBills = managerSubBillDao.getManagerSubBillByStatus(BigInteger.valueOf(4));//Disabled
+        } else {
+            InsufficientBalanceException balanceException = new InsufficientBalanceException("Insufficient funds on the balance sheet");
+            log.error("IN Service method updateManagerSubBillByManagerOperation: " + balanceException.getMessage());
+            throw balanceException;
+        }
+
+        for (ManagerSubBill managerSubBill : managerSubBills) {
+            BigInteger managerSubBillId = managerSubBill.getSubBillId();
+            managerSubBill.setManagerSpendingOperations(managerOperationSpendingService.getAllManagerOperationBySubBillId(managerSubBillId));
+            managerSubBill.setDebtPaymentOperations(debtPaymentOperationService.getDebtPaymentOperationsByManagerSubBillId(managerSubBillId));
+        }
+
+        return managerSubBills;
+    }
+
+    public Map<ManagerSubBill, Double> getAllSubBillDebt() {
         return managerSubBillDao.getManagerSubBillsDebt();
     }
 
     public Collection<ManagerSubBill> getAllManagerSubBillsWithoutOperations() {
-       return managerSubBillDao.getAllManagerSubBillsWithOutManager();
+        return managerSubBillDao.getAllManagerSubBillsWithOutManager();
     }
 
 

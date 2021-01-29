@@ -108,7 +108,7 @@ export class ManagerOperationListComponent implements OnInit {
 
     },
     error => {
-      console.log(error);
+      this.loading = false;
     }
     )
   }
@@ -148,10 +148,6 @@ export class ManagerOperationListComponent implements OnInit {
   onSubmit():void {
     this.form.controls['operationId'].setValue(this.id);
     this.form.controls['managerSubBillId'].setValue(this.managerSubBillId);
-
-    console.log(this.form.value)
-    console.log(this.range.valid)
-    console.log(this.utility.invalid && (this.range.valid || (this.dateStart !=null && this.dateEnd !=null)))
     if (this.description!=this.form.get('description').value || this.sum != this.form.get('sum').value)
     {
       this.managerService.updateSpending(this.form.value).subscribe(
@@ -170,6 +166,7 @@ export class ManagerOperationListComponent implements OnInit {
             {
               this.openErrorSnackBar('Cant update spending!', 'OK')
             }
+
           }
 
       )
@@ -190,32 +187,39 @@ export class ManagerOperationListComponent implements OnInit {
 
   filterManagerOperation()
   {
-    this.loading = true;
     if (this.range.invalid && this.utility.valid)
     {
+      this.loading = true;
       this.oSub = this.managerService.filterByCommunalUtility(this.utility.value).subscribe(operations => {
-        console.log(operations)
         this.operations = operations
-
         this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
-
         this.dataSource.paginator = this.paginator;
         this.loading = false;
+      },
+      error => {
+            this.loading = false;
       })
     }
+
     if (this.range.valid && this.utility.valid) {
-      console.log(this.utility.value)
-      console.log(this.range.value)
+      this.loading = true;
 
       this.oSub = this.managerService.filterByDateAndCommunalUtility(this.utility.value, this.dateStart, this.dateEnd).subscribe(operations => {
-        console.log(operations)
         this.operations = operations
-
         this.dataSource = new MatTableDataSource<ManagerOperation>(this.operations);
         this.dataSource.paginator = this.paginator;
         this.loading = false;
-      })
+      },error =>
+          {
+            this.loading = false;
+          }
+      )
     }
+
+    if (this.range.valid && this.utility.invalid) {
+      this.geDataByDateRange(this.dateStart, this.dateEnd)
+    }
+
   }
 
 

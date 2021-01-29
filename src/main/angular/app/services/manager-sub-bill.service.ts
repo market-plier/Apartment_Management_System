@@ -4,7 +4,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ManagerSubBill} from "../models/manager-sub-bill";
-import {ApartmentSubBill} from "../models/apartment-sub-bill";
+
 import {environment} from "../../environments/environment.prod";
 
 @Injectable({
@@ -21,6 +21,12 @@ export class ManagerSubBillService {
 
   getManagerSubBillByCommunalUtilityId(communalUtilityId: Number): Observable<Object> {
     return this.httpClient.get(`${this.baseURL}/get-by-communal/?communalUtilityId=${communalUtilityId}`);
+  }
+
+  getAllManagerSubBillsByStatus(statusId: Number): Observable<ManagerSubBill[]> {
+    return this.httpClient.get<ManagerSubBill[]>(`${this.baseURL}/get-by-status/${statusId}`).pipe(
+        catchError(this.handleError.bind(this))
+    );
   }
 
   getManagerSubBill(managerSubBillId: Number): Observable<ManagerSubBill> {

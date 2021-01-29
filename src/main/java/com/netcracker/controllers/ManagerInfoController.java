@@ -28,7 +28,7 @@ public class ManagerInfoController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    @RequestMapping(method = RequestMethod.POST, value = "/update-manager")
+    @RequestMapping(method = RequestMethod.PUT, value = "/update-manager")
     public Manager updateManager(@RequestBody @Valid Manager manager)
             throws DaoAccessException, IllegalArgumentException {
         Manager managerDTO = managerInfoService.updateManager(manager);
@@ -36,9 +36,9 @@ public class ManagerInfoController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    @RequestMapping(method = RequestMethod.POST, value = "/update-manager-password")
+    @RequestMapping(method = RequestMethod.PUT, value = "/update-manager-password")
     public Manager updateManagerPassword(@AuthenticationPrincipal JwtAccount account, @RequestBody @Valid Manager manager)
-            throws DaoAccessException {
+            throws DaoAccessException, ValidationException{
         if (manager.getPassword() == null || manager.getPassword().length() > 3900 || manager.getPassword().length() < 8) {
             throw new ValidationException("Password length is not correct");
         }
@@ -47,7 +47,7 @@ public class ManagerInfoController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-    @RequestMapping(method = RequestMethod.POST, value = "/update-manager-bill")
+    @RequestMapping(method = RequestMethod.PUT, value = "/update-manager-bill")
     public ManagerBill updateManagerBill(@RequestBody @Valid ManagerBill managerBill)
             throws DaoAccessException {
         return managerInfoService.updateManagerBill(managerBill);
