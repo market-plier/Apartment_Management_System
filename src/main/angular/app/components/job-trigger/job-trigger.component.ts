@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BackEndError} from "../../models/back-end-error";
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {environment} from "../../../environments/environment.prod";
 
 
 @Component({
@@ -13,8 +14,7 @@ export class JobTriggerComponent implements OnInit {
 
     ngOnInit(): void {
     }
-
-    private baseURL = 'http://localhost:8888/trigger';
+    private baseURL = environment.url;
     err: BackEndError | undefined;
 
     constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
