@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="row row-cols-2">
-                        <div class="form-row">
+                        <div class="form-row" [formGroup]="secondFormGroup">
                             <div class="name">Email address</div>
                             <div class="value">
                                 <div class="input-group">
@@ -58,11 +58,11 @@
                                                placeholder="example@email.com"
                                                [(ngModel)]="apartment.email">
                                         <mat-error
-                                                *ngIf="firstFormGroup.controls['emailCtrl'].hasError('pattern')">
+                                                *ngIf="secondFormGroup.controls['emailCtrl'].hasError('pattern')">
                                             Please enter a valid email address
                                         </mat-error>
                                         <mat-error
-                                                *ngIf="firstFormGroup.controls['emailCtrl'].hasError('required')">
+                                                *ngIf=" secondFormGroup.controls['emailCtrl'].hasError('required')">
                                             Email is required
                                         </mat-error>
                                     </mat-form-field>
@@ -111,7 +111,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row" [formGroup]="secondFormGroup">
                             <div class="name">Password</div>
                             <div class="value">
                                 <div class="input-group">
@@ -125,7 +125,7 @@
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
                                         <mat-error
-                                                *ngIf="firstFormGroup.controls['passwordCtrl'].hasError('minlength')">
+                                                *ngIf="secondFormGroup.controls['passwordCtrl'].hasError('minlength')">
                                             Password length should be more than 8 chars
                                         </mat-error>
                                     </mat-form-field>

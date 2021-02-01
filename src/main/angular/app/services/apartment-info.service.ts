@@ -27,7 +27,7 @@ export class ApartmentInfoService {
 
     getApartmentByAccountId(id: Number): Observable<Object> {
         return this.httpClient.get(`${this.baseURL}/apartment/?id=${id}`).pipe(
-            catchError(this.handleError.bind(this))
+                catchError(this.handleError.bind(this))
         );
     }
 

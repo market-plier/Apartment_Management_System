@@ -20,7 +20,7 @@ public class ManagerInfoController {
     @Autowired
     ManagerInfoService managerInfoService;
 
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_OWNER')")
     @RequestMapping("/manager")
     public Manager getManager() throws DaoAccessException {
         Manager managerDTO = managerInfoService.getManager();

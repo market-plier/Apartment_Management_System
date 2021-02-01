@@ -60,20 +60,15 @@ export class ApartmentRegistrationComponent implements OnInit {
     saveApartment() {
         this.loading = true;
         this.apartmentSave = Object.assign({}, this.apartment);
-
-        this.apartmentInfoService.createApartment(this.apartmentSave).subscribe(
+        var flag = undefined;
+        flag = this.apartmentInfoService.createApartment(this.apartmentSave).subscribe(
             data => {
                 this.openSnackBar('Apartment is created', 'OK');
                 this.isCreated = true;
-                this.loading = false;
                 this.goToApartmentsList();
-            },
-
-            error => {
-                this.loading = false;
-                console.log(error);
             }
         );
+        if (flag != undefined) this.loading = false;
     }
 
     openSnackBar(message: string, action: string) {

@@ -32,12 +32,15 @@ export class ApartmentInfoEditComponent implements OnInit {
     loading: boolean = false;
 
     firstFormGroup: FormGroup = new FormBuilder().group({
-        'emailCtrl': ['', [Validators.required, Validators.email]],
         'firstNameCtrl': ['', [Validators.required, Validators.pattern("^[а-яА-Яa-zA-Z]+(([',. -][а-яА-Яa-zA-Z ])?[а-яА-Яa-zA-Z]*)*$")]],
         'lastNameCtrl': ['', [Validators.required, Validators.pattern("^[а-яА-Яa-zA-Z]+(([',. -][а-яА-Яa-zA-Z ])?[а-яА-Яa-zA-Z]*)*$")]],
         'phoneNumberCtrl': ['', [Validators.required]],
-        'passwordCtrl': ['', [Validators.minLength(8), Validators.maxLength(256)]],
         'peopleCountCtrl': ['', [Validators.required, Validators.min(0)]]
+    });
+
+    secondFormGroup: FormGroup = new FormBuilder().group({
+        'emailCtrl': ['', [Validators.required, Validators.email]],
+        'passwordCtrl': ['', [Validators.minLength(8), Validators.maxLength(256)]]
     });
 
     public mask = ['+', /[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
@@ -62,40 +65,33 @@ export class ApartmentInfoEditComponent implements OnInit {
     };
 
     updateApartment() {
+        if (this.secondFormGroup.valid &&
+            (this.tokenStorage.getRole()=='MANAGER' && this.firstFormGroup.valid || this.tokenStorage.getRole()=='OWNER')){
 
-        this.loading = true;
-        this.apartmentToSave = Object.assign({}, this.apartment)
+            this.apartmentToSave = Object.assign({}, this.apartment)
 
-        this.service.updateApartment(this.apartmentToSave).subscribe(
-            data => {
-                this.openSnackBar('Apartment is updated', '');
-                this.loading = false;
-                this.goToApartmentsList();
-            },
-            error => {
-                this.loading = false;
-                console.log(error);
-            });
+            this.service.updateApartment(this.apartmentToSave).subscribe(
+                data => {
+                    this.openSnackBar('Apartment is updated', '');
+                    this.goToApartmentsList();
+                },
+                error => {
+                    console.log(error);
+                });
 
-        if (this.apartment.password != null) {
-            this.service.updatePassword(this.apartmentToSave);
+            if (this.apartment.password != null) {
+                this.service.updatePassword(this.apartmentToSave);
+            }
         }
-}
+    }
 
-goToApartmentsList()
-{
-    this.router.navigate(['/apartments']);
-}
+    goToApartmentsList() {
+        this.router.navigate(['/apartments']);
+    }
 
-openSnackBar(message
-:
-string, action
-:
-string
-)
-{
-    this._snackBar.open(message, action, {
-        duration: 10000,
-    });
-}
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
+    }
 }
