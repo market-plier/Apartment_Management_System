@@ -13,6 +13,10 @@
         >
             Pay for communal utilities
         </button>
+        <button mat-raised-button class="float-right" id="apartment_operations"
+        >
+            Watch your payment history
+        </button>
     </div>
 </mat-toolbar>
 <div id="back">
@@ -31,8 +35,15 @@
                             <li>Calculation method: {{apartmentSubBill.communalUtility.calculationMethod}}</li>
                             <li>Deadline: {{apartmentSubBill.communalUtility.deadline}}</li>
                             <li>Status: {{apartmentSubBill.communalUtility.status}}</li>
+                            <li>Rate: {{apartmentSubBill.communalUtility.coefficient}}</li>
                         </ul>
                     </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button class="more-btn"><a (click)="redirectToApartmentOperations(apartmentSubBill.subBillId)"
+                                                               class="btn btn-outlined btn-black text-muted more-button">
+                            <mat-icon>history</mat-icon>
+                            <small>Watch payment history</small></a> <span class="vl ml-3"></span></button>
+                    </mat-card-actions>
                 </mat-card>
             </div>
         </div>

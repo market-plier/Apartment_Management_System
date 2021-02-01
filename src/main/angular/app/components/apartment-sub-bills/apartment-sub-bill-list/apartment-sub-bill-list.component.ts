@@ -46,12 +46,16 @@ export class ApartmentSubBillListComponent implements OnInit {
         this.currentIndex = index;
     }
 
-    redirectToApartmentTransferCreate(): void{
+    redirectToApartmentTransferCreate(): void {
         this.router.navigate([`/apartment-sub-bill-transfer-create`])
     }
 
-    redirectToApartmentPayment(): void{
+    redirectToApartmentPayment(): void {
         this.router.navigate([`/apartment-sub-bill-payment`])
+    }
+
+    redirectToApartmentOperations(id: number): void {
+        this.router.navigate([`/apartment-sub-bill-payment-history/${id}`]);
     }
 
 }

@@ -22,7 +22,6 @@ export class ApartmentSubBillPaymentComponent implements OnInit {
     }
 
     public cardMask = [/\d/, /\d/, /\d/, /\d/,'-',/\d/, /\d/, /\d/, /\d/,'-',/\d/, /\d/, /\d/, /\d/,'-',/\d/, /\d/, /\d/, /\d/];
-    public dateMask = [/[0-3]/,/(?<!3)[0-9]/, '/', /[0-1]/, /[0-9]/];
     public cvvMask = [/\d/,/\d/,/\d/];
 
     ngOnInit() {
