@@ -30,6 +30,7 @@ import {ManagerOperationCreateComponent} from "./components/manager-operation/ma
 import {ApartmentOperationListComponent} from "./components/apartment-operation-list/apartment-operation-list.component";
 import {ManagerInfoUpdateComponent} from "./components/manager/manager-info-update.component";
 import {ManagerSubBillListComponent} from "./components/manager-sub-bills/manager-sub-bills-list/manager-sub-bills-list.component";
+import {ApartmentSubBillPaymentHistoryComponent} from "./components/apartment-sub-bills/apartment-sub-bill-payment-history/apartment-sub-bill-payment-history.component";
 
 
 const routes: Routes = [
@@ -55,6 +56,7 @@ const routes: Routes = [
     {path: 'apartment-sub-bills', component: ApartmentSubBillListComponent, canActivate: [AuthGuard]},
     {path: 'manager-sub-bills', component:ManagerSubBillListComponent, canActivate:[AuthGuard,ManagerGuard]},
     {path: 'apartment-sub-bills/:id', component: ApartmentSubBillShowComponent, canActivate: [AuthGuard]},
+    {path: 'apartment-sub-bill-payment-history/:id', component: ApartmentSubBillPaymentHistoryComponent, canActivate: [AuthGuard]},
     {
         path: 'apartment-sub-bill-transfer-create',
         component: ApartmentSubBillTransferCreateComponent,
