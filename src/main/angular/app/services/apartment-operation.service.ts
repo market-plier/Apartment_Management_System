@@ -19,7 +19,7 @@ export class ApartmentOperationService {
     private url = environment.url;
     private getApartOperationURL = this.url + 'apartment-operation/';
     private getApartmentOperationByApartmentNumberAndDateRangeURL = this.url + 'apartment-operation/by-date-and-apart-number/';
-    private getApartmentOperationsByApartmentSubBillId = this.url + '/apartment-sub-bill/';
+    private getApartmentOperationsByApartmentSubBillId = this.url + 'apartment-sub-bill/';
 
 
     constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
