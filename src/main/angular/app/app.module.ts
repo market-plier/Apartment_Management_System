@@ -83,9 +83,7 @@ import {ManagerSubBillsDashboardComponent} from './components/manager-sub-bills/
 import {CarouselModule} from "ngx-bootstrap/carousel";
 import {ApartmentOperationListComponent} from './components/apartment-operation-list/apartment-operation-list.component';
 import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment-sub-bill-dashboard/apartment-debt/apartment-debt.component";
-import {IConfig, NgxMaskModule} from "ngx-mask";
 import {ApartmentSubBillPaymentHistoryComponent} from "./components/apartment-sub-bills/apartment-sub-bill-payment-history/apartment-sub-bill-payment-history.component";
-export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 import {MatSortModule} from "@angular/material/sort";
 import {ManagerSubBillListComponent} from "./components/manager-sub-bills/manager-sub-bills-list/manager-sub-bills-list.component";
 
@@ -175,7 +173,6 @@ import {ManagerSubBillListComponent} from "./components/manager-sub-bills/manage
         MatBadgeModule,
         NgxChartsModule,
         CarouselModule,
-        NgxMaskModule.forRoot(),
         CarouselModule,
         MatSortModule
     ],

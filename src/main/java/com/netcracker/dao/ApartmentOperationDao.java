@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface ApartmentOperationDao {
     String selectApartmentOperationsBySubBillId =
-            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id\n" +
+            "SELECT APOP.OBJECT_ID operation_id, APOP_SUM.VALUE sum, APOP_CREATED_AT.DATE_VALUE created_at, APOP_TRANSFERS.REFERENCE apartment_sub_bill_id," +
+                    "COMMUNAL_UTILITY_NAME.VALUE communal_name\n" +
                     "FROM OBJECTS APOP, ATTRIBUTES APOP_SUM, ATTRIBUTES APOP_CREATED_AT, OBJREFERENCE APOP_TRANSFERS\n" +
                     "WHERE APOP.OBJECT_TYPE_ID = 17\n" +
                     "  AND APOP_SUM.ATTR_ID = 26\n" +
