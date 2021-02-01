@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.List;
 
@@ -55,5 +56,10 @@ public class ApartmentOperationController {
                                                                                      Integer number) throws ParseException {
 
         return apartmentOperationService.getApartmentOperationsByDateRangeAndApartmentNumber(number, DateUtil.provideDateFormat(start), DateUtil.provideDateFormat(end));
+    }
+
+    @GetMapping("/apartment-sub-bill/{apartmentSubBillId}")
+    public List<ApartmentOperation> getAllApartmentOperationByApartmentSubBillId(@PathVariable BigInteger apartmentSubBillId){
+        return apartmentOperationService.getAllApartmentOperationsBySubBillId(apartmentSubBillId);
     }
 }

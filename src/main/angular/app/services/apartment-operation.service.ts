@@ -7,6 +7,7 @@ import {ApartmentOperation} from "../models/apartment-operation";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CommunalUtility} from "../models/communal-utility";
 import {environment} from "../../environments/environment.prod";
+import {A} from "@angular/cdk/keycodes";
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class ApartmentOperationService {
 
     private url = environment.url;
     private getApartOperationURL = this.url + 'apartment-operation/';
-    private getApartmentOperationByApartmentNumberAndDateRangeURL = this.url + 'apartment-operation/by-date-and-apart-number/'
+    private getApartmentOperationByApartmentNumberAndDateRangeURL = this.url + 'apartment-operation/by-date-and-apart-number/';
+    private getApartmentOperationsByApartmentSubBillId = this.url + '/apartment-sub-bill/';
 
 
     constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
@@ -37,4 +39,8 @@ export class ApartmentOperationService {
 
     }
 
+    getApartmentOperationsByApartmentSubBill(id: number): Observable<ApartmentOperation[]> {
+
+        return this.httpClient.get<ApartmentOperation[]>(`${this.getApartmentOperationsByApartmentSubBillId}${id}`);
+    }
 }
