@@ -1,4 +1,4 @@
-<div class="container main-div">
+<div class="container main-div"  >
     <ngx-charts-pie-chart
             (window:resize)="onResize($event)"
             [view]="view"
@@ -9,7 +9,7 @@
             [doughnut]="isDoughnut"
             [legend]="showLegend"
             [scrollLeft]="true"
-            [legendTitle]="title+' '+sumDebt"
+            [legendTitle]="title+' '+sumDebt | number : '1.2-2'"
             [maxLabelLength]="maxChars"
             (select)="onSelect($event)"
             (activate)="onActivate($event)"
@@ -17,3 +17,4 @@
     >
     </ngx-charts-pie-chart>
 </div>
+

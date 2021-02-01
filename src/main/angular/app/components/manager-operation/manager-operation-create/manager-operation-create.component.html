@@ -18,7 +18,7 @@
             <mat-form-field>
                 <mat-label>Select communal utility</mat-label>
                 <mat-select formControlName="subBillId">
-                    <mat-option  *ngFor="let subBill of subBills" value="{{subBill.subBillId}}">Name: {{subBill.communalUtility.name}}&nbsp;  Balance: {{subBill.balance}}</mat-option>
+                    <mat-option  *ngFor="let subBill of subBills" value="{{subBill.subBillId}}">Name: {{subBill.communalUtility.name}}&nbsp;  Balance: {{subBill.balance | number : '1.2-2'}}</mat-option>
 
                 </mat-select>
 
