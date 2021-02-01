@@ -35,7 +35,7 @@ export class ApartmentSubBillPaymentHistoryComponent implements OnInit {
 
     paginateHide()
     {
-        return this.apartments.length>0
+        return this.apartments.length>0;
     }
 
 
@@ -49,7 +49,7 @@ export class ApartmentSubBillPaymentHistoryComponent implements OnInit {
             },
             error => {
                 console.log(error);
-                this.openErrorSnackBar(error,"OK")
+                this.openErrorSnackBar("Error getting operation history",'')
             }
         )
     }
