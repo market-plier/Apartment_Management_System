@@ -21,7 +21,6 @@ export class RequestComponent implements OnInit {
 
     request: ApartmentRequestToManager = new ApartmentRequestToManager();
     apartment?: Apartment = new Apartment();
-    manager: Account=new Account();
 
     isSent = false;
     color: ThemePalette = 'primary';
@@ -33,11 +32,7 @@ export class RequestComponent implements OnInit {
     });
 
     constructor(private service: RequestToManagerService, private apartmentService: ApartmentInfoService, private router: Router,
-                private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService,
-                private managerService: ManagerService) {
-        managerService.getManagerInfo().subscribe(
-            data => this.manager = data)
-    }
+                private _snackBar: MatSnackBar, public tokenStorage: TokenStorageService) {}
 
     ngOnInit(): void {
         this.apartmentService.getApartmentByAccountId(this.tokenStorage.getAccountId())
