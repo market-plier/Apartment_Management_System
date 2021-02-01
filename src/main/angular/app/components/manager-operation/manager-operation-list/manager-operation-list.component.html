@@ -85,6 +85,7 @@
                     <td mat-cell [hidden]="isHidden(element.operationId)"> {{element.sum}} </td>
                     <td mat-cell [hidden]="!isHidden(element.operationId)" > <input class="color-border-input" min="0"
                                                                                     type="number"
+                                                                                    numeric decimals="2"
                                                                                     formControlName="sum"></td>
                     </ng-container>
                 </ng-container>

@@ -19,7 +19,7 @@ public class ManagerSpendingOperationMapper implements RowMapper<ManagerSpending
                 .withOperationId(new BigInteger(resultSet.getString("manager_spending_id")))
                 .withCreatedAt(resultSet.getTimestamp("operation_created_at"))
                 .withDescription(resultSet.getString("manager_spending_description"))
-                .withSum(new Double(resultSet.getString("manager_spending_sum")))
+                .withSum(new Double(resultSet.getString("manager_spending_sum").replace(",",".")))
                 .withManagerSubBill(new ManagerSubBillBuilder()
                         .withSubBillId(new BigInteger(resultSet.getString("manager_sub_bill")))
                         .withBalance(new Double(resultSet.getString("MANAGER_SUBBIL_BALANCE").replace(",",".")))

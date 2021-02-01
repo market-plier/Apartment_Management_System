@@ -201,7 +201,7 @@ public class ManagerSpendingOperationDaoImpl implements ManagerSpendingOperation
     public void createManagerOperationSpending(ManagerSpendingOperation managerOperationSpending) throws DaoAccessException {
         try {
             jdbcTemplate.update(CREATE_MANAGER_OPERATION_SPENDING, managerOperationSpending.getDescription(),
-                    managerOperationSpending.getSum(), managerOperationSpending.getManagerSubBill().getSubBillId());
+                    managerOperationSpending.getSum().toString(), managerOperationSpending.getManagerSubBill().getSubBillId());
         } catch (DaoAccessException e) {
             DaoAccessException accessException =  new DaoAccessExceptionBuilder()
                     .withErrorMessage(ErrorCodes._FAIL_TO_INSERT_MANAGER_SPENDING_OPERATION)

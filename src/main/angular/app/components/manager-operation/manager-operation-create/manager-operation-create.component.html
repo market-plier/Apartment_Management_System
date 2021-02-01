@@ -30,7 +30,7 @@
 
             <mat-form-field>
                 <mat-label>Enter sum of spending</mat-label>
-                <input formControlName="sum" min="1" step="10" max="999999999999" type="number" matInput ngModel>
+                <input formControlName="sum" min="1" numeric decimals="2" type="number" matInput ngModel>
                 <span matPrefix>₴&nbsp;</span>
             </mat-form-field>
 

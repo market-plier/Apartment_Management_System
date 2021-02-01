@@ -86,6 +86,7 @@ import {ApartmentDebtComponent} from "./components/apartment-sub-bills/apartment
 import {ApartmentSubBillPaymentHistoryComponent} from "./components/apartment-sub-bills/apartment-sub-bill-payment-history/apartment-sub-bill-payment-history.component";
 import {MatSortModule} from "@angular/material/sort";
 import {ManagerSubBillListComponent} from "./components/manager-sub-bills/manager-sub-bills-list/manager-sub-bills-list.component";
+import { NumericDirective } from './services/numeric.directive';
 
 @NgModule({
     declarations: [
@@ -129,6 +130,7 @@ import {ManagerSubBillListComponent} from "./components/manager-sub-bills/manage
         DashboardManagerBillDebtComponent,
         ManagerSubBillsDashboardComponent,
         ApartmentSubBillPaymentHistoryComponent,
+        NumericDirective
     ],
     imports: [
         MatProgressSpinnerModule,
