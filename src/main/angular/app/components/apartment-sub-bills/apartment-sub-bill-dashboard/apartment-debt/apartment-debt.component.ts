@@ -30,6 +30,8 @@ export class ApartmentDebtComponent implements OnInit {
                     this.balance = this.balance + this.subbills[j].balance;
                 }
             });
+        this.balance=parseFloat(this.balance.toFixed(3));
+        this.debt=parseFloat(this.debt.toFixed(3));
     }
 
     makePayment() {

@@ -53,12 +53,12 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
                     };
 
                     if (single[j].value == 0) {
-                        single[j].value = 0.0000001
+                        single[j].value = 0.0001
                     }
 
                     this.balance = this.balance + this.subbills[j].balance;
                 }
-
+                this.balance=parseFloat(this.balance.toFixed(3))
                 this.loading = false;
                 Object.assign(this, {single});
 

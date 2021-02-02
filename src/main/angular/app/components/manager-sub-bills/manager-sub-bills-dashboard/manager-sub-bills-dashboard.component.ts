@@ -66,7 +66,7 @@ export class ManagerSubBillsDashboardComponent implements OnInit {
             SubBillsOnOneSlide[i] = {
                 name: this.subbills[j].communalUtility.name,
                 daysLeft: this.countTotalDays(this.subbills[j].communalUtility.deadline),
-                value: this.subbills[j].balance.toLocaleString() + '$',
+                value: parseFloat(this.subbills[j].balance.toFixed(3)).toLocaleString() + '$',
                 progress: this.subbills[j].balance * 100 / this.fillProgress(this.subbills[j]),
                 deadLine: this.subbills[j].communalUtility.deadline
             };
