@@ -1,6 +1,6 @@
 <div class="p-3" fxFlex="60" fxFlexFill fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch">
     <mat-card>
-        <form (ngSubmit)="add()" [formGroup]="form" fxLayout="column" xLayoutAlign="center">
+        <form (ngSubmit)="add()" [formGroup]="form" fxLayout="column" fxLayoutAlign="center">
             <mat-form-field>
                 <mat-label>Name</mat-label>
                 <input formControlName="name" matInput name="name"
@@ -23,7 +23,8 @@
             </mat-error>
             <mat-form-field>
                 <mat-label>Coefficient</mat-label>
-                <input formControlName="coefficient" matInput name="coefficient"
+                <input formControlName="coefficient" matInput
+                       name="price" name="coefficient" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
                 />
             </mat-form-field>
             <mat-form-field appearance="fill">

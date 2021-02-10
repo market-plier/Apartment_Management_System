@@ -1,4 +1,10 @@
-<div class="p-3" fxFlex="60" fxFlexFill fxFlexOffset="20" fxLayout="column" fxLayoutAlign="center stretch">
+<mat-spinner *ngIf="loading" style="
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -70px 0 0 -70px;"></mat-spinner>
+<div *ngIf="!loading" class="p-3" fxFlex="60" fxFlexFill fxFlexOffset="20" fxLayout="column"
+     fxLayoutAlign="center stretch">
     <mat-card>
         <form (ngSubmit)="save()" [formGroup]="form" fxLayout="column" xLayoutAlign="center">
             <mat-form-field>
@@ -55,3 +61,4 @@
         </form>
     </mat-card>
 </div>
+

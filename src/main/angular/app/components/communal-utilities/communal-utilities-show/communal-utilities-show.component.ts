@@ -5,6 +5,7 @@ import {CommunalUtility} from "../../../models/communal-utility";
 import {Location} from '@angular/common';
 
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -16,21 +17,23 @@ export class CommunalUtilitiesShowComponent implements OnInit {
   calculationMethods: string[] = [
     'SquareMeters', 'PeopleCount', 'Floor'
   ];
-  calc: string = 'PeopleCount';
-  utility: CommunalUtility;
-  status: string[] = [
-    'Enabled', 'Disabled'
-  ];
+    calc: string = 'PeopleCount';
+    utility: CommunalUtility = null;
+    status: string[] = [
+        'Enabled', 'Disabled'
+    ];
   dyr_type: string[] = [
     'Temporary', 'Constant'
   ];
   form: FormGroup;
   id: number;
-  minDate: Date;
+    minDate: Date;
+    loading: boolean = true;
 
   constructor(private route: ActivatedRoute,
               private service: CommunalUtilityService,
-              private location: Location
+              private location: Location,
+              private _snackBar: MatSnackBar
   ) {
     this.minDate = new Date();
     this.initForm();
@@ -56,36 +59,50 @@ export class CommunalUtilitiesShowComponent implements OnInit {
   }
 
   getUtility(): void {
-    this.id = +this.route.snapshot.paramMap.get('id');
-    this.service.getCommunalUtility(this.id)
-        .subscribe(utility => {
-          this.utility = utility;
-          console.log(this.utility);
-          this.form.get('status').setValue(this.utility.status);
-          this.form.get('durationType').setValue(this.utility.durationType);
-          this.form.get('calculationMethod').setValue(this.utility.calculationMethod);
-          this.form.get('name').setValue(this.utility.name);
-          this.form.get('coefficient').setValue(this.utility.coefficient);
-          this.form.get('deadline').setValue(this.utility.deadline);
-        });
+      this.loading = true;
+      console.log(this.loading);
+      this.id = +this.route.snapshot.paramMap.get('id');
+      this.service.getCommunalUtility(this.id)
+          .subscribe(utility => {
+              this.utility = utility;
+              console.log(this.utility);
+              this.form.get('status').setValue(this.utility.status);
+              this.form.get('durationType').setValue(this.utility.durationType);
+              this.form.get('calculationMethod').setValue(this.utility.calculationMethod);
+              this.form.get('name').setValue(this.utility.name);
+              this.form.get('coefficient').setValue(this.utility.coefficient);
+              this.form.get('deadline').setValue(this.utility.deadline);
+              this.loading = false;
+              console.log(this.loading);
+          });
   }
   save(): void {
     const communalUtility = {
       ...this.form.value,
       communalUtilityId: this.id,
     };
-
-    this.service.updateCommunalUtility(communalUtility)
-        .subscribe(() => this.goBack(),
-            (error => {
-              console.error('error caught in component')
-
-              throw error;
-            }));
+      this.loading = true;
+      this.service.updateCommunalUtility(communalUtility)
+          .subscribe(
+              () => {
+                  this.openSnackBar('Successfully updated', 'OK')
+                  this.goBack();
+              },
+              (error => {
+                  console.error('error caught in component')
+                  this.loading = false;
+                  throw error;
+              }));
   }
 
-  goBack(): void {
-    this.location.back();
-  }
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 10000,
+        });
+    }
+
+    goBack(): void {
+        this.location.back();
+    }
 
 }

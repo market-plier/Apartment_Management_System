@@ -24,7 +24,7 @@ export class CommunalUtilitiesCreateComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private service: CommunalUtilityService,
-                private location: Location
+                private location: Location,
     ) {
         this.initForm();
     }
@@ -43,7 +43,7 @@ export class CommunalUtilitiesCreateComponent implements OnInit {
             status: new FormControl('', Validators.required),
             calculationMethod: new FormControl('', Validators.required),
             durationType: new FormControl('', Validators.required),
-            deadline: new FormControl('', Validators.required)
+            deadmine: new FormControl('', Validators.required)
         })
     }
 
