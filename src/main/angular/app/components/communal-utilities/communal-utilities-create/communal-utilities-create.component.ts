@@ -14,7 +14,7 @@ export class CommunalUtilitiesCreateComponent implements OnInit {
         'SquareMeters', 'PeopleCount', 'Floor'
     ];
     form: FormGroup;
-    minDate: Date;
+    minDate: Date = new Date();
     status: string[] = [
         'Enabled', 'Disabled'
     ];
@@ -38,12 +38,13 @@ export class CommunalUtilitiesCreateComponent implements OnInit {
                 Validators.minLength(2),
                 Validators.maxLength(255)]),
             coefficient: new FormControl('', [Validators.required,
-                Validators.min(0.00001),
-                Validators.max(1000)]),
+                Validators.min(0.01),
+                Validators.max(1000),
+                Validators.pattern("^[0-9]+(\\.[0-9]{1,2})?$")]),
             status: new FormControl('', Validators.required),
             calculationMethod: new FormControl('', Validators.required),
             durationType: new FormControl('', Validators.required),
-            deadmine: new FormControl('', Validators.required)
+            deadline: new FormControl('', Validators.required)
         })
     }
 
