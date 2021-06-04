@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.*;
@@ -41,7 +42,7 @@ public class ReportService {
 
 
     public ByteArrayInputStream createManagerOperationSpendingReportByCommNameAndDate(Set<BigInteger> communalUtility,
-                                                                                      Date start, Date end) throws DaoAccessException {
+                                                                                      Date start, Date end) throws DaoAccessException, IOException {
         List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
                 .getAllManagerOperationByDateAndCommunalUtility(start, end, communalUtility);
 
@@ -61,7 +62,7 @@ public class ReportService {
 
     }
 
-    public ByteArrayInputStream createManagerOperationSpendingReportByDate(Date start, Date end) throws DaoAccessException {
+    public ByteArrayInputStream createManagerOperationSpendingReportByDate(Date start, Date end) throws DaoAccessException, IOException {
         List<ManagerSpendingOperation> managerSpendingOperations = managerOperationSpendingService
                 .getAllManagerOperationByDate(start, end);
 
@@ -80,7 +81,7 @@ public class ReportService {
 
     }
 
-    public ByteArrayInputStream createApartmentDebtReportByCommunalID(BigInteger accountID, Set<BigInteger> communalUtility) throws DaoAccessException {
+    public ByteArrayInputStream createApartmentDebtReportByCommunalID(BigInteger accountID, Set<BigInteger> communalUtility) throws DaoAccessException, IOException {
 
         List<ApartmentSubBill> apartmentSubBillList = apartmentSubBillDao.getApartmentSubBillsByCommunalUtilityList(accountID, communalUtility);
         if (!apartmentSubBillList.isEmpty()) {
@@ -100,7 +101,7 @@ public class ReportService {
 
     }
 
-    public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(Set<BigInteger> communalUtility) {
+    public ByteArrayInputStream createManagerSubBillDebtReportByCommunalID(Set<BigInteger> communalUtility) throws IOException {
         Map<ManagerSubBill, Double> managerDebtMap = managerSubBillDao.getManagerSubBillDeptByCommunalUtility(communalUtility);
 
         if (!managerDebtMap.isEmpty()) {

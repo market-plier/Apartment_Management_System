@@ -1,6 +1,6 @@
 
 <mat-toolbar class="mat-toolbar ">
-    <mat-card-title class="title-center">New Apartment</mat-card-title>
+    <mat-card-title class="title-center">Нова квартира</mat-card-title>
 </mat-toolbar>
 <div class="container">
     <mat-card>
@@ -11,10 +11,10 @@
                     <mat-horizontal-stepper [linear]=true #stepper>
                         <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
                             <form [formGroup]="firstFormGroup">
-                                <ng-template matStepLabel>Owner Info</ng-template>
+                                <ng-template matStepLabel>Інформація власника квартири</ng-template>
                                 <div class="row row-cols-2">
                                     <div class="form-row">
-                                        <div class="name">First name</div>
+                                        <div class="name">Ім'я</div>
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="firstNameCtrl" type="text"
@@ -32,7 +32,7 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="name">Last name</div>
+                                        <div class="name">Прізвище</div>
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="lastNameCtrl" type="text"
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="row row-cols-2">
                                     <div class="form-row">
-                                        <div class="name">Email address</div>
+                                        <div class="name">Email</div>
                                         <div class="value">
                                             <div class="input-group">
                                                 <mat-form-field appearance="standard">
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="name">Phone number</div>
+                                        <div class="name">Номер телефону</div>
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <mat-label>Input your phone number</mat-label>
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="name">Password</div>
+                                    <div class="name">Пароль</div>
                                     <div class="value">
                                         <div class="input-group">
                                             <mat-form-field appearance="standard">
@@ -121,16 +121,16 @@
                                     </div>
                                 </div>
                                 <div class="right">
-                                    <button mat-raised-button color="primary" matStepperNext>Next</button>
+                                    <button mat-raised-button color="primary" matStepperNext>Далі</button>
                                 </div>
                             </form>
                         </mat-step>
                         <mat-step [stepControl]="secondFormGroup" label="Apartment info">
                             <form [formGroup]="secondFormGroup">
-                                <ng-template matStepLabel>Apartment Info</ng-template>
+                                <ng-template matStepLabel>Інформація квартири</ng-template>
                                 <div class="row row-cols-2">
                                     <div class="form-row">
-                                        <div class="name">Apartment number</div>
+                                        <div class="name">Номер квартири</div>
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="apartmentNumberCtrl" type="number"
@@ -148,7 +148,7 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="name">Floor</div>
+                                        <div class="name">Етаж</div>
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="floorCtrl" type="number"
@@ -168,7 +168,7 @@
                                 </div>
                                 <div class="row row-cols-2">
                                     <div class="form-row">
-                                        <div class="name">Square meters</div>
+                                        <div class="name">Площа у квадратних мітрах</div>
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="squareMetresCtrl" type="number"
@@ -186,7 +186,7 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="name">People count</div>
+                                        <div class="name">Кількість мешканців</div>
                                         <div class="value">
                                             <mat-form-field appearance="standard">
                                                 <input matInput formControlName="peopleCountCtrl" type="number"
@@ -211,7 +211,7 @@
                             </form>
                         </mat-step>
                         <mat-step>
-                            <ng-template matStepLabel>Done</ng-template>
+                            <ng-template matStepLabel>Готово</ng-template>
                             <button mat-stroked-button color="primary" matStepperPrevious>Back</button>
                             <button mat-raised-button color="primary" (click)="onSubmit()">Create</button>
                         </mat-step>
@@ -221,7 +221,7 @@
             </div>
         </form>
         <div class="alert alert-success" *ngIf="isCreated">
-            New Apartment created
+            Нова квартира була успішно створена
         </div>
     </mat-card>
 </div>

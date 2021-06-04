@@ -25,7 +25,7 @@ export class ApartmentSubBillDashboardComponent implements OnInit {
     isDoughnut: boolean = false;
     legendPosition: string = 'right';
     maxChars = 30;
-    title = "Balance";
+    title = "Баланс";
     single: any[];
     view: any[] = [1000, 320];
     loading: boolean = false;

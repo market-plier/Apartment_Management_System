@@ -2,6 +2,7 @@ package com.netcracker.services.PDFBuilders;
 
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
+import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -12,6 +13,7 @@ import com.netcracker.models.ApartmentSubBill;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -23,13 +25,14 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
     private double sumDept;
     private ByteArrayOutputStream out = new ByteArrayOutputStream();
     private Apartment apartment;
-
+    public static final String FONT = "C:\\Users\\38067\\IdeaProjects\\Netcracker\\src\\main\\java\\com\\netcracker\\services\\PDFBuilders\\Assets\\Fonts\\arial.ttf";
     public ApartmentsDebtsPdfBuilder(List<ApartmentSubBill> apartmentDebtsList ,Apartment apartment) {
         this.apartment = apartment;
         this.apartmentDebtsList = apartmentDebtsList;
     }
-    private void writeTableData(PdfPTable table) {
-        Font font = FontFactory.getFont(FontFactory.COURIER);
+    private void writeTableData(PdfPTable table) throws IOException {
+        BaseFont bf = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        Font font=new Font(bf,30,Font.NORMAL);
         font.setSize(10);
         font.setColor(Color.BLACK);
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -45,25 +48,23 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
         }
     }
 
-    public ByteArrayInputStream exportToPdf()
-    {
-
-
+    public ByteArrayInputStream exportToPdf() throws IOException {
             Document document = new Document(PageSize.A4);
             PdfWriter.getInstance(document, out);
             document.open();
-            Font font = FontFactory.getFont(FontFactory.COURIER);
+            BaseFont bf = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font font=new Font(bf,30,Font.NORMAL);
             font.setSize(10);
             font.getBaseFont();
             font.setColor(Color.BLACK);
 
-            Paragraph header = new Paragraph("Apartment Debt", font);
+            Paragraph header = new Paragraph("Борг платника", font);
             header.setAlignment(Paragraph.ALIGN_CENTER);
-            Paragraph debtApartment = new Paragraph("Payer: " + apartment.getFirstName() + " " + apartment.getLastName(), font);
+            Paragraph debtApartment = new Paragraph("Платник: " + apartment.getFirstName() + " " + apartment.getLastName(), font);
             debtApartment.setAlignment(Paragraph.ALIGN_LEFT);
-            Paragraph apartmentSquareMeter = new Paragraph("Square meters: " + apartment.getSquareMetres(), font);
+            Paragraph apartmentSquareMeter = new Paragraph("Площа у квадратних метрах: " + apartment.getSquareMetres(), font);
             apartmentSquareMeter.setAlignment(Paragraph.ALIGN_LEFT);
-            Paragraph apartmentCountOfPeople = new Paragraph("Count of people: " + apartment.getPeopleCount(), font);
+            Paragraph apartmentCountOfPeople = new Paragraph("Кількість мешканців: " + apartment.getPeopleCount(), font);
             apartmentCountOfPeople.setAlignment(Paragraph.ALIGN_LEFT);
             document.add(header);
             document.add(debtApartment);
@@ -77,11 +78,11 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
 
 
 
-            String[] headerArr = {"Bill Id", "Communal Utility", "Debt Sum", "Balance", "Duration Type"};
+            String[] headerArr = {"ID Рахунку", "Комунальна Послуга", "Сума боргу", "Баланс", "Тривалість"};
             writeTableHeader(table, headerArr);
             writeTableData(table);
             document.add(table);
-            Paragraph totalAmount = new Paragraph("Total Debt: " + sumDept);
+            Paragraph totalAmount = new Paragraph("Борг всього: " + sumDept);
             totalAmount.setSpacingBefore(10f);
             document.add(totalAmount);
             DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -90,7 +91,7 @@ public class ApartmentsDebtsPdfBuilder extends ReportPdfBuilder {
             Phrase ph1 = new Phrase();
             Paragraph para = new Paragraph();
             para.setSpacingBefore(10f);
-            ph1.add(new Chunk("Signature of Payment  ________  ", font));
+            ph1.add(new Chunk("Підпис оплати  ________  ", font));
             ph1.add(glue);
             ph1.add(new Chunk(currentDateTime, font));
             para.add(ph1);

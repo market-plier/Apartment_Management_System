@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.*;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class ReportController {
                                                                  @RequestParam(name = "communalUtility")
                                                                  @NotNull(message = "Communal Utility date cant be null")
                                                                  Set<@Min(value = 0, message = "must be positive value")
-                                                                 @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility) throws ParseException {
+                                                                 @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility) throws ParseException, IOException {
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createManagerOperationSpendingReportByCommNameAndDate(communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()),
@@ -76,7 +77,7 @@ public class ReportController {
                                                                    @NotEmpty(message = "start date cant be empty") String start,
                                                                    @RequestParam
                                                                    @NotNull(message = "end date cant be null")
-                                                                   @NotEmpty(message = "end date cant be empty") String end) throws ParseException {
+                                                                   @NotEmpty(message = "end date cant be empty") String end) throws ParseException, IOException {
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createManagerOperationSpendingReportByDate(DateUtil.provideDateFormat(start), DateUtil.provideDateFormat(end));
@@ -97,7 +98,7 @@ public class ReportController {
                                                   @Positive(message = "id must be positive value") BigInteger accountId,
                                                   @RequestParam @NotNull(message = "communal utility cant be null ")
                                                   Set<@Min(value = 0, message = "must be positive value")
-                                                  @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility){
+                                                  @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility) throws IOException {
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createApartmentDebtReportByCommunalID(accountId,communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()));
@@ -117,7 +118,7 @@ public class ReportController {
     public ResponseEntity makeManagerBillDeptReport(@RequestParam
                                                     @NotNull(message = "communal utility cant be null")
                                                     Set<@Min(value = 0, message = "must be positive value")
-                                                    @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility){
+                                                    @Digits(integer = 10, fraction = 0,message = "Id must be integer value") String> communalUtility) throws IOException {
 
         ByteArrayInputStream arrayInputStream = reportService
                 .createManagerSubBillDebtReportByCommunalID(communalUtility.stream().map(BigInteger::new).collect(Collectors.toSet()));

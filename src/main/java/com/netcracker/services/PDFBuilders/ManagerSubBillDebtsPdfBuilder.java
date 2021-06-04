@@ -10,6 +10,7 @@ import com.netcracker.models.ManagerSubBill;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -44,7 +45,7 @@ public class ManagerSubBillDebtsPdfBuilder extends ReportPdfBuilder{
 
     }
 
-    public ByteArrayInputStream exportToPdf(){
+    public ByteArrayInputStream exportToPdf() throws IOException {
 
         Document document = new Document(PageSize.A4);
 
@@ -67,7 +68,7 @@ public class ManagerSubBillDebtsPdfBuilder extends ReportPdfBuilder{
         table.setWidths(new float[]{ 3.5f,3.5f, 4.0f, 3.5f, 3.5f, 3.5f});
         table.setSpacingBefore(10);
 
-        String[] headerArr = {"Communal utility","Debt",  "Duration type", "Status", "Dead line", "Calc name"};
+        String[] headerArr = {"Комунальна послуга","Debt",  "Duration type", "Status", "Dead line", "Calc name"};
         writeTableHeader(table, headerArr);
         writeTableData(table);
         Paragraph debt = new Paragraph();

@@ -20,7 +20,7 @@ export class CommunalUtilitiesListComponent implements OnInit {
     myColor: 'white';
     loading: boolean = false;
     searchText: string = '';
-    enabled: boolean;
+    enabled: boolean = true;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private tokenStorageService: TokenStorageService,
@@ -54,6 +54,7 @@ export class CommunalUtilitiesListComponent implements OnInit {
                     this.datasource.paginator = this.paginator;
                     this.datasource.sort = this.sort;
                     this.loading = false;
+                   // this.filterUtilities();
                 },
                 (error => {
                     console.error('error caught in component')

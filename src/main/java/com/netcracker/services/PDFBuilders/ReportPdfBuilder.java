@@ -4,14 +4,18 @@ package com.netcracker.services.PDFBuilders;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import lombok.Data;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+
+import static com.netcracker.services.PDFBuilders.ApartmentsDebtsPdfBuilder.FONT;
 
 
 @Data
@@ -34,12 +38,12 @@ public abstract class ReportPdfBuilder {
         out = new ByteArrayOutputStream();
     }
 
-    protected void writeTableHeader(PdfPTable table, String... headers) {
+    protected void writeTableHeader(PdfPTable table, String... headers) throws IOException {
         PdfPCell cell = new PdfPCell();
         cell.setBackgroundColor(Color.GRAY);
         cell.setPadding(5);
-
-        Font font = FontFactory.getFont(FontFactory.COURIER_BOLD);
+        BaseFont bf = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        Font font=new Font(bf,30,Font.NORMAL);
         font.setSize(9);
         font.setColor(Color.WHITE);
 

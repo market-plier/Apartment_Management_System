@@ -139,16 +139,37 @@ public class ApartmentSubBillService {
             Apartment apartment = apartmentInfoService.getApartmentById(apartmentSubBill.getApartment().getAccountId());
             switch (calculationMethod) {
                 case SquareMeters:
-                    apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
-                            .evaluate((double) apartment.getSquareMetres()));
+                        apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
+                                .evaluate((double) apartment.getSquareMetres()));
+
+                    if (apartmentSubBill.getDebt() <= apartmentSubBill.getBalance()) {
+
+
+                        apartmentSubBill.setBalance(apartmentSubBill.getBalance()-apartmentSubBill.getDebt());
+                        apartmentSubBill.setDebt(0d);
+                    }
                     break;
                 case PeopleCount:
-                    apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
+
+                        apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
                             .evaluate((double) apartment.getPeopleCount()));
+
+                    if (apartmentSubBill.getDebt() <= apartmentSubBill.getBalance()) {
+
+                        apartmentSubBill.setBalance(apartmentSubBill.getBalance()-apartmentSubBill.getDebt());
+                apartmentSubBill.setDebt(0d);
+            }
                     break;
                 case Floor:
-                    apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
+
+                        apartmentSubBill.setDebt(apartmentSubBill.getDebt() + new CommunalUtilityWrapper(communalUtility)
                             .evaluate((double) apartment.getFloor()));
+
+                    if (apartmentSubBill.getDebt() <= apartmentSubBill.getBalance()) {
+
+                        apartmentSubBill.setBalance(apartmentSubBill.getBalance()-apartmentSubBill.getDebt());
+            apartmentSubBill.setDebt(0d);
+        }
                     break;
                 default:
                     break;

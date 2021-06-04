@@ -1,14 +1,14 @@
 <mat-toolbar class="mat-toolbar ">
-    <mat-card-title class="title-center">Transfer</mat-card-title>
+    <mat-card-title class="title-center">Перевод</mat-card-title>
 </mat-toolbar>
     <div id="back">
         <mat-card id="card">
             <form id="apartment_sub_bills">
                     <div>
                         <div class="row">
-                        <div class="text">From:</div>
+                        <div class="text">З разунку:</div>
                             <mat-form-field appearance="fill">
-                                <mat-label>Choose From</mat-label>
+                                <mat-label>Вибрати</mat-label>
                                 <mat-select
                                         id="from"
                                         [(ngModel)]="fromApartmentSubBill"
@@ -24,9 +24,9 @@
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <div class="text">To:</div>
+                            <div class="text">На рахунок:</div>
                             <mat-form-field appearance="fill">
-                                <mat-label>Choose To</mat-label>
+                                <mat-label>Вибрати</mat-label>
                                 <mat-select
                                         id="to"
                                         [(ngModel)]="toApartmentSubBill"
@@ -44,7 +44,7 @@
                     </div>
                 <div class="input">
                     <mat-form-field>
-                        <mat-label>Sum</mat-label>
+                        <mat-label>Сума</mat-label>
                         <input matInput
                                id="sum"
                                type="number"

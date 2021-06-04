@@ -52,7 +52,7 @@ public class ManagerSpendingOperationPdfBuilder extends ReportPdfBuilder {
         }
     }
 
-    public ByteArrayInputStream exportToPdf(){
+    public ByteArrayInputStream exportToPdf() throws IOException {
 
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, out);

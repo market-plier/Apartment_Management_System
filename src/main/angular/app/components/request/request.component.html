@@ -1,5 +1,5 @@
 <mat-toolbar class="mat-toolbar col-12">
-    <mat-card-title class="title-center  col-11">Request to manager</mat-card-title>
+    <mat-card-title class="title-center  col-11">Запит до керуючого</mat-card-title>
 </mat-toolbar>
 <div class="background">
     <div class="container">
@@ -8,9 +8,9 @@
             <div class="screen-body">
                 <div class="screen-body-item left col-3">
                     <div class="app-title">
-                        <span>CONTACT</span>
+                        <span>Зв'язатися з</span>
                         <p></p>
-                        <span>MANAGER</span>
+                        <span>керуючим</span>
                     </div>
 
                     <mat-spinner class="mat-spinner" [mode]='mode'></mat-spinner>
@@ -20,7 +20,7 @@
                         <form [formGroup]="formGroup">
                             <div class="app-form-group message">
                                 <mat-form-field class="form-field ">
-                                    <mat-label>Leave a request message</mat-label>
+                                    <mat-label>Залиште повідомлення із запитом</mat-label>
                                     <textarea [(ngModel)]="request.text" #message maxlength="500" minlength="1"
                                               formControlName="requestText"
                                               matInput placeholder="Ex. It makes me feel..." required></textarea>
@@ -34,8 +34,8 @@
 
                             <div class="app-form-group buttons">
 
-                                <button routerLink="/home" class="app-form-button">CANCEL</button>
-                                <button (click)="sendRequest()" class="app-form-button">SEND</button>
+                                <button routerLink="/home" class="app-form-button">Скасувати</button>
+                                <button (click)="sendRequest()" class="app-form-button">Відправити</button>
                             </div>
                         </form>
                     </div>

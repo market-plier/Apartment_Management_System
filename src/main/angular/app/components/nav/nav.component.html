@@ -8,20 +8,20 @@
                 <img src="assets/svg/apartment_main.svg" class="img-logo" alt="Apt" >
             </mat-toolbar>
             <mat-nav-list style=" margin-top:20px;">
-                <a mat-list-item class="hover-link" routerLink="/home">Home</a>
-                <a mat-list-item *ngIf="role == 'OWNER'" class="hover-link" routerLink="/apartment-sub-bills">Subbills</a>
-                <a mat-list-item *ngIf="role == 'MANAGER'" class="hover-link" routerLink="/manager-sub-bills">Subbills</a>
-                <a mat-list-item class="hover-link" routerLink="/announcements">Announcements</a>
+                <a mat-list-item class="hover-link" routerLink="/home">На головну</a>
+                <a mat-list-item *ngIf="role == 'OWNER'" class="hover-link" routerLink="/apartment-sub-bills">Оплата Комунальних Послуг</a>
+                <a mat-list-item *ngIf="role == 'MANAGER'" class="hover-link" routerLink="/manager-sub-bills">Стан Рахунків</a>
+                <a mat-list-item class="hover-link" routerLink="/announcements">Оголошення</a>
                 <a *ngIf="role != 'MANAGER'" class="hover-link" mat-list-item
-                   routerLink="/request-to-manager">Request</a>
-                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/reports">Reports</a>
-                <a *ngIf="role == 'OWNER'" class="hover-link" mat-list-item routerLink="/reports">Report</a>
-                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartments">Apartments</a>
+                   routerLink="/request-to-manager">Запит До Керуючего</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/reports">Створити Звіт</a>
+                <a *ngIf="role == 'OWNER'" class="hover-link" mat-list-item routerLink="/reports">Створити Звіт</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartments">Квартири</a>
                 <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item
-                   routerLink="/manager-operation">Spending</a>
-                <a class="hover-link" mat-list-item routerLink="/communal-utilities">Communal utilities</a>
-                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartment-operation">Apartment
-                    Operation</a>
+                   routerLink="/manager-operation">Власні Транзакції</a>
+                <a class="hover-link" mat-list-item routerLink="/communal-utilities">Комунальні Послуги</a>
+                <a *ngIf="role == 'MANAGER'" class="hover-link" mat-list-item routerLink="/apartment-operation">
+                    Транзакції Користувачів</a>
             </mat-nav-list>
         </div>
     </mat-sidenav>
@@ -36,16 +36,16 @@
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
-            <span class="navbar-text">Apartments Management</span>
+            <span class="navbar-text">Організація Багатоквартирного Будинку</span>
 
             <mat-icon *ngIf="getIsLoggedIn()" class="mat-icon-account" [matMenuTriggerFor]="menu">account_circle
             </mat-icon>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="goToAccountPage()">My account</button>
-                <button mat-menu-item (click)="editAccountPage()">Edit</button>
+                <button mat-menu-item (click)="goToAccountPage()">Мій Аккаунт</button>
+                <button mat-menu-item (click)="editAccountPage()">Редаугвати</button>
             </mat-menu>
 
-            <button mat-raised-button *ngIf="getIsLoggedIn()" (click)="logout()">LogOut</button>
+            <button mat-raised-button *ngIf="getIsLoggedIn()" (click)="logout()">Вийти</button>
         </mat-toolbar>
 
         <div class="site">
@@ -55,10 +55,9 @@
 
             <footer class="page-footer">
                 <div class="footer-copyright text-center py-3">© 2021 Copyright:
-                    <a href="https://odessa.edu-netcracker.com/">BestTeamEver</a>
+                    <a href="https://github.com/market-plier">Максименко Гліб</a>
                 </div>
             </footer>
         </div>
-
     </mat-sidenav-content>
 </mat-sidenav-container>

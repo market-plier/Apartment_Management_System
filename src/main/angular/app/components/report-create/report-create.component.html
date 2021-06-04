@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutGap="50px">
     <div [hidden]="getRole() === 'OWNER'">
         <mat-toolbar class="mat-toolbar col-12" fxLayout="row wrap">
-            <mat-card-title class="title-center">Create Report</mat-card-title>
+            <mat-card-title class="title-center">Створити звіт</mat-card-title>
             <div class="col-7">
                 <mat-form-field class="form-field ml-2">
                     <mat-label>Select an option</mat-label>
@@ -132,11 +132,11 @@
                   fxLayout="column" xLayoutAlign="center">
                 <mat-toolbar class="mat-toolbar">
                     <mat-card-title class="title-center">
-                        Create report
+                        Створити звіт
                     </mat-card-title>
                 </mat-toolbar>
                 <mat-form-field appearance="fill">
-                    <mat-label>Communal utilities</mat-label>
+                    <mat-label>Комунальні послуги</mat-label>
                     <mat-select formControlName="communalUtility" multiple>
                         <mat-option *ngFor="let stat of utilities" [value]="stat.communalUtilityId">
                             {{stat.name}}
@@ -148,7 +148,7 @@
                     <small *ngIf="formGroup4.get('communalUtility').errors.required">Communal Utility is
                         required</small>
                 </mat-error>
-                <button [disabled]="!formGroup4.valid" color="primary" mat-flat-button type="submit">Submit</button>
+                <button [disabled]="!formGroup4.valid" color="primary" mat-flat-button type="submit">Створити</button>
             </form>
         </div>
         <div fxFlex="20"></div>

@@ -11,7 +11,7 @@
     <div  fxLayoutAlign = "center center" fxFlexFill>
         <mat-card fxFlex="30">
             <mat-card-title>
-                Login
+                Логін
             </mat-card-title>
 
             <form fxLayoutAlign="center" [formGroup]="form"  (ngSubmit) = "onSubmit()" fxLayout="column"  name="form">
@@ -23,7 +23,7 @@
                 </mat-form-field>
 
                 <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">
-                    <small *ngIf="form.get('email').errors.required">Email is required</small>
+                    <small *ngIf="form.get('email').errors.required">Email необхідний</small>
                     <small *ngIf="form.get('email').errors.email">Field must be email</small>
                 </mat-error>
 
@@ -33,7 +33,7 @@
                 </mat-form-field>
 
                 <mat-error *ngIf="form.get('password').invalid && form.get('password').touched">
-                    <small *ngIf="form.get('password').errors.required">Password is required</small>
+                    <small *ngIf="form.get('password').errors.required">Потрібен необхідний</small>
                     <small *ngIf="form.get('password').errors.minlength">Password must be more than 6 characters</small>
                 </mat-error>
 

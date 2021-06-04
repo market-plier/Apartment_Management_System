@@ -6,12 +6,12 @@
 </div>
 <div [hidden]="utilities == null">
     <mat-toolbar class="mat-toolbar col-12" fxLayout="row wrap" fxLayoutAlign="space-between center">
-        <mat-card-title class="title-center col-2">Communal Utilities</mat-card-title>
+        <mat-card-title class="title-center col-2">Комунальні Послуги</mat-card-title>
         <div fxLayout="row" fxLayoutAlign="start center">
             <div fxLayout="row">
                 <div>
                     <mat-form-field class="form-field ml-4">
-                        <mat-label>Search</mat-label>
+                        <mat-label>Пошук</mat-label>
                         <input (ngModelChange)="filterUtilities()" [(ngModel)]="searchText" matInput>
                     </mat-form-field>
                     <button (click)="filterUtilities()" mat-icon-button>
@@ -20,8 +20,8 @@
                 </div>
             </div>
 
-            <mat-checkbox (change)="filterUtilities()" [(ngModel)]="enabled" class="form-field ml-4">Only enabled
-            </mat-checkbox>
+<!--            <mat-checkbox (change)="filterUtilities()" [(ngModel)]="enabled" class="form-field ml-4">Only enabled-->
+<!--            </mat-checkbox>-->
         </div>
         <div class="col-1">
             <button *ngIf="getRole() == 'MANAGER'" class="create-btn float-right"
@@ -35,7 +35,7 @@
     <div class="mat-elevation-z8">
         <table [dataSource]="datasource" class="mat-elevation-z8" mat-table matSort text-align="center">
             <ng-container *ngIf="getRole() === 'MANAGER'" matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Назва Послуги</th>
                 <td *matCellDef="let utility" mat-cell>
                     <div (click)="route(utility.communalUtilityId)" [matRippleColor]="myColor" class="center" fxFlexFill
                          matRipple>
@@ -44,34 +44,32 @@
                 </td>
             </ng-container>
             <ng-container *ngIf="getRole() === 'OWNER'" matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Назва Послуги</th>
                 <td *matCellDef="let utility" mat-cell>
                     {{utility.name}}
                 </td>
             </ng-container>
-            <!-- Name Column -->
             <ng-container matColumnDef="status">
-                <th *matHeaderCellDef mat-header-cell> Status</th>
+                <th *matHeaderCellDef mat-header-cell>Статус</th>
                 <td *matCellDef="let utility" mat-cell> {{utility.status}} </td>
             </ng-container>
 
-            <!-- Weight Column -->
             <ng-container matColumnDef="durationType">
-                <th *matHeaderCellDef mat-header-cell> Duration type</th>
+                <th *matHeaderCellDef mat-header-cell>Тривалість</th>
                 <td *matCellDef="let utility" mat-cell> {{utility.durationType}} </td>
             </ng-container>
 
             <ng-container matColumnDef="calculation">
-                <th *matHeaderCellDef mat-header-cell> Calculation method</th>
+                <th *matHeaderCellDef mat-header-cell>Метод Розрахунку</th>
                 <td *matCellDef="let utility" mat-cell> {{utility.calculationMethod}} </td>
             </ng-container>
             <ng-container matColumnDef="coefficient">
-                <th *matHeaderCellDef mat-header-cell> Coefficient</th>
+                <th *matHeaderCellDef mat-header-cell>Коефіцієнт для розрахунку</th>
                 <td *matCellDef="let utility" mat-cell> {{utility.coefficient}} </td>
             </ng-container>
 
             <ng-container matColumnDef="deadline">
-                <th *matHeaderCellDef mat-header-cell> Deadline</th>
+                <th *matHeaderCellDef mat-header-cell>Термін</th>
                 <td *matCellDef="let utility" mat-cell> {{utility.deadline}} </td>
             </ng-container>
 

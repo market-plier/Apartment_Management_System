@@ -78,7 +78,7 @@ VALUES (obj_id_seq.nextval, NULL, 8, 'Manager_Account', NULL);
 INSERT INTO ATTRIBUTES(attr_id, object_id, LIST_VALUE_ID)
 VALUES (1, obj_id_seq.currval, 6);
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
-VALUES (2, obj_id_seq.currval, 'manager@gmail.com');
+VALUES (2, obj_id_seq.currval, 'maksimenkogleb@gmail.com');
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)
 VALUES (3, obj_id_seq.currval, '19513fdc9da4fb72a4a05eb66917548d3c90ff94d5419e1f2363eea89dfee1dd'); -- Password1
 INSERT INTO ATTRIBUTES(attr_id, object_id, value)

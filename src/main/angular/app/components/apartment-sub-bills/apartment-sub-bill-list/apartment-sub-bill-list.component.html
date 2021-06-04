@@ -1,17 +1,17 @@
 <mat-toolbar class="mat-toolbar col-12">
     <div id="title">
-    <mat-card-title class="title-center col-2" id="titlename">YOUR SUBBILLS</mat-card-title>
+    <mat-card-title class="title-center col-2" id="titlename">Рахунки Комунальних Послуг</mat-card-title>
     </div>
     <div id="toolbar">
         <button mat-raised-button class="float-right" id="transfer"
                            (click)="redirectToApartmentTransferCreate()"
         >
-            Transfer money
+            Перевести На Рахунок
         </button>
         <button mat-raised-button class="float-right" id="pay"
                            (click)="redirectToApartmentPayment()"
         >
-            Pay for communal utilities
+            Сплати Комунальну Послугу
         </button>
     </div>
 </mat-toolbar>
@@ -22,23 +22,23 @@
                 <mat-card class="example-card">
                     <mat-card-header>
                         <mat-card-title>{{apartmentSubBill.communalUtility.name}}</mat-card-title>
-                        <mat-card-title class="money"> Balance: {{apartmentSubBill.balance}}</mat-card-title>
-                        <mat-card-title class="money"> Debt: {{apartmentSubBill.debt}}</mat-card-title>
+                        <mat-card-title class="money"> Баланс: {{apartmentSubBill.balance}}</mat-card-title>
+                        <mat-card-title class="money"> Борг: {{apartmentSubBill.debt}}</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
                         <hr>
                         <ul class="ul">
-                            <li>Calculation method: {{apartmentSubBill.communalUtility.calculationMethod}}</li>
-                            <li>Deadline: {{apartmentSubBill.communalUtility.deadline}}</li>
-                            <li>Status: {{apartmentSubBill.communalUtility.status}}</li>
-                            <li>Rate: {{apartmentSubBill.communalUtility.coefficient}}</li>
+                            <li>Метод Розрахунку: {{apartmentSubBill.communalUtility.calculationMethod}}</li>
+                            <li>Термін: {{apartmentSubBill.communalUtility.deadline}}</li>
+                            <li>Статус: {{apartmentSubBill.communalUtility.status}}</li>
+                            <li>Коефіцієнт Для Розрахунку: {{apartmentSubBill.communalUtility.coefficient}}</li>
                         </ul>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-button class="more-btn"><a (click)="redirectToApartmentOperations(apartmentSubBill.subBillId)"
                                                                class="btn btn-outlined btn-black text-muted more-button">
                             <mat-icon>history</mat-icon>
-                            <small>Watch payment history</small></a> <span class="vl ml-3"></span></button>
+                            <small>Історія транзакцій</small></a> <span class="vl ml-3"></span></button>
                     </mat-card-actions>
                 </mat-card>
             </div>

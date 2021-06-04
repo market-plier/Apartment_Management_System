@@ -2,7 +2,7 @@
     <mat-card>
         <form (ngSubmit)="add()" [formGroup]="form" fxLayout="column" fxLayoutAlign="center">
             <mat-form-field>
-                <mat-label>Name</mat-label>
+                <mat-label>Ім'я</mat-label>
                 <input formControlName="name" matInput name="name"
                 />
             </mat-form-field>
@@ -11,7 +11,7 @@
                 <small *ngIf="form.get('name').errors.minlength">Name length must be more than 1</small>
             </mat-error>
             <mat-form-field appearance="fill">
-                <mat-label>Status</mat-label>
+                <mat-label>Статус</mat-label>
                 <mat-select formControlName="status">
                     <mat-option *ngFor="let stat of status" value="{{stat}}">
                         {{stat}}
@@ -22,12 +22,12 @@
                 <small *ngIf="form.get('status').errors.required">Status is required</small>
             </mat-error>
             <mat-form-field>
-                <mat-label>Coefficient</mat-label>
+                <mat-label>Коефіцієнт розрахунку</mat-label>
                 <input formControlName="coefficient" matInput
                        name="coefficient" pattern="^[0-9]+(\.[0-9]{1,2})?$" step="0.01" type="number"/>
             </mat-form-field>
             <mat-form-field appearance="fill">
-                <mat-label>Duration type</mat-label>
+                <mat-label>Тривалість</mat-label>
                 <mat-select formControlName="durationType">
                     <mat-option *ngFor="let stat of dyr_type" value="{{stat}}">
                         {{stat}}
@@ -38,7 +38,7 @@
                 <small *ngIf="form.get('durationType').errors.required">Status is required</small>
             </mat-error>
             <mat-form-field appearance="fill">
-                <mat-label>Calculation Methods</mat-label>
+                <mat-label>Метод розрахунку</mat-label>
                 <mat-select formControlName="calculationMethod">
                     <mat-option *ngFor="let stat of calculationMethods" value="{{stat}}">
                         {{stat}}
@@ -49,7 +49,7 @@
                 <small *ngIf="form.get('calculationMethod').errors.required">Status is required</small>
             </mat-error>
             <mat-form-field appearance="fill">
-                <mat-label>Deadline</mat-label>
+                <mat-label>Термін</mat-label>
                 <input [matDatepicker]="picker" [min]="minDate" formControlName="deadline"
                        matInput>
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
@@ -58,7 +58,7 @@
                     Valid date required.
                 </mat-error>
             </mat-form-field>
-            <button [disabled]="!form.valid" color="primary" mat-flat-button type="submit">Submit</button>
+            <button [disabled]="!form.valid" color="primary" mat-flat-button type="submit">Створити</button>
         </form>
     </mat-card>
 </div>

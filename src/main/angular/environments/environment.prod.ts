@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url : 'https://housemanagement.herokuapp.com/'
+  url : 'http://localhost:8888/'
 };
